@@ -8,7 +8,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@300;500;700&family=Noto+Sans+SC:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@300;500;700&family=Noto+Sans+SC:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body class="u-font-sans u-antialiased">
 
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </header>
-        </div>
+    </div>
 
     <nav id="mobileMenu" class="mobile-nav">
         <button id="closeMobileMenu" class="close-btn">&times;</button>
@@ -76,44 +76,67 @@
         </div>
     </section>
 
-    <section id="portfolio" class="section-padded portfolio-section">
-        <div class="container">
+    <section id="portfolio" class="section-padded portfolio-section container">
+        
+        <div class="portfolio-header">
             <h2 class="section-title lang-cn">精选作品</h2>
             <h2 class="section-title lang-kr hidden">포트폴리오</h2>
-
-            <div class="grid-card-wrapper">
-                
-                <div class="grid-card wide">
-                    <a href="#contact">
-                        <img src="https://images.unsplash.com/photo-1520624021020-f5a0f2832819?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Commercial Event" class="card-image">
-                        <div class="card-title-overlay">
-                            <h3 class="lang-cn">商业活动 | 明星侧拍</h3>
-                            <h3 class="lang-kr hidden">상업 이벤트 | 셀럽 비하인드</h3>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="grid-card">
-                    <a href="#contact">
-                        <img src="https://images.unsplash.com/photo-1542456075-812030f88e17?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beauty Product Photography" class="card-image">
-                        <div class="card-title-overlay">
-                            <h3 class="lang-cn">美妆产品摄影</h3>
-                            <h3 class="lang-kr hidden">뷰티 제품 사진</h3>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="grid-card">
-                    <a href="#contact">
-                        <img src="https://images.unsplash.com/photo-1533566160166-7b43c683c316?q=80&w=1969&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Wedding Snap" class="card-image">
-                        <div class="card-title-overlay">
-                            <h3 class="lang-cn">个人/婚礼旅拍</h3>
-                            <h3 class="lang-kr hidden">개인/웨딩 스냅</h3>
-                        </div>
-                    </a>
-                </div>
-
+            <div class="scroll-controls">
+                <button id="scrollLeft" class="scroll-arrow arrow-left">←</button>
+                <button id="scrollRight" class="scroll-arrow arrow-right">→</button>
             </div>
+        </div>
+
+        <div class="scrollable-card-wrapper">
+            
+            <div class="grid-card wide">
+                <a href="#contact">
+                    <img src="https://images.unsplash.com/photo-1520624021020-f5a0f2832819?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Commercial Event" class="card-image">
+                    <div class="card-title-overlay">
+                        <h3 class="lang-cn">商业活动 | 明星侧拍</h3>
+                        <h3 class="lang-kr hidden">상업 이벤트 | 셀럽 비하인드</h3>
+                        <p class="card-sub-title lang-cn">Seoul Fashion Week</p>
+                        <p class="card-sub-title lang-kr hidden">서울 패션 위크</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="grid-card">
+                <a href="#contact">
+                    <img src="https://images.unsplash.com/photo-1542456075-812030f88e17?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beauty Product Photography" class="card-image">
+                    <div class="card-title-overlay">
+                        <h3 class="lang-cn">美妆产品摄影</h3>
+                        <h3 class="lang-kr hidden">뷰티 제품 사진</h3>
+                        <p class="card-sub-title lang-cn">K-Beauty Campaign</p>
+                        <p class="card-sub-title lang-kr hidden">K-뷰티 캠페인</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="grid-card">
+                <a href="#contact">
+                    <img src="https://images.unsplash.com/photo-1533566160166-7b43c683c316?q=80&w=1969&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Wedding Snap" class="card-image">
+                    <div class="card-title-overlay">
+                        <h3 class="lang-cn">个人/婚礼旅拍</h3>
+                        <h3 class="lang-kr hidden">개인/웨딩 스냅</h3>
+                        <p class="card-sub-title lang-cn">Jeju Island</p>
+                        <p class="card-sub-title lang-kr hidden">제주도 스냅</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="grid-card">
+                <a href="#contact">
+                    <img src="https://images.unsplash.com/photo-1620021319089-9a70650d0325?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beauty Product Photography" class="card-image">
+                    <div class="card-title-overlay">
+                        <h3 class="lang-cn">化妆师作品集</h3>
+                        <h3 class="lang-kr hidden">메이크업 아티스트 포트폴리오</h3>
+                        <p class="card-sub-title lang-cn">Studio Portrait</p>
+                        <p class="card-sub-title lang-kr hidden">스튜디오 인물 사진</p>
+                    </div>
+                </a>
+            </div>
+            
         </div>
     </section>
 
@@ -146,11 +169,16 @@
     </section>
 
     <section id="about" class="section-padded about-section">
-        <div class="container">
-            <h2 class="section-title lang-cn">关于我们</h2>
-            <h2 class="section-title lang-kr hidden">팀 소개</h2>
-            <p class="about-text lang-cn">WXZ STUDIO 是一个位于韩国首尔的专业摄影及视频制作团队，由经验丰富的摄影师和导演组成。我们专注于商业推广、艺人侧拍以及高端定制的个人影像服务。我们致力于将艺术与商业需求完美结合，为您提供电影级的视觉体验。</p>
-            <p class="about-text lang-kr hidden">WXZ STUDIO는 서울에 기반을 둔 전문 사진 및 비디오 제작팀으로, 숙련된 포토그래퍼와 디렉터로 구성되어 있습니다. 당사는 상업 프로모션, 셀럽 비하인드 및 하이엔드 맞춤형 개인 영상 서비스에 주력합니다. 예술과 상업적 요구를 완벽하게 결합하여 영화 같은 시각적 경험을 제공하는 것을 목표로 합니다.</p>
+        <div class="container about-flex">
+            <div class="about-text-content">
+                <h2 class="section-title lang-cn">关于我们</h2>
+                <h2 class="section-title lang-kr hidden">팀 소개</h2>
+                <p class="about-text lang-cn">WXZ STUDIO 是一个位于韩国首尔的专业摄影及视频制作团队，由经验丰富的摄影师和导演组成。我们专注于商业推广、艺人侧拍以及高端定制的个人影像服务。我们致力于将艺术与商业需求完美结合，为您提供电影级的视觉体验。</p>
+                <p class="about-text lang-kr hidden">WXZ STUDIO는 서울에 기반을 둔 전문 사진 및 비디오 제작팀으로, 숙련된 포토그래퍼와 디렉터로 구성되어 있습니다. 당사는 상업 프로모션, 셀럽 비하인드 및 하이엔드 맞춤형 개인 영상 서비스에 주력합니다. 예술과 상업적 요구를 완벽하게 결합하여 영화 같은 시각적 경험을 제공하는 것을 목표로 합니다.</p>
+            </div>
+            <div class="about-image-content">
+                 <img src="https://images.unsplash.com/photo-1581091275997-f58c42b2d6a5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Studio Team" class="about-image">
+            </div>
         </div>
     </section>
 
@@ -179,22 +207,3 @@
     </section>
 
     <footer class="main-footer">
-        <div class="container footer-flex">
-            <div class="footer-left">
-                <div class="footer-logo">WXZ STUDIO</div>
-                <p class="copyright">&copy; 2024 WXZ STUDIO. All rights reserved.</p>
-            </div>
-            
-            <div class="lang-switch-desktop">
-                <button onclick="switchLanguage('cn')" id="btn-cn-footer">CN</button>
-                <span>|</span>
-                <button onclick="switchLanguage('kr')" id="btn-kr-footer">KR</button>
-            </div>
-        </div>
-    </footer>
-
-    <script src="data/nav_menu.js"></script>
-    <script src="script.js"></script>
-
-</body>
-</html>
