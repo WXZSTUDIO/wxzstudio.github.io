@@ -1,6 +1,5 @@
 // ===========================================
 // 语言切换逻辑 (Language Switch Logic)
-// 语言按钮现在位于页脚
 // ===========================================
 function switchLanguage(lang) {
     const cnElements = document.querySelectorAll('.lang-cn');
@@ -15,8 +14,8 @@ function switchLanguage(lang) {
         krElements.forEach(el => el.classList.remove('hidden'));
         localStorage.setItem('userLang', 'kr');
     }
-    // 更新所有语言切换按钮的 active 状态
     updateLanguageButtonStates(lang);
+    renderMobileNavigationMenu(lang); // 确保移动端菜单语言同步
 }
 
 function updateLanguageButtonStates(lang) {
@@ -30,21 +29,22 @@ function updateLanguageButtonStates(lang) {
 
 
 // ===========================================
-// 导航菜单逻辑 (仅剩移动端菜单)
+// 导航菜单逻辑 (Mobile Menu)
 // ===========================================
 const mobileMenuButton = document.getElementById('mobileMenuButton');
 const mobileMenu = document.getElementById('mobileMenu');
 const navOverlay = document.getElementById('navOverlay');
-const primaryNavMenu = document.getElementById('primaryNavMenu');
 
-// 从 data/nav_menu.js 中获取菜单数据，仅用于移动端菜单
 function renderMobileNavigationMenu(lang) {
-    const menuData = navMenuItems[lang];
-    if (!menuData) return; 
+    // 假设 menu data 存在于全局变量 navMenuItems 中 (来自 data/nav_menu.js)
+    const menuData = navMenuItems[lang] || []; 
 
     const mobileListContainer = mobileMenu.querySelector('.mobile-menu-list');
+    if (!mobileListContainer) return;
+
     mobileListContainer.innerHTML = ''; 
 
+    // 添加核心服务到移动端菜单
     menuData.forEach(item => {
         const li = document.createElement('li');
         const a = document.createElement('a');
@@ -56,12 +56,10 @@ function renderMobileNavigationMenu(lang) {
     });
 }
 
-
 function openMobileMenu() {
     mobileMenu.classList.add('active');
     navOverlay.classList.add('active');
     document.body.classList.add('no-scroll');
-    // 渲染移动端菜单
     const currentLang = localStorage.getItem('userLang') || 'cn';
     renderMobileNavigationMenu(currentLang);
 }
@@ -73,63 +71,22 @@ function closeMobileMenu() {
 }
 
 // ===========================================
-// Dropdown (悬浮下拉菜单) 逻辑 - 核心改变
+// Dropdown (悬浮下拉菜单) 逻辑 - 修复悬停消失问题
 // ===========================================
 const dropdownToggler = document.getElementById('propertiesDropdownToggler');
 const dropdownMenu = document.getElementById('propertiesDropdown');
+let hoverTimeout;
 
 if (dropdownToggler && dropdownMenu) {
-    // 桌面端使用 Hover 展开菜单
-    dropdownToggler.addEventListener('mouseenter', () => {
+    const showDropdown = () => {
+        clearTimeout(hoverTimeout);
         if (window.innerWidth > 1024) {
             dropdownMenu.classList.add('active');
         }
-    });
-
-    // 鼠标离开 Toggler 或 Menu 时关闭菜单
-    const closeDropdown = () => {
-        if (window.innerWidth > 1024) {
-            dropdownMenu.classList.remove('active');
-        }
     };
-    dropdownToggler.addEventListener('mouseleave', closeDropdown);
-    dropdownMenu.addEventListener('mouseleave', closeDropdown);
 
-    // 移动端使用 Click 切换 (在CSS中实现)
-    dropdownToggler.addEventListener('click', (e) => {
-        if (window.innerWidth <= 1024) {
-            e.preventDefault(); 
-            dropdownMenu.classList.toggle('active');
-        }
-    });
-
-    // 点击外部或菜单项后关闭菜单 (适用于移动端/点击)
-    document.addEventListener('click', (e) => {
-        if (!dropdownToggler.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.classList.remove('active');
-        }
-    });
-
-    // 监听菜单项点击，点击后关闭下拉菜单 (针对移动端/小屏点击)
-    dropdownMenu.querySelectorAll('a').forEach(item => {
-        item.addEventListener('click', () => {
-            dropdownMenu.classList.remove('active');
-            if (window.innerWidth <= 1024) {
-                closeMobileMenu(); // 如果在移动端，也关闭移动菜单
-            }
-        });
-    });
-}
-
-
-// ===========================================
-// 初始化
-// ===========================================
-document.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('userLang') || 'cn';
-    switchLanguage(savedLang); // 初始化语言和按钮状态
-
-    if (mobileMenuButton) mobileMenuButton.onclick = openMobileMenu;
-    if (document.getElementById('closeMobileMenu')) document.getElementById('closeMobileMenu').onclick = closeMobileMenu;
-    if (navOverlay) navOverlay.onclick = closeMobileMenu;
-});
+    const hideDropdown = () => {
+        if (window.innerWidth > 1024) {
+            // 设置延迟，给用户将鼠标从toggler移到menu的时间
+            hoverTimeout = setTimeout(() => {
+                dropdown
