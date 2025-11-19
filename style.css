@@ -1,13 +1,14 @@
 :root {
-    /* === Drake Inspired Palette === */
-    --bg-color: #0a0a0a;
-    --card-bg: #000000; /* 更纯粹的黑色 */
-    --text-main: #ffffff;
-    --text-muted: #888888; /* 柔和的灰色 */
-    --accent-color: #a9988b; /* 沉稳的灰金/米色 */
-    --border-style: 1px solid var(--accent-color); /* 统一边框风格 */
-    --font-heading: 'Raleway', sans-serif;
-    --font-body: 'Noto Sans SC', 'Noto Sans KR', sans-serif;
+    /* === Drake Inspired Palette (White Background) === */
+    --bg-color: #f7f7f7; /* 略微偏灰的白，更有质感 */
+    --text-main: #000000;
+    --text-muted: #555555;
+    --accent-color: #a9988b; /* 沉稳的灰金/米色 (用作强调色) */
+    --border-style: 1px solid #000000; /* 黑色边框，高对比 */
+
+    /* 字体替代方案 */
+    --font-heading: 'Montserrat', 'Noto Sans SC', 'Noto Sans KR', sans-serif;
+    --font-body: 'Lora', 'Noto Sans SC', 'Noto Sans KR', serif;
 }
 
 /* Base Styles & Resets */
@@ -18,192 +19,373 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.6;
-    padding-bottom: 120px; /* Space for floating CTA */
-    overflow-x: hidden; /* Prevent horizontal scroll on mobile menu */
+    padding-bottom: 0; 
+    overflow-x: hidden;
 }
 
 /* Utility Class */
 .hidden { display: none !important; }
-.no-scroll { overflow: hidden; } /* For mobile menu */
-
-/* Global Container & Section Padding */
+.no-scroll { overflow: hidden; } 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-.section-padded { padding: 5rem 0; } /* Consistent section spacing */
+.section-padded { padding: 4rem 0; } 
 
-/* Section Titles & Subtitles */
+/* === Typography === */
+.subtitle {
+    font-family: var(--font-body);
+    color: var(--text-muted); 
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+}
 .section-title {
     font-family: var(--font-heading);
     font-weight: 800;
-    font-size: 3rem; /* Large title */
-    margin-bottom: 1rem;
-    color: var(--text-main);
+    font-size: 2.5rem; /* Mobile Size */
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    border-bottom: var(--border-style);
+    padding-bottom: 10px;
 }
-.section-subtitle {
-    color: var(--accent-color);
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
-    max-width: 800px;
-    line-height: 1.4;
+.logo {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+    color: var(--text-main);
+    text-decoration: none;
 }
 
-/* === Top Bar & Navigation (Mobile First) === */
+
+/* === Navigation (Mobile First) === */
+
+/* Wrapper for Fixed Top Bar */
 .nav-wrapper {
     position: sticky;
     top: 0;
     z-index: 1000;
     background-color: var(--bg-color);
-    border-bottom: var(--border-style); /* Drake style border */
+    border-bottom: 1px solid #000000; 
 }
 
+/* Top Bar (Mobile: Logo Center, Icon Left) */
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2rem 1.5rem;
+    padding: 1rem 1.5rem;
 }
 
-.logo {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: 1.5rem;
-    letter-spacing: 1.5px;
-    color: white;
-    flex-grow: 1; /* Allow logo to take available space */
-    text-align: center; /* Center logo on mobile */
-}
-
-/* Mobile Menu Icon */
+/* Menu Icon (Mobile Toggler) */
 .menu-icon {
-    display: flex; /* Always show on mobile */
+    display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 30px;
-    height: 25px;
+    width: 25px;
+    height: 20px;
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 1100; /* Above mobile nav */
 }
 .menu-icon .bar {
     width: 100%;
-    height: 3px;
-    background-color: white;
-    transition: all 0.3s ease;
+    height: 2px;
+    background-color: var(--text-main);
 }
 
-/* Mobile Nav Overlay (Darkens background) */
-.nav-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);
-    z-index: 999;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.nav-overlay.active {
-    display: block;
-    opacity: 1;
-}
-
-/* Mobile Navigation Panel (Slides from left) */
-.mobile-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 80%; /* Takes 80% of screen width */
-    max-width: 300px;
-    height: 100%;
-    background-color: var(--card-bg);
-    padding: 2rem;
-    transform: translateX(-100%); /* Start off-screen */
-    transition: transform 0.3s ease-out;
-    z-index: 1000;
+/* Desktop Language Switch (Hidden on Mobile) */
+.lang-switch-desktop { display: none; }
+.header-right-group {
     display: flex;
-    flex-direction: column;
-    border-right: var(--border-style);
-}
-.mobile-nav.active {
-    transform: translateX(0); /* Slide in */
+    align-items: center;
+    gap: 1.5rem;
 }
 
-.mobile-nav .close-btn {
-    align-self: flex-end; /* Push close button to top right */
-    color: white;
-    font-size: 2rem;
+/* Dropdown Toggler (Mobile/Desktop) */
+.dropdown-toggler {
+    font-family: var(--font-body);
     background: none;
     border: none;
+    color: var(--text-main);
     cursor: pointer;
-    margin-bottom: 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    white-space: nowrap;
 }
 
-.mobile-nav ul {
-    list-style: none;
-    flex-grow: 1; /* Take up vertical space */
+/* Dropdown Menu (Fixed Position for Desktop Hover) */
+.c-header_dropdown { position: relative; }
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; 
+    left: -100px; /* Adjust left to center or position correctly */
+    min-width: 280px;
+    background-color: white;
+    padding: 1.5rem;
+    border: var(--border-style);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    z-index: 999;
 }
-.mobile-nav ul li { margin-bottom: 1.5rem; }
-.mobile-nav ul li a {
-    color: white;
+.dropdown-menu.active { display: block; }
+.dropdown-menu p { color: var(--text-muted); font-size: 0.75rem; margin-bottom: 5px; text-transform: uppercase; }
+.dropdown-menu ul li a {
+    color: var(--text-main);
     text-decoration: none;
-    font-size: 1.5rem;
+    font-family: var(--font-heading);
     font-weight: 700;
+    font-size: 1.1rem;
     display: block;
-    transition: color 0.2s;
+    padding: 4px 0;
 }
-.mobile-nav ul li a:hover { color: var(--accent-color); }
+.dropdown-menu ul li:not(:last-child) { border-bottom: 1px solid #eee; }
+.dropdown-menu ul li a:hover { color: var(--accent-color); }
 
+/* Desktop Primary Nav (Secondary Menu) */
+.desktop-nav { display: none; }
+
+
+/* === Mobile Navigation Panel === */
+.nav-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+    z-index: 999; display: none; opacity: 0; transition: opacity 0.3s ease;
+}
+.nav-overlay.active { display: block; opacity: 1; }
+
+.mobile-nav {
+    position: fixed; top: 0; left: 0;
+    width: 85%; max-width: 350px; height: 100%;
+    background-color: white; color: black;
+    padding: 2rem; transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1); /* Smoother slide */
+    z-index: 1000; display: flex; flex-direction: column;
+    border-right: var(--border-style);
+}
+.mobile-nav.active { transform: translateX(0); }
+
+.mobile-nav .close-btn { 
+    align-self: flex-end; color: black; font-size: 2rem; background: none; border: none; cursor: pointer; margin-bottom: 2rem;
+}
+.mobile-nav ul { list-style: none; flex-grow: 1; padding-top: 2rem;}
+.mobile-nav ul li { margin-bottom: 1.8rem; border-bottom: 1px solid #eee; }
+.mobile-nav ul li a {
+    color: black; text-decoration: none; font-size: 1.3rem; font-weight: 700; display: block; padding-bottom: 5px;
+}
 .lang-switch-mobile {
-    display: flex;
-    gap: 10px;
-    font-size: 1rem;
-    align-items: center;
-    border: 1px solid var(--text-muted);
-    padding: 8px 15px;
-    border-radius: 4px;
-    width: fit-content;
-    margin-top: auto; /* Push to bottom */
+    display: flex; gap: 10px; font-size: 1rem; align-items: center; 
+    border: 1px solid var(--text-main); padding: 8px 15px; width: fit-content;
 }
-.lang-switch-mobile button {
-    background: none; border: none; color: var(--text-muted); cursor: pointer;
-    font-weight: 500; font-size: 1rem; transition: all 0.3s;
-}
-.lang-switch-mobile button.active {
-    color: white; font-weight: 700;
-}
-.lang-switch-mobile span { color: #444; }
+.lang-switch-mobile button { background: none; border: none; color: var(--text-main); font-weight: 500;}
+.lang-switch-mobile button.active { font-weight: 700; color: var(--accent-color); }
+.lang-switch-mobile span { color: #ccc; }
 
 
-/* Desktop Navigation (Hidden on mobile) */
-.desktop-nav {
-    display: none; /* Hide by default, show on larger screens */
-    padding: 0 1.5rem; /* Match top-bar padding */
-    justify-content: center; /* Center items */
-    width: 100%;
-}
-.desktop-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 3rem; /* Spacing between items */
-    padding: 1rem 0;
-}
-.desktop-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
+/* === Hero Section (全屏) === */
+.hero-section {
     position: relative;
-    padding-bottom: 5px; /* Space for underline */
+    height: 85vh; /* 减少到 85vh，让用户看到内容分割 */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: var(--border-style);
 }
-.desktop-nav ul li a::after {
+.hero-section::before {
     content: '';
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--accent-color);
-    transition: width 0.3s ease;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.5); /* 白色半透明蒙层 */
+}
+.hero-content-wrapper {
+    position: relative;
+    z-index: 10;
+    padding: 2rem;
+}
+.hero-content-wrapper .subtitle {
+    color: var(--text-main); /* 黑色副标题 */
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+.hero-section h1 {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 4rem; /* Mobile Size */
+    line-height: 1;
+}
+
+/* === Portfolio Grid === */
+.grid-card-wrapper {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile: Single Column */
+    gap: 20px;
+}
+.grid-card {
+    position: relative;
+    overflow: hidden;
+    height: 350px;
+    border: var(--border-style); /* 边框强调几何感 */
+}
+.grid-card a { text-decoration: none; color: white; }
+.grid-card:hover .card-image { transform: scale(1.05); }
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    filter: brightness(0.9); /* 稍微变暗，保持高对比 */
+}
+
+.card-title-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+}
+.card-title-overlay h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* === Services Section === */
+.service-list {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile: Single Column */
+    gap: 3rem;
+}
+.service-item {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1.5rem;
+}
+.service-item h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+.service-item p {
+    font-family: var(--font-body);
+    color: var(--text-muted);
+}
+
+/* === Contact Section === */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile: Single Column */
+    gap: 2rem;
+    max-width: 600px;
+}
+.contact-item {
+    border: var(--border-style);
+    padding: 1.5rem;
+}
+.contact-item h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+.contact-item p {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* === Footer === */
+.main-footer {
+    background-color: var(--text-main);
+    color: var(--bg-color);
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+}
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-heading);
+}
+.footer-logo { font-weight: 900; }
+.copyright { font-size: 0.8rem; }
+
+
+/* =========================================
+   Media Queries (Tablet and Desktop)
+   ========================================= */
+
+@media (min-width: 768px) {
+    .section-title { font-size: 3.5rem; }
+    .hero-section h1 { font-size: 6rem; }
+    
+    .grid-card-wrapper {
+        grid-template-columns: repeat(2, 1fr); /* Tablet: Two Columns */
+    }
+    .wide {
+        grid-column: span 2;
+        height: 500px;
+    }
+    .service-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    /* === Desktop Navigation Structure === */
+    .menu-icon, .lang-switch-mobile { display: none; }
+    .logo { 
+        position: absolute; /* 使Logo脱离流，方便居中 */
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* Primary Nav (次级菜单) */
+    .desktop-nav { 
+        display: block; 
+        border-top: var(--border-style);
+    }
+    .desktop-nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 3rem; 
+        padding: 1rem 0;
+    }
+    .desktop-nav ul li a {
+        color: var(--text-main);
+        text-decoration: none;
+        font-family: var(--font-heading);
+        font-size: 0.9rem;
+        font-weight: 600;
+        position: relative;
+    }
+    .desktop-nav ul li a:hover {
+        color: var(--accent-color);
+    }
+
+    /* Desktop Language Switch */
+    .lang-switch-desktop {
+        display: flex;
+        gap: 8px;
+        font-size: 0.8rem;
+    }
+    .lang-switch-desktop button {
+        background: none; border: none; color: var(--text-main); cursor: pointer;
+        font-weight: 500; font-size: 0.8rem;
+    }
+    .lang-switch-desktop button.active {
+        color: var(--accent-color); font-weight: 700;
+    }
+    
+    .hero-section h1 { font-size: 8rem; }
+    .section-title { font-size: 4rem; }
 }
