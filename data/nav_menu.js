@@ -1,11 +1,9 @@
-// This file holds the data for the navigation menu.
-// This allows for easier management and potential localization of menu items.
-
+// data/nav_menu.js
 const navMenuItems = {
     cn: [
         { label: "作品", href: "#portfolio" },
         { label: "服务", href: "#services" },
-        { label: "关于", href: "#about" }, // 可以增加一个关于 WXZ STUDIO 的介绍
+        { label: "关于", href: "#about" },
         { label: "联系", href: "#contact" }
     ],
     kr: [
