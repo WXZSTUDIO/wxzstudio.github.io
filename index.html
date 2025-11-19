@@ -8,43 +8,82 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Noto+Sans+SC:wght@300;500;700&family=Raleway:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@300;500;700&family=Noto+Sans+SC:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="u-font-sans u-antialiased">
 
     <div class="nav-wrapper">
         <header class="top-bar">
+            
             <button id="mobileMenuButton" class="menu-icon">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
-            <div class="logo">WXZ STUDIO</div>
-            <div class="lang-switch-desktop">
-                <button onclick="switchLanguage('cn')" id="btn-cn">CN</button>
-                <span>|</span>
-                <button onclick="switchLanguage('kr')" id="btn-kr">KR</button>
+
+            <a href="#home" class="logo">WXZ STUDIO</a>
+
+            <div class="header-right-group">
+                <div class="c-header_dropdown">
+                    <button id="propertiesDropdownToggler" class="dropdown-toggler" type="button" aria-haspopup="true" aria-controls="propertiesDropdown" aria-expanded="false">
+                        <span class="lang-cn">选择服务</span>
+                        <span class="lang-kr hidden">서비스 선택</span>
+                        </button>
+                    <div id="propertiesDropdown" class="dropdown-menu">
+                        <ul>
+                            <li>
+                                <p class="u-typo-label-tiny lang-cn">商业合作 (BUSINESS)</p>
+                                <p class="u-typo-label-tiny lang-kr hidden">상업 협력 (BUSINESS)</p>
+                                <ul>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">短视频拍摄</a></li>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">产品摄影</a></li>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">商业活动</a></li>
+                                </ul>
+                            </li>
+                            <li class="u-mt-6">
+                                <p class="u-typo-label-tiny lang-cn">个人定制 (PERSONAL)</p>
+                                <p class="u-typo-label-tiny lang-kr hidden">개인 맞춤 (PERSONAL)</p>
+                                <ul>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">婚礼旅拍</a></li>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">个人写真</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="lang-switch-desktop">
+                    <button onclick="switchLanguage('cn')" id="btn-cn">CN</button>
+                    <span>|</span>
+                    <button onclick="switchLanguage('kr')" id="btn-kr">KR</button>
+                </div>
             </div>
-            <nav id="mainNav" class="mobile-nav">
-                </nav>
-            <div id="navOverlay" class="nav-overlay"></div>
         </header>
 
         <nav class="desktop-nav">
-            <ul id="desktopNavItems">
+            <ul id="primaryNavMenu">
                 </ul>
         </nav>
     </div>
 
-    <section id="home" class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1582239459275-e0b6b8d4f07a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwxNXx8U2VvdWwlMjBuZ2h0fGVufDB8fHx8MTcwODY0OTE1M3ww&ixlib=rb-4.0.3&q=80&w=1080');">
+    <nav id="mobileMenu" class="mobile-nav">
+        <button id="closeMobileMenu" class="close-btn">&times;</button>
+        <ul class="mobile-menu-list">
+            </ul>
+        <div class="lang-switch-mobile">
+            <button onclick="switchLanguage('cn'); closeMobileMenu();" id="btn-cn-mobile">CN</button>
+            <span>|</span>
+            <button onclick="switchLanguage('kr'); closeMobileMenu();" id="btn-kr-mobile">KR</button>
+        </div>
+    </nav>
+    <div id="navOverlay" class="nav-overlay"></div>
+    
+    <section id="home" class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1549419137-b45b0a3fbf5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHw0fHxjZWxlYnJpdHklMjBldmVudHxlbnwwfHx8fDE3MDg2NDkxNjF8MHw&ixlib=rb-4.0.3&q=80&w=1080');">
         <div class="hero-content-wrapper container">
-            <p class="subtitle">SEOUL BASED PHOTOGRAPHY & VIDEO</p>
-            <h1 class="lang-cn">捕捉暗夜里的<br> <span class="highlight">每一束光</span></h1>
-            <h1 class="lang-kr hidden">서울의 밤,<br> <span class="highlight">빛을 기록하다</span></h1>
-            <a href="#contact" class="hero-cta">
-                <span class="lang-cn">立即预约 →</span>
-                <span class="lang-kr hidden">예약 문의 →</span>
-            </a>
+            <p class="subtitle lang-cn">捕捉暗夜里的光 | 明星侧拍，美妆产品，商业拍摄</p>
+            <p class="subtitle lang-kr hidden">서울의 빛을 기록하다 | 셀럽 비하인드, 뷰티 제품, 비즈니스 촬영</p>
+            <h1 class="lang-cn">WXZ STUDIO</h1>
+            <h1 class="lang-kr hidden">WXZ 스튜디오</h1>
         </div>
     </section>
 
@@ -52,82 +91,66 @@
         <div class="container">
             <h2 class="section-title lang-cn">精选作品</h2>
             <h2 class="section-title lang-kr hidden">포트폴리오</h2>
-            <p class="section-subtitle lang-cn">短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍</p>
-            <p class="section-subtitle lang-kr hidden">숏폼 영상 제작｜제품 사진｜상업 이벤트｜웨딩 스냅</p>
 
-            <div class="bento-grid">
+            <div class="grid-card-wrapper">
                 
-                <div class="card wide">
-                    <img src="https://images.unsplash.com/photo-1549419137-b45b0a3fbf5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHw0fHxjZWxlYnJpdHklMjBldmVudHxlbnwwfHx8fDE3MDg2NDkxNjF8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Commercial Event" class="card-image">
-                    <div class="card-overlay-text">
-                        <h3 class="lang-cn">商业活动 | 明星侧拍</h3>
-                        <h3 class="lang-kr hidden">상업 이벤트 | 셀럽 비하인드</h3>
-                    </div>
-                </div>
-
-                <div class="card video-card" onclick="showVideoModal('dQw4w9WgXcQ')"> <img src="https://images.unsplash.com/photo-1542316410-639a02298e72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwzMHx8c2hvcnQlMjB2aWRlb3xlbnwwfHx8fDE3MDg2NDkxNjZ8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Short Video Production" class="card-image">
-                    <div class="video-overlay">
-                        <span class="play-icon">▶</span>
-                        <h4 class="lang-cn">创意短视频拍摄</h4>
-                        <h4 class="lang-kr hidden">숏폼 영상 제작</h4>
-                    </div>
-                </div>
-
-                <div class="card tall">
-                    <img src="https://images.unsplash.com/photo-1596700679803-f38b2d1894d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHw3fHx3ZWRkaW5nJTIwc25hcHxlbnwwfHx8fDE3MDg2NDkxNjN8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Wedding Snap" class="card-image">
-                    <div class="card-overlay-text">
-                        <h4 class="lang-cn">韩国婚礼旅拍</h4>
-                        <h4 class="lang-kr hidden">한국 웨딩 스냅</h4>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1622615456461-efc8f6153966?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwzNHx8YmVhdXR5JTIwcHJvZHVjdHxlbnwwfHx8fDE3MDg2NDkxNzB8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Beauty Product Photography" class="card-image">
-                    <div class="card-overlay-text">
-                        <p class="lang-cn">美妆产品摄影</p>
-                        <p class="lang-kr hidden">뷰티 제품 사진</p>
-                    </div>
-                </div>
-                
-                <div class="card social-card">
-                    <div class="xhs-badge">小红书 (Red)</div>
-                    <h2 class="lang-cn">更多客片</h2>
-                    <h2 class="lang-kr hidden">더 많은<br>사진 보기</h2>
-                    <p class="small-text">@WXZ STUDIO</p>
-                    <a href="https://www.xiaohongshu.com/user/profile/5fd363ac000000000101cffc" target="_blank" class="btn-link">
-                        <span class="lang-cn">点击跳转 →</span>
-                        <span class="lang-kr hidden">바로가기 →</span>
+                <div class="grid-card wide">
+                    <a href="#contact">
+                        <img src="https://images.unsplash.com/photo-1593450535306-ed0285a8677c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwyM3x8YmFja3N0YWdlJTIwZXZlbnR8ZW58MHx8fHx8MTcwODc0MjUwNnw&ixlib=rb-4.0.3&q=80&w=1080" alt="Commercial Event" class="card-image">
+                        <div class="card-title-overlay">
+                            <h3 class="lang-cn">商业活动 | 明星侧拍</h3>
+                            <h3 class="lang-kr hidden">상업 이벤트 | 셀럽 비하인드</h3>
+                        </div>
                     </a>
                 </div>
+
+                <div class="grid-card">
+                    <a href="#contact">
+                        <img src="https://images.unsplash.com/photo-1622615456461-efc8f6153966?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwzNHx8YmVhdXR5JTIwcHJvZHVjdHxlbnwwfHx8fDE3MDg2NDkxNzB8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Beauty Product Photography" class="card-image">
+                        <div class="card-title-overlay">
+                            <h3 class="lang-cn">美妆产品摄影</h3>
+                            <h3 class="lang-kr hidden">뷰티 제품 사진</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="grid-card">
+                    <a href="#contact">
+                        <img src="https://images.unsplash.com/photo-1596700679803-f38b2d1894d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHw3fHx3ZWRkaW5nJTIwc25hcHxlbnwwfHx8fDE3MDg2NDkxNjN8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Wedding Snap" class="card-image">
+                        <div class="card-title-overlay">
+                            <h3 class="lang-cn">婚礼旅拍 | 个人写真</h3>
+                            <h3 class="lang-kr hidden">웨딩 스냅 | 개인 화보</h3>
+                        </div>
+                    </a>
+                </div>
+
             </div>
         </div>
     </section>
 
     <section id="services" class="section-padded services-section">
         <div class="container">
-            <h2 class="section-title lang-cn">专业服务</h2>
-            <h2 class="section-title lang-kr hidden">전문 서비스</h2>
-            <div class="service-grid">
+            <h2 class="section-title lang-cn">专业服务明细</h2>
+            <h2 class="section-title lang-kr hidden">전문 서비스 내역</h2>
+            
+            <div class="service-list">
                 <div class="service-item">
-                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwxMXx8YnVzaW5lc3MlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3MDg2NDkxNjd8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Brand Photography" class="service-icon">
-                    <h3 class="lang-cn">品牌 | 商业摄影</h3>
-                    <h3 class="lang-kr hidden">브랜드 | 상업 촬영</h3>
-                    <p class="lang-cn">为您的品牌量身定制视觉内容，涵盖产品、宣传片和活动记录。</p>
-                    <p class="lang-kr hidden">브랜드에 맞는 맞춤형 시각 콘텐츠, 제품, 홍보 영상 및 이벤트 기록을 제공합니다.</p>
+                    <h3 class="lang-cn">短视频拍摄</h3>
+                    <h3 class="lang-kr hidden">숏폼 영상 제작</h3>
+                    <p class="lang-cn">涵盖 Reels、TikTok 和小红书视频的创意策划、拍摄及后期制作。专注于韩国市场和K-Pop/美妆/时尚主题。</p>
+                    <p class="lang-kr hidden">릴스, 틱톡, 샤오홍슈 영상의 기획, 촬영 및 후반 작업을 포함합니다. 한국 시장 및 K-Pop/뷰티/패션 테마에 중점을 둡니다.</p>
                 </div>
                 <div class="service-item">
-                    <img src="https://images.unsplash.com/photo-1596496191764-16d7d74ae6ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwxMHx8ZXZlbnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3MDg2NDkxNjF8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Event Coverage" class="service-icon">
-                    <h3 class="lang-cn">活动 | 庆典拍摄</h3>
-                    <h3 class="lang-kr hidden">이벤트 | 기념 촬영</h3>
-                    <p class="lang-cn">捕捉各类商业活动、庆典、发布会的精彩瞬间，提供高质量影像。</p>
-                    <p class="lang-kr hidden">다양한 상업 행사, 기념식, 발표회의 멋진 순간을 포착하여 고품질 이미지를 제공합니다.</p>
+                    <h3 class="lang-cn">产品摄影</h3>
+                    <h3 class="lang-kr hidden">제품 사진</h3>
+                    <p class="lang-cn">为美妆、时尚、科技等品牌提供高品质的静物、场景和模特产品摄影。</p>
+                    <p class="lang-kr hidden">뷰티, 패션, 기술 등 브랜드에 고품질의 스튜디오 촬영, 컨셉 촬영, 모델 제품 사진을 제공합니다.</p>
                 </div>
                 <div class="service-item">
-                    <img src="https://images.unsplash.com/photo-1517430154807-74220b33c080?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHw1fHx3ZWRkaW5nJTIwdmlkZW9ncmFwaHl8ZW5wwfHx8fDE3MDg2NDkxNjN8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Wedding & Travel" class="service-icon">
-                    <h3 class="lang-cn">婚礼 | 旅拍</h3>
-                    <h3 class="lang-kr hidden">웨딩 | 여행 스냅</h3>
-                    <p class="lang-cn">在首尔记录您的浪漫婚礼或旅行记忆，定格美好时光。</p>
-                    <p class="lang-kr hidden">서울에서 로맨틱한 웨딩 또는 여행 추억을 기록하고, 아름다운 순간을 담아드립니다.</p>
+                    <h3 class="lang-cn">商业活动跟拍</h3>
+                    <h3 class="lang-kr hidden">상업 이벤트 촬영</h3>
+                    <p class="lang-cn">提供明星见面会、品牌发布会、VIP活动和演唱会侧拍等全流程记录服务。</p>
+                    <p class="lang-kr hidden">스타 팬미팅, 브랜드 론칭 행사, VIP 이벤트, 콘서트 비하인드 등 전체 과정을 기록합니다.</p>
                 </div>
             </div>
         </div>
@@ -139,8 +162,8 @@
             <h2 class="section-title lang-kr hidden">문의하기</h2>
             <div class="contact-grid">
                 <div class="contact-item">
-                    <h3 class="lang-cn">微信</h3>
-                    <h3 class="lang-kr hidden">위챗</h3>
+                    <h3 class="lang-cn">微信 (WeChat)</h3>
+                    <h3 class="lang-kr hidden">위챗 (WeChat)</h3>
                     <p>icf304</p>
                 </div>
                 <div class="contact-item">
@@ -160,7 +183,7 @@
     <footer class="main-footer">
         <div class="container footer-flex">
             <div class="footer-logo">WXZ STUDIO</div>
-            <p class="copyright">&copy; 2024 WXZ STUDIO. All Rights Reserved.</p>
+            <p class="copyright">&copy; 2024 WXZ STUDIO.</p>
         </div>
     </footer>
 
@@ -169,13 +192,6 @@
             <span class="close-btn" onclick="closeVideoModal()">&times;</span>
             <div id="videoPlayer" class="video-container"></div> 
         </div>
-    </div>
-
-    <div class="floating-dock">
-        <button class="ios-glass-btn" onclick="window.location.href='#contact'">
-            <span class="lang-cn">📅 预约拍摄</span>
-            <span class="lang-kr hidden">📅 예약하기</span>
-        </button>
     </div>
 
     <script src="data/nav_menu.js"></script>
