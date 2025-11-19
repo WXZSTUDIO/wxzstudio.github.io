@@ -1,1 +1,1 @@
-# wxzstudio.github.io
+# github.io

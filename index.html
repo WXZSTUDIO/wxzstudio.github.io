@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WXZ STUDIO | Seoul Photographer</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Noto+Sans+SC:wght@300;500;700&family=Raleway:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">WXZ STUDIO</div>
+        
+        <div class="lang-switch">
+            <button onclick="switchLanguage('cn')" id="btn-cn">CN</button>
+            <span>|</span>
+            <button onclick="switchLanguage('kr')" id="btn-kr">KR</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <p class="subtitle">SEOUL BASED PHOTOGRAPHY & VIDEO</p>
+            
+            <h1 class="lang-cn">捕捉暗夜里的<br> <span class="highlight">每一束光</span></h1>
+            <h1 class="lang-kr hidden">서울의 밤,<br> <span class="highlight">빛을 기록하다</span></h1>
+
+            <div class="hero-visual">
+                <img src="images/seoul_night.jpg" alt="Seoul Night" class="main-photo">
+                <div class="location-badge">
+                    📍 <span class="lang-cn">韩国 · 首尔</span><span class="lang-kr hidden">서울 · 대한민국</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="section-header">
+            <h2 class="lang-cn">精选作品</h2>
+            <h2 class="lang-kr hidden">포트폴리오</h2>
+            <p class="lang-cn">短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍</p>
+            <p class="lang-kr hidden">숏폼 영상 제작｜제품 사진｜상업 이벤트｜웨딩 스냅</p>
+        </div>
+
+        <div class="bento-grid">
+            
+            <div class="card wide concert-card">
+                <div class="card-bg-img" style="background-image: url('images/commercial_event.jpg');"></div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span class="lang-cn">🎥 商业活动/明星侧拍</span>
+                        <span class="lang-kr hidden">🎥 상업 이벤트/셀럽 비하인드</span>
+                    </div>
+                    <h3 class="lang-cn">高光时刻侧拍记录</h3>
+                    <h3 class="lang-kr hidden">무대 위 순간 기록</h3>
+                </div>
+            </div>
+
+            <div class="card video-card">
+                <div class="card-bg-img" style="background-image: url('images/short_video_poster.jpg');"></div>
+                <div class="video-overlay" onclick="showVideoModal('yourVideoID')">
+                    <span class="play-icon">▶</span>
+                    <h4 class="lang-cn">创意短视频拍摄</h4>
+                    <h4 class="lang-kr hidden">숏폼 영상 제작</h4>
+                </div>
+            </div>
+
+            <div class="card tall portrait-card">
+                <img src="images/wedding_snap.jpg" alt="Wedding Snap" class="portrait-img">
+                <div class="card-overlay">
+                    <h4 class="lang-cn">婚礼旅拍<br>& 个人写真</h4>
+                    <h4 class="lang-kr hidden">웨딩/여행 스냅<br>& 인물 화보</h4>
+                </div>
+            </div>
+
+            <div class="card product-card">
+                <div class="card-bg-img" style="background-image: url('images/beauty_product.jpg');"></div>
+                <div class="overlay-text">
+                    <p class="lang-cn">美妆产品拍摄</p>
+                    <p class="lang-kr hidden">뷰티 제품 사진</p>
+                </div>
+            </div>
+            
+            <div class="card social-card">
+                <div class="xhs-badge">小红书 (Red)</div>
+                <h2 class="lang-cn">查看<br>更多客片</h2>
+                <h2 class="lang-kr hidden">더 많은<br>사진 보기</h2>
+                <p>@WXZ STUDIO</p>
+                <a href="https://www.xiaohongshu.com/user/profile/5fd363ac000000000101cffc" target="_blank" class="btn-link">
+                    <span class="lang-cn">点击跳转 →</span>
+                    <span class="lang-kr hidden">바로가기 →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container feature-section">
+        <div class="camera-ui-card">
+            <img src="images/camera_gear.jpg" alt="Camera Gear">
+            <div class="cam-overlay">
+                <div class="service-info">
+                    <h3 class="lang-cn">专业拍摄服务</h3>
+                    <h3 class="lang-kr hidden">촬영 문의</h3>
+                    <ul class="lang-cn">
+                        <li>▪ 明星/活动侧拍</li>
+                        <li>▪ 品牌产品摄影</li>
+                        <li>▪ 韩国婚礼旅拍</li>
+                    </ul>
+                    <ul class="lang-kr hidden">
+                        <li>▪ 셀럽/이벤트 촬영</li>
+                        <li>▪ 브랜드 제품 촬영</li>
+                        <li>▪ 한국 웨딩 스냅</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="dark-footer">
+        <div class="container footer-flex">
+            <div class="contact-info">
+                <h2 class="lang-cn">期待与您合作</h2>
+                <h2 class="lang-kr hidden">함께 작업해요</h2>
+                <div class="list-row">
+                    <span>WeChat</span> <span style="color:white;">icf304</span>
+                </div>
+                <div class="list-row">
+                    <span>KakaoTalk</span> <span style="color:white;">icf304</span>
+                </div>
+            </div>
+            <div class="big-footer-logo">WXZ</div>
+        </div>
+    </footer>
+
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeVideoModal()">&times;</span>
+            <div id="videoPlayer" class="video-container"></div> 
+        </div>
+    </div>
+
+    <div class="floating-dock">
+        <button class="ios-glass-btn">
+            <span class="lang-cn">📅 预约拍摄</span>
+            <span class="lang-kr hidden">📅 예약하기</span>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
