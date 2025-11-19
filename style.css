@@ -19,7 +19,6 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.6;
-    padding-bottom: 0; 
     overflow-x: hidden;
 }
 
@@ -32,7 +31,7 @@ body {
 /* === Typography === */
 .subtitle {
     font-family: var(--font-body);
-    color: var(--text-muted); 
+    color: var(--text-main); 
     font-size: 0.9rem;
     font-weight: 400;
     margin-bottom: 0.5rem;
@@ -40,7 +39,7 @@ body {
 .section-title {
     font-family: var(--font-heading);
     font-weight: 800;
-    font-size: 2.5rem; /* Mobile Size */
+    font-size: 2.5rem; 
     margin-bottom: 2rem;
     text-transform: uppercase;
     border-bottom: var(--border-style);
@@ -58,21 +57,22 @@ body {
 
 /* === Navigation (Mobile First) === */
 
-/* Wrapper for Fixed Top Bar */
+/* Wrapper for Fixed Top Bar (通栏，但内容居中) */
 .nav-wrapper {
     position: sticky;
     top: 0;
     z-index: 1000;
     background-color: var(--bg-color);
-    border-bottom: 1px solid #000000; 
+    border-bottom: var(--border-style); 
 }
 
-/* Top Bar (Mobile: Logo Center, Icon Left) */
+/* Top Bar - 居中且非通栏效果 */
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
+    /* 保持 container 居中 */
 }
 
 /* Menu Icon (Mobile Toggler) */
@@ -93,43 +93,58 @@ body {
     background-color: var(--text-main);
 }
 
-/* Desktop Language Switch (Hidden on Mobile) */
-.lang-switch-desktop { display: none; }
 .header-right-group {
     display: flex;
     align-items: center;
     gap: 1.5rem;
 }
 
-/* Dropdown Toggler (Mobile/Desktop) */
+/* Dropdown Toggler (The Drake Style Button) */
+.c-header_dropdown { 
+    position: relative; 
+    border: var(--border-style);
+}
 .dropdown-toggler {
-    font-family: var(--font-body);
+    font-family: var(--font-heading); /* 粗体字体 */
     background: none;
     border: none;
     color: var(--text-main);
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.5rem 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 10px 15px;
     white-space: nowrap;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.location-icon {
+    width: 8px; height: 8px; border-radius: 50%; background-color: var(--text-main);
 }
 
 /* Dropdown Menu (Fixed Position for Desktop Hover) */
-.c-header_dropdown { position: relative; }
 .dropdown-menu {
     display: none;
     position: absolute;
     top: 100%; 
-    left: -100px; /* Adjust left to center or position correctly */
+    right: 0; 
     min-width: 280px;
     background-color: white;
     padding: 1.5rem;
     border: var(--border-style);
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     z-index: 999;
+    transform-origin: top right;
+    animation: fadein 0.3s ease-out forwards;
 }
 .dropdown-menu.active { display: block; }
-.dropdown-menu p { color: var(--text-muted); font-size: 0.75rem; margin-bottom: 5px; text-transform: uppercase; }
+@keyframes fadein {
+    from { opacity: 0; transform: scaleY(0.9); }
+    to { opacity: 1; transform: scaleY(1); }
+}
+.dropdown-menu p { color: var(--text-muted); font-size: 0.75rem; margin-bottom: 5px; text-transform: uppercase; font-family: var(--font-heading);}
+.dropdown-menu ul { list-style: none; }
 .dropdown-menu ul li a {
     color: var(--text-main);
     text-decoration: none;
@@ -141,10 +156,6 @@ body {
 }
 .dropdown-menu ul li:not(:last-child) { border-bottom: 1px solid #eee; }
 .dropdown-menu ul li a:hover { color: var(--accent-color); }
-
-/* Desktop Primary Nav (Secondary Menu) */
-.desktop-nav { display: none; }
-
 
 /* === Mobile Navigation Panel === */
 .nav-overlay {
@@ -159,7 +170,7 @@ body {
     width: 85%; max-width: 350px; height: 100%;
     background-color: white; color: black;
     padding: 2rem; transform: translateX(-100%);
-    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1); /* Smoother slide */
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
     z-index: 1000; display: flex; flex-direction: column;
     border-right: var(--border-style);
 }
@@ -172,6 +183,7 @@ body {
 .mobile-nav ul li { margin-bottom: 1.8rem; border-bottom: 1px solid #eee; }
 .mobile-nav ul li a {
     color: black; text-decoration: none; font-size: 1.3rem; font-weight: 700; display: block; padding-bottom: 5px;
+    font-family: var(--font-heading);
 }
 .lang-switch-mobile {
     display: flex; gap: 10px; font-size: 1rem; align-items: center; 
@@ -185,7 +197,7 @@ body {
 /* === Hero Section (全屏) === */
 .hero-section {
     position: relative;
-    height: 85vh; /* 减少到 85vh，让用户看到内容分割 */
+    height: 85vh; 
     background-size: cover;
     background-position: center;
     display: flex;
@@ -198,7 +210,7 @@ body {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255, 255, 255, 0.5); /* 白色半透明蒙层 */
+    background: rgba(255, 255, 255, 0.5); 
 }
 .hero-content-wrapper {
     position: relative;
@@ -206,7 +218,7 @@ body {
     padding: 2rem;
 }
 .hero-content-wrapper .subtitle {
-    color: var(--text-main); /* 黑色副标题 */
+    color: var(--text-main); 
     font-weight: 600;
     font-size: 1rem;
     margin-bottom: 1.5rem;
@@ -214,21 +226,21 @@ body {
 .hero-section h1 {
     font-family: var(--font-heading);
     font-weight: 900;
-    font-size: 4rem; /* Mobile Size */
+    font-size: 4rem; 
     line-height: 1;
 }
 
 /* === Portfolio Grid === */
 .grid-card-wrapper {
     display: grid;
-    grid-template-columns: 1fr; /* Mobile: Single Column */
+    grid-template-columns: 1fr; 
     gap: 20px;
 }
 .grid-card {
     position: relative;
     overflow: hidden;
     height: 350px;
-    border: var(--border-style); /* 边框强调几何感 */
+    border: var(--border-style); 
 }
 .grid-card a { text-decoration: none; color: white; }
 .grid-card:hover .card-image { transform: scale(1.05); }
@@ -238,7 +250,7 @@ body {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
-    filter: brightness(0.9); /* 稍微变暗，保持高对比 */
+    filter: brightness(0.85); 
 }
 
 .card-title-overlay {
@@ -257,7 +269,7 @@ body {
 /* === Services Section === */
 .service-list {
     display: grid;
-    grid-template-columns: 1fr; /* Mobile: Single Column */
+    grid-template-columns: 1fr; 
     gap: 3rem;
 }
 .service-item {
@@ -275,10 +287,20 @@ body {
     color: var(--text-muted);
 }
 
+/* === About Section === */
+.about-section {
+    background-color: #f0f0f0; /* 略有区分的背景色 */
+}
+.about-text {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
 /* === Contact Section === */
 .contact-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Mobile: Single Column */
+    grid-template-columns: 1fr; 
     gap: 2rem;
     max-width: 600px;
 }
@@ -299,21 +321,41 @@ body {
     font-weight: 600;
 }
 
-/* === Footer === */
+/* === Footer (集成语言切换) === */
 .main-footer {
     background-color: var(--text-main);
     color: var(--bg-color);
-    padding: 1.5rem 0;
+    padding: 2rem 0;
     margin-top: 3rem;
+    border-top: var(--border-style); /* 确保底部有分隔 */
 }
 .footer-flex {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    gap: 1.5rem;
     font-family: var(--font-heading);
 }
 .footer-logo { font-weight: 900; }
-.copyright { font-size: 0.8rem; }
+.copyright { font-size: 0.8rem; color: #aaa; }
+.footer-left { text-align: center; }
+
+/* 语言切换 (移至页脚) */
+.lang-switch-desktop {
+    display: flex;
+    gap: 10px;
+    font-size: 0.8rem;
+    border: 1px solid var(--bg-color);
+    padding: 5px 10px;
+}
+.lang-switch-desktop button {
+    background: none; border: none; color: var(--bg-color); cursor: pointer;
+    font-weight: 500; font-size: 0.8rem;
+}
+.lang-switch-desktop button.active {
+    color: var(--accent-color); font-weight: 700;
+}
 
 
 /* =========================================
@@ -325,7 +367,7 @@ body {
     .hero-section h1 { font-size: 6rem; }
     
     .grid-card-wrapper {
-        grid-template-columns: repeat(2, 1fr); /* Tablet: Two Columns */
+        grid-template-columns: repeat(2, 1fr); 
     }
     .wide {
         grid-column: span 2;
@@ -340,52 +382,21 @@ body {
 }
 
 @media (min-width: 1024px) {
-    /* === Desktop Navigation Structure === */
-    .menu-icon, .lang-switch-mobile { display: none; }
+    /* Desktop Top Bar: Logo 居中 */
+    .menu-icon { display: none; }
     .logo { 
-        position: absolute; /* 使Logo脱离流，方便居中 */
+        position: absolute; 
         left: 50%;
         transform: translateX(-50%);
     }
 
-    /* Primary Nav (次级菜单) */
-    .desktop-nav { 
-        display: block; 
-        border-top: var(--border-style);
+    /* Footer Layout */
+    .footer-flex {
+        flex-direction: row;
+        gap: 0;
     }
-    .desktop-nav ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        gap: 3rem; 
-        padding: 1rem 0;
-    }
-    .desktop-nav ul li a {
-        color: var(--text-main);
-        text-decoration: none;
-        font-family: var(--font-heading);
-        font-size: 0.9rem;
-        font-weight: 600;
-        position: relative;
-    }
-    .desktop-nav ul li a:hover {
-        color: var(--accent-color);
-    }
+    .footer-left { text-align: left; }
 
-    /* Desktop Language Switch */
-    .lang-switch-desktop {
-        display: flex;
-        gap: 8px;
-        font-size: 0.8rem;
-    }
-    .lang-switch-desktop button {
-        background: none; border: none; color: var(--text-main); cursor: pointer;
-        font-weight: 500; font-size: 0.8rem;
-    }
-    .lang-switch-desktop button.active {
-        color: var(--accent-color); font-weight: 700;
-    }
-    
     .hero-section h1 { font-size: 8rem; }
     .section-title { font-size: 4rem; }
 }
