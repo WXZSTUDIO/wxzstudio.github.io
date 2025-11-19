@@ -1,14 +1,20 @@
 :root {
-    /* === Drake Inspired Palette (White Background) === */
-    --bg-color: #f7f7f7; 
-    --text-main: #000000;
-    --text-muted: #555555;
-    --accent-color: #a9988b; 
-    --border-style: 1px solid #000000; 
+    /* 颜色变量 (模仿原站蓝/白/黑) */
+    --color-dark: #000000;
+    --color-blue: #002bba; /* 主题蓝色 */
+    --color-light-blue: #f7f7f7; 
+    --color-white: #ffffff;
+    
+    /* 默认主题颜色 */
+    --bg-color-dark: var(--color-dark);
+    --text-color-dark: var(--color-white);
 
-    /* 字体替代方案 */
-    --font-heading: 'Montserrat', 'Noto Sans SC', 'Noto Sans KR', sans-serif;
-    --font-body: 'Montserrat', 'Noto Sans SC', 'Noto Sans KR', sans-serif; 
+    --bg-color-light: var(--color-light-blue);
+    --text-color-light: var(--color-dark);
+
+    /* 字体 */
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Noto Sans SC', 'Noto Sans KR', sans-serif;
 }
 
 /* Base Styles & Resets */
@@ -16,64 +22,155 @@
 
 body {
     font-family: var(--font-body);
-    background-color: var(--bg-color);
-    color: var(--text-main);
+    /* 默认深色主题 */
+    background-color: var(--bg-color-dark); 
+    color: var(--text-color-dark);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease; /* 平滑过渡 */
+}
+body.light-theme {
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
 }
 
-/* Utility Class */
+a { text-decoration: none; color: inherit; }
 .hidden { display: none !important; }
 .no-scroll { overflow: hidden; } 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-.section-padded { padding: 4rem 0; } 
 
-/* === Typography === */
-.subtitle {
-    font-family: var(--font-body);
-    color: var(--text-main); 
-    font-size: 0.9rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
+/* 容器和间距 */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.section { padding: 8rem 0; position: relative; } 
+.is-dark { background-color: var(--color-dark); color: var(--color-white); }
+.is-light-blue { background-color: var(--color-light-blue); color: var(--color-dark); }
+
+
+/* === Typography & Animation Prep === */
+
+/* 核心标题动画结构 */
+.line-wrapper { 
+    overflow: hidden; 
+    display: block; 
+    line-height: 1em; /* 确保行高贴合，防止动画时跳动 */
+}
+.line-inner {  
+    display: inline-block;  
+    transform: translateY(100%);  /* 动画初始状态：向下偏移 100% */
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.fade-in {
+    opacity: 0; /* 动画初始状态：透明 */
+    transform: translateY(1.5rem); /* 动画初始状态：向下偏移 */
+    will-change: transform, opacity;
+}
+
+.hero-headline {
+    font-family: var(--font-heading); 
+    font-weight: 900; 
+    font-size: clamp(3rem, 10vw, 8rem); 
+    line-height: 1.1;
+}
+.large-copy {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(1.2rem, 3vw, 2.5rem);
+    line-height: 1.4;
+    max-width: 600px;
 }
 .section-title {
     font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: 2.5rem; 
-    margin-bottom: 0; 
-    text-transform: uppercase;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin-bottom: 2rem;
 }
-.logo {
+.section-sub-title {
     font-family: var(--font-heading);
-    font-weight: 900;
-    font-size: 1.5rem;
-    letter-spacing: 1.5px;
-    color: var(--text-main);
-    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    color: var(--color-blue);
+}
+.contact-item span {
+    font-weight: 700;
+    color: var(--color-blue);
 }
 
 
-/* === Navigation Styles === */
-
-.nav-wrapper {
-    position: sticky;
+/* === Navigation Styles (Sticky & Theme Swapping) === */
+.nav-wrap {
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
-    background-color: var(--bg-color);
-    border-bottom: var(--border-style); 
+    padding: 1rem 0;
+    transition: background-color 0.4s ease;
 }
-.top-bar {
+.nav-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
 }
-.menu-icon {
-    display: flex; flex-direction: column; justify-content: space-around; width: 25px; height: 20px;
-    background: transparent; border: none; cursor: pointer; padding: 0;
+/* 默认深色主题下的样式 */
+.nav-wrap {
+    color: var(--text-color-dark); 
 }
-.menu-icon .bar { width: 100%; height: 2px; background-color: var(--text-main); }
-.header-right-group { display: flex; align-items: center; gap: 1.5rem; }
+.nav-wrap .logo-light-theme { display: none; }
+.nav-wrap .logo-dark-theme { display: block; }
+.nav-wrap .nav-contact-btn { 
+    background-color: var(--color-white); 
+    color: var(--color-dark); 
+    border: 1px solid var(--color-white);
+}
+
+/* 浅色主题激活时的样式 (由 JS 切换 body.light-theme) */
+body.light-theme .nav-wrap {
+    color: var(--text-color-light); 
+}
+body.light-theme .nav-wrap .logo-dark-theme { display: none; }
+body.light-theme .nav-wrap .logo-light-theme { display: block; }
+body.light-theme .nav-wrap .nav-contact-btn { 
+    background-color: var(--color-dark); 
+    color: var(--color-white); 
+    border: 1px solid var(--color-dark);
+}
+
+.logo-link {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.2rem;
+    display: block;
+}
+.logo-img {
+    height: 1.5rem; /* 假设 Logo 高度 */
+    width: auto;
+}
+.nav-desktop { display: none; gap: 2rem; align-items: center; }
+.nav-item { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
+
+/* 按钮样式 */
+.button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.button:hover {
+    opacity: 0.8;
+}
+
+/* 移动菜单按钮 */
+.menu-button {
+    background: none; border: none; cursor: pointer;
+    font-size: 1rem; font-family: var(--font-heading);
+    font-weight: 600; text-transform: uppercase;
+    color: inherit;
+}
 
 
 /* Mobile Navigation Panel */
@@ -83,272 +180,222 @@ body {
     z-index: 999; display: none; opacity: 0; transition: opacity 0.3s ease;
 }
 .nav-overlay.active { display: block; opacity: 1; }
-
 .mobile-nav {
-    position: fixed; top: 0; left: 0; width: 85%; max-width: 350px; height: 100%;
-    background-color: white; color: black; padding: 2rem; transform: translateX(-100%);
+    position: fixed; top: 0; right: 0; width: 85%; max-width: 350px; height: 100%;
+    background-color: var(--color-dark); color: var(--color-white); 
+    padding: 2rem; transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1); z-index: 1000;
     display: flex; flex-direction: column; justify-content: space-between;
 }
 .mobile-nav.active { transform: translateX(0); }
-.close-btn { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; background: none; border: none; cursor: pointer; }
+.close-btn { position: absolute; top: 1rem; left: 1rem; font-size: 2rem; background: none; border: none; cursor: pointer; color: var(--color-white); }
 .mobile-menu-list { list-style: none; padding-top: 1rem; }
 .mobile-menu-list li a {
-    text-decoration: none; color: var(--text-main); font-family: var(--font-heading);
-    font-weight: 700; font-size: 1.4rem; display: block; padding: 10px 0;
+    font-family: var(--font-heading);
+    font-weight: 700; font-size: 1.8rem; display: block; padding: 15px 0;
+    transition: color 0.3s ease;
 }
+.mobile-menu-list li a:hover { color: var(--color-blue); }
 .lang-switch-mobile {
-    display: flex; gap: 10px; font-size: 1rem; margin-top: auto; padding-top: 20px;
+    display: flex; gap: 10px; font-size: 1.2rem; margin-top: auto; padding-top: 20px;
+    font-family: var(--font-heading);
 }
 .lang-switch-mobile button {
-    background: none; border: none; color: var(--text-main); cursor: pointer;
+    background: none; border: none; color: var(--color-white); cursor: pointer;
     font-weight: 500; font-size: 1rem;
+    text-transform: uppercase;
 }
 .lang-switch-mobile button.active {
-    color: var(--accent-color); font-weight: 700;
+    color: var(--color-blue); font-weight: 700;
 }
 
-/* === Hero Section === */
-.hero-section {
-    position: relative; height: 85vh; background-size: cover;
-    background-position: center; display: flex; align-items: center;
-    justify-content: center; text-align: center; border-bottom: var(--border-style);
-}
-.hero-section::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255, 255, 255, 0.5); 
-}
-.hero-content-wrapper {
-    position: relative; z-index: 10; padding: 2rem;
-}
-.hero-section h1 {
-    font-family: var(--font-heading); font-weight: 900; font-size: 4rem; line-height: 1;
-}
 
-/* === Portfolio Section (作品展示 - 横向滚动重构) === */
-.portfolio-header {
+/* === Hero Section (Full-Screen Video) === */
+.is-hero {
+    padding: 0;
+    height: 100vh;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    border-bottom: var(--border-style);
-    padding-bottom: 10px;
-}
-.scroll-controls {
-    /* 默认在移动端隐藏 */
-    display: none; 
-    gap: 10px;
-}
-.scroll-arrow {
-    background: none;
-    border: var(--border-style);
-    color: var(--text-main);
-    width: 30px;
-    height: 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: opacity 0.3s;
-    font-family: monospace; 
-}
-.scroll-arrow:hover {
-    background-color: var(--text-main);
-    color: var(--bg-color);
-}
-
-
-/* 滚动容器 */
-.scrollable-card-wrapper {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto; 
-    padding-bottom: 20px; 
-    -webkit-overflow-scrolling: touch; 
-    scrollbar-width: none; 
-}
-/* 隐藏 WebKit 滚动条 */
-.scrollable-card-wrapper::-webkit-scrollbar {
-    display: none;
-}
-
-/* 卡片样式 */
-.grid-card {
-    position: relative;
+    justify-content: center;
+    text-align: center;
     overflow: hidden;
-    flex-shrink: 0; 
-    width: 80vw; 
-    max-width: 400px; 
-    height: 450px;
-    border: var(--border-style); 
-    background-color: #ffffff; 
 }
-.grid-card.wide {
-    width: 90vw;
-    max-width: 650px;
+.hero-video-wrapper {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    overflow: hidden;
 }
-.grid-card a { text-decoration: none; color: white; display: block; height: 100%; }
-.grid-card:hover .card-image { transform: scale(1.05); }
-
-.card-image {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.5s ease; filter: brightness(0.85); 
+.hero-video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7);
 }
-
-.card-title-overlay {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 1.5rem; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    color: white;
-}
-.card-title-overlay h3 {
-    font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700;
-}
-.card-sub-title {
-    font-size: 0.9rem; margin-top: 5px; color: #ccc;
-    font-family: var(--font-body);
+.hero-content {
+    position: relative;
+    z-index: 10;
 }
 
 
-/* === Sections Below (Services, About, Contact) === */
-
-.service-list {
+/* === Services/Mission Section === */
+.services-grid {
     display: grid;
-    grid-template-columns: 1fr; 
-    gap: 0; 
-    border-top: var(--border-style);
+    grid-template-columns: 1fr;
+    gap: 3rem;
 }
 .service-item {
-    border-bottom: var(--border-style);
-    padding: 1.5rem 0;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 .service-item h3 {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
 }
 .service-item p {
     font-family: var(--font-body);
-    color: var(--text-muted);
+    color: rgba(0, 0, 0, 0.7);
 }
 
-.about-flex {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-}
-.about-text-content { order: 2; }
-.about-image-content {
-    order: 1; 
-    border: var(--border-style);
-    padding: 1rem;
-    background-color: white;
-}
-.about-image {
-    display: block;
+/* Sliding Text Row */
+.sliding-row-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    overflow: hidden;
+    padding: 1rem 0;
+    background-color: var(--color-blue);
+    color: var(--color-white);
 }
-.about-text {
-    font-family: var(--font-body);
-    font-size: 1.1rem;
-    line-height: 1.8;
+.sliding-text {
+    white-space: nowrap;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 4vw;
+    display: inline-block;
+    will-change: transform;
+}
+.sliding-text span {
+    margin-right: 2rem;
 }
 
-.contact-grid {
-    display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 600px;
+
+/* === Portfolio Section === */
+.portfolio-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 4rem;
+}
+.portfolio-item {
+    display: block;
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.portfolio-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+    transition: transform 0.5s ease;
+}
+.portfolio-item:hover .portfolio-img {
+    transform: scale(1.05);
+}
+.portfolio-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+.portfolio-info h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+.cta-wrap {
+    text-align: center;
+    margin-top: 4rem;
+}
+.cta-button {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    padding: 1rem 2rem;
+}
+
+
+/* === About/Contact Section === */
+.about-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+}
+.contact-info {
+    margin-top: 2rem;
 }
 .contact-item {
-    border: var(--border-style); padding: 1.5rem;
-}
-.contact-item h3 {
-    font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem;
-    margin-bottom: 0.5rem; color: var(--accent-color);
-}
-.contact-item p {
-    font-family: var(--font-body); font-size: 1.1rem; font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 2;
 }
 
 /* === Footer === */
 .main-footer {
-    background-color: var(--text-main); color: var(--bg-color);
-    padding: 2rem 0; margin-top: 3rem; border-top: var(--border-style);
+    background-color: var(--color-dark); 
+    color: var(--color-white);
+    padding: 2rem 0;
 }
 .footer-flex {
     display: flex; flex-direction: column; justify-content: space-between;
     align-items: center; gap: 1.5rem; font-family: var(--font-heading);
 }
-.footer-logo { font-weight: 900; }
+.footer-logo { font-weight: 900; font-size: 1.2rem;}
 .copyright { font-size: 0.8rem; color: #aaa; }
 .lang-switch-desktop {
-    display: none; /* 移动端默认隐藏 */
+    display: none; 
 }
 .lang-switch-desktop button {
-    background: none; border: none; color: var(--bg-color); cursor: pointer;
-    font-weight: 500; font-size: 0.8rem;
+    background: none; border: none; color: var(--color-white); cursor: pointer;
+    font-weight: 500; font-size: 0.9rem; text-transform: uppercase;
 }
 .lang-switch-desktop button.active {
-    color: var(--accent-color); font-weight: 700;
+    color: var(--color-blue); font-weight: 700;
 }
 
 
 /* =========================================
-   Media Queries (Tablet and Desktop)
+   Media Queries (Desktop)
    ========================================= */
 
-@media (min-width: 768px) {
-    .hero-section h1 { font-size: 6rem; }
-    .section-title { font-size: 3.5rem; }
+@media (min-width: 992px) {
+    .nav-desktop { display: flex; }
+    .menu-button { display: none; }
+    
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8rem;
+    }
+    .service-left { order: 2; }
+    .service-right { order: 1; }
 
-    /* Services Grid */
-    .service-list {
+    .portfolio-list {
         grid-template-columns: repeat(3, 1fr);
     }
     
-    /* About Section Layout */
-    .about-flex {
-        flex-direction: row;
+    .about-contact-grid {
+        grid-template-columns: 1.5fr 1fr;
         gap: 5rem;
-        align-items: flex-start;
     }
-    .about-text-content {
-        order: 1; 
-        flex: 1;
-    }
-    .about-image-content {
-        order: 2; 
-        flex: 1;
-    }
-
-    /* Contact Grid */
-    .contact-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
     .lang-switch-desktop {
-        display: flex; /* 桌面端显示页脚语言切换 */
-        gap: 10px; font-size: 0.8rem;
-        border: 1px solid var(--bg-color); padding: 5px 10px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .hero-section h1 { font-size: 8rem; }
-    .section-title { font-size: 4rem; }
-    .logo { position: absolute; left: 50%; transform: translateX(-50%); }
-    .footer-flex { flex-direction: row; gap: 0; }
-    .footer-left { text-align: left; }
-    
-    /* 作品横向滚动 - 确保箭头可见 */
-    .scroll-controls {
-        display: flex; /* 桌面端显示滚动按钮 */
+        display: flex; 
         gap: 10px;
     }
-    .grid-card {
-        width: 300px; 
-        height: 400px;
-    }
-    .grid-card.wide {
-        width: 450px; 
-        height: 400px;
-    }
+    .footer-flex { flex-direction: row; gap: 0; }
 }
