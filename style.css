@@ -145,7 +145,7 @@ body.light-theme .nav-wrap .nav-contact-btn {
     display: block;
 }
 .logo-img {
-    height: 1.5rem; /* 假设 Logo 高度 */
+    height: 5rem; /* 假设 Logo 高度 */
     width: auto;
 }
 .nav-desktop { display: none; gap: 2rem; align-items: center; }
