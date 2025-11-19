@@ -7,19 +7,18 @@ function switchLanguage(lang) {
     const btnCn = document.getElementById('btn-cn');
     const btnKr = document.getElementById('btn-kr');
 
-    // 切换所有元素的可见性
     if (lang === 'cn') {
         cnElements.forEach(el => el.classList.remove('hidden'));
         krElements.forEach(el => el.classList.add('hidden'));
         btnCn.classList.add('active');
         btnKr.classList.remove('active');
-        localStorage.setItem('userLang', 'cn'); // 保存用户语言偏好
+        localStorage.setItem('userLang', 'cn');
     } else {
         cnElements.forEach(el => el.classList.add('hidden'));
         krElements.forEach(el => el.classList.remove('hidden'));
         btnCn.classList.remove('active');
         btnKr.classList.add('active');
-        localStorage.setItem('userLang', 'kr'); // 保存用户语言偏好
+        localStorage.setItem('userLang', 'kr');
     }
     // 重新渲染导航菜单以显示新语言
     renderNavigationMenu(lang);
@@ -29,88 +28,85 @@ function switchLanguage(lang) {
 // 导航菜单逻辑 (Navigation Menu Logic)
 // ===========================================
 const mobileMenuButton = document.getElementById('mobileMenuButton');
-const mainNav = document.getElementById('mainNav');
+const mobileMenu = document.getElementById('mobileMenu');
 const navOverlay = document.getElementById('navOverlay');
-const desktopNavItems = document.getElementById('desktopNavItems');
+const primaryNavMenu = document.getElementById('primaryNavMenu');
 
 // 从 data/nav_menu.js 中获取菜单数据
-// navMenuItems 应该由外部脚本加载
-// 确保 data/nav_menu.js 在 script.js 之前加载
-
 function renderNavigationMenu(lang) {
     const menuData = navMenuItems[lang];
-    if (!menuData) return; // 如果没有数据，则退出
+    if (!menuData) return; 
 
-    // 清空现有菜单项
-    desktopNavItems.innerHTML = '';
-    mainNav.innerHTML = `
-        <button id="closeMobileMenu" class="close-btn">&times;</button>
-        <div class="lang-switch-mobile">
-            <button onclick="switchLanguage('cn'); closeMobileMenu();" id="btn-cn-mobile">CN</button>
-            <span>|</span>
-            <button onclick="switchLanguage('kr'); closeMobileMenu();" id="btn-kr-mobile">KR</button>
-        </div>
-    `;
+    // 填充主要菜单 (桌面端和移动端列表)
+    const renderList = (container, isMobile = false) => {
+        container.innerHTML = ''; // Clear existing
+        menuData.forEach(item => {
+            if (item.label !== (lang === 'cn' ? "作品" : "포트폴리오")) { // 排除已在下拉菜单中的项
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = item.href;
+                a.textContent = item.label;
+                if (isMobile) {
+                    a.onclick = closeMobileMenu;
+                }
+                li.appendChild(a);
+                container.appendChild(li);
+            }
+        });
+    };
 
-    // 重新填充桌面导航
-    menuData.forEach(item => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = item.href;
-        a.textContent = item.label;
-        li.appendChild(a);
-        desktopNavItems.appendChild(li);
-    });
-
-    // 重新填充移动端导航
-    const mobileList = document.createElement('ul');
-    menuData.forEach(item => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = item.href;
-        a.textContent = item.label;
-        a.onclick = closeMobileMenu; // 点击菜单项后关闭菜单
-        li.appendChild(a);
-        mobileList.appendChild(li);
-    });
-    mainNav.appendChild(mobileList);
+    renderList(primaryNavMenu, false); 
+    // 移动端菜单列表需要单独处理，因为它在 #mobileMenu 内部
+    const mobileListContainer = mobileMenu.querySelector('.mobile-menu-list');
+    if (mobileListContainer) {
+        renderList(mobileListContainer, true);
+    }
 
     // 更新移动端语言切换按钮的 active 状态
     const currentLang = localStorage.getItem('userLang') || 'cn';
     document.getElementById('btn-cn-mobile').classList.toggle('active', currentLang === 'cn');
     document.getElementById('btn-kr-mobile').classList.toggle('active', currentLang === 'kr');
-
-    // 重新绑定关闭按钮事件
-    document.getElementById('closeMobileMenu').onclick = closeMobileMenu;
 }
 
 
 function openMobileMenu() {
-    mainNav.classList.add('active');
+    mobileMenu.classList.add('active');
     navOverlay.classList.add('active');
-    document.body.classList.add('no-scroll'); // 禁止页面滚动
+    document.body.classList.add('no-scroll');
 }
 
 function closeMobileMenu() {
-    mainNav.classList.remove('active');
+    mobileMenu.classList.remove('active');
     navOverlay.classList.remove('active');
-    document.body.classList.remove('no-scroll'); // 恢复页面滚动
+    document.body.classList.remove('no-scroll');
 }
 
-// 事件监听
-document.addEventListener('DOMContentLoaded', () => {
-    // 恢复用户上次选择的语言，如果没有则默认为中文
-    const savedLang = localStorage.getItem('userLang') || 'cn';
-    switchLanguage(savedLang);
+// ===========================================
+// Dropdown (悬浮下拉菜单) 逻辑
+// ===========================================
+const dropdownToggler = document.getElementById('propertiesDropdownToggler');
+const dropdownMenu = document.getElementById('propertiesDropdown');
 
-    // 桌面端语言切换按钮激活状态
-    document.getElementById('btn-cn').classList.toggle('active', savedLang === 'cn');
-    document.getElementById('btn-kr').classList.toggle('active', savedLang === 'kr');
+if (dropdownToggler && dropdownMenu) {
+    // 桌面端使用 Hover (CSS也可以实现，但JS提供更好的兼容性)
+    dropdownToggler.addEventListener('mouseenter', () => dropdownMenu.classList.add('active'));
+    dropdownMenu.addEventListener('mouseleave', () => dropdownMenu.classList.remove('active'));
 
-    // 移动菜单事件
-    if (mobileMenuButton) mobileMenuButton.onclick = openMobileMenu;
-    if (navOverlay) navOverlay.onclick = closeMobileMenu;
-});
+    // 移动端使用 Click 切换
+    dropdownToggler.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024) {
+            e.preventDefault(); 
+            dropdownMenu.classList.toggle('active');
+        }
+    });
+
+    // 点击外部关闭
+    document.addEventListener('click', (e) => {
+        if (!dropdownToggler.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('active');
+        }
+    });
+}
 
 
 // ===========================================
@@ -120,7 +116,6 @@ const videoModal = document.getElementById('videoModal');
 const videoPlayer = document.getElementById('videoPlayer');
 
 function showVideoModal(videoId) {
-    // 假设 videoId 是 YouTube 视频的 ID (例如，dQw4w9WgXcQ)
     const embedCode = `
         <iframe 
             width="100%" 
@@ -132,19 +127,34 @@ function showVideoModal(videoId) {
         ></iframe>`;
         
     videoPlayer.innerHTML = embedCode;
-    videoModal.style.display = 'flex'; // 显示模态框
-    document.body.classList.add('no-scroll'); // 禁止页面滚动
+    videoModal.style.display = 'flex';
+    document.body.classList.add('no-scroll');
 }
 
 function closeVideoModal() {
     videoModal.style.display = 'none';
-    videoPlayer.innerHTML = ''; // 停止播放 (清除 iframe)
-    document.body.classList.remove('no-scroll'); // 恢复页面滚动
+    videoPlayer.innerHTML = '';
+    document.body.classList.remove('no-scroll');
 }
 
-// 点击模态框背景关闭
 window.onclick = function(event) {
     if (event.target == videoModal) {
         closeVideoModal();
     }
 }
+
+
+// ===========================================
+// 初始化
+// ===========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('userLang') || 'cn';
+    switchLanguage(savedLang);
+
+    document.getElementById('btn-cn').classList.toggle('active', savedLang === 'cn');
+    document.getElementById('btn-kr').classList.toggle('active', savedLang === 'kr');
+
+    if (mobileMenuButton) mobileMenuButton.onclick = openMobileMenu;
+    if (document.getElementById('closeMobileMenu')) document.getElementById('closeMobileMenu').onclick = closeMobileMenu;
+    if (navOverlay) navOverlay.onclick = closeMobileMenu;
+});
