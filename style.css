@@ -143,7 +143,8 @@ body {
     padding-bottom: 10px;
 }
 .scroll-controls {
-    display: none; /* 默认隐藏，桌面端显示 */
+    /* 默认在移动端隐藏 */
+    display: none; 
     gap: 10px;
 }
 .scroll-arrow {
@@ -238,4 +239,120 @@ body {
 }
 .about-flex {
     display: flex;
-    flex-direction
+    flex-direction: column;
+    gap: 3rem;
+}
+.about-text-content {
+    order: 2; /* 移动端文字在下 */
+}
+.about-image-content {
+    order: 1; /* 移动端图片在上 */
+    border: var(--border-style);
+    padding: 1rem;
+    background-color: white;
+}
+.about-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.about-text {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* === Contact Section (保持不变) === */
+.contact-grid {
+    display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 600px;
+}
+.contact-item {
+    border: var(--border-style); padding: 1.5rem;
+}
+.contact-item h3 {
+    font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem;
+    margin-bottom: 0.5rem; color: var(--accent-color);
+}
+.contact-item p {
+    font-family: var(--font-body); font-size: 1.1rem; font-weight: 600;
+}
+
+/* === Footer (保持不变) === */
+.main-footer {
+    background-color: var(--text-main); color: var(--bg-color);
+    padding: 2rem 0; margin-top: 3rem; border-top: var(--border-style);
+}
+.footer-flex {
+    display: flex; flex-direction: column; justify-content: space-between;
+    align-items: center; gap: 1.5rem; font-family: var(--font-heading);
+}
+.footer-logo { font-weight: 900; }
+.copyright { font-size: 0.8rem; color: #aaa; }
+.lang-switch-desktop {
+    display: flex; gap: 10px; font-size: 0.8rem;
+    border: 1px solid var(--bg-color); padding: 5px 10px;
+}
+.lang-switch-desktop button {
+    background: none; border: none; color: var(--bg-color); cursor: pointer;
+    font-weight: 500; font-size: 0.8rem;
+}
+.lang-switch-desktop button.active {
+    color: var(--accent-color); font-weight: 700;
+}
+
+
+/* =========================================
+   Media Queries (Tablet and Desktop)
+   ========================================= */
+
+@media (min-width: 768px) {
+    .hero-section h1 { font-size: 6rem; }
+    .section-title { font-size: 3.5rem; }
+
+    /* Services Grid */
+    .service-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* About Section Layout */
+    .about-flex {
+        flex-direction: row;
+        gap: 5rem;
+        align-items: flex-start;
+    }
+    .about-text-content {
+        order: 1; /* 桌面端文字在左 */
+        flex: 1;
+    }
+    .about-image-content {
+        order: 2; /* 桌面端图片在右 */
+        flex: 1;
+    }
+
+    /* Contact Grid */
+    .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-section h1 { font-size: 8rem; }
+    .section-title { font-size: 4rem; }
+    .logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    .footer-flex { flex-direction: row; gap: 0; }
+    .footer-left { text-align: left; }
+    
+    /* 作品横向滚动 - 卡片更大，桌面端显示箭头 */
+    .scroll-controls {
+        /* 取消默认隐藏，确保在 PC 端显示 */
+        display: flex; 
+    }
+    .grid-card {
+        width: 300px; /* 较小的卡片 */
+        height: 400px;
+    }
+    .grid-card.wide {
+        width: 450px; /* 较宽的卡片 */
+        height: 400px;
+    }
+}
