@@ -3,39 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WXZ STUDIO | Seoul Photographer & Videographer</title>
+    <title>WXZ STUDIO | Game-changing Visuals</title>
     <link rel="stylesheet" href="style.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@300;500;700&family=Noto+Sans+SC:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
 </head>
-<body class="u-font-sans u-antialiased">
+<body data-theme="dark">
 
-    <div class="nav-wrapper">
-        <header class="top-bar container">
+    <header class="nav-wrap">
+        <div class="nav-inner container">
+            <a href="#home" class="logo-link">
+                <img src="./images/logo-white.svg" alt="WXZ Studio" class="logo-img logo-dark-theme" data-logo-type="dark">
+                <img src="./images/logo-blue.svg" alt="WXZ Studio" class="logo-img logo-light-theme" data-logo-type="light">
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="#portfolio" class="nav-item lang-cn">作品</a>
+                <a href="#portfolio" class="nav-item lang-kr hidden">포트폴리오</a>
+
+                <a href="#services" class="nav-item lang-cn">服务</a>
+                <a href="#services" class="nav-item lang-kr hidden">서비스</a>
+                
+                <a href="#about" class="nav-item lang-cn">关于</a>
+                <a href="#about" class="nav-item lang-kr hidden">소개</a>
+
+                <a href="#contact" class="button nav-contact-btn lang-cn">联系我们</a>
+                <a href="#contact" class="button nav-contact-btn lang-kr hidden">문의하기</a>
+            </nav>
             
-            <button id="mobileMenuButton" class="menu-icon">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <button id="mobileMenuButton" class="menu-button">
+                <div class="menu-txt lang-cn">菜单</div>
+                <div class="menu-txt lang-kr hidden">메뉴</div>
             </button>
-
-            <a href="#home" class="logo">WXZ STUDIO</a>
-
-            <div class="header-right-group">
-                <div style="width: 25px;"></div> 
-            </div>
-        </header>
-    </div>
+        </div>
+    </header>
 
     <nav id="mobileMenu" class="mobile-nav">
         <button id="closeMobileMenu" class="close-btn">&times;</button>
         <ul class="mobile-menu-list">
             <li><a href="#portfolio" onclick="closeMobileMenu();" class="lang-cn">精选作品</a><a href="#portfolio" onclick="closeMobileMenu();" class="lang-kr hidden">포트폴리오</a></li>
-            <li><a href="#services" onclick="closeMobileMenu();" class="lang-cn">服务明细</a><a href="#services" onclick="closeMobileMenu();" class="lang-kr hidden">서비스 내역</a></li>
+            <li><a href="#services" onclick="closeMobileMenu();" class="lang-cn">专业服务</a><a href="#services" onclick="closeMobileMenu();" class="lang-kr hidden">전문 서비스</a></li>
             <li><a href="#about" onclick="closeMobileMenu();" class="lang-cn">关于团队</a><a href="#about" onclick="closeMobileMenu();" class="lang-kr hidden">팀 소개</a></li>
-            <li><a href="#contact" onclick="closeMobileMenu();" class="lang-cn">联系我们</a><a href="#contact" onclick="closeMobileMenu();" class="lang-kr hidden">문의하기</a></li>
+            <li><a href="#contact" onclick="closeMobileMenu();" class="lang-cn">立即咨询</a><a href="#contact" onclick="closeMobileMenu();" class="lang-kr hidden">지금 문의</a></li>
         </ul>
         <div class="lang-switch-mobile">
             <button onclick="switchLanguage('cn')" id="btn-cn-mobile">CN</button>
@@ -44,162 +59,15 @@
         </div>
     </nav>
     <div id="navOverlay" class="nav-overlay"></div>
-    
-    <section id="home" class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1541334057885-3e284a1e9564?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
-        <div class="hero-content-wrapper container">
-            <p class="subtitle lang-cn">捕捉暗夜里的光 | 明星侧拍，美妆产品，商业拍摄</p>
-            <p class="subtitle lang-kr hidden">서울의 빛을 기록하다 | 셀럽 비하인드, 뷰티 제품, 비즈니스 촬영</p>
-            <h1 class="lang-cn">WXZ STUDIO</h1>
-            <h1 class="lang-kr hidden">WXZ 스튜디오</h1>
+
+
+    <section id="home" class="section is-hero" data-theme="dark">
+        <div class="hero-video-wrapper">
+            <video autoplay loop muted playsinline class="hero-video">
+                <source src="./images/hero-video.mp4" type="video/mp4">
+            </video>
         </div>
-    </section>
-
-    <section id="portfolio" class="section-padded portfolio-section container">
-        
-        <div class="portfolio-header">
-            <h2 class="section-title lang-cn">精选作品</h2>
-            <h2 class="section-title lang-kr hidden">포트폴리오</h2>
-            <div class="scroll-controls">
-                <button id="scrollLeft" class="scroll-arrow arrow-left">←</button>
-                <button id="scrollRight" class="scroll-arrow arrow-right">→</button>
-            </div>
-        </div>
-
-        <div class="scrollable-card-wrapper">
-            
-            <div class="grid-card wide">
-                <a href="#contact">
-                    <img src="https://images.unsplash.com/photo-1596707328659-c290a6e0269f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Commercial Event" class="card-image">
-                    <div class="card-title-overlay">
-                        <h3 class="lang-cn">商业活动 | 明星侧拍</h3>
-                        <h3 class="lang-kr hidden">상업 이벤트 | 셀럽 비하인드</h3>
-                        <p class="card-sub-title lang-cn">Seoul Fashion Week</p>
-                        <p class="card-sub-title lang-kr hidden">서울 패션 위크</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="grid-card">
-                <a href="#contact">
-                    <img src="https://images.unsplash.com/photo-1557827829-1e3c86121b66?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beauty Product Photography" class="card-image">
-                    <div class="card-title-overlay">
-                        <h3 class="lang-cn">美妆产品摄影</h3>
-                        <h3 class="lang-kr hidden">뷰티 제품 사진</h3>
-                        <p class="card-sub-title lang-cn">K-Beauty Campaign</p>
-                        <p class="card-sub-title lang-kr hidden">K-뷰티 캠페인</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="grid-card">
-                <a href="#contact">
-                    <img src="https://images.unsplash.com/photo-1507720977467-9d7a26f8d384?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Wedding Snap" class="card-image">
-                    <div class="card-title-overlay">
-                        <h3 class="lang-cn">个人/婚礼旅拍</h3>
-                        <h3 class="lang-kr hidden">개인/웨딩 스냅</h3>
-                        <p class="card-sub-title lang-cn">Jeju Island</p>
-                        <p class="card-sub-title lang-kr hidden">제주도 스냅</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="grid-card">
-                <a href="#contact">
-                    <img src="https://images.unsplash.com/photo-1574880597155-06a1460d37e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beauty Product Photography" class="card-image">
-                    <div class="card-title-overlay">
-                        <h3 class="lang-cn">化妆师作品集</h3>
-                        <h3 class="lang-kr hidden">메이크업 아티스트 포트폴리오</h3>
-                        <p class="card-sub-title lang-cn">Studio Portrait</p>
-                        <p class="card-sub-title lang-kr hidden">스튜디오 인물 사진</p>
-                    </div>
-                </a>
-            </div>
-            
-        </div>
-    </section>
-
-    <section id="services" class="section-padded services-section">
-        <div class="container">
-            <h2 class="section-title lang-cn">专业服务明细</h2>
-            <h2 class="section-title lang-kr hidden">전문 서비스 내역</h2>
-            
-            <div class="service-list">
-                <div class="service-item">
-                    <h3 class="lang-cn">短视频拍摄</h3>
-                    <h3 class="lang-kr hidden">숏폼 영상 제작</h3>
-                    <p class="lang-cn">涵盖 Reels、TikTok 和小红书视频的创意策划、拍摄及后期制作。专注于韩国市场和K-Pop/美妆/时尚主题。</p>
-                    <p class="lang-kr hidden">릴스, 틱톡, 샤오홍슈 영상의 기획, 촬영 및 후반 작업을 포함합니다. 한국 시장 및 K-Pop/뷰티/패션 테마에 중점을 둡니다.</p>
-                </div>
-                <div class="service-item">
-                    <h3 class="lang-cn">产品摄影</h3>
-                    <h3 class="lang-kr hidden">제품 사진</h3>
-                    <p class="lang-cn">为美妆、时尚、科技等品牌提供高品质的静物、场景和模特产品摄影。</p>
-                    <p class="lang-kr hidden">뷰티, 패션, 기술 등 브랜드에 고품질의 스튜디오 촬영, 컨셉 촬영, 모델 제품 사진을 제공합니다.</p>
-                </div>
-                <div class="service-item">
-                    <h3 class="lang-cn">商业活动跟拍</h3>
-                    <h3 class="lang-kr hidden">상업 이벤트 촬영</h3>
-                    <p class="lang-cn">提供明星见面会、品牌发布会、VIP活动和演唱会侧拍等全流程记录服务。</p>
-                    <p class="lang-kr hidden">스타 팬미팅, 브랜드 론칭 행사, VIP 이벤트, 콘서트 비하인드 등 전체 과정을 기록합니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="section-padded about-section">
-        <div class="container about-flex">
-            <div class="about-text-content">
-                <h2 class="section-title lang-cn">关于我们</h2>
-                <h2 class="section-title lang-kr hidden">팀 소개</h2>
-                <p class="about-text lang-cn">WXZ STUDIO 是一个位于韩国首尔的专业摄影及视频制作团队，由经验丰富的摄影师和导演组成。我们专注于商业推广、艺人侧拍以及高端定制的个人影像服务。我们致力于将艺术与商业需求完美结合，为您提供电影级的视觉体验。</p>
-                <p class="about-text lang-kr hidden">WXZ STUDIO는 서울에 기반을 둔 전문 사진 및 비디오 제작팀으로, 숙련된 포토그래퍼와 디렉터로 구성되어 있습니다. 당사는 상업 프로모션, 셀럽 비하인드 및 하이엔드 맞춤형 개인 영상 서비스에 주력합니다. 예술과 상업적 요구를 완벽하게 결합하여 영화 같은 시각적 경험을 제공하는 것을 목표로 합니다.</p>
-            </div>
-            <div class="about-image-content">
-                <img src="https://images.unsplash.com/photo-1522044810052-16a2468205f2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Studio Team" class="about-image">
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="section-padded contact-section">
-        <div class="container">
-            <h2 class="section-title lang-cn">联系我们</h2>
-            <h2 class="section-title lang-kr hidden">문의하기</h2>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <h3 class="lang-cn">微信 (WeChat)</h3>
-                    <h3 class="lang-kr hidden">위챗 (WeChat)</h3>
-                    <p>icf304</p>
-                </div>
-                <div class="contact-item">
-                    <h3 class="lang-cn">KakaoTalk</h3>
-                    <h3 class="lang-kr hidden">카카오톡</h3>
-                    <p>icf304</p>
-                </div>
-                <div class="contact-item">
-                    <h3 class="lang-cn">Email</h3>
-                    <h3 class="lang-kr hidden">이메일</h3>
-                    <p>wxz.studio@email.com</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="main-footer">
-        <div class="container footer-flex">
-            <div class="footer-left">
-                <div class="footer-logo">WXZ STUDIO</div>
-                <p class="copyright">&copy; 2024 WXZ STUDIO. All rights reserved.</p>
-            </div>
-            
-            <div class="lang-switch-desktop">
-                <button onclick="switchLanguage('cn')" id="btn-cn-footer">CN</button>
-                <span>|</span>
-                <button onclick="switchLanguage('kr')" id="btn-kr-footer">KR</button>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-
-</body>
-</html>
+        <div class="hero-content container">
+            <h1 class="hero-headline is-white split-text-target lang-cn">
+                <span class="line-wrapper"><span class="line-inner">Game-changing</span></span>
+                <span class="line-wrapper"><span class="line-inner">Visuals</span>
