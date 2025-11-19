@@ -13,7 +13,7 @@
 <body class="u-font-sans u-antialiased">
 
     <div class="nav-wrapper">
-        <header class="top-bar">
+        <header class="top-bar container">
             
             <button id="mobileMenuButton" class="menu-icon">
                 <span class="bar"></span>
@@ -28,43 +28,32 @@
                     <button id="propertiesDropdownToggler" class="dropdown-toggler" type="button" aria-haspopup="true" aria-controls="propertiesDropdown" aria-expanded="false">
                         <span class="lang-cn">选择服务</span>
                         <span class="lang-kr hidden">서비스 선택</span>
-                        </button>
+                        <span class="location-icon"></span>
+                    </button>
                     <div id="propertiesDropdown" class="dropdown-menu">
                         <ul>
                             <li>
-                                <p class="u-typo-label-tiny lang-cn">商业合作 (BUSINESS)</p>
-                                <p class="u-typo-label-tiny lang-kr hidden">상업 협력 (BUSINESS)</p>
+                                <p class="u-typo-label-tiny lang-cn">核心服务 (CORE)</p>
+                                <p class="u-typo-label-tiny lang-kr hidden">핵심 서비스 (CORE)</p>
                                 <ul>
-                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">短视频拍摄</a></li>
-                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">产品摄影</a></li>
-                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">商业活动</a></li>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block lang-cn">精选作品</a><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block lang-kr hidden">포트폴리오</a></li>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#services" class="u-py-1 u-typo-h6 u-inline-block lang-cn">服务明细</a><a href="#services" class="u-py-1 u-typo-h6 u-inline-block lang-kr hidden">서비스 내역</a></li>
                                 </ul>
                             </li>
                             <li class="u-mt-6">
-                                <p class="u-typo-label-tiny lang-cn">个人定制 (PERSONAL)</p>
-                                <p class="u-typo-label-tiny lang-kr hidden">개인 맞춤 (PERSONAL)</p>
+                                <p class="u-typo-label-tiny lang-cn">关于我们 (ABOUT)</p>
+                                <p class="u-typo-label-tiny lang-kr hidden">소개 (ABOUT)</p>
                                 <ul>
-                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">婚礼旅拍</a></li>
-                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#portfolio" class="u-py-1 u-typo-h6 u-inline-block">个人写真</a></li>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#about" class="u-py-1 u-typo-h6 u-inline-block lang-cn">关于团队</a><a href="#about" class="u-py-1 u-typo-h6 u-inline-block lang-kr hidden">팀 소개</a></li>
+                                    <li class="u-mt-1 u-border-t-1 u-border-black"><a href="#contact" class="u-py-1 u-typo-h6 u-inline-block lang-cn">联系我们</a><a href="#contact" class="u-py-1 u-typo-h6 u-inline-block lang-kr hidden">문의하기</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="lang-switch-desktop">
-                    <button onclick="switchLanguage('cn')" id="btn-cn">CN</button>
-                    <span>|</span>
-                    <button onclick="switchLanguage('kr')" id="btn-kr">KR</button>
-                </div>
             </div>
         </header>
-
-        <nav class="desktop-nav">
-            <ul id="primaryNavMenu">
-                </ul>
-        </nav>
-    </div>
+        </div>
 
     <nav id="mobileMenu" class="mobile-nav">
         <button id="closeMobileMenu" class="close-btn">&times;</button>
@@ -78,7 +67,7 @@
     </nav>
     <div id="navOverlay" class="nav-overlay"></div>
     
-    <section id="home" class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1549419137-b45b0a3fbf5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHw0fHxjZWxlYnJpdHklMjBldmVudHxlbnwwfHx8fDE3MDg2NDkxNjF8MHw&ixlib=rb-4.0.3&q=80&w=1080');">
+    <section id="home" class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1510414842594-a61c69b5ae74?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
         <div class="hero-content-wrapper container">
             <p class="subtitle lang-cn">捕捉暗夜里的光 | 明星侧拍，美妆产品，商业拍摄</p>
             <p class="subtitle lang-kr hidden">서울의 빛을 기록하다 | 셀럽 비하인드, 뷰티 제품, 비즈니스 촬영</p>
@@ -96,7 +85,7 @@
                 
                 <div class="grid-card wide">
                     <a href="#contact">
-                        <img src="https://images.unsplash.com/photo-1593450535306-ed0285a8677c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwyM3x8YmFja3N0YWdlJTIwZXZlbnR8ZW58MHx8fHx8MTcwODc0MjUwNnw&ixlib=rb-4.0.3&q=80&w=1080" alt="Commercial Event" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1520624021020-f5a0f2832819?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Commercial Event" class="card-image">
                         <div class="card-title-overlay">
                             <h3 class="lang-cn">商业活动 | 明星侧拍</h3>
                             <h3 class="lang-kr hidden">상업 이벤트 | 셀럽 비하인드</h3>
@@ -106,7 +95,7 @@
 
                 <div class="grid-card">
                     <a href="#contact">
-                        <img src="https://images.unsplash.com/photo-1622615456461-efc8f6153966?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHwzNHx8YmVhdXR5JTIwcHJvZHVjdHxlbnwwfHx8fDE3MDg2NDkxNzB8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Beauty Product Photography" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1542456075-812030f88e17?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beauty Product Photography" class="card-image">
                         <div class="card-title-overlay">
                             <h3 class="lang-cn">美妆产品摄影</h3>
                             <h3 class="lang-kr hidden">뷰티 제품 사진</h3>
@@ -116,10 +105,10 @@
 
                 <div class="grid-card">
                     <a href="#contact">
-                        <img src="https://images.unsplash.com/photo-1596700679803-f38b2d1894d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NjU0NzJ8MHwxfHNlYXJjaHw3fHx3ZWRkaW5nJTIwc25hcHxlbnwwfHx8fDE3MDg2NDkxNjN8MHw&ixlib=rb-4.0.3&q=80&w=1080" alt="Wedding Snap" class="card-image">
+                        <img src="https://images.unsplash.com/photo-1533566160166-7b43c683c316?q=80&w=1969&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Wedding Snap" class="card-image">
                         <div class="card-title-overlay">
-                            <h3 class="lang-cn">婚礼旅拍 | 个人写真</h3>
-                            <h3 class="lang-kr hidden">웨딩 스냅 | 개인 화보</h3>
+                            <h3 class="lang-cn">个人/婚礼旅拍</h3>
+                            <h3 class="lang-kr hidden">개인/웨딩 스냅</h3>
                         </div>
                     </a>
                 </div>
@@ -156,6 +145,15 @@
         </div>
     </section>
 
+    <section id="about" class="section-padded about-section">
+        <div class="container">
+            <h2 class="section-title lang-cn">关于我们</h2>
+            <h2 class="section-title lang-kr hidden">팀 소개</h2>
+            <p class="about-text lang-cn">WXZ STUDIO 是一个位于韩国首尔的专业摄影及视频制作团队，由经验丰富的摄影师和导演组成。我们专注于商业推广、艺人侧拍以及高端定制的个人影像服务。我们致力于将艺术与商业需求完美结合，为您提供电影级的视觉体验。</p>
+            <p class="about-text lang-kr hidden">WXZ STUDIO는 서울에 기반을 둔 전문 사진 및 비디오 제작팀으로, 숙련된 포토그래퍼와 디렉터로 구성되어 있습니다. 당사는 상업 프로모션, 셀럽 비하인드 및 하이엔드 맞춤형 개인 영상 서비스에 주력합니다. 예술과 상업적 요구를 완벽하게 결합하여 영화 같은 시각적 경험을 제공하는 것을 목표로 합니다.</p>
+        </div>
+    </section>
+
     <section id="contact" class="section-padded contact-section">
         <div class="container">
             <h2 class="section-title lang-cn">联系我们</h2>
@@ -182,17 +180,18 @@
 
     <footer class="main-footer">
         <div class="container footer-flex">
-            <div class="footer-logo">WXZ STUDIO</div>
-            <p class="copyright">&copy; 2024 WXZ STUDIO.</p>
+            <div class="footer-left">
+                <div class="footer-logo">WXZ STUDIO</div>
+                <p class="copyright">&copy; 2024 WXZ STUDIO. All rights reserved.</p>
+            </div>
+            
+            <div class="lang-switch-desktop">
+                <button onclick="switchLanguage('cn')" id="btn-cn-footer">CN</button>
+                <span>|</span>
+                <button onclick="switchLanguage('kr')" id="btn-kr-footer">KR</button>
+            </div>
         </div>
     </footer>
-
-    <div id="videoModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeVideoModal()">&times;</span>
-            <div id="videoPlayer" class="video-container"></div> 
-        </div>
-    </div>
 
     <script src="data/nav_menu.js"></script>
     <script src="script.js"></script>
