@@ -1,14 +1,14 @@
 :root {
     /* === Drake Inspired Palette (White Background) === */
-    --bg-color: #f7f7f7; /* 略微偏灰的白，更有质感 */
+    --bg-color: #f7f7f7; 
     --text-main: #000000;
     --text-muted: #555555;
-    --accent-color: #a9988b; /* 沉稳的灰金/米色 (用作强调色) */
-    --border-style: 1px solid #000000; /* 黑色边框，高对比 */
+    --accent-color: #a9988b; 
+    --border-style: 1px solid #000000; 
 
     /* 字体替代方案 */
     --font-heading: 'Montserrat', 'Noto Sans SC', 'Noto Sans KR', sans-serif;
-    --font-body: 'Montserrat', 'Noto Sans SC', 'Noto Sans KR', sans-serif; /* 统一使用 Montserrat 或 Noto Sans */
+    --font-body: 'Montserrat', 'Noto Sans SC', 'Noto Sans KR', sans-serif; 
 }
 
 /* Base Styles & Resets */
@@ -40,9 +40,8 @@ body {
     font-family: var(--font-heading);
     font-weight: 800;
     font-size: 2.5rem; 
-    margin-bottom: 0; /* 移除默认margin，交给父容器控制 */
+    margin-bottom: 0; 
     text-transform: uppercase;
-    
 }
 .logo {
     font-family: var(--font-heading);
@@ -54,7 +53,7 @@ body {
 }
 
 
-/* === Navigation Styles (保持不变，但优化了字体) === */
+/* === Navigation Styles === */
 
 .nav-wrapper {
     position: sticky;
@@ -75,32 +74,9 @@ body {
 }
 .menu-icon .bar { width: 100%; height: 2px; background-color: var(--text-main); }
 .header-right-group { display: flex; align-items: center; gap: 1.5rem; }
-.c-header_dropdown { position: relative; border: var(--border-style); }
-.dropdown-toggler {
-    font-family: var(--font-heading); background: none; border: none; color: var(--text-main);
-    cursor: pointer; font-size: 0.8rem; font-weight: 600; padding: 10px 15px;
-    white-space: nowrap; text-transform: uppercase; display: flex; align-items: center; gap: 5px;
-}
-.location-icon { width: 8px; height: 8px; border-radius: 50%; background-color: var(--text-main); }
-
-/* Dropdown Menu - 关键：桌面端悬停保持显示 */
-.dropdown-menu {
-    display: none; position: absolute; top: calc(100% + 1px); right: -1px; /* 调整位置 */
-    min-width: 280px; background-color: white; padding: 1.5rem; border: var(--border-style);
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.2); /* 模仿 Drake 的阴影效果 */
-    z-index: 999; animation: fadein 0.2s ease-out forwards;
-}
-.dropdown-menu.active { display: block; }
-.dropdown-menu p { color: var(--text-muted); font-size: 0.75rem; margin-bottom: 5px; text-transform: uppercase; font-family: var(--font-heading);}
-.dropdown-menu ul { list-style: none; }
-.dropdown-menu ul li a {
-    color: var(--text-main); text-decoration: none; font-family: var(--font-heading);
-    font-weight: 700; font-size: 1.1rem; display: block; padding: 4px 0;
-}
-.dropdown-menu ul li a:hover { color: var(--accent-color); }
 
 
-/* Mobile Navigation Panel - (省略重复的移动端样式) */
+/* Mobile Navigation Panel */
 .nav-overlay {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
@@ -112,11 +88,27 @@ body {
     position: fixed; top: 0; left: 0; width: 85%; max-width: 350px; height: 100%;
     background-color: white; color: black; padding: 2rem; transform: translateX(-100%);
     transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1); z-index: 1000;
+    display: flex; flex-direction: column; justify-content: space-between;
 }
-/* ... 保持其他移动端样式不变 ... */
+.mobile-nav.active { transform: translateX(0); }
+.close-btn { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; background: none; border: none; cursor: pointer; }
+.mobile-menu-list { list-style: none; padding-top: 1rem; }
+.mobile-menu-list li a {
+    text-decoration: none; color: var(--text-main); font-family: var(--font-heading);
+    font-weight: 700; font-size: 1.4rem; display: block; padding: 10px 0;
+}
+.lang-switch-mobile {
+    display: flex; gap: 10px; font-size: 1rem; margin-top: auto; padding-top: 20px;
+}
+.lang-switch-mobile button {
+    background: none; border: none; color: var(--text-main); cursor: pointer;
+    font-weight: 500; font-size: 1rem;
+}
+.lang-switch-mobile button.active {
+    color: var(--accent-color); font-weight: 700;
+}
 
-
-/* === Hero Section (全屏) === */
+/* === Hero Section === */
 .hero-section {
     position: relative; height: 85vh; background-size: cover;
     background-position: center; display: flex; align-items: center;
@@ -156,17 +148,22 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
     transition: opacity 0.3s;
-    font-family: monospace; /* 确保箭头符号清晰 */
+    font-family: monospace; 
 }
+.scroll-arrow:hover {
+    background-color: var(--text-main);
+    color: var(--bg-color);
+}
+
 
 /* 滚动容器 */
 .scrollable-card-wrapper {
     display: flex;
     gap: 20px;
-    overflow-x: auto; /* 允许横向滚动 */
-    padding-bottom: 20px; /* 留出滚动条空间 */
-    -webkit-overflow-scrolling: touch; /* 增强移动端滑动体验 */
-    scrollbar-width: none; /* 隐藏 Firefox 滚动条 */
+    overflow-x: auto; 
+    padding-bottom: 20px; 
+    -webkit-overflow-scrolling: touch; 
+    scrollbar-width: none; 
 }
 /* 隐藏 WebKit 滚动条 */
 .scrollable-card-wrapper::-webkit-scrollbar {
@@ -177,8 +174,8 @@ body {
 .grid-card {
     position: relative;
     overflow: hidden;
-    flex-shrink: 0; /* 防止卡片被压缩 */
-    width: 80vw; /* 移动端卡片宽度 */
+    flex-shrink: 0; 
+    width: 80vw; 
     max-width: 400px; 
     height: 450px;
     border: var(--border-style); 
@@ -210,11 +207,12 @@ body {
 }
 
 
-/* === Services Section (Drake Style List) === */
+/* === Sections Below (Services, About, Contact) === */
+
 .service-list {
     display: grid;
     grid-template-columns: 1fr; 
-    gap: 0; /* 移除 grid 间距，依靠 item 内部 padding */
+    gap: 0; 
     border-top: var(--border-style);
 }
 .service-item {
@@ -233,20 +231,14 @@ body {
     color: var(--text-muted);
 }
 
-/* === About Section (左右布局) === */
-.about-section {
-    background-color: var(--bg-color); /* 保持背景色一致 */
-}
 .about-flex {
     display: flex;
     flex-direction: column;
     gap: 3rem;
 }
-.about-text-content {
-    order: 2; /* 移动端文字在下 */
-}
+.about-text-content { order: 2; }
 .about-image-content {
-    order: 1; /* 移动端图片在上 */
+    order: 1; 
     border: var(--border-style);
     padding: 1rem;
     background-color: white;
@@ -262,7 +254,6 @@ body {
     line-height: 1.8;
 }
 
-/* === Contact Section (保持不变) === */
 .contact-grid {
     display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 600px;
 }
@@ -277,7 +268,7 @@ body {
     font-family: var(--font-body); font-size: 1.1rem; font-weight: 600;
 }
 
-/* === Footer (保持不变) === */
+/* === Footer === */
 .main-footer {
     background-color: var(--text-main); color: var(--bg-color);
     padding: 2rem 0; margin-top: 3rem; border-top: var(--border-style);
@@ -289,8 +280,7 @@ body {
 .footer-logo { font-weight: 900; }
 .copyright { font-size: 0.8rem; color: #aaa; }
 .lang-switch-desktop {
-    display: flex; gap: 10px; font-size: 0.8rem;
-    border: 1px solid var(--bg-color); padding: 5px 10px;
+    display: none; /* 移动端默认隐藏 */
 }
 .lang-switch-desktop button {
     background: none; border: none; color: var(--bg-color); cursor: pointer;
@@ -321,17 +311,23 @@ body {
         align-items: flex-start;
     }
     .about-text-content {
-        order: 1; /* 桌面端文字在左 */
+        order: 1; 
         flex: 1;
     }
     .about-image-content {
-        order: 2; /* 桌面端图片在右 */
+        order: 2; 
         flex: 1;
     }
 
     /* Contact Grid */
     .contact-grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .lang-switch-desktop {
+        display: flex; /* 桌面端显示页脚语言切换 */
+        gap: 10px; font-size: 0.8rem;
+        border: 1px solid var(--bg-color); padding: 5px 10px;
     }
 }
 
@@ -342,17 +338,17 @@ body {
     .footer-flex { flex-direction: row; gap: 0; }
     .footer-left { text-align: left; }
     
-    /* 作品横向滚动 - 卡片更大，桌面端显示箭头 */
+    /* 作品横向滚动 - 确保箭头可见 */
     .scroll-controls {
-        /* 取消默认隐藏，确保在 PC 端显示 */
-        display: flex; 
+        display: flex; /* 桌面端显示滚动按钮 */
+        gap: 10px;
     }
     .grid-card {
-        width: 300px; /* 较小的卡片 */
+        width: 300px; 
         height: 400px;
     }
     .grid-card.wide {
-        width: 450px; /* 较宽的卡片 */
+        width: 450px; 
         height: 400px;
     }
 }
