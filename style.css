@@ -94,7 +94,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* 导航的通用颜色设置（深色主题） */
-.nav-item, .menu-button, .nav-back-home { color: var(--color-white); }
+.nav-item, .menu-button { color: var(--color-white); }
 .nav-contact-btn { border: 1px solid var(--color-white); color: var(--color-white); }
 .logo-dark-theme { display: block; }
 .logo-light-theme { display: none; }
@@ -106,8 +106,7 @@ body.light-theme-nav .nav-wrap {
     background-color: rgba(255, 255, 255, 0.8);
 }
 body.light-theme-nav .nav-item, 
-body.light-theme-nav .menu-button,
-body.light-theme-nav .nav-back-home { 
+body.light-theme-nav .menu-button { 
     color: var(--color-primary); 
 }
 body.light-theme-nav .nav-contact-btn {
@@ -122,29 +121,16 @@ body.light-theme-nav .logo-light-theme { display: block; }
     display: flex; justify-content: space-between; align-items: center;
     height: 100%;
 }
+
+/* 导航栏中 Logo 区域变为纯文本品牌名称 */
 .logo-link {
-    height: 35px; 
-    margin-right: 20px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    height: auto; /* 不再限制高度 */
 }
-.logo-img {
-    height: 100%; width: auto; 
-}
-
-/* 返回首页按钮 */
-.nav-back-home {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    padding: 0;
-    margin-right: 20px;
-    font-family: inherit;
-}
-.nav-back-home::before {
-    content: "← ";
-}
-
+/* 隐藏图片 Logo，仅在移动端菜单中保留链接 */
+.logo-img { display: none !important; }
 
 /* Desktop Navigation */
 .nav-desktop {
@@ -154,7 +140,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
     font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.95rem;
-    margin-left: auto; /* 将链接推到右侧 */
+    margin-left: auto; 
 }
 .nav-contact-btn {
     padding: 0.4rem 1.2rem;
@@ -173,14 +159,13 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 
-/* === Hero Section (视频背景) === */
+/* === Hero Section (视频背景) - 彻底清空内容 === */
 .is-hero {
     position: relative;
     height: 100vh;
     padding: 0;
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
-    flex-direction: column; /* 垂直居中 */
 }
 .hero-video-wrapper {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -199,28 +184,13 @@ body.light-theme-nav .logo-light-theme { display: block; }
     z-index: 10;
 }
 .hero-content {
+    /* 保持为空，防止视频内容溢出 */
     position: relative; z-index: 20;
     text-align: center;
     max-width: 1000px;
     padding: 0 20px;
 }
-.hero-logo-box {
-    margin-bottom: 20px;
-}
-.hero-logo-img {
-    height: clamp(50px, 10vw, 150px); /* 响应式 Logo 大小 */
-    width: auto;
-}
-.hero-logo-text {
-    font-size: clamp(1.5rem, 5vw, 3rem); /* 辅助文字大小 */
-    font-weight: 500;
-    color: var(--color-white);
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    margin-top: 10px;
-}
-.hero-headline { /* 保持，但不再使用它作为主要标题 */
-    display: none;
-}
+
 
 /* === Core Business Section (精简版) === */
 .core-business-grid {
@@ -297,42 +267,55 @@ body.light-theme-nav .logo-light-theme { display: block; }
     border-width: 2px;
 }
 
-/* === Regulatory Notes (Apple 风格的须知) === */
+
+/* === Regulatory Notes (纯文本 Apple 风格的须知) === */
 .regulatory-notes {
-    background-color: #f5f5f7; /* 浅灰色背景 */
-    color: #515154; /* 灰色文字 */
-    padding: 20px 0;
+    background-color: #f5f5f7; 
+    color: #515154; 
+    padding: 40px 0 20px; /* 顶部留更多空间 */
     font-size: 0.8rem;
-    line-height: 1.6;
+    line-height: 1.8;
 }
 .notes-container {
     max-width: 700px;
     margin: 0 auto;
     padding: 0 20px;
+    text-align: center; /* 居中 */
 }
 .notes-container h4 {
     font-weight: 600;
     margin-bottom: 10px;
     color: var(--color-primary);
+    font-size: 1rem;
 }
-.notes-container ul {
-    list-style: none;
-    padding: 0;
+.notes-content {
+    text-align: left; /* 内容左对齐 */
+    white-space: pre-wrap; /* 保持换行 */
 }
-.notes-container li {
-    margin-bottom: 10px;
-}
-.notes-container .disclaimer {
-    margin-top: 15px;
+.disclaimer {
+    margin-top: 25px;
     font-size: 0.7rem;
     color: #999;
+}
+
+/* === Bottom Logo & Links Area (新的最底部区域) === */
+.bottom-logo-area {
+    background-color: #f5f5f7; /* 与须知背景一致 */
+    padding: 20px 0 40px;
+    text-align: center;
+}
+.bottom-logo-area .logo-img {
+    height: 25px;
+    width: auto;
+    display: block !important;
+    margin: 0 auto;
 }
 
 
 /* --- Contact Page Styles (大方块 Apple 设计) --- */
 .contact-page-content {
     padding-top: calc(var(--nav-height) + 60px);
-    max-width: 1000px; /* 更宽的容器 */
+    max-width: 1000px; 
     margin: 0 auto;
     text-align: center;
     min-height: 80vh;
@@ -348,14 +331,14 @@ body.light-theme-nav .logo-light-theme { display: block; }
     gap: 20px;
 }
 .contact-block {
-    background-color: #f5f5f7; /* 浅灰块背景 */
+    background-color: #f5f5f7; 
     border-radius: 20px;
     padding: 40px 20px;
     text-align: center;
     transition: background-color 0.3s;
 }
 .contact-block:hover {
-    background-color: #e9e9eb; /* 悬停微亮 */
+    background-color: #e9e9eb; 
 }
 .contact-block h3 {
     font-size: 1.1rem;
@@ -372,11 +355,39 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 
-/* --- Works Page Styles --- */
-.page-header {
-    padding-top: calc(var(--nav-height) + 80px); /* 留出导航空间 */
-    text-align: center;
-    padding-bottom: 60px;
+/* === Floating Back-to-Home Button (圆形悬浮图标) === */
+.floating-back-home {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    z-index: 1002;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.floating-back-home:hover {
+    background-color: var(--color-accent);
+    transform: scale(1.05);
+}
+
+.floating-back-home.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 
@@ -387,9 +398,6 @@ body.light-theme-nav .logo-light-theme { display: block; }
 @media (min-width: 768px) {
     .section {
         padding: 80px 0;
-    }
-    .hero-logo-img {
-        height: clamp(80px, 8vw, 150px);
     }
     .core-business-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -407,6 +415,10 @@ body.light-theme-nav .logo-light-theme { display: block; }
     }
     .contact-block .id-value {
         font-size: clamp(2.5rem, 4vw, 3.5rem);
+    }
+    .floating-back-home {
+        right: 40px;
+        bottom: 40px;
     }
 }
 
