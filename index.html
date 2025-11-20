@@ -3,117 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WXZ Studio</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>WXZ Studio - 视觉设计与摄影</title>
+    <link rel="stylesheet" href="style.css"> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
-<body class="is-dark">
-
-    <nav class="nav-wrap">
-        <div class="nav-inner">
-            <a href="index.html" class="logo-link">
-                <img src="images/logo-white.svg" alt="WXZ" class="logo-img logo-dark-theme">
-                <img src="images/logo-black.svg" alt="WXZ" class="logo-img logo-light-theme">
-            </a>
-            <div class="nav-desktop">
-                <a href="works.html" class="nav-item">作品</a>
-                <a href="contact.html" class="nav-item">联系我们</a>
-            </div>
-            <button class="menu-button" id="mobileMenuBtn">菜单</button>
+<body class="is-dark is-homepage"> 
+    
+    <div class="nav-wrap">
+        <div class="container nav-inner">
+            <a href="index.html" class="logo-link">WXZ STUDIO</a>
+            
+            <nav class="nav-desktop">
+                <a href="works.html" class="nav-item">案例作品</a>
+                <a href="contact.html" class="nav-contact-btn">联系我们</a> 
+            </nav>
         </div>
-    </nav>
+    </div>
+    
+    <main>
+        <section class="section is-dark is-hero" data-theme="dark">
+            <div class="hero-video-wrapper">
+                <video class="hero-video" autoplay loop muted playsinline>
+                    <source src="images/hero-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                </div>
+            <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
+        </section>
 
+        <section class="section is-light" data-theme="light">
+            <div class="container core-business-grid">
+                <div class="business-item fade-in" data-delay="0">
+                    <h3>商业影像与摄影</h3>
+                    <p>短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍。我们提供高品质的视觉资产，全方位覆盖您的商业影像需求。</p>
+                </div>
+                
+                <div class="business-item fade-in" data-delay="0.2">
+                    <h3>平面视觉设计</h3>
+                    <p>从品牌标识、海报设计到社交媒体视觉企划。通过专业设计，助力品牌建立统一、引人注目的视觉形象。</p>
+                </div>
+            </div>
+             <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
+        </section>
+
+        <section class="section is-dark" data-theme="dark">
+            <div class="container">
+                <h2 class="section-sub-title fade-in">精选</h2>
+                <h2 class="section-title fade-in">最新案例作品</h2>
+                
+                <div class="portfolio-grid">
+                    <a href="works.html#project1" class="portfolio-item fade-in">
+                        <img src="images/portfolio1.jpg" alt="项目 1" class="portfolio-img">
+                        <div class="portfolio-info">
+                            <h3>[品牌名称] 品牌升级</h3>
+                            <p>品牌策略 / 视觉设计</p>
+                        </div>
+                    </a>
+                    <a href="works.html#project2" class="portfolio-item fade-in">
+                        <img src="images/portfolio2.jpg" alt="项目 2" class="portfolio-img">
+                        <div class="portfolio-info">
+                            <h3>[产品名称] 商业影像</h3>
+                            <p>商业摄影 / 短视频</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="view-all-cta fade-in">
+                    <a href="works.html" class="nav-contact-btn is-dark-theme" style="border-radius: 9999px;">查看更多案例</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section is-light contact-cta-footer" data-theme="light">
+            <div class="container">
+                <h2 class="section-title fade-in">开启您的项目</h2>
+                <a href="contact.html" class="nav-contact-btn button fade-in is-black-btn">联系我们</a>
+            </div>
+            <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
+        </section>
+
+    </main>
+
+    <div class="regulatory-notes">
+        <div class="notes-container">
+            <h4>合作指南</h4>
+            <div class="notes-content">
+                <p>我们致力于提供高质量的拍摄服务。为确保项目顺利进行，请您在合作前了解并同意以下条款：</p>
+
+                <p>
+                    <strong>排期确认与预付定金 (Deposit & Scheduling)</strong><br>
+                    定金标准：首次合作的客户，请在确认您的专属拍摄排期时，预付约定总金额的 50% 作为项目定金。排期将在定金到账后正式锁定。
+                </p>
+
+                <p>
+                    <strong>项目取消政策 (Cancellation Policy)</strong><br>
+                    当日取消：除非发生不可抗力情况，否则在拍摄项目当日取消，您所支付的定金将不予退还。
+                </p>
+
+                <p>
+                    <strong>创意与执行 (Project Briefing & Execution)</strong><br>
+                    内容规划：为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。
+                </p>
+
+                <p>
+                    <strong>费用结算与超时 (Billing & Overtime)</strong><br>
+                    尾款结算：剩余的款项请在拍摄服务完成后的 24 小时内结清。 超时计费：若实际工作时间超出原定计划 30 分钟或以上，我们将按照合同拟定的单价以 1 小时进行额外计费。
+                </p>
+
+                <p>
+                    <strong>文件交付与管理 (File Delivery & Archiving)</strong><br>
+                    下载期限：最终交付文件上传成功后，请您务必在 30 日内完成下载并妥善备份。超过此期限，WXZ STUDIO 不保证文件的永久存储。
+                </p>
+
+                <p>
+                    <strong>作品宣传权利 (Portfolio Use)</strong><br>
+                    默认授权：除非事先另有约定，WXZ STUDIO 默认同意在项目交付后一周将部分非涉密作品用于社交媒体和官方渠道的宣传展示。 保密需求：如您有任何保密或特殊使用限制，请务必在正式签订合作合同前明确提出并以书面形式确认。
+                </p>
+
+                <p>期待与您共同创造精彩作品。</p>
+            </div>
+            <p class="disclaimer">© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+        </div>
+    </div>
+    
     <div class="mobile-nav" id="mobileMenu">
-        <ul>
-            <li><a href="index.html">主页</a></li>
-            <li><a href="works.html">作品</a></li>
+        <ul class="mobile-menu-list">
+            <li><a href="index.html" class="active">主页</a></li>
+            <li><a href="works.html">案例作品</a></li>
             <li><a href="contact.html">联系我们</a></li>
         </ul>
     </div>
-
-    <section class="section is-hero" data-theme="dark">
-        <div class="hero-video-wrapper">
-            <video class="hero-video" autoplay loop muted playsinline>
-                <source src="images/hero-video.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="nav-theme-trigger"></div>
-    </section>
-
-    <section class="section is-light" data-theme="light">
-        <div class="container">
-            <h2 class="section-sub-title fade-in">业务领域</h2>
-            <div class="core-business-grid">
-                <div class="business-item fade-in">
-                    <h3>商业影像与摄影</h3>
-                    <p>短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍。</p>
-                </div>
-                <div class="business-item fade-in" data-delay="0.1">
-                    <h3>平面视觉设计</h3>
-                    <p>专注于品牌视觉识别、数字化内容设计及社交媒体视觉企划。</p>
-                </div>
-            </div>
-        </div>
-        <div class="nav-theme-trigger"></div>
-    </section>
-
-    <section class="section is-dark" data-theme="dark">
-        <div class="container">
-            <h2 class="section-title fade-in">精选案例</h2>
-            <div class="portfolio-grid">
-                <a href="works.html" class="portfolio-item fade-in">
-                    <img src="images/portfolio1.jpg" alt="Case 1" class="portfolio-img">
-                    <div class="portfolio-info">
-                        <h3>品牌升级</h3>
-                        <p>视觉策略 / 摄影</p>
-                    </div>
-                </a>
-                <a href="works.html" class="portfolio-item fade-in" data-delay="0.1">
-                    <img src="images/portfolio2.jpg" alt="Case 2" class="portfolio-img">
-                    <div class="portfolio-info">
-                        <h3>商业影像</h3>
-                        <p>短视频 / 广告</p>
-                    </div>
-                </a>
-            </div>
-            <div class="view-all-cta fade-in" style="margin-top: 40px;">
-                <a href="works.html" class="apple-btn white">查看更多作品</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="section is-dark" style="padding: 120px 0; text-align: center;" data-theme="dark">
-        <div class="container">
-            <h2 class="section-title fade-in">开启您的项目</h2>
-            <a href="contact.html" class="apple-btn white fade-in">联系我们</a>
-        </div>
-        <div class="nav-theme-trigger"></div>
-    </section>
-
-    <div class="regulatory-notes">
-        <div class="container notes-content">
-            <h4>合作指南</h4>
-            <p><strong>仅限首次预约：</strong>确认拍摄时需缴纳商议金额的50%作为押金。*非不可抗力原因当天取消时押金无法退还。</p>
-            <p><strong>建议提供拍摄剧本：</strong>*无剧本最好提前大致说明拍摄角度或想法。</p>
-            <p><strong>剪辑：</strong>不适用。</p>
-            <p><strong>结算：</strong>请于拍摄完成后24小时内结算剩余款项。*超出原定时间30分钟，按拟定单价1小时计费。</p>
-            <p><strong>交付：</strong>请于上传成功后30日内下载保存。</p>
-            <p><strong>宣传：</strong>默认同意在拍摄一周后传至社交媒体，若有其他保密协议请提前说明。</p>
-            <div style="margin-top: 30px; font-size: 10px; color: #999;">
-                © 2025 WXZ Studio. All Rights Reserved.
-            </div>
-        </div>
-    </div>
-
-    <div class="bottom-logo-area">
-        <img src="images/logo-black.svg" alt="WXZ Studio" class="bottom-logo-img">
-    </div>
-
-    <a href="#" class="floating-back" id="scrollTopBtn">↑</a>
+    
+    <a href="index.html" class="floating-back-home" id="floatingBackHome">
+        <span style="font-size: 1.2rem;">↑</span>
+    </a>
 
     <script src="script.js"></script>
 </body>
