@@ -6,6 +6,7 @@
     --color-dark-bg: #111111; /* 深色背景 (更深的黑) */
     --color-white: #ffffff;
     --color-accent: #0070c9; /* Apple 蓝色作为强调色 */
+    --color-light-gray: #f5f5f7; /* Apple 背景灰 */
 
     /* 字体 (大气和现代感) */
     --font-heading: 'Montserrat', sans-serif;
@@ -13,7 +14,7 @@
     
     /* 布局变量 */
     --max-width: 1200px;
-    --nav-height: 64px; /* 导航高度保持不变，以维持布局 */
+    --nav-height: 64px;
     --blur-strength: 15px; /* 毛玻璃模糊强度 */
 }
 
@@ -73,7 +74,7 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-white);
 }
 .is-dark .section-sub-title, .is-dark .large-copy {
-    color: var(--color-secondary);
+    color: #aaaaaa; /* 深色背景下的副文本颜色 */
 }
 .is-light {
     background-color: var(--color-background);
@@ -89,7 +90,7 @@ a { text-decoration: none; color: inherit; }
     /* 默认：深色主题导航（白色文字，半透明黑背景）*/
     background-color: rgba(17, 17, 17, 0.7); 
     backdrop-filter: blur(var(--blur-strength)); 
-    -webkit-backdrop-filter: blur(var(--blur-strength)); /* 兼容 Webkit */
+    -webkit-backdrop-filter: blur(var(--blur-strength));
     transition: background-color 0.3s ease;
 }
 
@@ -98,8 +99,14 @@ body.light-theme-nav .nav-wrap {
     /* 浅色导航：深色文字，半透明白背景 */
     background-color: rgba(255, 255, 255, 0.8);
 }
+
+/* Nav Link States (根据主题变化) */
+.nav-item, .menu-button, .back-to-home-btn { color: var(--color-white); }
+.nav-contact-btn { border: 1px solid var(--color-white); color: var(--color-white); }
+
 body.light-theme-nav .nav-item, 
-body.light-theme-nav .menu-button { 
+body.light-theme-nav .menu-button,
+body.light-theme-nav .back-to-home-btn { 
     color: var(--color-primary); 
 }
 body.light-theme-nav .nav-contact-btn {
@@ -107,33 +114,25 @@ body.light-theme-nav .nav-contact-btn {
     color: var(--color-primary);
 }
 
-.nav-inner {
-    display: flex; justify-content: space-between; align-items: center;
-    height: 100%;
-}
-.logo-link {
-    /* 重点修改：Logo 高度增加到 60px，这是在 64px 导航栏内可容纳的最大尺寸 */
-    height: 60px; 
-}
-.logo-img {
-    height: 100%; width: auto; 
-}
+/* Logo Switching */
 .logo-light-theme, .logo-dark-theme {
+    height: 100%; width: auto; 
     display: none;
 }
+.logo-link { height: 35px; }
 
 /* 默认状态 (深色导航) */
 .logo-dark-theme { display: block; }
-.nav-item, .menu-button { color: var(--color-white); }
-.nav-contact-btn { border: 1px solid var(--color-white); color: var(--color-white); }
-
 
 /* 切换到浅色主题导航 */
 body.light-theme-nav .logo-dark-theme { display: none; }
 body.light-theme-nav .logo-light-theme { display: block; }
 
 
-/* Desktop Navigation */
+.nav-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    height: 100%;
+}
 .nav-desktop {
     display: none; 
     gap: 2.5rem;
@@ -142,9 +141,20 @@ body.light-theme-nav .logo-light-theme { display: block; }
     font-weight: 500;
     font-size: 0.95rem;
 }
+/* 返回首页按钮样式 */
+.back-to-home-btn {
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding-right: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.5); /* 分隔线 */
+}
+body.light-theme-nav .back-to-home-btn {
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+}
+
 .nav-contact-btn {
     padding: 0.4rem 1.2rem;
-    border-radius: 9999px; /* Apple 风格的圆角 */
+    border-radius: 9999px; 
     font-weight: 600;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
@@ -180,7 +190,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 .hero-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* 视频上增加黑色半透明层 */
+    background: rgba(0, 0, 0, 0.5); 
     z-index: 10;
 }
 .hero-content {
@@ -190,7 +200,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
     padding: 0 20px;
 }
 .hero-headline {
-    font-size: clamp(3rem, 10vw, 7.5rem); /* 响应式字号 */
+    font-size: clamp(3rem, 10vw, 7.5rem); 
     font-weight: 900;
     line-height: 1.05;
     color: var(--color-white);
@@ -199,6 +209,11 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 /* === Core Business Section (精简版) === */
+.core-business-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
 .business-item {
     padding: 20px 0;
     text-align: left;
@@ -225,11 +240,11 @@ body.light-theme-nav .logo-light-theme { display: block; }
     display: block;
     overflow: hidden;
     position: relative;
-    border-radius: 12px; /* 增加圆角 */
+    border-radius: 12px; 
     transition: transform 0.3s ease;
 }
 .portfolio-item:hover {
-    transform: translateY(-5px); /* 悬停微抬效果 */
+    transform: translateY(-5px); 
 }
 .portfolio-img {
     width: 100%; height: 400px; 
@@ -270,8 +285,8 @@ body.light-theme-nav .logo-light-theme { display: block; }
 
 /* === Regulatory Notes (Apple 风格的须知) === */
 .regulatory-notes {
-    background-color: #f5f5f7; /* 浅灰色背景 */
-    color: #515154; /* 灰色文字 */
+    background-color: var(--color-light-gray); 
+    color: #515154; 
     padding: 20px 0;
     font-size: 0.8rem;
     line-height: 1.6;
@@ -293,6 +308,10 @@ body.light-theme-nav .logo-light-theme { display: block; }
 .notes-container li {
     margin-bottom: 10px;
 }
+.notes-container li strong {
+    font-weight: 700;
+    color: var(--color-primary);
+}
 .notes-container .disclaimer {
     margin-top: 15px;
     font-size: 0.7rem;
@@ -300,33 +319,54 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 
-/* --- Contact Page Styles --- */
+/* --- Contact Page Styles (Apple 大方块设计) --- */
 .contact-page-content {
     padding-top: calc(var(--nav-height) + 60px);
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     text-align: center;
     min-height: 80vh;
 }
 .contact-page-content h1 {
-    font-size: clamp(2rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 800;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 }
-.contact-item-large {
-    font-size: 1.5rem;
-    margin: 20px 0;
-    font-weight: 500;
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding-bottom: 60px;
 }
-.contact-item-large span {
-    font-weight: 700;
-    color: var(--color-accent);
+.contact-box {
+    background-color: var(--color-light-gray);
+    border-radius: 18px; /* 大圆角 */
+    padding: 40px 30px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+.contact-box:hover {
+    background-color: #e8e8eb;
+}
+.contact-box h3 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin-bottom: 15px;
+    letter-spacing: 0.05em;
+}
+.contact-box .contact-id {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--color-primary);
     display: block;
-    margin-top: 5px;
 }
 
 
-/* === Mobile Nav Panel (保持基础功能) === */
+/* === Mobile Nav Panel */
 .nav-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.8); z-index: 1000;
@@ -371,18 +411,18 @@ body.light-theme-nav .logo-light-theme { display: block; }
         font-size: clamp(6rem, 8vw, 7.5rem);
     }
     .core-business-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 40px;
+        grid-template-columns: repeat(2, 1fr); /* 两个主要业务板块 */
+        gap: 80px;
+        padding: 0 40px;
     }
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
     .contact-page-content {
         padding-top: calc(var(--nav-height) + 120px);
-    }
-    .contact-item-large {
-        font-size: 1.8rem;
     }
 }
 
