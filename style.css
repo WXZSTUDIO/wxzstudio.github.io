@@ -352,6 +352,26 @@ body.light-theme-nav .logo-light-theme { display: block; }
     font-weight: 700;
     color: var(--color-primary);
     display: block;
+    margin-top: 15px; /* 与 ID 之间拉开距离 */
+}
+/* 新增：图标容器样式 */
+.contact-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.contact-icon {
+    height: 40px; /* 图标大小 */
+    width: 40px;
+    display: inline-block;
+    color: var(--color-primary); /* 单色图标的颜色 */
+}
+/* 确保图标图片能适应容器 */
+.contact-icon img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
 
 
@@ -407,14 +427,18 @@ body.light-theme-nav .logo-light-theme { display: block; }
         grid-template-columns: repeat(2, 1fr);
     }
     .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
+        /* 三个块并排 */
+        grid-template-columns: repeat(3, 1fr);
         gap: 40px;
     }
     .contact-block {
         padding: 60px 30px;
     }
+    .contact-block h3 {
+        font-size: 1.2rem;
+    }
     .contact-block .id-value {
-        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
     }
     .floating-back-home {
         right: 40px;
