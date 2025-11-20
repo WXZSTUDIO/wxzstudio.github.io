@@ -1,11 +1,11 @@
 :root {
-    /* 颜色变量 (模仿 180ai 的简洁黑白灰) */
+    /* 颜色变量 (模仿 Apple 的简洁、高对比度和半透明效果) */
     --color-primary: #000000; /* 主色/文字色 (黑色) */
     --color-secondary: #666666; /* 副文本色 (灰色) */
     --color-background: #ffffff; /* 浅色背景 (白色) */
-    --color-dark-bg: #000000; /* 深色背景 (黑色) */
+    --color-dark-bg: #111111; /* 深色背景 (更深的黑) */
     --color-white: #ffffff;
-    --color-accent: #007bff; /* 强调色，例如按钮或链接 */
+    --color-accent: #0070c9; /* Apple 蓝色作为强调色 */
 
     /* 字体 (大气和现代感) */
     --font-heading: 'Montserrat', sans-serif;
@@ -13,7 +13,8 @@
     
     /* 布局变量 */
     --max-width: 1200px;
-    --nav-height: 80px;
+    --nav-height: 64px; /* 导航高度略微降低 */
+    --blur-strength: 15px; /* 毛玻璃模糊强度 */
 }
 
 /* Base Styles & Resets */
@@ -30,12 +31,6 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 body.no-scroll { overflow: hidden; }
-
-/* 用于导航切换的辅助类 */
-body.light-theme-nav {
-    background-color: var(--color-background);
-    color: var(--color-primary);
-}
 
 a { text-decoration: none; color: inherit; }
 .hidden { display: none !important; }
@@ -86,19 +81,38 @@ a { text-decoration: none; color: inherit; }
 }
 
 
-/* === Navigation === */
+/* === Navigation (Apple Glassmorphism / 毛玻璃效果) === */
 .nav-wrap {
     position: fixed; top: 0; left: 0; width: 100%;
     height: var(--nav-height);
     z-index: 1000;
+    /* 默认：深色主题导航（白色文字，半透明黑背景）*/
+    background-color: rgba(17, 17, 17, 0.7); 
+    backdrop-filter: blur(var(--blur-strength)); 
+    -webkit-backdrop-filter: blur(var(--blur-strength)); /* 兼容 Webkit */
     transition: background-color 0.3s ease;
 }
+
+/* Light Theme Nav State (滚动到浅色区域时) */
+body.light-theme-nav .nav-wrap {
+    /* 浅色导航：深色文字，半透明白背景 */
+    background-color: rgba(255, 255, 255, 0.8);
+}
+body.light-theme-nav .nav-item, 
+body.light-theme-nav .menu-button { 
+    color: var(--color-primary); 
+}
+body.light-theme-nav .nav-contact-btn {
+    border: 1px solid var(--color-primary); 
+    color: var(--color-primary);
+}
+
 .nav-inner {
     display: flex; justify-content: space-between; align-items: center;
     height: 100%;
 }
 .logo-link {
-    height: 40px; /* 限制 logo 高度 */
+    height: 35px; 
 }
 .logo-img {
     height: 100%; width: auto; 
@@ -107,17 +121,15 @@ a { text-decoration: none; color: inherit; }
     display: none;
 }
 
-/* 默认深色主题导航（显示浅色 Logo/文字） */
+/* 默认状态 (深色导航) */
 .logo-dark-theme { display: block; }
-.nav-item { color: var(--color-white); }
+.nav-item, .menu-button { color: var(--color-white); }
 .nav-contact-btn { border: 1px solid var(--color-white); color: var(--color-white); }
 
 
-/* 切换到浅色主题导航（显示深色 Logo/文字） */
+/* 切换到浅色主题导航 */
 body.light-theme-nav .logo-dark-theme { display: none; }
 body.light-theme-nav .logo-light-theme { display: block; }
-body.light-theme-nav .nav-item { color: var(--color-primary); }
-body.light-theme-nav .nav-contact-btn { border: 1px solid var(--color-primary); color: var(--color-primary); }
 
 
 /* Desktop Navigation */
@@ -125,15 +137,15 @@ body.light-theme-nav .nav-contact-btn { border: 1px solid var(--color-primary); 
     display: none; 
     gap: 2.5rem;
     align-items: center;
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.95rem;
-    text-transform: uppercase;
 }
 .nav-contact-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
+    padding: 0.4rem 1.2rem;
+    border-radius: 9999px; /* Apple 风格的圆角 */
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 .nav-contact-btn:hover {
     background-color: var(--color-accent);
@@ -167,44 +179,39 @@ body.light-theme-nav .nav-contact-btn { border: 1px solid var(--color-primary); 
 }
 .hero-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.4); 
+    background: rgba(0, 0, 0, 0.5); /* 视频上增加黑色半透明层 */
     z-index: 10;
 }
 .hero-content {
     position: relative; z-index: 20;
     text-align: center;
-    max-width: 800px;
+    max-width: 1000px;
     padding: 0 20px;
 }
 .hero-headline {
-    font-size: 4rem;
+    font-size: clamp(3rem, 10vw, 7.5rem); /* 响应式字号 */
     font-weight: 900;
-    line-height: 1.1;
+    line-height: 1.05;
     color: var(--color-white);
     margin-bottom: 20px;
     font-family: var(--font-heading);
 }
 
-/* === Mission/Core Value Section === */
-.core-values {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    text-align: left; /* 模仿 180ai 的左对齐 */
-    margin-top: 40px;
-}
-.value-item {
+/* === Core Business Section (精简版) === */
+.business-item {
     padding: 20px 0;
+    text-align: left;
 }
-.value-item h3 {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
+.business-item h3 {
+    font-family: var(--font-body);
+    font-size: 1.6rem;
     margin-bottom: 10px;
-    font-weight: 700;
+    font-weight: 600;
 }
-.value-item p {
+.business-item p {
     color: var(--color-secondary);
 }
+
 
 /* === Portfolio Grid (首页预览) === */
 .portfolio-grid {
@@ -217,15 +224,16 @@ body.light-theme-nav .nav-contact-btn { border: 1px solid var(--color-primary); 
     display: block;
     overflow: hidden;
     position: relative;
+    border-radius: 12px; /* 增加圆角 */
+    transition: transform 0.3s ease;
+}
+.portfolio-item:hover {
+    transform: translateY(-5px); /* 悬停微抬效果 */
 }
 .portfolio-img {
-    width: 100%; height: 400px; /* 固定高度，保持一致 */
+    width: 100%; height: 400px; 
     object-fit: cover;
     display: block;
-    transition: transform 0.6s ease;
-}
-.portfolio-item:hover .portfolio-img {
-    transform: scale(1.05);
 }
 .portfolio-info {
     position: absolute; bottom: 0; left: 0; width: 100%;
@@ -246,66 +254,76 @@ body.light-theme-nav .nav-contact-btn { border: 1px solid var(--color-primary); 
     text-align: center;
     margin-top: 60px;
 }
-.button {
-    display: inline-block;
-    padding: 10px 30px;
-    border: 2px solid var(--color-primary);
-    border-radius: 4px;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-}
-.button.is-dark-theme {
-    border-color: var(--color-white);
-    color: var(--color-white);
-}
-.button.is-dark-theme:hover {
-    background-color: var(--color-white);
-    color: var(--color-primary);
-}
 
-/* === Footer === */
-.main-footer {
-    background-color: var(--color-dark-bg); 
-    color: var(--color-white);
-    padding: 40px 0;
-}
-.footer-content {
-    display: flex; 
-    flex-direction: column; 
-    gap: 30px;
-}
-.footer-logo {
-    font-family: var(--font-heading);
-    font-weight: 900;
-    font-size: 1.5rem;
-}
-.footer-links-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-.footer-links-grid ul {
-    list-style: none;
-}
-.footer-links-grid ul li {
-    margin-bottom: 10px;
-}
-.footer-links-grid ul li a {
-    color: var(--color-secondary);
-}
-.footer-bottom {
-    border-top: 1px solid #333;
-    padding-top: 20px;
-    margin-top: 30px;
-    font-size: 0.8rem;
+/* === Contact Button Footer (替换旧 Footer) === */
+.contact-cta-footer {
+    padding: 80px 0;
     text-align: center;
 }
-.footer-bottom a {
-    color: var(--color-secondary);
-    margin-left: 10px;
+.contact-cta-footer .nav-contact-btn {
+    font-size: 1.1rem;
+    padding: 0.8rem 2.5rem;
+    border-radius: 9999px;
+    border-width: 2px;
 }
+
+/* === Regulatory Notes (Apple 风格的须知) === */
+.regulatory-notes {
+    background-color: #f5f5f7; /* 浅灰色背景 */
+    color: #515154; /* 灰色文字 */
+    padding: 20px 0;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+.notes-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.notes-container h4 {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--color-primary);
+}
+.notes-container ul {
+    list-style: none;
+    padding: 0;
+}
+.notes-container li {
+    margin-bottom: 10px;
+}
+.notes-container .disclaimer {
+    margin-top: 15px;
+    font-size: 0.7rem;
+    color: #999;
+}
+
+
+/* --- Contact Page Styles --- */
+.contact-page-content {
+    padding-top: calc(var(--nav-height) + 60px);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    min-height: 80vh;
+}
+.contact-page-content h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 40px;
+}
+.contact-item-large {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    font-weight: 500;
+}
+.contact-item-large span {
+    font-weight: 700;
+    color: var(--color-accent);
+    display: block;
+    margin-top: 5px;
+}
+
 
 /* === Mobile Nav Panel (保持基础功能) === */
 .nav-overlay {
@@ -335,89 +353,8 @@ body.light-theme-nav .nav-contact-btn { border: 1px solid var(--color-primary); 
 }
 .mobile-menu-list li a {
     display: block; padding: 15px 0;
-    font-family: var(--font-heading); font-size: 1.2rem;
-    color: var(--color-white); text-transform: uppercase;
-}
-
-/* --- Works Page Specific Styles --- */
-
-/* Subpage Hero */
-.subpage-hero {
-    height: auto; 
-    min-height: 40vh;
-    padding-top: calc(var(--nav-height) + 60px);
-    padding-bottom: 60px;
-}
-.subpage-hero .page-title {
-    font-size: 3rem;
-    font-weight: 900;
-}
-
-/* Works Filter Tabs */
-.works-filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 40px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-}
-.filter-btn {
-    background: none;
-    border: none;
-    font-family: var(--font-body);
-    font-size: 1.05rem;
-    cursor: pointer;
-    padding: 5px 10px;
-    color: var(--color-secondary);
-    transition: color 0.3s;
-}
-.filter-btn:hover {
-    color: var(--color-primary);
-}
-.filter-btn.active {
-    color: var(--color-primary);
-    font-weight: 700;
-    border-bottom: 2px solid var(--color-primary);
-}
-
-/* Works Grid */
-.works-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    margin-top: 20px;
-}
-.work-item {
-    display: block;
-    overflow: hidden;
-    position: relative;
-    /* 动画属性由 JS 控制 */
-}
-/* 用于 JS 隐藏元素 */
-.work-item.hidden {
-    display: none !important;
-}
-.work-img {
-    width: 100%;
-    height: 400px; /* 固定高度，确保图片比例一致 */
-    object-fit: cover;
-    display: block;
-}
-.work-info {
-    padding: 15px 0 5px 0;
-    background: var(--color-background); 
-    color: var(--color-primary);
-}
-.work-info h3 {
-    font-size: 1.2rem;
-    margin: 0;
-    font-weight: 700;
-}
-.work-info p {
-    font-size: 0.9rem;
-    margin: 0;
-    color: var(--color-secondary);
+    font-family: var(--font-body); font-size: 1.1rem;
+    color: var(--color-white); 
 }
 
 
@@ -430,14 +367,21 @@ body.light-theme-nav .nav-contact-btn { border: 1px solid var(--color-primary); 
         padding: 80px 0;
     }
     .hero-headline {
-        font-size: 6rem;
+        font-size: clamp(6rem, 8vw, 7.5rem);
     }
-    .core-values {
+    .core-business-grid {
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
-        text-align: center;
+        gap: 40px;
     }
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .contact-page-content {
+        padding-top: calc(var(--nav-height) + 120px);
+    }
+    .contact-item-large {
+        font-size: 1.8rem;
     }
 }
 
@@ -447,17 +391,7 @@ body.light-theme-nav .nav-contact-btn { border: 1px solid var(--color-primary); 
     .section {
         padding: 120px 0;
     }
-    .footer-content {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .footer-links-grid {
-        grid-template-columns: repeat(3, auto);
-        gap: 60px;
-    }
-    .works-grid {
-        /* 桌面端三列布局 */
+    .portfolio-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 60px 40px;
     }
 }
