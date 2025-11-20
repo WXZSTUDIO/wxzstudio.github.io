@@ -3,127 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WXZ Studio - 联系我们</title>
-    <link rel="preload" href="style.css" as="style">
-    <link rel="preload" href="script.js" as="script">
-    
-    <link rel="stylesheet" href="style.css"> 
-    
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
-    
+    <title>联系我们 - WXZ Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
-<body class="is-light light-theme-nav is-other-page"> 
-    
-    <div class="nav-wrap">
-        <div class="container nav-inner">
-            <a href="index.html" class="logo-link">WXZ STUDIO</a>
-            
-            <nav class="nav-desktop">
-                <a href="works.html" class="nav-item">案例作品</a>
-                <a href="contact.html" class="nav-contact-btn">联系我们</a> 
-            </nav>
+<body class="is-light light-theme-nav"> 
+
+    <nav class="nav-wrap">
+        <div class="nav-inner">
+            <a href="index.html" class="logo-link">
+                <img src="images/logo-white.svg" alt="WXZ" class="logo-img logo-dark-theme hidden">
+                <img src="images/logo-black.svg" alt="WXZ" class="logo-img logo-light-theme">
+            </a>
+            <div class="nav-desktop">
+                <a href="works.html" class="nav-item">作品</a>
+                <a href="contact.html" class="nav-item" style="opacity: 1; color: #000;">联系我们</a>
+            </div>
+            <button class="menu-button" id="mobileMenuBtn">菜单</button>
         </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">主页</a></li>
+            <li><a href="works.html">作品</a></li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
     </div>
-    
-    <main>
-        <section class="section is-light contact-page-content">
-            <h1 class="fade-in">与我们共同创造</h1>
-            <p class="large-copy fade-in" style="margin-bottom: 60px; max-width: 600px; margin: 0 auto 60px;">
-                无论是商业合作还是项目洽谈，期待与您取得联系。我们目前坐标韩国首尔，可服务全球客户。
-            </p>
-            
-            <div class="contact-grid">
+
+    <main style="padding-top: 120px; min-height: 80vh;">
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title fade-in" style="text-align: center; margin-bottom: 60px;">联系方式</h1>
                 
-                <div class="contact-block fade-in" data-delay="0.1">
-                    <div class="contact-icon-box">
-                        <span class="contact-icon">🌐</span>
+                <div class="contact-grid">
+                    <div class="contact-card fade-in">
+                        <h3>WeChat</h3>
+                        <div class="id-text">icf304</div>
                     </div>
-                    <h3>WeChat ID</h3>
-                    <span class="id-value">icf304</span>
+                    <div class="contact-card fade-in" data-delay="0.1">
+                        <h3>KakaoTalk</h3>
+                        <div class="id-text">icf304</div>
+                    </div>
+                    <a href="https://www.xiaohongshu.com/user/profile/5fd363ac000000000101cffc" target="_blank" class="contact-card fade-in" data-delay="0.2">
+                        <h3>小红书</h3>
+                        <div class="id-text" style="font-size: 24px; text-decoration: underline;">点击跳转主页</div>
+                    </a>
                 </div>
-                
-                <div class="contact-block fade-in" data-delay="0.2">
-                    <div class="contact-icon-box">
-                        <span class="contact-icon">💬</span>
-                    </div>
-                    <h3>KakaoTalk ID</h3>
-                    <span class="id-value">icf304</span>
-                </div>
-                
-                <a href="https://www.xiaohongshu.com/user/profile/5fd363ac000000000101cffc" target="_blank" class="contact-block fade-in" data-delay="0.3" style="text-decoration: none;">
-                    <div class="contact-icon-box">
-                        <span class="contact-icon">📸</span>
-                    </div>
-                    <h3>小红书主页</h3>
-                    <span class="id-value" style="font-size: 1.5rem; font-weight: 500;">点击跳转</span>
-                </a>
             </div>
-            
-            <div style="margin-top: 50px; font-size: 0.9rem; color: var(--color-secondary);">
-                如需快速响应，请添加以上社交平台账户。<br>
-                时区: GMT+9 (韩国标准时间)
-            </div>
-            
         </section>
     </main>
 
-    <div class="regulatory-notes">
-        <div class="notes-container">
-            <h4>合作指南</h4>
-            <div class="notes-content">
-                <p>我们致力于提供高质量的拍摄服务。为确保项目顺利进行，请您在合作前了解并同意以下条款：</p>
-
-                <p>
-                    <strong>排期确认与预付定金 (Deposit & Scheduling)</strong><br>
-                    定金标准：首次合作的客户，请在确认您的专属拍摄排期时，预付约定总金额的 50% 作为项目定金。排期将在定金到账后正式锁定。
-                </p>
-
-                <p>
-                    <strong>项目取消政策 (Cancellation Policy)</strong><br>
-                    当日取消：除非发生不可抗力情况，否则在拍摄项目当日取消，您所支付的定金将不予退还。
-                </p>
-
-                <p>
-                    <strong>创意与执行 (Project Briefing & Execution)</strong><br>
-                    内容规划：为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。
-                </p>
-
-                <p>
-                    <strong>费用结算与超时 (Billing & Overtime)</strong><br>
-                    尾款结算：剩余的款项请在拍摄服务完成后的 24 小时内结清。 超时计费：若实际工作时间超出原定计划 30 分钟或以上，我们将按照合同拟定的单价以 1 小时进行额外计费。
-                </p>
-
-                <p>
-                    <strong>文件交付与管理 (File Delivery & Archiving)</strong><br>
-                    下载期限：最终交付文件上传成功后，请您务必在 30 日内完成下载并妥善备份。超过此期限，WXZ STUDIO 不保证文件的永久存储。
-                </p>
-
-                <p>
-                    <strong>作品宣传权利 (Portfolio Use)</strong><br>
-                    默认授权：除非事先另有约定，WXZ STUDIO 默认同意在项目交付后一周将部分非涉密作品用于社交媒体和官方渠道的宣传展示。 保密需求：如您有任何保密或特殊使用限制，请务必在正式签订合作合同前明确提出并以书面形式确认。
-                </p>
-
-                <p>期待与您共同创造精彩作品。</p>
-            </div>
-            <p class="disclaimer">© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
-        </div>
+    <div class="bottom-logo-area">
+        <img src="images/logo-black.svg" alt="WXZ Studio" class="bottom-logo-img">
     </div>
-    
-    <div class="mobile-nav" id="mobileMenu">
-        <ul class="mobile-menu-list">
-            <li><a href="index.html">主页</a></li>
-            <li><a href="works.html">案例作品</a></li>
-            <li><a href="contact.html" class="active">联系我们</a></li>
-        </ul>
-    </div>
-    
-    <a href="index.html" class="floating-back-home" id="floatingBackHome">
-        <span style="font-size: 1.2rem;">↑</span>
-    </a>
-    
+
+    <a href="index.html" class="floating-back visible" style="font-size: 14px;">←</a>
+
     <script src="script.js"></script>
 </body>
 </html>
