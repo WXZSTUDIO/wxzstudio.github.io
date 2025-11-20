@@ -1,3 +1,12 @@
+/*
+ * style.css
+ * * 修改内容:
+ * 1. 统一 .mobile-nav 的毛玻璃样式，并移除阴影。
+ * 2. 调整 .nav-inner 在小屏下的布局，实现 Logo 居中。
+ * 3. 移除顶部 .menu-button 的隐藏，因为移动端现在使用底部导航。
+ * * 请用以下代码替换原文件内容。
+ */
+
 :root {
     /* 颜色变量 (模仿 Apple 的简洁、高对比度和半透明效果) */
     --color-primary: #000000; /* 主色/文字色 (黑色) */
@@ -158,6 +167,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
 .menu-button {
     display: none; 
 }
+
 
 /* === Hero Section (视频背景) === */
 .is-hero {
@@ -378,17 +388,19 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 
-/* === 移动端底部固定导航栏 (Mobile Nav Redesign) === */
+/* === 移动端底部固定导航栏 (Mobile Nav Redesign - Apple Glassmorphism) === */
 .mobile-nav {
     position: fixed;
     bottom: 0; left: 0; width: 100%;
     height: var(--mobile-nav-height);
     z-index: 999;
     
-    background-color: rgba(255, 255, 255, 0.9);
+    /* 统一为 Apple 风格的半透明和毛玻璃效果 */
+    background-color: rgba(255, 255, 255, 0.8); /* 浅色半透明背景 */
     backdrop-filter: blur(var(--blur-strength)); 
     -webkit-backdrop-filter: blur(var(--blur-strength)); 
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: none; /* 移除阴影，更简洁 */
+    border-top: 1px solid rgba(0, 0, 0, 0.05); /* 添加微弱的顶部边框 */
 
     display: flex;
     justify-content: space-around;
@@ -482,5 +494,35 @@ body.light-theme-nav .logo-light-theme { display: block; }
     .floating-back-home {
         bottom: 40px; /* 桌面端回到原位 */
         right: 40px;
+    }
+}
+
+
+/* =========================================
+   Media Queries (Mobile - 991px 及以下)
+   ========================================= */
+@media (max-width: 991px) {
+    /* 顶部导航栏 Logo 居中 */
+    .nav-inner {
+        /* 取消两端对齐 */
+        justify-content: center; 
+    }
+    /* 将 Logo 链接本身居中 */
+    .logo-link {
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+    }
+    /* 隐藏桌面端联系按钮/导航，确保只有 Logo 在顶部导航栏中 */
+    .nav-desktop {
+        display: none !important;
+    }
+    /* 确保顶部 Logo 不被其他元素挤压 */
+    .nav-inner > * {
+        flex-shrink: 0;
+    }
+    /* 隐藏顶部导航中的菜单按钮 */
+    .menu-button {
+        display: none;
     }
 }
