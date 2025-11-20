@@ -1,73 +1,166 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WXZ STUDIO | Game-changing Visuals</title>
-    <link rel="stylesheet" href="style.css">
+    <title>WXZ Studio - 视觉设计与摄影</title>
+    <link rel="stylesheet" href="style.css"> 
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    
-</head>
-<body data-theme="dark">
+    </head>
 
-    <header class="nav-wrap">
-        <div class="nav-inner container">
-            <a href="#home" class="logo-link">
-                <img src="./images/logo-white.svg" alt="WXZ Studio" class="logo-img logo-dark-theme" data-logo-type="dark">
-                <img src="./images/logo-blue.svg" alt="WXZ Studio" class="logo-img logo-light-theme" data-logo-type="light">
+<body class="is-dark"> 
+    
+    <div class="nav-wrap">
+        <div class="container nav-inner">
+            <a href="index.html" class="logo-link">
+                <img src="path/to/logo-dark-theme.svg" alt="WXZ Studio" class="logo-img logo-dark-theme">
+                <img src="path/to/logo-light-theme.svg" alt="WXZ Studio" class="logo-img logo-light-theme hidden">
             </a>
-
+            
             <nav class="nav-desktop">
-                <a href="#portfolio" class="nav-item lang-cn">作品</a>
-                <a href="#portfolio" class="nav-item lang-kr hidden">포트폴리오</a>
-
-                <a href="#services" class="nav-item lang-cn">服务</a>
-                <a href="#services" class="nav-item lang-kr hidden">서비스</a>
-                
-                <a href="#about" class="nav-item lang-cn">关于</a>
-                <a href="#about" class="nav-item lang-kr hidden">소개</a>
-
-                <a href="#contact" class="button nav-contact-btn lang-cn">联系我们</a>
-                <a href="#contact" class="button nav-contact-btn lang-kr hidden">문의하기</a>
+                <a href="works.html" class="nav-item">作品</a>
+                <a href="about.html" class="nav-item">关于</a>
+                <a href="contact.html" class="nav-contact-btn button">联系我们</a>
             </nav>
             
-            <button id="mobileMenuButton" class="menu-button">
-                <div class="menu-txt lang-cn">菜单</div>
-                <div class="menu-txt lang-kr hidden">메뉴</div>
-            </button>
+            <button class="menu-button">菜单</button>
         </div>
-    </header>
+    </div>
+    
+    <main>
+        <section class="section is-hero">
+            <div class="hero-video-wrapper">
+                <video class="hero-video" autoplay loop muted playsinline src="path/to/your/hero-video.mp4"></video>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-headline">
+                    <span class="line-inner fade-in">用光影，创造价值</span>
+                </h1>
+                <p class="large-copy fade-in" style="margin-top: 2rem;">
+                    专注于品牌视觉、商业摄影及创意内容制作。
+                </p>
+                <a href="works.html" class="button cta-button fade-in" style="margin-top: 3rem;">查看我们的作品</a>
+            </div>
+        </section>
 
-    <nav id="mobileMenu" class="mobile-nav">
-        <button id="closeMobileMenu" class="close-btn">&times;</button>
+        <section class="section is-light-blue">
+            <div class="container">
+                <h2 class="section-sub-title fade-in">我们的价值</h2>
+                <div class="services-grid">
+                    <div class="service-left fade-in">
+                        <p class="large-copy">
+                            WXZ Studio 致力于提供超越客户期待的视觉解决方案，我们相信创意与技术并重。
+                        </p>
+                    </div>
+                    <div class="service-right">
+                        <div class="service-item fade-in">
+                            <h3>01. 品牌级摄影</h3>
+                            <p>从概念企划到后期精修，提供全流程品牌商业摄影服务，提升您的品牌形象。</p>
+                        </div>
+                        <div class="service-item fade-in">
+                            <h3>02. 创意与叙事</h3>
+                            <p>我们擅长将抽象概念转化为引人入胜的视觉故事，赋予作品独特的灵魂与深度。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sliding-row-wrapper" style="margin-top: 8rem;">
+                <div class="sliding-text">
+                    <span>• COMMERCIAL PHOTOGRAPHY</span> 
+                    <span>• BRAND VISUALS</span>
+                    <span>• CREATIVE DIRECTION</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section is-dark">
+            <div class="container">
+                <h2 class="section-sub-title fade-in">精选项目</h2>
+                <h2 class="section-title fade-in">最新作品</h2>
+                
+                <div class="portfolio-list">
+                    <a href="works.html" class="portfolio-item fade-in">
+                        <img src="path/to/portfolio1.jpg" alt="项目 1" class="portfolio-img">
+                        <div class="portfolio-info">
+                            <h3>项目名称 A</h3>
+                            <p>商业肖像</p>
+                        </div>
+                    </a>
+                    <a href="works.html" class="portfolio-item fade-in">
+                        <img src="path/to/portfolio2.jpg" alt="项目 2" class="portfolio-img">
+                        <div class="portfolio-info">
+                            <h3>项目名称 B</h3>
+                            <p>产品拍摄</p>
+                        </div>
+                    </a>
+                    <a href="works.html" class="portfolio-item fade-in">
+                        <img src="path/to/portfolio3.jpg" alt="项目 3" class="portfolio-img">
+                        <div class="portfolio-info">
+                            <h3>项目名称 C</h3>
+                            <p>活动纪实</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="cta-wrap fade-in">
+                    <a href="works.html" class="button cta-button">查看全部作品</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section is-light-blue">
+            <div class="container about-contact-grid">
+                <div class="about-section fade-in">
+                    <h2 class="section-sub-title">关于 WXZ Studio</h2>
+                    <h2 class="section-title">您的视觉伙伴</h2>
+                    <p class="large-copy">
+                        我们相信高质量的视觉内容是品牌和故事成功的关键。我们提供定制化服务，确保每一个项目都能完美达成目标。
+                    </p>
+                    <a href="about.html" class="button cta-button" style="margin-top: 2rem; background-color: var(--color-dark); color: var(--color-white);">了解更多</a>
+                </div>
+                
+                <div class="contact-section fade-in">
+                    <h2 class="section-sub-title">联系我们</h2>
+                    <h2 class="section-title">开始您的项目</h2>
+                    <div class="contact-info">
+                        <div class="contact-item">电话/微信: <span>+86 XXXX XXXX</span></div>
+                        <div class="contact-item">邮箱: <a href="mailto:info@wxzstudio.com"><span>info@wxzstudio.com</span></a></div>
+                        <div class="contact-item">地址: <span>[您的工作室地址]</span></div>
+                    </div>
+                    <a href="contact.html" class="button cta-button" style="margin-top: 2rem; background-color: var(--color-blue); color: var(--color-white);">立即洽谈</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-flex">
+            <div class="footer-logo">WXZ STUDIO</div>
+            <div class="copyright">&copy; 2025 WXZ Studio. All Rights Reserved.</div>
+            
+            <div class="lang-switch-desktop">
+                <button class="active">中文</button>
+                <button>EN</button>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="nav-overlay"></div>
+    <div class="mobile-nav">
+        <button class="close-btn">&times;</button>
         <ul class="mobile-menu-list">
-            <li><a href="#portfolio" onclick="closeMobileMenu();" class="lang-cn">精选作品</a><a href="#portfolio" onclick="closeMobileMenu();" class="lang-kr hidden">포트폴리오</a></li>
-            <li><a href="#services" onclick="closeMobileMenu();" class="lang-cn">专业服务</a><a href="#services" onclick="closeMobileMenu();" class="lang-kr hidden">전문 서비스</a></li>
-            <li><a href="#about" onclick="closeMobileMenu();" class="lang-cn">关于团队</a><a href="#about" onclick="closeMobileMenu();" class="lang-kr hidden">팀 소개</a></li>
-            <li><a href="#contact" onclick="closeMobileMenu();" class="lang-cn">立即咨询</a><a href="#contact" onclick="closeMobileMenu();" class="lang-kr hidden">지금 문의</a></li>
+            <li><a href="index.html">主页</a></li>
+            <li><a href="works.html">作品</a></li>
+            <li><a href="about.html">关于</a></li>
+            <li><a href="contact.html">联系我们</a></li>
         </ul>
         <div class="lang-switch-mobile">
-            <button onclick="switchLanguage('cn')" id="btn-cn-mobile">CN</button>
-            <span>|</span>
-            <button onclick="switchLanguage('kr')" id="btn-kr-mobile">KR</button>
+            <button class="active">中文</button>
+            <button>EN</button>
         </div>
-    </nav>
-    <div id="navOverlay" class="nav-overlay"></div>
-
-
-    <section id="home" class="section is-hero" data-theme="dark">
-        <div class="hero-video-wrapper">
-            <video autoplay loop muted playsinline class="hero-video">
-                <source src="./images/hero-video.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="hero-content container">
-            <h1 class="hero-headline is-white split-text-target lang-cn">
-                <span class="line-wrapper"><span class="line-inner">Game-changing</span></span>
-                <span class="line-wrapper"><span class="line-inner">Visuals</span>
+    </div>
+    
+    </body>
+</html>
