@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WXZ Studio - 案例作品</title>
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    
     <link rel="stylesheet" href="style.css"> 
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
@@ -38,7 +41,7 @@
         <section class="section is-light">
             <div class="container portfolio-grid" style="grid-template-columns: 1fr;">
                 <div class="portfolio-item fade-in">
-                    <img src="images/portfolio1.jpg" alt="项目 1" class="portfolio-img" style="height: 500px;">
+                    <img src="" data-src="images/portfolio1.jpg" alt="项目 1" class="portfolio-img lazy-load-img" style="height: 500px;">
                     <div class="portfolio-info">
                         <h3>[项目名称] 深度分析</h3>
                         <p>品牌重塑 / 商业摄影</p>
@@ -46,7 +49,7 @@
                 </div>
                 
                 <div class="portfolio-item fade-in">
-                    <img src="images/portfolio2.jpg" alt="项目 2" class="portfolio-img" style="height: 500px;">
+                    <img src="" data-src="images/portfolio2.jpg" alt="项目 2" class="portfolio-img lazy-load-img" style="height: 500px;">
                     <div class="portfolio-info">
                         <h3>[项目名称] 数字化内容</h3>
                         <p>短视频 / 社交媒体企划</p>
@@ -59,7 +62,7 @@
         <section class="section is-dark contact-cta-footer" data-theme="dark">
             <div class="container">
                 <h2 class="section-title fade-in">开启您的项目</h2>
-                <a href="contact.html" class="nav-contact-btn button fade-in is-black-btn">联系我们</a>
+                <a href="contact.html" class="apple-button fade-in is-black-btn">联系我们</a>
             </div>
         </section>
         
