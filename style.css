@@ -1,23 +1,27 @@
 /* =========================================
-   WXZ STUDIO 新增样式 (作品/服务/关于页面)
+   WXZ STUDIO 新增页面样式 (作品/服务/关于)
+   请粘贴到 style.css 文件的最末尾
    ========================================= */
 
 /* 1. Logo 尺寸调整 (解决 Logo 过小的问题) */
-/* 覆盖原有的 .logo-img 样式，以调整到正常可见的大小 */
+/* 覆盖原有的 .logo-img 样式，调整到适合导航栏的高度 */
 .logo-img {
-    /* 假设您希望 Logo 高度在 30px 左右，这里设置为 2rem */
-    height: 2rem; 
-    width: auto; /* 保持宽度自动，维持图片比例 */
-    display: block; /* 确保 Logo 元素能设置高度 */
+    /* 调整为更适合导航栏的高度，例如 35px 左右 */
+    height: 2.2rem; 
+    width: auto; 
 }
 
-/* 2. 页面标题区样式 (延续 Hero 风格) */
-/* 使用 Section 容器和 .is-light-blue 主题 */
+/* 导航项激活状态 - 确保当前页面链接高亮 */
+.nav-item.is-active { 
+    font-weight: 700; 
+    color: var(--color-blue);
+}
+
+/* 2. 页面顶部标题区 (Page Hero) 样式 */
+/* 用于 works.html, services.html, about.html 的顶部标题区 */
 .page-hero-section {
-    /* 采用 Light Blue 主题，与您的主页色调形成对比 */
-    background-color: var(--color-light-blue);
-    color: var(--color-dark);
-    padding: 6rem 0 4rem; /* 顶部间距更大 */
+    padding-top: 10rem; /* 增加顶部间距，避开固定导航栏 */
+    padding-bottom: 6rem; 
     text-align: center;
 }
 .page-hero-section h1 {
@@ -25,26 +29,25 @@
     font-weight: 900;
     font-size: clamp(2.5rem, 8vw, 6rem);
     line-height: 1.1;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 .page-hero-section p {
     font-size: clamp(1rem, 2vw, 1.5rem);
-    color: #666;
     max-width: 800px;
     margin: 0.5rem auto 0;
 }
+/* Light Theme 时的文本颜色调整 */
+body.light-theme .page-hero-section p {
+    color: #666;
+}
 
 /* 3. 作品页 - 作品网格样式 (.works.html) */
-.works-grid-section {
-    background-color: var(--color-dark);
-    color: var(--color-white);
-    padding: 4rem 0 8rem;
-}
+/* .section 是您已定义的类，用于标准间距 */
 .work-grid {
     display: grid;
-    /* 响应式网格：每列最小 350px */
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
-    gap: 2rem;
+    /* 响应式网格：每列最小 300px */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 3rem;
     margin-top: 3rem;
 }
 .work-item {
@@ -55,29 +58,30 @@
 }
 .work-item img {
     width: 100%;
-    /* 设置一个固定的宽高比，如 16:10，使作品集整齐 */
+    /* 设置作品图片宽高比，保持统一视觉效果 */
     aspect-ratio: 16/10; 
     object-fit: cover;
     display: block;
+    filter: brightness(0.85); /* 默认稍暗，突出对比 */
     transition: transform 0.5s ease, filter 0.3s ease;
-    filter: brightness(0.9);
 }
 .work-item:hover img {
-    transform: scale(1.05);
-    filter: brightness(1.1);
+    transform: scale(1.03);
+    filter: brightness(1.0); /* 悬停时恢复亮度 */
 }
 .work-info {
     position: absolute;
     bottom: 0;
     left: 0;
-    padding: 1rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 1.5rem;
+    /* 渐变背景确保信息在图片上清晰可见 */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
     width: 100%;
 }
 .work-info h3 {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 0.25rem;
 }
 .work-info p {
@@ -87,47 +91,43 @@
 
 
 /* 4. 服务页 - 服务列表样式 (.services.html) */
-.services-list-section {
-    background-color: var(--color-white);
-    color: var(--color-dark);
-    padding: 8rem 0;
-}
-.service-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin-top: 2rem;
+.service-block-list {
+    margin-top: 3rem;
 }
 .service-block {
     padding: 2.5rem 0;
-    border-bottom: 1px solid #ddd;
+    /* 默认浅色分隔线 */
+    border-top: 1px solid rgba(255, 255, 255, 0.2); 
     transition: background-color 0.3s;
 }
-.service-block:last-child {
-    border-bottom: none;
+/* Light Theme 下使用深色分隔线 */
+body.light-theme .service-block {
+    border-top: 1px solid rgba(0, 0, 0, 0.2); 
 }
-.service-block:hover {
-    background-color: #f0f0f0;
+
+.service-block:first-child {
+    border-top: none;
+    padding-top: 0;
 }
 .service-block h2 {
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: 2rem;
     margin-bottom: 0.5rem;
+    color: var(--color-blue); /* 突出服务标题 */
 }
 .service-block p {
-    color: #555;
     line-height: 1.7;
     max-width: 800px;
 }
+/* Light Theme 下调整描述文本颜色 */
+body.light-theme .service-block p {
+    color: #555;
+}
+
 
 /* 5. 关于页 - 内容布局样式 (.about.html) */
-.about-content-section {
-    background-color: var(--color-dark);
-    color: var(--color-white);
-    padding: 8rem 0;
-}
-.about-grid {
+.about-content-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -138,17 +138,21 @@
     font-weight: 700;
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: var(--color-blue);
 }
 .about-item p {
     line-height: 1.8;
     font-size: 1.1rem;
+}
+/* Dark Theme 下调整描述文本颜色 */
+body:not(.light-theme) .about-item p {
     color: #ccc;
 }
+
 /* 桌面布局优化 */
 @media (min-width: 992px) {
-    .about-grid {
-        grid-template-columns: 1fr 1fr;
+    .about-content-grid {
+        /* 在大屏幕上将 关于页的内容分成两列 */
+        grid-template-columns: 1.5fr 1fr; 
         gap: 5rem;
     }
 }
