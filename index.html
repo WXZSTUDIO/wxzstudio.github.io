@@ -8,7 +8,9 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     
-    </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
 
 <body class="is-dark"> 
     
@@ -25,30 +27,31 @@
                 <a href="contact.html" class="nav-contact-btn button">联系我们</a>
             </nav>
             
-            <button class="menu-button">菜单</button>
+            <button class="menu-button" id="mobileMenuButton">菜单</button>
         </div>
     </div>
     
     <main>
-        <section class="section is-hero">
-            <div class="hero-video-wrapper">
+        <section class="section is-hero" data-theme="dark">
+             <div class="hero-video-wrapper">
                 <video class="hero-video" autoplay loop muted playsinline>
                     <source src="images/hero-video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
             <div class="hero-content">
-                <h1 class="hero-headline">
-                    <span class="line-inner fade-in">用光影，创造价值</span>
-                </h1>
+                <h1 class="hero-headline split-text-target">
+                    <span class="line-wrapper"><span class="line-inner lang-cn">用光影，创造价值</span></span>
+                    </h1>
                 <p class="large-copy fade-in" style="margin-top: 2rem;">
                     专注于品牌视觉、商业摄影及创意内容制作。
                 </p>
                 <a href="works.html" class="button cta-button fade-in" style="margin-top: 3rem;">查看我们的作品</a>
             </div>
+            <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
         </section>
 
-        <section class="section is-light-blue">
+        <section class="section is-light-blue" data-theme="light">
             <div class="container">
                 <h2 class="section-sub-title fade-in">我们的价值</h2>
                 <div class="services-grid">
@@ -58,11 +61,11 @@
                         </p>
                     </div>
                     <div class="service-right">
-                        <div class="service-item fade-in">
+                        <div class="service-item fade-in" data-delay="0.1">
                             <h3>01. 品牌级摄影</h3>
                             <p>从概念企划到后期精修，提供全流程品牌商业摄影服务，提升您的品牌形象。</p>
                         </div>
-                        <div class="service-item fade-in">
+                        <div class="service-item fade-in" data-delay="0.2">
                             <h3>02. 创意与叙事</h3>
                             <p>我们擅长将抽象概念转化为引人入胜的视觉故事，赋予作品独特的灵魂与深度。</p>
                         </div>
@@ -76,9 +79,10 @@
                     <span>• CREATIVE DIRECTION</span>
                 </div>
             </div>
+             <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
         </section>
 
-        <section class="section is-dark">
+        <section class="section is-dark" data-theme="dark">
             <div class="container">
                 <h2 class="section-sub-title fade-in">精选项目</h2>
                 <h2 class="section-title fade-in">最新作品</h2>
@@ -111,9 +115,10 @@
                     <a href="works.html" class="button cta-button">查看全部作品</a>
                 </div>
             </div>
+             <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
         </section>
 
-        <section class="section is-light-blue">
+        <section class="section is-light-blue" data-theme="light">
             <div class="container about-contact-grid">
                 <div class="about-section fade-in">
                     <h2 class="section-sub-title">关于 WXZ Studio</h2>
@@ -144,26 +149,27 @@
             <div class="copyright">&copy; 2025 WXZ Studio. All Rights Reserved.</div>
             
             <div class="lang-switch-desktop">
-                <button class="active">中文</button>
-                <button>EN</button>
+                <button class="active" id="btn-cn-footer">中文</button>
+                <button id="btn-kr-footer">EN</button>
             </div>
         </div>
     </footer>
     
-    <div class="nav-overlay"></div>
-    <div class="mobile-nav">
-        <button class="close-btn">&times;</button>
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="mobile-nav" id="mobileMenu">
+        <button class="close-btn" id="closeMobileMenu">&times;</button>
         <ul class="mobile-menu-list">
-            <li><a href="index.html">主页</a></li>
-            <li><a href="works.html">作品</a></li>
-            <li><a href="about.html">关于</a></li>
-            <li><a href="contact.html">联系我们</a></li>
+            <li><a href="index.html" onclick="closeMobileMenu()">主页</a></li>
+            <li><a href="works.html" onclick="closeMobileMenu()">作品</a></li>
+            <li><a href="about.html" onclick="closeMobileMenu()">关于</a></li>
+            <li><a href="contact.html" onclick="closeMobileMenu()">联系我们</a></li>
         </ul>
         <div class="lang-switch-mobile">
-            <button class="active">中文</button>
-            <button>EN</button>
+            <button class="active" id="btn-cn-mobile" onclick="switchLanguage('cn')">中文</button>
+            <button id="btn-kr-mobile" onclick="switchLanguage('kr')">EN</button>
         </div>
     </div>
     
-    </body>
+    <script src="script.js"></script>
+</body>
 </html>

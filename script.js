@@ -6,6 +6,36 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
     // ===========================================
+    // 移动端视频自动播放修复 (Play Attempt)
+    // ===========================================
+    function initVideoAutoplay() {
+        const heroVideo = document.querySelector('.hero-video');
+
+        if (heroVideo) {
+            // 尝试播放视频
+            const playPromise = heroVideo.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // 视频播放成功
+                    console.log("Hero video started successfully.");
+                }).catch(error => {
+                    // 视频播放失败，执行最终兜底方案：静音后再次尝试播放
+                    console.warn("Video auto-play failed. Retrying with explicit mute/play logic.", error);
+                    
+                    // 确保视频是静音状态 (双重确认)
+                    heroVideo.muted = true;
+                    heroVideo.play().catch(finalError => {
+                        console.error("Final attempt to play video failed:", finalError);
+                        // 最终失败时，视频将保持在第一帧，等待用户交互
+                    });
+                });
+            }
+        }
+    }
+
+
+    // ===========================================
     // 自定义 SplitText 模拟 (模拟逐行/词动画)
     // -------------------------------------------
     // 依赖 HTML 结构: <span class="line-wrapper"><span class="line-inner">Text...</span></span>
@@ -15,11 +45,8 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         const targets = document.querySelectorAll('.split-text-target');
 
         targets.forEach(target => {
-            // 确保只选择当前语言的元素
-            if (target.classList.contains('hidden')) return;
-
-            // 针对每个 line-inner 执行动画
-            const lines = target.querySelectorAll('.line-inner');
+            // 针对每个可见的 line-inner 执行动画
+            const lines = target.querySelectorAll('.line-inner:not(.hidden)');
 
             gsap.from(lines, {
                 yPercent: 100, // 向上移动
@@ -46,6 +73,7 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
             // 确保只选择当前语言的元素
             if (target.classList.contains('hidden')) return;
             
+            // 使用 data-delay 实现错开效果
             const delay = parseFloat(target.getAttribute('data-delay')) || 0;
 
             gsap.from(target, {
@@ -67,38 +95,40 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     // 导航主题切换 (Sticky Nav Swap)
     // ===========================================
     function initNavThemeSwap() {
-        const navWrap = document.querySelector('.nav-wrap');
-        
-        document.querySelectorAll('.nav-theme-trigger').forEach((trigger, index) => {
+        // 获取所有主题触发点
+        document.querySelectorAll('.nav-theme-trigger').forEach((trigger) => {
             
-            // 获取当前 section 的主题
             const section = trigger.closest('.section');
             const theme = section ? section.getAttribute('data-theme') : 'dark';
             const isDark = (theme === 'dark');
 
-            // 创建 ScrollTrigger 实例
             ScrollTrigger.create({
                 trigger: trigger,
                 start: "top 50%", // 当触发点进入视口中间时
+                end: "bottom 50%",
                 // markers: true, // 调试用
-                onEnter: () => {
-                    // 当进入主题对应的 section 时，设置 body 的主题类
-                    document.body.classList.toggle('light-theme', !isDark);
-                    document.body.setAttribute('data-theme', theme);
-                },
-                onLeaveBack: () => {
-                    // 当离开主题对应的 section 时，恢复到上一个 section 的主题
-                    // 由于是遍历，我们可以简单地切换到相反的主题
-                    if (index === 0) {
-                        // 初始 Hero section 是 dark
-                        document.body.classList.remove('light-theme');
-                        document.body.setAttribute('data-theme', 'dark');
+                
+                onToggle: (self) => {
+                    // 仅在当前触发点处于活动状态时更新主题
+                    if (self.isActive) {
+                        document.body.classList.toggle('light-theme', !isDark);
                     } else {
-                        // 切换到上一个 section 的主题
-                        const prevSection = document.querySelectorAll('.section')[index];
-                        const prevTheme = prevSection ? prevSection.getAttribute('data-theme') : 'dark';
-                        document.body.classList.toggle('light-theme', (prevTheme !== 'dark'));
-                        document.body.setAttribute('data-theme', prevTheme);
+                        // 当离开或回到顶部时，获取上一个 section 的主题
+                        const previousTrigger = self.trigger.previousElementSibling && self.trigger.previousElementSibling.classList.contains('nav-theme-trigger') ? self.trigger.previousElementSibling : null;
+                        
+                        // 检查触发点的垂直位置
+                        const scrollPos = ScrollTrigger.scroller.scrollTop;
+                        const triggerPos = self.start;
+
+                        if (scrollPos < triggerPos) {
+                             // 向上滚动，恢复到上一个 section 的主题
+                            const prevSection = section.previousElementSibling;
+                            const prevTheme = prevSection && prevSection.classList.contains('section') ? prevSection.getAttribute('data-theme') : 'dark';
+
+                            document.body.classList.toggle('light-theme', (prevTheme !== 'dark'));
+                        } else {
+                            // 向下滚动，当前 section 主题已在 onToggle(isActive=true) 中处理
+                        }
                     }
                 }
             });
@@ -128,26 +158,26 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     // 语言切换逻辑 (Language Switch Logic)
     // ===========================================
     function switchLanguage(lang) {
+        // 假设中文为 'cn', 英文/韩语为 'kr'
         const cnElements = document.querySelectorAll('.lang-cn');
         const krElements = document.querySelectorAll('.lang-kr');
+        
+        // 仅处理按钮和页面语言设置
+        // 实际多语言内容应在 HTML 中使用 lang-cn/lang-kr 类控制 display:none
 
         if (lang === 'cn') {
-            cnElements.forEach(el => el.classList.remove('hidden'));
-            krElements.forEach(el => el.classList.add('hidden'));
             document.documentElement.lang = 'zh-CN';
             localStorage.setItem('userLang', 'cn');
         } else {
-            cnElements.forEach(el => el.classList.add('hidden'));
-            krElements.forEach(el => el.classList.remove('hidden'));
-            document.documentElement.lang = 'ko-KR';
+            document.documentElement.lang = 'en'; // 默认为英文
             localStorage.setItem('userLang', 'kr');
         }
         
         updateLanguageButtonStates(lang);
         
-        // ** 重新初始化动画 ** (因为元素隐藏/显示状态改变)
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        initAnimations(); 
+        // 重新初始化动画 (因为元素隐藏/显示状态改变)
+        // ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        // initAnimations(); 
     }
 
     function updateLanguageButtonStates(lang) {
@@ -161,7 +191,10 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         buttons.forEach(btn => {
             if (btn) {
                 const btnLang = btn.id.includes('-cn-') ? 'cn' : 'kr';
+                // 使用 toggle() 来添加或移除 active 类
                 btn.classList.toggle('active', btnLang === lang);
+                // 绑定点击事件，确保按钮功能正常
+                btn.onclick = () => switchLanguage(btnLang);
             }
         });
     }
@@ -180,7 +213,8 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         document.body.classList.add('no-scroll');
     }
 
-    window.closeMobileMenu = function() { // 暴露给全局的函数
+    // 暴露给全局的函数，以便在 HTML 中的 a 标签中使用 onclick="closeMobileMenu()"
+    window.closeMobileMenu = function() { 
         mobileMenu.classList.remove('active');
         navOverlay.classList.remove('active');
         document.body.classList.remove('no-scroll');
@@ -205,15 +239,19 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     // 页面加载完成
     // ===========================================
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. 初始化横向滚动
+        // 1. 尝试自动播放视频 (移动端修复)
+        initVideoAutoplay(); 
+        
+        // 2. 初始化横向滚动
         initSlidingText(); 
 
-        // 2. 检查本地存储的语言设置并应用
+        // 3. 检查本地存储的语言设置并应用
         const userPreferredLang = localStorage.getItem('userLang') || 'cn'; 
+        // 暴露 switchLanguage 函数到全局 window 对象，以便 HTML 按钮调用
+        window.switchLanguage = switchLanguage; 
         switchLanguage(userPreferredLang); 
-        window.switchLanguage = switchLanguage;
         
-        // 3. 初始动画 (SplitText, FadeIn, Nav Swap)
+        // 4. 初始动画 (SplitText, FadeIn, Nav Swap)
         initAnimations();
     });
 }
