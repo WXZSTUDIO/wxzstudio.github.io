@@ -6,42 +6,59 @@
     <title>作品 - WXZ Studio</title>
     <link rel="stylesheet" href="style.css"> 
 </head>
-<body>
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="logo">WXZ Studio</a>
-            <nav class="nav">
-                <a href="works.html" class="nav-item current">作品</a>
-                <a href="services.html" class="nav-item">服务</a>
+<body class="is-dark">
+    <div class="nav-wrap">
+        <div class="container nav-inner">
+            <a href="index.html" class="logo-link">
+                <img src="path/to/logo-dark-theme.svg" alt="WXZ Studio" class="logo-img logo-dark-theme">
+                <img src="path/to/logo-light-theme.svg" alt="WXZ Studio" class="logo-img logo-light-theme hidden">
+            </a>
+            <nav class="nav-desktop">
+                <a href="works.html" class="nav-item is-active">作品</a>
                 <a href="about.html" class="nav-item">关于</a>
-                <a href="contact.html" class="nav-item button">联系我们</a>
+                <a href="contact.html" class="nav-contact-btn button">联系我们</a>
             </nav>
+            <button class="menu-button">菜单</button>
         </div>
-    </header>
-
-    <main class="main-content">
-        <section class="page-hero works-hero">
-            <h1>精选作品</h1>
+    </div>
+    
+    <main>
+        <section class="page-hero-section is-dark">
+            <h1>精选作品集</h1>
             <p>我们用视觉语言，讲述每一个独特的时刻和故事。</p>
         </section>
 
-        <section class="gallery-section container">
-            <div class="work-grid">
-                <div class="work-item">
-                    <img src="path/to/work1.jpg" alt="作品名称 1">
-                    <p class="work-title">商业肖像摄影</p>
+        <section class="section is-dark">
+            <div class="container">
+                <h2 class="section-title">我们的项目</h2>
+                <div class="work-grid">
+                    <a href="#" class="work-item fade-in">
+                        <img src="path/to/work1.jpg" alt="项目名称 1">
+                        <div class="work-info">
+                            <h3>商业肖像摄影</h3>
+                            <p>品牌 / 2024</p>
+                        </div>
+                    </a>
+                    <a href="#" class="work-item fade-in">
+                        <img src="path/to/work2.jpg" alt="项目名称 2">
+                        <div class="work-info">
+                            <h3>活动现场记录</h3>
+                            <p>纪实 / 2023</p>
+                        </div>
+                    </a>
+                    </div>
+                
+                <div class="cta-wrap">
+                    <a href="contact.html" class="button cta-button">联系我们定制您的项目</a>
                 </div>
-                <div class="work-item">
-                    <img src="path/to/work2.jpg" alt="作品名称 2">
-                    <p class="work-title">活动现场记录</p>
-                </div>
-                </div>
+            </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 WXZ Studio. All Rights Reserved.</p>
+    <footer class="main-footer">
+        <div class="container footer-flex">
+            <div class="footer-logo">WXZ STUDIO</div>
+            <div class="copyright">&copy; 2025 WXZ Studio. All Rights Reserved.</div>
         </div>
     </footer>
 </body>
