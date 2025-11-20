@@ -6,7 +6,6 @@
     --color-dark-bg: #111111; /* 深色背景 (更深的黑) */
     --color-white: #ffffff;
     --color-accent: #0070c9; /* Apple 蓝色作为强调色 */
-    --color-light-gray: #f5f5f7; /* Apple 背景灰 */
 
     /* 字体 (大气和现代感) */
     --font-heading: 'Montserrat', sans-serif;
@@ -14,7 +13,7 @@
     
     /* 布局变量 */
     --max-width: 1200px;
-    --nav-height: 64px;
+    --nav-height: 64px; 
     --blur-strength: 15px; /* 毛玻璃模糊强度 */
 }
 
@@ -74,7 +73,7 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-white);
 }
 .is-dark .section-sub-title, .is-dark .large-copy {
-    color: #aaaaaa; /* 深色背景下的副文本颜色 */
+    color: #aaaaaa;
 }
 .is-light {
     background-color: var(--color-background);
@@ -90,41 +89,31 @@ a { text-decoration: none; color: inherit; }
     /* 默认：深色主题导航（白色文字，半透明黑背景）*/
     background-color: rgba(17, 17, 17, 0.7); 
     backdrop-filter: blur(var(--blur-strength)); 
-    -webkit-backdrop-filter: blur(var(--blur-strength));
+    -webkit-backdrop-filter: blur(var(--blur-strength)); 
     transition: background-color 0.3s ease;
 }
 
-/* Light Theme Nav State (滚动到浅色区域时) */
+/* 导航的通用颜色设置（深色主题） */
+.nav-item, .menu-button, .nav-back-home { color: var(--color-white); }
+.nav-contact-btn { border: 1px solid var(--color-white); color: var(--color-white); }
+.logo-dark-theme { display: block; }
+.logo-light-theme { display: none; }
+
+
+/* Light Theme Nav State (滚动到浅色区域或非首页的浅色页面) */
 body.light-theme-nav .nav-wrap {
     /* 浅色导航：深色文字，半透明白背景 */
     background-color: rgba(255, 255, 255, 0.8);
 }
-
-/* Nav Link States (根据主题变化) */
-.nav-item, .menu-button, .back-to-home-btn { color: var(--color-white); }
-.nav-contact-btn { border: 1px solid var(--color-white); color: var(--color-white); }
-
 body.light-theme-nav .nav-item, 
 body.light-theme-nav .menu-button,
-body.light-theme-nav .back-to-home-btn { 
+body.light-theme-nav .nav-back-home { 
     color: var(--color-primary); 
 }
 body.light-theme-nav .nav-contact-btn {
     border: 1px solid var(--color-primary); 
     color: var(--color-primary);
 }
-
-/* Logo Switching */
-.logo-light-theme, .logo-dark-theme {
-    height: 100%; width: auto; 
-    display: none;
-}
-.logo-link { height: 35px; }
-
-/* 默认状态 (深色导航) */
-.logo-dark-theme { display: block; }
-
-/* 切换到浅色主题导航 */
 body.light-theme-nav .logo-dark-theme { display: none; }
 body.light-theme-nav .logo-light-theme { display: block; }
 
@@ -133,6 +122,31 @@ body.light-theme-nav .logo-light-theme { display: block; }
     display: flex; justify-content: space-between; align-items: center;
     height: 100%;
 }
+.logo-link {
+    height: 35px; 
+    margin-right: 20px;
+}
+.logo-img {
+    height: 100%; width: auto; 
+}
+
+/* 返回首页按钮 */
+.nav-back-home {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0;
+    margin-right: 20px;
+    font-family: inherit;
+}
+.nav-back-home::before {
+    content: "← ";
+}
+
+
+/* Desktop Navigation */
 .nav-desktop {
     display: none; 
     gap: 2.5rem;
@@ -140,18 +154,8 @@ body.light-theme-nav .logo-light-theme { display: block; }
     font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.95rem;
+    margin-left: auto; /* 将链接推到右侧 */
 }
-/* 返回首页按钮样式 */
-.back-to-home-btn {
-    font-size: 0.95rem;
-    font-weight: 500;
-    padding-right: 20px;
-    border-right: 1px solid rgba(255, 255, 255, 0.5); /* 分隔线 */
-}
-body.light-theme-nav .back-to-home-btn {
-    border-right: 1px solid rgba(0, 0, 0, 0.3);
-}
-
 .nav-contact-btn {
     padding: 0.4rem 1.2rem;
     border-radius: 9999px; 
@@ -176,6 +180,7 @@ body.light-theme-nav .back-to-home-btn {
     padding: 0;
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
+    flex-direction: column; /* 垂直居中 */
 }
 .hero-video-wrapper {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -199,13 +204,22 @@ body.light-theme-nav .back-to-home-btn {
     max-width: 1000px;
     padding: 0 20px;
 }
-.hero-headline {
-    font-size: clamp(3rem, 10vw, 7.5rem); 
-    font-weight: 900;
-    line-height: 1.05;
-    color: var(--color-white);
+.hero-logo-box {
     margin-bottom: 20px;
-    font-family: var(--font-heading);
+}
+.hero-logo-img {
+    height: clamp(50px, 10vw, 150px); /* 响应式 Logo 大小 */
+    width: auto;
+}
+.hero-logo-text {
+    font-size: clamp(1.5rem, 5vw, 3rem); /* 辅助文字大小 */
+    font-weight: 500;
+    color: var(--color-white);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-top: 10px;
+}
+.hero-headline { /* 保持，但不再使用它作为主要标题 */
+    display: none;
 }
 
 /* === Core Business Section (精简版) === */
@@ -285,8 +299,8 @@ body.light-theme-nav .back-to-home-btn {
 
 /* === Regulatory Notes (Apple 风格的须知) === */
 .regulatory-notes {
-    background-color: var(--color-light-gray); 
-    color: #515154; 
+    background-color: #f5f5f7; /* 浅灰色背景 */
+    color: #515154; /* 灰色文字 */
     padding: 20px 0;
     font-size: 0.8rem;
     line-height: 1.6;
@@ -308,10 +322,6 @@ body.light-theme-nav .back-to-home-btn {
 .notes-container li {
     margin-bottom: 10px;
 }
-.notes-container li strong {
-    font-weight: 700;
-    color: var(--color-primary);
-}
 .notes-container .disclaimer {
     margin-top: 15px;
     font-size: 0.7rem;
@@ -319,10 +329,10 @@ body.light-theme-nav .back-to-home-btn {
 }
 
 
-/* --- Contact Page Styles (Apple 大方块设计) --- */
+/* --- Contact Page Styles (大方块 Apple 设计) --- */
 .contact-page-content {
     padding-top: calc(var(--nav-height) + 60px);
-    max-width: 1000px;
+    max-width: 1000px; /* 更宽的容器 */
     margin: 0 auto;
     text-align: center;
     min-height: 80vh;
@@ -330,72 +340,43 @@ body.light-theme-nav .back-to-home-btn {
 .contact-page-content h1 {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 800;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
 }
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 30px;
-    padding-bottom: 60px;
+    gap: 20px;
 }
-.contact-box {
-    background-color: var(--color-light-gray);
-    border-radius: 18px; /* 大圆角 */
-    padding: 40px 30px;
+.contact-block {
+    background-color: #f5f5f7; /* 浅灰块背景 */
+    border-radius: 20px;
+    padding: 40px 20px;
     text-align: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
-.contact-box:hover {
-    background-color: #e8e8eb;
+.contact-block:hover {
+    background-color: #e9e9eb; /* 悬停微亮 */
 }
-.contact-box h3 {
-    font-family: var(--font-heading);
-    font-size: 1.2rem;
-    font-weight: 600;
+.contact-block h3 {
+    font-size: 1.1rem;
     color: var(--color-secondary);
-    margin-bottom: 15px;
-    letter-spacing: 0.05em;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
-.contact-box .contact-id {
+.contact-block .id-value {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
-    line-height: 1.1;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 700;
     color: var(--color-primary);
     display: block;
 }
 
 
-/* === Mobile Nav Panel */
-.nav-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.8); z-index: 1000;
-    opacity: 0; visibility: hidden; transition: opacity 0.3s;
-}
-.mobile-nav {
-    position: fixed; top: 0; right: 0; width: 70%; max-width: 300px;
-    height: 100%; background: var(--color-dark-bg); z-index: 1001;
-    transform: translateX(100%); transition: transform 0.3s;
-    padding: 40px 20px;
-}
-.mobile-nav.active, .nav-overlay.active {
-    opacity: 1; visibility: visible;
-}
-.mobile-nav.active {
-    transform: translateX(0);
-}
-.close-btn {
-    position: absolute; top: 20px; right: 20px;
-    background: none; border: none; color: var(--color-white); font-size: 2rem;
-}
-.mobile-menu-list {
-    list-style: none;
-    margin-top: 50px;
-}
-.mobile-menu-list li a {
-    display: block; padding: 15px 0;
-    font-family: var(--font-body); font-size: 1.1rem;
-    color: var(--color-white); 
+/* --- Works Page Styles --- */
+.page-header {
+    padding-top: calc(var(--nav-height) + 80px); /* 留出导航空间 */
+    text-align: center;
+    padding-bottom: 60px;
 }
 
 
@@ -407,22 +388,25 @@ body.light-theme-nav .back-to-home-btn {
     .section {
         padding: 80px 0;
     }
-    .hero-headline {
-        font-size: clamp(6rem, 8vw, 7.5rem);
+    .hero-logo-img {
+        height: clamp(80px, 8vw, 150px);
     }
     .core-business-grid {
-        grid-template-columns: repeat(2, 1fr); /* 两个主要业务板块 */
-        gap: 80px;
-        padding: 0 40px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 60px;
     }
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     .contact-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
     }
-    .contact-page-content {
-        padding-top: calc(var(--nav-height) + 120px);
+    .contact-block {
+        padding: 60px 30px;
+    }
+    .contact-block .id-value {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
     }
 }
 

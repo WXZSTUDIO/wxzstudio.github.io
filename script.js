@@ -6,46 +6,31 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
     // ===========================================
-    // 移动端视频自动播放修复 (Play Attempt)
-    // ===========================================
-    function initVideoAutoplay() {
-        const heroVideo = document.querySelector('.hero-video');
-
-        if (heroVideo) {
-            const playPromise = heroVideo.play();
-
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log("Hero video started successfully.");
-                }).catch(error => {
-                    console.warn("Video auto-play failed. Retrying with explicit mute/play logic.", error);
-                    heroVideo.muted = true;
-                    heroVideo.play().catch(finalError => {
-                        console.error("Final attempt to play video failed:", finalError);
-                    });
-                });
-            }
-        }
-    }
-
-    // ===========================================
     // 自定义 SplitText 模拟 (模拟逐行/词动画)
+    // -------------------------------------------
+    // 依赖 HTML 结构: <span class="line-wrapper"><span class="line-inner">Text...</span></span>
     // ===========================================
     function initSplitTextAnimations() {
+        // 选中所有带有 split-text-target 类的元素
         const targets = document.querySelectorAll('.split-text-target');
 
         targets.forEach(target => {
-            const lines = target.querySelectorAll('.line-inner:not(.hidden)');
+            // 确保只选择当前语言的元素
+            if (target.classList.contains('hidden')) return;
+
+            // 针对每个 line-inner 执行动画
+            const lines = target.querySelectorAll('.line-inner');
 
             gsap.from(lines, {
-                yPercent: 100, 
+                yPercent: 100, // 向上移动
                 opacity: 0,
                 duration: 1.2,
                 ease: "power3.out",
                 stagger: 0.1,
                 scrollTrigger: {
                     trigger: target,
-                    start: "top 90%",
+                    start: "top 90%", // 当目标顶部进入视口 90% 时开始
+                    // markers: true, // 调试用
                 }
             });
         });
@@ -55,111 +40,80 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     // 常规滚动淡入动画 (Fade In & Slide Up)
     // ===========================================
     function initFadeInAnimations() {
-        const fadeInTargets = document.querySelectorAll('.fade-in');
+        const fadeInElements = document.querySelectorAll('.fade-in');
 
-        fadeInTargets.forEach(target => {
-            if (target.classList.contains('hidden')) return;
+        fadeInElements.forEach((el, index) => {
+            const delay = el.dataset.delay ? parseFloat(el.dataset.delay) : 0;
             
-            const delay = parseFloat(target.getAttribute('data-delay')) || 0;
-
-            gsap.from(target, {
-                y: 30, 
+            gsap.from(el, {
+                y: 50, // 向上滑动
                 opacity: 0,
                 duration: 0.8,
-                ease: "power2.out",
                 delay: delay,
+                ease: "power2.out",
                 scrollTrigger: {
-                    trigger: target,
-                    start: "top 95%", 
+                    trigger: el,
+                    start: "top 95%", // 当元素进入视口 95% 时开始
+                    // once: true, // 只触发一次
                 }
             });
         });
     }
 
     // ===========================================
-    // 导航主题切换 (Sticky Nav Swap)
+    // 导航主题切换 (深色/浅色)
     // ===========================================
     function initNavThemeSwap() {
-        document.querySelectorAll('.nav-theme-trigger').forEach((trigger) => {
-            
-            const section = trigger.closest('.section');
-            const theme = section ? section.getAttribute('data-theme') : 'dark';
-            const isDark = (theme === 'dark');
+        const navTriggers = document.querySelectorAll('.nav-theme-trigger');
+        const body = document.body;
 
+        navTriggers.forEach(trigger => {
+            // 找到触发器所在的 Section
+            const section = trigger.closest('.section');
+            if (!section) return;
+
+            // 获取下一个 Section 的主题
+            const nextSection = section.nextElementSibling;
+            if (!nextSection || !nextSection.classList.contains('section')) return;
+            
+            const nextTheme = nextSection.dataset.theme || 'dark';
+            const isLight = nextTheme === 'light';
+            
             ScrollTrigger.create({
                 trigger: trigger,
-                start: "top 50%", 
-                end: "bottom 50%",
-                
-                onToggle: (self) => {
-                    if (self.isActive) {
-                        document.body.classList.toggle('light-theme-nav', !isDark);
+                start: "bottom top", // 当触发器的底部到达视口顶部时触发
+                // markers: true, // 调试用
+                onEnter: () => {
+                    if (isLight) {
+                        body.classList.add('light-theme-nav');
                     } else {
-                        const scrollPos = ScrollTrigger.scroller.scrollTop;
-                        const triggerPos = self.start;
-
-                        if (scrollPos < triggerPos) {
-                            const prevSection = section.previousElementSibling;
-                            const prevTheme = prevSection && prevSection.classList.contains('section') ? prevSection.getAttribute('data-theme') : 'dark';
-
-                            document.body.classList.toggle('light-theme-nav', (prevTheme !== 'dark'));
-                        } 
+                        body.classList.remove('light-theme-nav');
+                    }
+                },
+                onLeaveBack: () => {
+                    // 当向上滚动离开触发器时，切换回当前 Section 的主题
+                    const currentTheme = section.dataset.theme || 'dark';
+                    if (currentTheme === 'light') {
+                        body.classList.add('light-theme-nav');
+                    } else {
+                        body.classList.remove('light-theme-nav');
                     }
                 }
             });
         });
-    }
-    
-    // ===========================================
-    // 作品筛选逻辑 (Works Filter) - NEW FUNCTION
-    // ===========================================
-    function initWorksFilter() {
-        const filterButtons = document.querySelectorAll('.works-filter .filter-btn');
-        const worksGrid = document.querySelector('.works-grid');
-        if (!worksGrid) return;
-        const workItems = worksGrid.querySelectorAll('.work-item');
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const filter = e.target.getAttribute('data-filter');
-
-                // 1. 切换按钮的 active 状态
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-
-                // 2. 筛选作品
-                workItems.forEach(item => {
-                    const category = item.getAttribute('data-category');
-                    const shouldShow = filter === 'all' || category === filter;
-                    
-                    if (shouldShow) {
-                        // 显示元素
-                        item.style.display = 'block';
-                        gsap.to(item, {
-                            opacity: 1,
-                            scale: 1,
-                            duration: 0.5,
-                            delay: Math.random() * 0.1, 
-                            clearProps: "all" // 确保清除所有 GSAP 设置的样式，恢复 CSS 控制
-                        });
-                    } else {
-                        // 隐藏元素
-                        gsap.to(item, {
-                            opacity: 0,
-                            scale: 0.95,
-                            duration: 0.3,
-                            onComplete: () => {
-                                item.style.display = 'none';
-                            }
-                        });
-                    }
-                });
-            });
-        });
+        // 非首页默认主题处理 (对于非首页页面，我们直接根据body的class设置一次，不依赖滚动)
+        if (body.classList.contains('is-other-page')) {
+             if (body.classList.contains('is-light')) {
+                body.classList.add('light-theme-nav');
+             } else {
+                body.classList.remove('light-theme-nav');
+             }
+        }
     }
 
     // ===========================================
-    // 导航菜单逻辑 (Mobile Menu)
+    // 移动端菜单逻辑
     // ===========================================
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -172,7 +126,7 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         document.body.classList.add('no-scroll');
     }
 
-    window.closeMobileMenu = function() { 
+    window.closeMobileMenu = function() { // 暴露给全局的函数
         mobileMenu.classList.remove('active');
         navOverlay.classList.remove('active');
         document.body.classList.remove('no-scroll');
@@ -197,15 +151,7 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     // 页面加载完成
     // ===========================================
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. 仅在首页尝试自动播放视频
-        if (document.querySelector('.hero-video')) {
-             initVideoAutoplay(); 
-        }
-       
-        // 2. 初始化作品筛选功能 (works.html 专用)
-        initWorksFilter();
-        
-        // 3. 初始动画 (SplitText, FadeIn, Nav Swap)
+        // 1. 初始动画 (SplitText, FadeIn, Nav Swap)
         initAnimations();
     });
 }
