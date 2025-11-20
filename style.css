@@ -14,7 +14,7 @@
     /* --- Layout & Effects --- */
     --max-width: 1000px; /* Apple 内容区域通常较窄 */
     --nav-height: 52px; /* Apple 官网导航通常较窄 */
-    --mobile-nav-height: 60px; 
+    --mobile-nav-height: 50px; /* 底部导航高度 */
     --blur-strength: 20px; /* 强模糊 */
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1); /* 丝滑过渡曲线 */
 }
@@ -31,289 +31,219 @@ body {
     font-family: var(--font-body);
     background-color: var(--color-background); 
     color: var(--color-primary);
-    line-height: 1.47059;
-    letter-spacing: -0.022em;
+    line-height: 1.6;
     overflow-x: hidden;
-    /* 使用丝滑过渡 */
-    transition: background-color 0.5s var(--transition-smooth), color 0.5s var(--transition-smooth);
-    /* 底部留出空间给固定导航 */
+    transition: background-color 0.4s var(--transition-smooth), color 0.4s var(--transition-smooth);
+    /* 手机端为底部导航预留空间 */
     padding-bottom: var(--mobile-nav-height); 
 }
-body.is-dark {
-    background-color: var(--color-dark-bg);
-    color: var(--color-white);
-}
-body.no-scroll { overflow: hidden; }
 
-a { text-decoration: none; color: inherit; transition: opacity 0.3s var(--transition-smooth); }
-a:hover { opacity: 0.8; }
+/* 强制深色/浅色模式 */
+body.is-dark { background-color: var(--color-dark-bg); color: var(--color-white); }
+body.is-light { background-color: var(--color-background); color: var(--color-primary); }
+
+a { text-decoration: none; color: inherit; }
 .hidden { display: none !important; }
+.no-scroll { overflow: hidden; } 
 
-/* Global Typography */
-.container { width: 90%; max-width: var(--max-width); margin: 0 auto; }
-.section { padding: 120px 0; position: relative; overflow: hidden;}
-
-.section-title {
-    font-size: 48px; font-weight: 600; margin-bottom: 20px;
-    letter-spacing: -0.005em; font-family: var(--font-heading);
+/* Container & Section */
+.container { 
+    max-width: var(--max-width); 
+    margin: 0 auto; 
+    padding: 0 1.5rem; 
 }
-.section-sub-title {
-    font-size: 21px; font-weight: 600; color: var(--color-secondary);
-    margin-bottom: 12px; font-family: var(--font-heading);
-}
-.large-copy {
-    font-size: 21px; line-height: 1.4; font-weight: 400;
-    color: var(--color-secondary);
-}
-.is-dark .large-copy { color: #a1a1a6; }
+.section { 
+    padding: 6rem 0; 
+    position: relative; 
+    min-height: 50vh; 
+} 
+.is-dark-section { background-color: var(--color-dark-bg); color: var(--color-white); }
+.is-light-section { background-color: var(--color-background); color: var(--color-primary); }
 
-
-/* === 1. Apple 风格顶部导航 (Ultra-Premium Glassmorphism) === */
+/* Navigation */
 .nav-wrap {
-    position: fixed; top: 0; left: 0; width: 100%;
-    height: var(--nav-height);
-    z-index: 9999;
-    /* 核心：Apple 风格的半透明黑色背景 + 高斯模糊 */
-    background-color: rgba(22, 22, 23, 0.8); 
-    backdrop-filter: saturate(180%) blur(var(--blur-strength));
-    -webkit-backdrop-filter: saturate(180%) blur(var(--blur-strength));
-    /* 细节：底部微弱边框 */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: background-color 0.5s var(--transition-smooth), border-color 0.5s var(--transition-smooth);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: var(--nav-height); display: flex; align-items: center;
+    background-color: rgba(255, 255, 255, 0.7); /* 默认浅色/白色背景 */
+    backdrop-filter: blur(var(--blur-strength)); 
+    -webkit-backdrop-filter: blur(var(--blur-strength)); 
+    transition: background-color 0.4s var(--transition-smooth);
 }
-
 .nav-inner {
-    max-width: 980px; 
-    margin: 0 auto; padding: 0 20px;
     display: flex; justify-content: space-between; align-items: center;
-    height: 100%;
+    width: 100%; padding: 0 1.5rem; 
 }
 
-/* 品牌名 (纯文本 Logo) */
-.logo-link {
-    font-family: var(--font-heading); font-weight: 600; font-size: 19px;
-    color: #f5f5f7; letter-spacing: -0.01em;
+/* --- 深色导航模式 --- */
+body.dark-theme-nav .nav-wrap {
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: var(--color-white); 
 }
-/* 隐藏所有图片 Logo */
-.logo-img { display: none !important; }
-
-/* 导航链接 */
-.nav-desktop { display: none; gap: 32px; align-items: center; margin-left: auto;}
-.nav-item {
-    color: #f5f5f7; font-size: 12px; font-weight: 400; opacity: 0.8;
-    letter-spacing: -0.01em; transition: opacity 0.3s var(--transition-smooth);
+body.dark-theme-nav .nav-wrap .logo-dark-theme { display: block; }
+body.dark-theme-nav .nav-wrap .logo-light-theme { display: none; }
+body.dark-theme-nav .nav-wrap .nav-contact-btn { 
+    background-color: var(--color-white); color: var(--color-primary); 
 }
-.nav-item:hover { opacity: 1; color: #fff; }
 
-/* 浅色导航状态 (滚动到白色区域) */
+/* --- 浅色导航模式 --- */
 body.light-theme-nav .nav-wrap {
-    background-color: rgba(251, 251, 253, 0.8);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: rgba(255, 255, 255, 0.7); 
+    color: var(--color-primary); 
 }
-body.light-theme-nav .logo-link,
-body.light-theme-nav .nav-item { color: #1d1d1f; }
-body.light-theme-nav .nav-contact-btn { 
-    background-color: var(--color-primary); color: #fff; border-color: var(--color-primary); 
-}
-
-/* 导航栏联系按钮 */
-.nav-contact-btn {
-    padding: 4px 12px;
-    border-radius: 980px;
-    font-size: 12px; font-weight: 400;
-    background-color: #fff; color: #1d1d1f;
-    border: 1px solid #fff;
-    transition: all 0.3s var(--transition-smooth);
-}
-.nav-contact-btn:hover {
-    background-color: transparent; color: #fff;
-}
-body.light-theme-nav .nav-contact-btn:hover {
-    background-color: transparent; color: #1d1d1f;
+body.light-theme-nav .nav-wrap .logo-dark-theme { display: none; }
+body.light-theme-nav .nav-wrap .logo-light-theme { display: block; }
+body.light-theme-nav .nav-wrap .nav-contact-btn { 
+    background-color: var(--color-primary); color: var(--color-white); 
 }
 
-
-/* === 2. Apple 风格按钮 (Smooth Interaction) === */
-.apple-btn {
-    display: inline-block;
-    padding: 12px 24px;
-    border-radius: 980px;
-    font-size: 14px; font-weight: 600;
-    background-color: #0071e3; color: #fff;
-    cursor: pointer; border: none; outline: none;
-    /* 性能优化：GPU 加速 */
-    transform: translateZ(0);
-    will-change: transform, box-shadow;
-    transition: all 0.4s var(--transition-smooth);
+.logo-link {
+    font-family: var(--font-heading); font-weight: 900; font-size: 1.2rem; display: block;
+    position: relative; /* 用于手机居中 */
 }
-.apple-btn:hover {
-    background-color: #0077ed;
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+.logo-img { height: 1.8rem; width: auto; }
+.nav-desktop { display: none; gap: 2.5rem; align-items: center; } 
+.nav-item { font-size: 0.95rem; font-weight: 500; text-transform: none; } 
+
+/* Buttons */
+.apple-button {
+    display: inline-block; padding: 8px 16px; border-radius: 9999px;
+    background: var(--color-accent); color: var(--color-white);
+    font-size: 0.9rem; font-weight: 500; text-align: center; cursor: pointer;
+    border: none; transition: all 0.5s var(--transition-smooth); 
+    position: relative; overflow: hidden; transform: translateZ(0);
 }
-.apple-btn:active { transform: scale(0.98); }
+.apple-button:hover { filter: brightness(1.1); transform: scale(1.02) translateZ(0); }
+.apple-button:active { transform: scale(0.98) translateZ(0); filter: brightness(0.9); }
+.is-black-btn { background-color: var(--color-primary); color: var(--color-white); }
 
-/* 黑色变体 */
-.is-black-btn { background-color: #1d1d1f; color: #fff; }
-.is-black-btn:hover { background-color: #333; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-
-
-/* === Hero Section (视差滚动 + 性能优化) === */
-.is-hero {
-    height: 100vh; padding: 0;
-    display: flex; align-items: center; justify-content: center;
+/* Typography & Content */
+.hero-headline { font-size: clamp(3rem, 10vw, 8rem); }
+.large-copy {
+    font-size: clamp(1.1rem, 2.5vw, 2rem);
+    color: rgba(255, 255, 255, 0.75);
 }
-.hero-video-wrapper {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    /* 性能核心：独立图层渲染 */
-    will-change: transform; transform: translateZ(0); 
-}
-.hero-video { width: 100%; height: 100%; object-fit: cover; }
-.hero-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.4); pointer-events: none;
-}
-.hero-content { position: relative; z-index: 10; text-align: center; }
+.is-light-section .large-copy { color: var(--color-secondary); }
 
-/* 动画与排版 (GSAP Targets) */
-.fade-in { opacity: 0; transform: translateY(30px); will-change: opacity, transform; }
+.section-title { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 2rem; }
+.section-sub-title { font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--color-accent); }
 
-
-/* === 核心业务 (Grid 布局) === */
+/* Services/Business Grid (文字颜色修正保持) */
 .core-business-grid {
-    display: grid; grid-template-columns: 1fr; gap: 40px;
-    width: 88%; max-width: 980px; margin: 40px auto 0;
+    display: grid; grid-template-columns: 1fr; gap: 3rem;
+    width: 88%; max-width: 980px; margin: 60px auto 0;
 }
-.business-item { padding: 20px 0; text-align: left; }
-.business-item h3 { font-size: 24px; margin-bottom: 8px; font-weight: 600; color: #1d1d1f;}
-.business-item p { font-size: 17px; line-height: 1.5; color: #86868b; }
+.business-item { padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.2); }
+.is-light-section .business-item { border-top: 1px solid rgba(0,0,0,0.1); }
+.business-item h3 { font-size: 21px; margin-bottom: 8px; font-weight: 600; color: inherit; }
+.business-item p { font-size: 17px; line-height: 1.5; color: inherit; opacity: 0.8; }
 
-
-/* === 案例作品 (Portfolio - 交互优化) === */
+/* Portfolio */
 .portfolio-grid {
-    display: grid; grid-template-columns: 1fr; gap: 24px;
-    width: 90%; max-width: 1200px; margin: 40px auto 0;
+    display: grid; grid-template-columns: 1fr; gap: 2rem;
+    margin-top: 4rem;
 }
 .portfolio-item {
     display: block; position: relative; overflow: hidden;
-    border-radius: 18px; background: #1d1d1f;
-    transform: translateZ(0);
-    transition: transform 0.6s var(--transition-smooth), box-shadow 0.6s var(--transition-smooth);
-}
-.portfolio-item:hover {
-    transform: scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    z-index: 2;
+    border-radius: 12px; background: #1d1d1f;
+    transition: transform 0.6s var(--transition-smooth);
 }
 .portfolio-img {
     width: 100%; height: 500px; object-fit: cover;
     transition: transform 0.8s var(--transition-smooth); opacity: 0.9;
 }
-.portfolio-item:hover .portfolio-img { opacity: 1; transform: scale(1.05); }
-.portfolio-info {
-    position: absolute; bottom: 30px; left: 30px; right: 30px;
-    color: #fff; pointer-events: none; text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-.portfolio-info h3 { font-size: 24px; margin-bottom: 6px; font-weight: 700; }
-.portfolio-info p { font-size: 15px; font-weight: 500; opacity: 0.9; }
+.portfolio-info h3 { font-size: 28px; font-weight: 700; }
+.portfolio-info p { font-size: 15px; font-weight: 500; opacity: 0.8; }
+
+/* About/Contact */
+.about-contact-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; }
+.contact-info { margin-top: 2rem; }
+.contact-item { font-size: 1.1rem; line-height: 2; }
 
 
-/* === 联系/底部区域 === */
-.contact-cta-footer { text-align: center; padding: 120px 0; }
-.view-all-cta { text-align: center; margin-top: 60px; }
-
-
-/* === 合作指南 (Regulatory Notes) === */
-.regulatory-notes {
-    background: #f5f5f7; color: #86868b;
-    padding: 60px 0 40px; font-size: 12px; line-height: 1.6;
-}
-.notes-container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
-.notes-container h4 { 
-    font-family: var(--font-heading); font-weight: 600; font-size: 14px; 
-    color: #1d1d1f; margin-bottom: 20px; 
-}
-.notes-content p { margin-bottom: 12px; }
-.notes-content strong { color: #1d1d1f; font-weight: 600; }
-.disclaimer { margin-top: 30px; font-size: 11px; color: #999; }
-
-
-/* === 移动端底部固定导航栏 (Mobile Nav - 横向) === */
-.mobile-nav {
-    position: fixed; bottom: 0; left: 0; width: 100%;
+/* === NEW: Mobile Bottom Nav (手机底部导航栏 - Apple 风格) === */
+.mobile-nav-bottom {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
     height: var(--mobile-nav-height);
-    z-index: 999;
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 -1px 0 rgba(0,0,0,0.1);
-    display: flex; justify-content: center; align-items: center;
+    background-color: rgba(0, 0, 0, 0.9); /* 黑色半透明 */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    z-index: 900;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 5px;
+    color: var(--color-white);
 }
-.mobile-menu-list {
-    list-style: none; display: flex; width: 100%; max-width: 400px;
-    justify-content: space-around; padding: 0; margin: 0;
-}
-.mobile-menu-list a {
-    display: block; padding: 10px;
-    font-size: 12px; font-weight: 500; color: #86868b;
-    transition: color 0.3s var(--transition-smooth);
-}
-.mobile-menu-list a.active { color: #0071e3; }
 
-/* 隐藏不需要的元素 */
-.menu-button, .nav-overlay, .bottom-logo-area { display: none !important; }
-
-
-/* === 悬浮返回按钮 === */
-.floating-back-home {
-    position: fixed; bottom: calc(var(--mobile-nav-height) + 20px); right: 20px;
-    width: 44px; height: 44px; border-radius: 50%;
-    background: rgba(29, 29, 31, 0.8); 
-    backdrop-filter: blur(10px);
-    color: #fff; display: flex; align-items: center; justify-content: center;
-    font-size: 18px; z-index: 1002; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    opacity: 0; pointer-events: none;
-    transition: all 0.4s var(--transition-smooth);
+.mobile-nav-bottom .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7); /* 默认图标/文字颜色 */
+    transition: color 0.3s;
+    flex-grow: 1; /* 平分空间 */
+    padding: 5px 0;
 }
-.floating-back-home.show { opacity: 1; pointer-events: auto; }
-.floating-back-home:hover { background: #0071e3; transform: scale(1.1); }
 
+.mobile-nav-bottom .nav-item.is-active {
+    color: var(--color-white); /* 激活状态为纯白 */
+}
 
-/* === Contact Page Styles === */
-.contact-page-content { padding-top: 140px; text-align: center; min-height: 80vh; }
-.contact-grid {
-    display: grid; grid-template-columns: 1fr; gap: 20px;
-    max-width: 1000px; margin: 0 auto;
+/* 模拟图标 (使用 i 标签，需要自己替换为 SVG 或字体图标) */
+.mobile-nav-bottom .nav-item i {
+    font-style: normal;
+    font-size: 1.2rem;
+    margin-bottom: 2px;
 }
-.contact-block {
-    background-color: #f5f5f7; border-radius: 24px; padding: 40px;
-    text-align: center; transition: transform 0.3s var(--transition-smooth);
-}
-.contact-block:hover { transform: scale(1.02); background-color: #e8e8ed; }
-.contact-block h3 { font-size: 14px; color: #86868b; margin-bottom: 8px; font-weight: 500; }
-.contact-block .id-value {
-    font-size: 28px; font-weight: 700; color: #1d1d1f; display: block; margin-top: 10px;
-}
-.contact-icon-box { font-size: 32px; margin-bottom: 15px; }
-.contact-icon { display: inline-block; width: 40px; height: 40px; }
-.contact-icon img { width: 100%; height: 100%; object-fit: contain; opacity: 0.8; }
+/* 实际应用中，您需要确保 icon-home, icon-works, icon-contact 对应您的图标字体或 SVG */
+
+/* Footer */
+.main-footer { padding: 4rem 0 8rem; background-color: var(--color-dark-bg); color: var(--color-white); }
+.footer-flex { display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 1.5rem; }
+.copyright { font-size: 0.8rem; color: #86868b; }
+.lang-switch-desktop { display: none; }
 
 
 /* =========================================
-   Media Queries (Desktop)
+   Media Queries (Mobile - 991px 及以下)
    ========================================= */
-@media (min-width: 992px) {
-    body { padding-bottom: 0; }
-    .mobile-nav { display: none; } 
-    .nav-desktop { display: flex; }
-    .menu-button { display: none; }
-    
-    .core-business-grid { grid-template-columns: 1fr 1fr; gap: 80px; }
-    .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
-    
-    .contact-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
-    .contact-block { padding: 60px 30px; }
-    .contact-block .id-value { font-size: 32px; }
 
-    .floating-back-home { bottom: 40px; right: 40px; }
+@media (max-width: 991px) {
+    /* 强制隐藏桌面导航和语言切换 */
+    .nav-desktop { display: none !important; }
+    .lang-switch-desktop { display: none !important; }
+    .main-footer { padding-bottom: calc(4rem + var(--mobile-nav-height)); } /* 底部预留更多空间 */
+    
+    /* 顶部导航栏 Logo 居中 */
+    .nav-inner { justify-content: center; position: relative; } /* 确保容器居中 */
+    .logo-link { 
+        position: absolute; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        display: block;
+    }
+    .nav-contact-btn { display: none; } /* 隐藏顶部联系按钮 */
+}
+
+
+/* =========================================
+   Media Queries (Desktop - 992px 及以上)
+   ========================================= */
+
+@media (min-width: 992px) {
+    /* 桌面端隐藏底部导航，并取消 body 的 padding-bottom */
+    .mobile-nav-bottom { display: none !important; }
+    body { padding-bottom: 0; } 
+    
+    .nav-desktop { display: flex; }
+    .nav-inner { justify-content: space-between; } /* 桌面端恢复 Logo 靠左 */
+    .logo-link { position: static; transform: none; }
+    .nav-contact-btn { display: inline-block; }
+    
+    .portfolio-grid, .about-contact-grid { grid-template-columns: 1fr 1fr; }
+    .footer-flex { flex-direction: row; }
+    .lang-switch-desktop { display: flex; gap: 10px; }
 }

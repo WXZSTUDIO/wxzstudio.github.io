@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WXZ Studio - 视觉设计与摄影</title>
     
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    
     <link rel="preload" href="style.css" as="style">
     <link rel="preload" href="script.js" as="script">
     <link rel="preload" href="images/hero-video.mp4" as="video" type="video/mp4">
@@ -22,22 +24,21 @@
     <div class="nav-wrap" id="navWrap">
         <div class="container nav-inner">
             <a href="index.html" class="logo-link">
-                <img src="images/logo-dark-theme.svg" alt="WXZ Studio" class="logo-img logo-dark-theme">
-                <img src="images/logo-light-theme.svg" alt="WXZ Studio" class="logo-img logo-light-theme hidden">
+                <img src="images/logo-dark-theme.svg" alt="WXZ Studio" class="logo-img logo-dark-theme hidden">
+                <img src="images/logo-light-theme.svg" alt="WXZ Studio" class="logo-img logo-light-theme">
             </a>
             
             <nav class="nav-desktop">
                 <a href="works.html" class="nav-item">案例作品</a>
-                <a href="contact.html" class="nav-contact-btn">联系我们</a>
+                <a href="contact.html" class="nav-contact-btn apple-button is-black-btn">联系我们</a>
             </nav>
             
-            <button class="menu-button" id="mobileMenuButton">菜单</button>
-        </div>
+            </div>
     </div>
     
     <main>
         <section class="section is-dark-section is-hero" data-theme="dark">
-            <div class="hero-video-wrapper" id="heroVideo">
+            <div class="hero-video-wrapper" id="heroVideo" data-parallax-speed="0.2">
                 <video class="hero-video" autoplay loop muted playsinline>
                     <source src="images/hero-video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
@@ -72,14 +73,6 @@
                 </div>
             </div>
              <div class="nav-theme-trigger" data-theme-target="dark" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
-
-            <div class="sliding-row-wrapper" style="margin-top: 8rem;">
-                <div class="sliding-text">
-                    <span>• COMMERCIAL PHOTOGRAPHY</span> 
-                    <span>• BRAND VISUALS</span>
-                    <span>• CREATIVE DIRECTION</span>
-                </div>
-            </div>
         </section>
 
         <section class="section is-dark-section" data-theme="dark">
@@ -89,14 +82,14 @@
                 
                 <div class="portfolio-grid">
                     <a href="works.html#project1" class="portfolio-item fade-in">
-                        <img src="" data-src="images/portfolio1.jpg" alt="项目 1" class="portfolio-img lazy-load-img">
+                        <img src="images/portfolio1.jpg" data-src="images/portfolio1.jpg" alt="项目 1" class="portfolio-img lazy-load-img">
                         <div class="portfolio-info">
                             <h3>[品牌名称] 品牌升级</h3>
                             <p>品牌策略 / 视觉设计</p>
                         </div>
                     </a>
                     <a href="works.html#project2" class="portfolio-item fade-in">
-                        <img src="" data-src="images/portfolio2.jpg" alt="项目 2" class="portfolio-img lazy-load-img">
+                        <img src="images/portfolio2.jpg" data-src="images/portfolio2.jpg" alt="项目 2" class="portfolio-img lazy-load-img">
                         <div class="portfolio-info">
                             <h3>[产品名称] 商业影像</h3>
                             <p>商业摄影 / 短视频</p>
@@ -150,19 +143,23 @@
     </footer>
     
     <div class="nav-overlay" id="navOverlay" onclick="closeMobileMenu()"></div>
-    <div class="mobile-nav" id="mobileMenu">
-        <button class="close-btn" id="closeMobileMenu">&times;</button>
-        <ul class="mobile-menu-list">
-            <li><a href="index.html" onclick="closeMobileMenu()">主页</a></li>
-            <li><a href="works.html" onclick="closeMobileMenu()">作品</a></li>
-            <li><a href="about.html" onclick="closeMobileMenu()">关于</a></li>
-            <li><a href="contact.html" onclick="closeMobileMenu()">联系我们</a></li>
-        </ul>
-        <div class="lang-switch-mobile">
-            <button class="active" id="btn-cn-mobile" onclick="switchLanguage('cn')">中文</button>
-            <button id="btn-kr-mobile" onclick="switchLanguage('kr')">EN</button>
+    <div class="mobile-nav" id="mobileMenu" style="display: none;">
         </div>
-    </div>
+    
+    <nav class="mobile-nav-bottom">
+        <a href="index.html" class="nav-item is-active">
+            <i class="icon-home"></i>
+            <span>主页</span>
+        </a>
+        <a href="works.html" class="nav-item">
+            <i class="icon-works"></i>
+            <span>作品</span>
+        </a>
+        <a href="contact.html" class="nav-item">
+            <i class="icon-contact"></i>
+            <span>联系</span>
+        </a>
+        </nav>
     
     <script src="script.js"></script>
 </body>
