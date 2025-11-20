@@ -1,486 +1,319 @@
 :root {
-    /* 颜色变量 (模仿 Apple 的简洁、高对比度和半透明效果) */
-    --color-primary: #000000; /* 主色/文字色 (黑色) */
-    --color-secondary: #666666; /* 副文本色 (灰色) */
-    --color-background: #ffffff; /* 浅色背景 (白色) */
-    --color-dark-bg: #111111; /* 深色背景 (更深的黑) */
-    --color-white: #ffffff;
-    --color-accent: #0070c9; /* Apple 蓝色作为强调色 */
-
-    /* 字体 (大气和现代感) */
-    --font-heading: 'Montserrat', sans-serif;
-    --font-body: 'Noto Sans SC', sans-serif;
+    /* --- Apple Design System Colors --- */
+    --color-primary: #1d1d1f; /* Apple 经典的深灰色文字 */
+    --color-secondary: #86868b; /* Apple 副文本灰 */
+    --color-background: #ffffff; 
+    --color-dark-bg: #000000; 
+    --color-white: #f5f5f7; /* Apple 经常使用的略带灰的白 */
+    --color-accent: #0071e3; /* Apple Blue */
     
-    /* 布局变量 */
-    --max-width: 1200px;
-    --nav-height: 64px; 
-    --mobile-nav-height: 60px; /* 新增：底部导航高度 */
-    --blur-strength: 15px; /* 毛玻璃模糊强度 */
+    /* --- Typography --- */
+    --font-heading: 'SF Pro Display', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'SF Pro Text', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* --- Layout & Effects --- */
+    --max-width: 1000px; /* Apple 内容区域通常较窄 */
+    --nav-height: 52px; /* Apple 官网导航通常较窄 */
+    --mobile-nav-height: 60px; 
+    --blur-strength: 20px; /* 强模糊 */
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1); /* 丝滑过渡曲线 */
 }
 
-/* Base Styles & Resets */
+/* 基础重置 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
+html { 
+    scroll-behavior: smooth; 
+    -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale;
+}
 
 body {
     font-family: var(--font-body);
     background-color: var(--color-background); 
     color: var(--color-primary);
-    line-height: 1.6;
+    line-height: 1.47059;
+    letter-spacing: -0.022em;
     overflow-x: hidden;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    /* 使用丝滑过渡 */
+    transition: background-color 0.5s var(--transition-smooth), color 0.5s var(--transition-smooth);
     /* 底部留出空间给固定导航 */
     padding-bottom: var(--mobile-nav-height); 
 }
-body.no-scroll { overflow: hidden; }
-
-a { text-decoration: none; color: inherit; }
-.hidden { display: none !important; }
-
-/* Global Typography */
-.container {
-    width: 90%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-}
-.section {
-    padding: 60px 0;
-    position: relative;
-}
-.section-title {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
-}
-.section-sub-title {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-secondary);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-}
-.large-copy {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--color-secondary);
-}
-
-/* === Theme Sections === */
-.is-dark {
+body.is-dark {
     background-color: var(--color-dark-bg);
     color: var(--color-white);
 }
-.is-dark .section-sub-title, .is-dark .large-copy {
-    color: #aaaaaa;
+body.no-scroll { overflow: hidden; }
+
+a { text-decoration: none; color: inherit; transition: opacity 0.3s var(--transition-smooth); }
+a:hover { opacity: 0.8; }
+.hidden { display: none !important; }
+
+/* Global Typography */
+.container { width: 90%; max-width: var(--max-width); margin: 0 auto; }
+.section { padding: 120px 0; position: relative; overflow: hidden;}
+
+.section-title {
+    font-size: 48px; font-weight: 600; margin-bottom: 20px;
+    letter-spacing: -0.005em; font-family: var(--font-heading);
 }
-.is-light {
-    background-color: var(--color-background);
-    color: var(--color-primary);
+.section-sub-title {
+    font-size: 21px; font-weight: 600; color: var(--color-secondary);
+    margin-bottom: 12px; font-family: var(--font-heading);
 }
+.large-copy {
+    font-size: 21px; line-height: 1.4; font-weight: 400;
+    color: var(--color-secondary);
+}
+.is-dark .large-copy { color: #a1a1a6; }
 
 
-/* === Top Navigation (Apple Glassmorphism / 毛玻璃效果) === */
+/* === 1. Apple 风格顶部导航 (Ultra-Premium Glassmorphism) === */
 .nav-wrap {
     position: fixed; top: 0; left: 0; width: 100%;
     height: var(--nav-height);
-    z-index: 1000;
-    /* 默认：深色主题导航（白色文字，半透明黑背景）*/
-    background-color: rgba(17, 17, 17, 0.7); 
-    backdrop-filter: blur(var(--blur-strength)); 
-    -webkit-backdrop-filter: blur(var(--blur-strength)); 
-    transition: background-color 0.3s ease;
+    z-index: 9999;
+    /* 核心：Apple 风格的半透明黑色背景 + 高斯模糊 */
+    background-color: rgba(22, 22, 23, 0.8); 
+    backdrop-filter: saturate(180%) blur(var(--blur-strength));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--blur-strength));
+    /* 细节：底部微弱边框 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.5s var(--transition-smooth), border-color 0.5s var(--transition-smooth);
 }
-
-/* 导航的通用颜色设置（深色主题） */
-.nav-item, .menu-button { color: var(--color-white); }
-.nav-contact-btn { border: 1px solid var(--color-white); color: var(--color-white); }
-.logo-dark-theme { display: block; }
-.logo-light-theme { display: none; }
-
-
-/* Light Theme Nav State (滚动到浅色区域或非首页的浅色页面) */
-body.light-theme-nav .nav-wrap {
-    /* 浅色导航：深色文字，半透明白背景 */
-    background-color: rgba(255, 255, 255, 0.8);
-}
-body.light-theme-nav .nav-item, 
-body.light-theme-nav .menu-button { 
-    color: var(--color-primary); 
-}
-body.light-theme-nav .nav-contact-btn {
-    border: 1px solid var(--color-primary); 
-    color: var(--color-primary);
-}
-body.light-theme-nav .logo-dark-theme { display: none; }
-body.light-theme-nav .logo-light-theme { display: block; }
-
 
 .nav-inner {
+    max-width: 980px; 
+    margin: 0 auto; padding: 0 20px;
     display: flex; justify-content: space-between; align-items: center;
     height: 100%;
 }
 
+/* 品牌名 (纯文本 Logo) */
 .logo-link {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.2rem;
-    height: auto; 
+    font-family: var(--font-heading); font-weight: 600; font-size: 19px;
+    color: #f5f5f7; letter-spacing: -0.01em;
 }
+/* 隐藏所有图片 Logo */
 .logo-img { display: none !important; }
 
-/* Desktop Navigation */
-.nav-desktop {
-    display: none; 
-    gap: 2.5rem;
-    align-items: center;
-    font-family: var(--font-body);
-    font-weight: 500;
-    font-size: 0.95rem;
-    margin-left: auto; 
+/* 导航链接 */
+.nav-desktop { display: none; gap: 32px; align-items: center; margin-left: auto;}
+.nav-item {
+    color: #f5f5f7; font-size: 12px; font-weight: 400; opacity: 0.8;
+    letter-spacing: -0.01em; transition: opacity 0.3s var(--transition-smooth);
 }
-.nav-contact-btn {
-    padding: 0.4rem 1.2rem;
-    border-radius: 9999px; 
-    font-weight: 600;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+.nav-item:hover { opacity: 1; color: #fff; }
+
+/* 浅色导航状态 (滚动到白色区域) */
+body.light-theme-nav .nav-wrap {
+    background-color: rgba(251, 251, 253, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
-.nav-contact-btn:hover {
-    background-color: var(--color-accent);
-    color: var(--color-white);
-    border-color: var(--color-accent);
-}
-/* 隐藏顶部菜单按钮，因为改用底部固定菜单 */
-.menu-button {
-    display: none; 
+body.light-theme-nav .logo-link,
+body.light-theme-nav .nav-item { color: #1d1d1f; }
+body.light-theme-nav .nav-contact-btn { 
+    background-color: var(--color-primary); color: #fff; border-color: var(--color-primary); 
 }
 
-/* === Hero Section (视频背景) === */
+/* 导航栏联系按钮 */
+.nav-contact-btn {
+    padding: 4px 12px;
+    border-radius: 980px;
+    font-size: 12px; font-weight: 400;
+    background-color: #fff; color: #1d1d1f;
+    border: 1px solid #fff;
+    transition: all 0.3s var(--transition-smooth);
+}
+.nav-contact-btn:hover {
+    background-color: transparent; color: #fff;
+}
+body.light-theme-nav .nav-contact-btn:hover {
+    background-color: transparent; color: #1d1d1f;
+}
+
+
+/* === 2. Apple 风格按钮 (Smooth Interaction) === */
+.apple-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 980px;
+    font-size: 14px; font-weight: 600;
+    background-color: #0071e3; color: #fff;
+    cursor: pointer; border: none; outline: none;
+    /* 性能优化：GPU 加速 */
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+    transition: all 0.4s var(--transition-smooth);
+}
+.apple-btn:hover {
+    background-color: #0077ed;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+.apple-btn:active { transform: scale(0.98); }
+
+/* 黑色变体 */
+.is-black-btn { background-color: #1d1d1f; color: #fff; }
+.is-black-btn:hover { background-color: #333; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+
+/* === Hero Section (视差滚动 + 性能优化) === */
 .is-hero {
-    position: relative;
-    height: 100vh;
-    padding: 0;
+    height: 100vh; padding: 0;
     display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
 }
 .hero-video-wrapper {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    overflow: hidden;
+    /* 性能核心：独立图层渲染 */
+    will-change: transform; transform: translateZ(0); 
 }
-.hero-video {
-    min-width: 100%; min-height: 100%;
-    width: auto; height: auto;
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-}
+.hero-video { width: 100%; height: 100%; object-fit: cover; }
 .hero-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.5); 
-    z-index: 10;
+    background: rgba(0,0,0,0.4); pointer-events: none;
 }
-.hero-content {
-    position: relative; z-index: 20;
-    text-align: center;
-    max-width: 1000px;
-    padding: 0 20px;
-}
+.hero-content { position: relative; z-index: 10; text-align: center; }
+
+/* 动画与排版 (GSAP Targets) */
+.fade-in { opacity: 0; transform: translateY(30px); will-change: opacity, transform; }
 
 
-/* === Core Business Section === */
+/* === 核心业务 (Grid 布局) === */
 .core-business-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
+    display: grid; grid-template-columns: 1fr; gap: 40px;
+    width: 88%; max-width: 980px; margin: 40px auto 0;
 }
-.business-item {
-    padding: 20px 0;
-    text-align: left;
-}
-.business-item h3 {
-    font-family: var(--font-body);
-    font-size: 1.6rem;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-.business-item p {
-    color: var(--color-secondary);
-}
+.business-item { padding: 20px 0; text-align: left; }
+.business-item h3 { font-size: 24px; margin-bottom: 8px; font-weight: 600; color: #1d1d1f;}
+.business-item p { font-size: 17px; line-height: 1.5; color: #86868b; }
 
 
-/* === Portfolio Grid === */
+/* === 案例作品 (Portfolio - 交互优化) === */
 .portfolio-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-top: 40px;
+    display: grid; grid-template-columns: 1fr; gap: 24px;
+    width: 90%; max-width: 1200px; margin: 40px auto 0;
 }
 .portfolio-item {
-    display: block;
-    overflow: hidden;
-    position: relative;
-    border-radius: 12px; 
-    transition: transform 0.3s ease;
+    display: block; position: relative; overflow: hidden;
+    border-radius: 18px; background: #1d1d1f;
+    transform: translateZ(0);
+    transition: transform 0.6s var(--transition-smooth), box-shadow 0.6s var(--transition-smooth);
 }
 .portfolio-item:hover {
-    transform: translateY(-5px); 
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    z-index: 2;
 }
 .portfolio-img {
-    width: 100%; height: 400px; 
-    object-fit: cover;
-    display: block;
+    width: 100%; height: 500px; object-fit: cover;
+    transition: transform 0.8s var(--transition-smooth); opacity: 0.9;
 }
+.portfolio-item:hover .portfolio-img { opacity: 1; transform: scale(1.05); }
 .portfolio-info {
-    position: absolute; bottom: 0; left: 0; width: 100%;
-    padding: 20px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-    color: var(--color-white);
+    position: absolute; bottom: 30px; left: 30px; right: 30px;
+    color: #fff; pointer-events: none; text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
-.portfolio-info h3 {
-    font-size: 1.3rem;
-    margin: 0;
-}
-.portfolio-info p {
-    font-size: 0.9rem;
-    margin: 0;
-    color: #ccc;
-}
-.view-all-cta {
-    text-align: center;
-    margin-top: 60px;
-}
-
-/* === Contact Button Footer (CTA 区域) === */
-.contact-cta-footer {
-    padding: 80px 0;
-    text-align: center;
-}
-.contact-cta-footer .nav-contact-btn {
-    font-size: 1.1rem;
-    padding: 0.8rem 2.5rem;
-    border-radius: 9999px;
-    border-width: 2px;
-}
-/* 新增：CTA 按钮为黑底白字 */
-.contact-cta-footer .is-black-btn {
-    background-color: var(--color-primary);
-    color: var(--color-white);
-    border-color: var(--color-primary);
-}
-.contact-cta-footer .is-black-btn:hover {
-    background-color: var(--color-dark-bg);
-    border-color: var(--color-dark-bg);
-}
+.portfolio-info h3 { font-size: 24px; margin-bottom: 6px; font-weight: 700; }
+.portfolio-info p { font-size: 15px; font-weight: 500; opacity: 0.9; }
 
 
-/* === Regulatory Notes (纯文本/优化排版) === */
+/* === 联系/底部区域 === */
+.contact-cta-footer { text-align: center; padding: 120px 0; }
+.view-all-cta { text-align: center; margin-top: 60px; }
+
+
+/* === 合作指南 (Regulatory Notes) === */
 .regulatory-notes {
-    background-color: #f5f5f7; 
-    color: #515154; 
-    padding: 40px 0 60px; /* 增加底部间距 */
-    font-size: 0.9rem;
-    line-height: 1.8;
+    background: #f5f5f7; color: #86868b;
+    padding: 60px 0 40px; font-size: 12px; line-height: 1.6;
 }
-.notes-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
+.notes-container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+.notes-container h4 { 
+    font-family: var(--font-heading); font-weight: 600; font-size: 14px; 
+    color: #1d1d1f; margin-bottom: 20px; 
 }
-.notes-container h4 {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: var(--color-primary);
-    margin-bottom: 25px;
-    text-align: center;
-}
-.notes-content p {
-    margin-bottom: 1.2rem;
-    padding-left: 0; /* 移除列表缩进 */
-}
-.notes-content strong {
-    font-weight: 700;
-    color: var(--color-primary);
-    display: block;
-    margin-bottom: 5px;
-}
-.disclaimer {
-    margin-top: 30px;
-    font-size: 0.75rem;
-    color: #999;
-    text-align: center;
-}
+.notes-content p { margin-bottom: 12px; }
+.notes-content strong { color: #1d1d1f; font-weight: 600; }
+.disclaimer { margin-top: 30px; font-size: 11px; color: #999; }
 
 
-/* --- Contact Page Styles --- */
-.contact-page-content {
-    padding-top: calc(var(--nav-height) + 60px);
-    max-width: 1000px; 
-    margin: 0 auto;
-    text-align: center;
-    min-height: 80vh;
-}
-.contact-page-content h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    margin-bottom: 50px;
-}
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-.contact-block {
-    background-color: #f5f5f7; 
-    border-radius: 20px;
-    padding: 40px 20px;
-    text-align: center;
-    transition: background-color 0.3s;
-}
-.contact-block:hover {
-    background-color: #e9e9eb; 
-}
-.contact-block h3 {
-    font-size: 1.1rem;
-    color: var(--color-secondary);
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-.contact-block .id-value {
-    font-family: var(--font-heading);
-    font-size: clamp(1.8rem, 5vw, 3rem);
-    font-weight: 700;
-    color: var(--color-primary);
-    display: block;
-    margin-top: 15px; 
-}
-.contact-icon-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
-}
-.contact-icon {
-    height: 40px; 
-    width: 40px;
-    display: inline-block;
-    color: var(--color-primary); 
-    font-size: 2rem; /* 临时图标大小 */
-}
-.contact-icon img {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-}
-
-
-/* === 移动端底部固定导航栏 (Mobile Nav Redesign) === */
+/* === 移动端底部固定导航栏 (Mobile Nav - 横向) === */
 .mobile-nav {
-    position: fixed;
-    bottom: 0; left: 0; width: 100%;
+    position: fixed; bottom: 0; left: 0; width: 100%;
     height: var(--mobile-nav-height);
     z-index: 999;
-    
     background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(var(--blur-strength)); 
-    -webkit-backdrop-filter: blur(var(--blur-strength)); 
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    transition: transform 0.3s ease;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 -1px 0 rgba(0,0,0,0.1);
+    display: flex; justify-content: center; align-items: center;
 }
-
 .mobile-menu-list {
-    list-style: none;
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    padding: 0;
-    margin: 0;
-}
-.mobile-menu-list li {
-    flex-grow: 1;
-    text-align: center;
+    list-style: none; display: flex; width: 100%; max-width: 400px;
+    justify-content: space-around; padding: 0; margin: 0;
 }
 .mobile-menu-list a {
-    display: block;
-    padding: 10px 0;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-secondary);
-    transition: color 0.2s ease;
+    display: block; padding: 10px;
+    font-size: 12px; font-weight: 500; color: #86868b;
+    transition: color 0.3s var(--transition-smooth);
 }
-.mobile-menu-list a:hover,
-.mobile-menu-list a.active {
-    color: var(--color-primary);
-    font-weight: 600;
-}
+.mobile-menu-list a.active { color: #0071e3; }
 
-/* 隐藏不再需要的元素 */
-.nav-overlay, .close-btn { display: none !important; }
+/* 隐藏不需要的元素 */
+.menu-button, .nav-overlay, .bottom-logo-area { display: none !important; }
 
-/* === Floating Back-to-Home Button (悬浮图标) - 调整位置以避开底部导航 === */
+
+/* === 悬浮返回按钮 === */
 .floating-back-home {
-    position: fixed;
-    bottom: calc(var(--mobile-nav-height) + 20px); /* 向上移动 */
-    right: 30px;
-    /* ... 保持原有样式 ... */
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.7); 
+    position: fixed; bottom: calc(var(--mobile-nav-height) + 20px); right: 20px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(29, 29, 31, 0.8); 
     backdrop-filter: blur(10px);
-    color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    z-index: 1002;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    opacity: 0;
-    visibility: hidden;
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; z-index: 1002; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0; pointer-events: none;
+    transition: all 0.4s var(--transition-smooth);
 }
+.floating-back-home.show { opacity: 1; pointer-events: auto; }
+.floating-back-home:hover { background: #0071e3; transform: scale(1.1); }
 
-.floating-back-home.show {
-    opacity: 1;
-    visibility: visible;
+
+/* === Contact Page Styles === */
+.contact-page-content { padding-top: 140px; text-align: center; min-height: 80vh; }
+.contact-grid {
+    display: grid; grid-template-columns: 1fr; gap: 20px;
+    max-width: 1000px; margin: 0 auto;
 }
+.contact-block {
+    background-color: #f5f5f7; border-radius: 24px; padding: 40px;
+    text-align: center; transition: transform 0.3s var(--transition-smooth);
+}
+.contact-block:hover { transform: scale(1.02); background-color: #e8e8ed; }
+.contact-block h3 { font-size: 14px; color: #86868b; margin-bottom: 8px; font-weight: 500; }
+.contact-block .id-value {
+    font-size: 28px; font-weight: 700; color: #1d1d1f; display: block; margin-top: 10px;
+}
+.contact-icon-box { font-size: 32px; margin-bottom: 15px; }
+.contact-icon { display: inline-block; width: 40px; height: 40px; }
+.contact-icon img { width: 100%; height: 100%; object-fit: contain; opacity: 0.8; }
 
 
 /* =========================================
    Media Queries (Desktop)
    ========================================= */
-
 @media (min-width: 992px) {
-    /* 桌面端隐藏底部导航，并取消 padding-bottom */
     body { padding-bottom: 0; }
     .mobile-nav { display: none; } 
     .nav-desktop { display: flex; }
+    .menu-button { display: none; }
     
-    .section {
-        padding: 120px 0;
-    }
-    .core-business-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 60px;
-    }
-    .portfolio-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .contact-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 40px;
-    }
-    .floating-back-home {
-        bottom: 40px; /* 桌面端回到原位 */
-        right: 40px;
-    }
+    .core-business-grid { grid-template-columns: 1fr 1fr; gap: 80px; }
+    .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
+    
+    .contact-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
+    .contact-block { padding: 60px 30px; }
+    .contact-block .id-value { font-size: 32px; }
+
+    .floating-back-home { bottom: 40px; right: 40px; }
 }
