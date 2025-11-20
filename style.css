@@ -13,7 +13,7 @@
     
     /* 布局变量 */
     --max-width: 1200px;
-    --nav-height: 100px; /* 导航高度增加，以容纳更大的 Logo */
+    --nav-height: 64px; /* 导航高度保持不变，以维持布局 */
     --blur-strength: 15px; /* 毛玻璃模糊强度 */
 }
 
@@ -111,15 +111,12 @@ body.light-theme-nav .nav-contact-btn {
     display: flex; justify-content: space-between; align-items: center;
     height: 100%;
 }
-/* 关键修改：Logo 放大 5 倍 */
 .logo-link {
-    height: 175px; /* 约 35px * 5 = 175px (在移动端会缩放适应) */
-    display: flex; /* 确保图片居中对齐 */
-    align-items: center;
+    /* 重点修改：Logo 高度增加到 60px，这是在 64px 导航栏内可容纳的最大尺寸 */
+    height: 60px; 
 }
 .logo-img {
-    height: 90%; /* 图片占据 Logo 容器的 90% */
-    width: auto; 
+    height: 100%; width: auto; 
 }
 .logo-light-theme, .logo-dark-theme {
     display: none;
@@ -169,9 +166,6 @@ body.light-theme-nav .logo-light-theme { display: block; }
     padding: 0;
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
-    /* 调整 Hero Section 顶部内边距，以抵消 Nav 增大带来的内容遮挡 */
-    padding-top: var(--nav-height); 
-    height: calc(100vh + var(--nav-height));
 }
 .hero-video-wrapper {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -205,11 +199,6 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 /* === Core Business Section (精简版) === */
-.core-business-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-}
 .business-item {
     padding: 20px 0;
     text-align: left;
@@ -313,8 +302,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
 
 /* --- Contact Page Styles --- */
 .contact-page-content {
-    /* 增加顶部内边距，以适应更大的 Nav 高度 */
-    padding-top: calc(var(--nav-height) + 60px); 
+    padding-top: calc(var(--nav-height) + 60px);
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
@@ -384,7 +372,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
     }
     .core-business-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 调整为两列，因为删除了一个业务板块 */
+        grid-template-columns: repeat(3, 1fr);
         gap: 40px;
     }
     .portfolio-grid {
