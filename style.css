@@ -144,7 +144,7 @@ body.light-theme .nav-wrap .nav-contact-btn {
     font-size: 1.2rem;
     display: block;
 }
-/* === 修复 Logo 尺寸，由 5rem 调整为 2.2rem === */
+/* === 修复 Logo 尺寸：由 5rem 调整为 2.2rem === */
 .logo-img {
     height: 2.2rem; /* 修复 Logo 尺寸 */
     width: auto;
@@ -239,7 +239,8 @@ body.light-theme .nav-wrap .nav-contact-btn {
 }
 
 
-/* === Services/Mission Section === */
+/* === Services/Mission Section (Home Page) === */
+/* 注意：这里的 services-grid 和 service-item 仅为首页 Services/Mission Section 的默认样式 */
 .services-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -286,7 +287,7 @@ body.light-theme .nav-wrap .nav-contact-btn {
 }
 
 
-/* === Portfolio Section (Home Page) === */
+/* === Portfolio Section === */
 .portfolio-list {
     display: grid;
     grid-template-columns: 1fr;
@@ -405,7 +406,7 @@ body.light-theme .nav-wrap .nav-contact-btn {
 
 
 /* =========================================
-   WXZ STUDIO 新增页面样式 (作品/服务/关于)
+   WXZ STUDIO 新增页面样式 (作品/关于/联系)
    ========================================= */
 
 /* 1. 导航项激活状态 - 确保当前页面链接高亮 */
@@ -485,45 +486,8 @@ body.light-theme .page-hero-section p {
 }
 
 
-/* 4. 服务页 - 服务列表样式 (.services.html) */
-.service-block-list {
-    margin-top: 3rem;
-}
-.service-block {
-    padding: 2.5rem 0;
-    /* 默认深色主题下的浅色分隔线 */
-    border-top: 1px solid rgba(255, 255, 255, 0.2); 
-    transition: background-color 0.3s;
-}
-/* Light Theme 下使用深色分隔线 */
-body.light-theme .service-block {
-    border-top: 1px solid rgba(0, 0, 0, 0.2); 
-}
-
-.service-block:first-child {
-    border-top: none;
-    padding-top: 0;
-}
-.service-block h2 {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-blue); /* 突出服务标题 */
-}
-.service-block p {
-    line-height: 1.7;
-    max-width: 800px;
-}
-/* Light Theme 下调整描述文本颜色 */
-body.light-theme .service-block p {
-    color: #555;
-}
-
-
-/* 5. 关于页 - 内容布局样式 (.about.html) */
+/* 4. 关于页 - 内容布局样式 (.about.html) */
 .about-content-section {
-    /* 页面内容区，您可以根据需要调整背景色 */
     padding: 8rem 0;
 }
 .about-grid {
