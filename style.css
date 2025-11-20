@@ -1,31 +1,27 @@
 :root {
-    /* --- Apple Design System Colors --- */
-    --color-primary: #1d1d1f; /* Apple 经典的深灰色文字 (用于浅色背景) */
-    --color-secondary: #86868b; /* Apple 副文本灰 */
-    --color-background: #ffffff; /* 浅色背景 */
-    --color-dark-bg: #000000; /* 深色背景 (纯黑) */
+    /* 颜色变量 (模仿 Apple 的简洁、高对比度和半透明效果) */
+    --color-primary: #000000; /* 主色/文字色 (黑色) */
+    --color-secondary: #666666; /* 副文本色 (灰色) */
+    --color-background: #ffffff; /* 浅色背景 (白色) */
+    --color-dark-bg: #111111; /* 深色背景 (更深的黑) */
     --color-white: #ffffff;
-    --color-accent: #0071e3; /* Apple Blue */
+    --color-accent: #0070c9; /* Apple 蓝色作为强调色 */
+
+    /* 字体 (大气和现代感) */
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Noto Sans SC', sans-serif;
     
-    /* --- Typography --- */
-    --font-heading: 'SF Pro Display', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-body: 'SF Pro Text', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-    
-    /* --- Layout & Effects --- */
-    --max-width: 1000px;
-    --nav-height: 52px;
-    --mobile-nav-height: 60px; /* 底部导航高度 */
-    --blur-strength: 20px; 
-    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1); 
+    /* 布局变量 */
+    --max-width: 1200px;
+    --nav-height: 64px; 
+    --mobile-nav-height: 60px; /* 新增：底部导航高度 */
+    --blur-strength: 15px; /* 毛玻璃模糊强度 */
 }
 
-/* 基础重置 */
+/* Base Styles & Resets */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { 
-    scroll-behavior: smooth; 
-    -webkit-font-smoothing: antialiased; 
-    -moz-osx-font-smoothing: grayscale;
-}
+
+html { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font-body);
@@ -33,189 +29,458 @@ body {
     color: var(--color-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    transition: background-color 0.4s var(--transition-smooth), color 0.4s var(--transition-smooth);
-    /* 手机端为底部导航预留空间 */
+    transition: background-color 0.4s ease, color 0.4s ease;
+    /* 底部留出空间给固定导航 */
     padding-bottom: var(--mobile-nav-height); 
 }
-
-/* 强制深色/浅色模式 (用于 body 和 section 继承) */
-body.is-dark { background-color: var(--color-dark-bg); color: var(--color-white); }
-body.is-light { background-color: var(--color-background); color: var(--color-primary); }
+body.no-scroll { overflow: hidden; }
 
 a { text-decoration: none; color: inherit; }
 .hidden { display: none !important; }
-.no-scroll { overflow: hidden; } 
 
-/* Container & Section */
-.container { 
-    max-width: var(--max-width); 
-    margin: 0 auto; 
-    padding: 0 1.5rem; 
+/* Global Typography */
+.container {
+    width: 90%;
+    max-width: var(--max-width);
+    margin: 0 auto;
 }
-.section { 
-    padding: 6rem 0; 
-    position: relative; 
-    min-height: 50vh; 
-} 
-/* 核心业务板块需要黑底白字 */
-.is-dark-section { background-color: var(--color-dark-bg); color: var(--color-white); }
-.is-light-section { background-color: var(--color-background); color: var(--color-primary); }
+.section {
+    padding: 60px 0;
+    position: relative;
+}
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+.section-sub-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+.large-copy {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-secondary);
+}
+
+/* === Theme Sections === */
+.is-dark {
+    background-color: var(--color-dark-bg);
+    color: var(--color-white);
+}
+.is-dark .section-sub-title, .is-dark .large-copy {
+    color: #aaaaaa;
+}
+.is-light {
+    background-color: var(--color-background);
+    color: var(--color-primary);
+}
 
 
-/* Navigation (Top) */
+/* === Top Navigation (Apple Glassmorphism / 毛玻璃效果) === */
 .nav-wrap {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    height: var(--nav-height); display: flex; align-items: center;
-    background-color: rgba(255, 255, 255, 0.7); 
+    position: fixed; top: 0; left: 0; width: 100%;
+    height: var(--nav-height);
+    z-index: 1000;
+    /* 默认：深色主题导航（白色文字，半透明黑背景）*/
+    background-color: rgba(17, 17, 17, 0.7); 
     backdrop-filter: blur(var(--blur-strength)); 
     -webkit-backdrop-filter: blur(var(--blur-strength)); 
-    transition: background-color 0.4s var(--transition-smooth);
+    transition: background-color 0.3s ease;
 }
+
+/* 导航的通用颜色设置（深色主题） */
+.nav-item, .menu-button { color: var(--color-white); }
+.nav-contact-btn { border: 1px solid var(--color-white); color: var(--color-white); }
+.logo-dark-theme { display: block; }
+.logo-light-theme { display: none; }
+
+
+/* Light Theme Nav State (滚动到浅色区域或非首页的浅色页面) */
+body.light-theme-nav .nav-wrap {
+    /* 浅色导航：深色文字，半透明白背景 */
+    background-color: rgba(255, 255, 255, 0.8);
+}
+body.light-theme-nav .nav-item, 
+body.light-theme-nav .menu-button { 
+    color: var(--color-primary); 
+}
+body.light-theme-nav .nav-contact-btn {
+    border: 1px solid var(--color-primary); 
+    color: var(--color-primary);
+}
+body.light-theme-nav .logo-dark-theme { display: none; }
+body.light-theme-nav .logo-light-theme { display: block; }
+
+
 .nav-inner {
     display: flex; justify-content: space-between; align-items: center;
-    width: 100%; padding: 0 1.5rem; 
+    height: 100%;
 }
-
-/* Logo & Theme Logic (确保 logo-light-theme 是白色) */
-body.dark-theme-nav .nav-wrap { background-color: rgba(0, 0, 0, 0.7); color: var(--color-white); }
-body.dark-theme-nav .nav-wrap .logo-dark-theme { display: none; }
-body.dark-theme-nav .nav-wrap .logo-light-theme { display: block; }
-body.light-theme-nav .nav-wrap { background-color: rgba(255, 255, 255, 0.7); color: var(--color-primary); }
-body.light-theme-nav .nav-wrap .logo-dark-theme { display: block; }
-body.light-theme-nav .nav-wrap .logo-light-theme { display: none; }
 
 .logo-link {
-    font-family: var(--font-heading); font-weight: 900; font-size: 1.2rem; display: block;
-    position: relative; /* 用于手机居中定位 */
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    height: auto; 
 }
-.logo-img { height: 1.8rem; width: auto; }
-.nav-desktop { display: none; gap: 2.5rem; align-items: center; } 
-.nav-item { font-size: 0.95rem; font-weight: 500; text-transform: none; } 
+.logo-img { display: none !important; }
 
-/* Buttons */
-.apple-button {
-    display: inline-block; padding: 8px 16px; border-radius: 9999px;
-    background: var(--color-accent); color: var(--color-white);
-    font-size: 0.9rem; font-weight: 500; text-align: center; cursor: pointer;
-    border: none; transition: all 0.5s var(--transition-smooth); 
-    position: relative; overflow: hidden; transform: translateZ(0);
+/* Desktop Navigation */
+.nav-desktop {
+    display: none; 
+    gap: 2.5rem;
+    align-items: center;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-left: auto; 
 }
-.apple-button:hover { filter: brightness(1.1); transform: scale(1.02) translateZ(0); }
-.apple-button:active { transform: scale(0.98) translateZ(0); filter: brightness(0.9); }
-.is-black-btn { background-color: var(--color-primary); color: var(--color-white); }
-.is-dark-section .is-black-btn { background-color: var(--color-white); color: var(--color-primary); } /* 在黑底背景下，CTA按钮变成白底黑字 */
-
-/* Typography & Content */
-.hero-headline { font-size: clamp(3rem, 10vw, 8rem); }
-.large-copy {
-    font-size: clamp(1.1rem, 2.5vw, 2rem);
-    color: rgba(255, 255, 255, 0.75);
+.nav-contact-btn {
+    padding: 0.4rem 1.2rem;
+    border-radius: 9999px; 
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
-.is-light-section .large-copy { color: var(--color-secondary); }
+.nav-contact-btn:hover {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border-color: var(--color-accent);
+}
+/* 隐藏顶部菜单按钮，因为改用底部固定菜单 */
+.menu-button {
+    display: none; 
+}
 
-.section-title { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 2rem; }
-.section-sub-title { font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--color-accent); }
+/* === Hero Section (视频背景) === */
+.is-hero {
+    position: relative;
+    height: 100vh;
+    padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+.hero-video-wrapper {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    overflow: hidden;
+}
+.hero-video {
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+.hero-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 10;
+}
+.hero-content {
+    position: relative; z-index: 20;
+    text-align: center;
+    max-width: 1000px;
+    padding: 0 20px;
+}
 
-/* Services/Business Grid */
+
+/* === Core Business Section === */
 .core-business-grid {
-    display: grid; grid-template-columns: 1fr; gap: 3rem;
-    width: 88%; max-width: 980px; margin: 60px auto 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
 }
-.business-item { padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.2); }
-.is-light-section .business-item { border-top: 1px solid rgba(0,0,0,0.1); }
-.business-item h3 { font-size: 21px; margin-bottom: 8px; font-weight: 600; color: inherit; }
-.business-item p { font-size: 17px; line-height: 1.5; color: inherit; opacity: 0.8; }
+.business-item {
+    padding: 20px 0;
+    text-align: left;
+}
+.business-item h3 {
+    font-family: var(--font-body);
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.business-item p {
+    color: var(--color-secondary);
+}
 
 
-/* Footer */
-.main-footer { padding: 4rem 0 8rem; background-color: var(--color-dark-bg); color: var(--color-white); }
-.footer-flex { display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 1.5rem; }
-.copyright { font-size: 0.8rem; color: #86868b; }
-.lang-switch-desktop { display: none; }
+/* === Portfolio Grid === */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-top: 40px;
+}
+.portfolio-item {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    border-radius: 12px; 
+    transition: transform 0.3s ease;
+}
+.portfolio-item:hover {
+    transform: translateY(-5px); 
+}
+.portfolio-img {
+    width: 100%; height: 400px; 
+    object-fit: cover;
+    display: block;
+}
+.portfolio-info {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    color: var(--color-white);
+}
+.portfolio-info h3 {
+    font-size: 1.3rem;
+    margin: 0;
+}
+.portfolio-info p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #ccc;
+}
+.view-all-cta {
+    text-align: center;
+    margin-top: 60px;
+}
+
+/* === Contact Button Footer (CTA 区域) === */
+.contact-cta-footer {
+    padding: 80px 0;
+    text-align: center;
+}
+.contact-cta-footer .nav-contact-btn {
+    font-size: 1.1rem;
+    padding: 0.8rem 2.5rem;
+    border-radius: 9999px;
+    border-width: 2px;
+}
+/* 新增：CTA 按钮为黑底白字 */
+.contact-cta-footer .is-black-btn {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+.contact-cta-footer .is-black-btn:hover {
+    background-color: var(--color-dark-bg);
+    border-color: var(--color-dark-bg);
+}
 
 
-/* === NEW: Mobile Bottom Nav (手机底部导航栏 - Apple 风格) === */
-.mobile-nav-bottom {
+/* === Regulatory Notes (纯文本/优化排版) === */
+.regulatory-notes {
+    background-color: #f5f5f7; 
+    color: #515154; 
+    padding: 40px 0 60px; /* 增加底部间距 */
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+.notes-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.notes-container h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    margin-bottom: 25px;
+    text-align: center;
+}
+.notes-content p {
+    margin-bottom: 1.2rem;
+    padding-left: 0; /* 移除列表缩进 */
+}
+.notes-content strong {
+    font-weight: 700;
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: 5px;
+}
+.disclaimer {
+    margin-top: 30px;
+    font-size: 0.75rem;
+    color: #999;
+    text-align: center;
+}
+
+
+/* --- Contact Page Styles --- */
+.contact-page-content {
+    padding-top: calc(var(--nav-height) + 60px);
+    max-width: 1000px; 
+    margin: 0 auto;
+    text-align: center;
+    min-height: 80vh;
+}
+.contact-page-content h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    margin-bottom: 50px;
+}
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+.contact-block {
+    background-color: #f5f5f7; 
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+.contact-block:hover {
+    background-color: #e9e9eb; 
+}
+.contact-block h3 {
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.contact-block .id-value {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--color-primary);
+    display: block;
+    margin-top: 15px; 
+}
+.contact-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.contact-icon {
+    height: 40px; 
+    width: 40px;
+    display: inline-block;
+    color: var(--color-primary); 
+    font-size: 2rem; /* 临时图标大小 */
+}
+.contact-icon img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+
+/* === 移动端底部固定导航栏 (Mobile Nav Redesign) === */
+.mobile-nav {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0; left: 0; width: 100%;
     height: var(--mobile-nav-height);
-    background-color: rgba(0, 0, 0, 0.8); /* 黑色半透明 */
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    z-index: 900;
+    z-index: 999;
+    
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(var(--blur-strength)); 
+    -webkit-backdrop-filter: blur(var(--blur-strength)); 
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 0 5px;
-    color: var(--color-white);
+    transition: transform 0.3s ease;
 }
 
-.mobile-nav-bottom .nav-item {
+.mobile-menu-list {
+    list-style: none;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.65rem;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+}
+.mobile-menu-list li {
+    flex-grow: 1;
+    text-align: center;
+}
+.mobile-menu-list a {
+    display: block;
+    padding: 10px 0;
+    font-size: 0.9rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.6); /* 默认图标/文字颜色 */
-    transition: color 0.3s;
-    flex-grow: 1; 
-    padding: 5px 0;
+    color: var(--color-secondary);
+    transition: color 0.2s ease;
+}
+.mobile-menu-list a:hover,
+.mobile-menu-list a.active {
+    color: var(--color-primary);
+    font-weight: 600;
 }
 
-.mobile-nav-bottom .nav-item.is-active {
-    color: var(--color-white); /* 激活状态为纯白 */
+/* 隐藏不再需要的元素 */
+.nav-overlay, .close-btn { display: none !important; }
+
+/* === Floating Back-to-Home Button (悬浮图标) - 调整位置以避开底部导航 === */
+.floating-back-home {
+    position: fixed;
+    bottom: calc(var(--mobile-nav-height) + 20px); /* 向上移动 */
+    right: 30px;
+    /* ... 保持原有样式 ... */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(10px);
+    color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    z-index: 1002;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    opacity: 0;
+    visibility: hidden;
 }
 
-/* 模拟图标 (需要自己替换为 SVG 或字体图标) */
-.mobile-nav-bottom .nav-item i {
-    font-style: normal;
-    font-size: 1.5rem; /* 图标尺寸略大 */
-    margin-bottom: 2px;
-}
-/* 隐藏旧的 mobile nav 元素 */
-.nav-overlay, .mobile-nav, .menu-button { display: none !important; }
-
-
-/* =========================================
-   Media Queries (Mobile - 991px 及以下)
-   ========================================= */
-
-@media (max-width: 991px) {
-    /* 强制隐藏桌面导航和语言切换 */
-    .nav-desktop { display: none !important; }
-    
-    /* 顶部导航栏 Logo 居中 */
-    .nav-inner { 
-        justify-content: center; 
-        position: relative; 
-    } 
-    .logo-link { 
-        /* 绝对定位并使用 transform 居中 */
-        position: absolute; 
-        left: 50%; 
-        transform: translateX(-50%); 
-        display: block;
-    }
-    .nav-contact-btn { 
-        display: none; 
-    } 
+.floating-back-home.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 
 /* =========================================
-   Media Queries (Desktop - 992px 及以上)
+   Media Queries (Desktop)
    ========================================= */
 
 @media (min-width: 992px) {
-    /* 桌面端隐藏底部导航，并取消 body 的 padding-bottom */
-    .mobile-nav-bottom { display: none !important; }
-    body { padding-bottom: 0; } 
-    
+    /* 桌面端隐藏底部导航，并取消 padding-bottom */
+    body { padding-bottom: 0; }
+    .mobile-nav { display: none; } 
     .nav-desktop { display: flex; }
-    .nav-inner { justify-content: space-between; } /* 桌面端恢复 Logo 靠左 */
-    .logo-link { position: static; transform: none; }
-    .nav-contact-btn { display: inline-block; }
     
-    .portfolio-grid, .about-contact-grid { grid-template-columns: 1fr 1fr; }
-    .footer-flex { flex-direction: row; }
+    .section {
+        padding: 120px 0;
+    }
+    .core-business-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 60px;
+    }
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+    .floating-back-home {
+        bottom: 40px; /* 桌面端回到原位 */
+        right: 40px;
+    }
 }
