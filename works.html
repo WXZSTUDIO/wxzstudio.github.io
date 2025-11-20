@@ -3,63 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>作品 - WXZ Studio</title>
+    <title>WXZ Studio - 案例作品</title>
     <link rel="stylesheet" href="style.css"> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
-<body class="is-dark">
+
+<body class="is-dark"> 
+    
     <div class="nav-wrap">
         <div class="container nav-inner">
             <a href="index.html" class="logo-link">
-                <img src="path/to/logo-dark-theme.svg" alt="WXZ Studio" class="logo-img logo-dark-theme">
-                <img src="path/to/logo-light-theme.svg" alt="WXZ Studio" class="logo-img logo-light-theme hidden">
+                <img src="images/logo_dark.svg" alt="WXZ Studio" class="logo-img logo-dark-theme">
+                <img src="images/logo_light.svg" alt="WXZ Studio" class="logo-img logo-light-theme hidden">
             </a>
+            
             <nav class="nav-desktop">
-                <a href="works.html" class="nav-item is-active">作品</a>
-                <a href="about.html" class="nav-item">关于</a>
-                <a href="contact.html" class="nav-contact-btn button">联系我们</a>
+                <a href="works.html" class="nav-item">案例作品</a>
+                <a href="about.html" class="nav-item">关于我们</a>
+                <a href="contact.html" class="nav-contact-btn">联系我们</a> 
             </nav>
-            <button class="menu-button">菜单</button>
+            
+            <button class="menu-button" id="mobileMenuButton">菜单</button>
         </div>
     </div>
     
     <main>
-        <section class="page-hero-section is-dark">
-            <h1>精选作品集</h1>
-            <p>我们用视觉语言，讲述每一个独特的时刻和故事。</p>
+        <section class="section is-dark subpage-hero" data-theme="dark">
+            <div class="container">
+                <h1 class="page-title fade-in">案例作品</h1>
+                <p class="large-copy fade-in" style="max-width: 800px;">
+                    用创意驱动价值。以下是我们在商业摄影、短视频和旅拍领域的精选案例。
+                </p>
+            </div>
+            <div class="nav-theme-trigger"></div>
         </section>
 
-        <section class="section is-dark">
+        <section class="section is-light works-gallery" data-theme="light">
             <div class="container">
-                <h2 class="section-title">我们的项目</h2>
-                <div class="work-grid">
-                    <a href="#" class="work-item fade-in">
-                        <img src="path/to/work1.jpg" alt="项目名称 1">
-                        <div class="work-info">
-                            <h3>商业肖像摄影</h3>
-                            <p>品牌 / 2024</p>
-                        </div>
-                    </a>
-                    <a href="#" class="work-item fade-in">
-                        <img src="path/to/work2.jpg" alt="项目名称 2">
-                        <div class="work-info">
-                            <h3>活动现场记录</h3>
-                            <p>纪实 / 2023</p>
-                        </div>
-                    </a>
-                    </div>
                 
-                <div class="cta-wrap">
-                    <a href="contact.html" class="button cta-button">联系我们定制您的项目</a>
+                <div class="works-filter fade-in">
+                    <button class="filter-btn active" data-filter="all">全部</button>
+                    <button class="filter-btn" data-filter="commercial">商业摄影</button>
+                    <button class="filter-btn" data-filter="video">短视频/影像</button>
+                    <button class="filter-btn" data-filter="portrait">人像/旅拍</button>
+                </div>
+
+                <div class="works-grid">
+                    
+                    <a href="#" class="work-item fade-in" data-category="commercial">
+                        <img src="images/work-marketkurly.jpg" alt="Market Kurly 推广" class="work-img">
+                        <div class="work-info">
+                            <h3>Market Kurly - 黑色星期五推广</h3>
+                            <p>商业摄影 / 品牌合作</p>
+                        </div>
+                    </a>
+
+                    <a href="#" class="work-item fade-in" data-category="portrait">
+                        <img src="images/work-seoul-portrait.jpg" alt="首尔约拍成片分享" class="work-img">
+                        <div class="work-info">
+                            <h3>🇰🇷首尔约拍 | 季节人像精选</h3>
+                            <p>人像摄影 / 旅拍</p>
+                        </div>
+                    </a>
+
+                    <a href="#" class="work-item fade-in" data-category="video">
+                        <img src="images/work-video-concept.jpg" alt="短视频拍摄概念" class="work-img">
+                        <div class="work-info">
+                            <h3>商业短视频 - 概念与执行</h3>
+                            <p>短视频制作 / 创意指导</p>
+                        </div>
+                    </a>
+
+                    <a href="#" class="work-item fade-in" data-category="commercial">
+                        <img src="images/work-product-line.jpg" alt="产品拍摄" class="work-img">
+                        <div class="work-info">
+                            <h3>[假定客户] - 产品系列大片</h3>
+                            <p>产品摄影 / 细节展示</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="work-item fade-in" data-category="portrait">
+                        <img src="images/work-travel-wedding.jpg" alt="婚礼旅拍" class="work-img">
+                        <div class="work-info">
+                            <h3>旅拍系列 | 济州岛婚礼影像</h3>
+                            <p>婚礼旅拍 / 纪实</p>
+                        </div>
+                    </a>
+
+                    <a href="#" class="work-item fade-in" data-category="video">
+                        <img src="images/work-drone-footage.jpg" alt="无人机作品" class="work-img">
+                        <div class="work-info">
+                            <h3>无人机航拍 - 城市与建筑</h3>
+                            <p>航拍影像 / 影视后期</p>
+                        </div>
+                    </a>
+                    
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="main-footer">
-        <div class="container footer-flex">
-            <div class="footer-logo">WXZ STUDIO</div>
-            <div class="copyright">&copy; 2025 WXZ Studio. All Rights Reserved.</div>
+        <div class="container footer-content">
+            <div class="footer-left">
+                <div class="footer-logo">WXZ STUDIO</div>
+            </div>
+            
+            <div class="footer-links-grid">
+                <ul>
+                    <li><a href="works.html">案例作品</a></li>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                </ul>
+                <ul>
+                    <li><a href="#">企业文化</a></li>
+                    <li><a href="#">人才招聘</a></li>
+                    <li><a href="#">行业洞察</a></li>
+                </ul>
+                <ul>
+                    <li><a href="mailto:info@wxzstudio.com">info@wxzstudio.com</a></li>
+                    <li><span>+86 XXXX XXXX</span></li>
+                    <li><span>[您的工作室地址]</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container footer-bottom">
+            <div class="copyright">&copy; 2025 WXZ Studio All Rights Reserved.</div>
+            <a href="https://beian.miit.gov.cn" target="_blank">京ICP备XXXXXXX号</a>
         </div>
     </footer>
+    
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="mobile-nav" id="mobileMenu">
+        <button class="close-btn" id="closeMobileMenu">&times;</button>
+        <ul class="mobile-menu-list">
+            <li><a href="index.html" onclick="closeMobileMenu()">主页</a></li>
+            <li><a href="works.html" onclick="closeMobileMenu()">案例作品</a></li>
+            <li><a href="about.html" onclick="closeMobileMenu()">关于我们</a></li>
+            <li><a href="contact.html" onclick="closeMobileMenu()">联系我们</a></li>
+        </ul>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>

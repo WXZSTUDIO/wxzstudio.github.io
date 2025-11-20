@@ -12,32 +12,25 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         const heroVideo = document.querySelector('.hero-video');
 
         if (heroVideo) {
-            // 尝试播放视频
             const playPromise = heroVideo.play();
 
             if (playPromise !== undefined) {
                 playPromise.then(() => {
-                    // 视频播放成功
                     console.log("Hero video started successfully.");
                 }).catch(error => {
-                    // 视频播放失败，执行最终兜底方案：静音后再次尝试播放
                     console.warn("Video auto-play failed. Retrying with explicit mute/play logic.", error);
-                    
-                    // 确保视频是静音状态 (双重确认)
                     heroVideo.muted = true;
                     heroVideo.play().catch(finalError => {
                         console.error("Final attempt to play video failed:", finalError);
-                        // 最终失败时，视频将保持在第一帧，等待用户交互
                     });
                 });
             }
         }
     }
 
-
     // ===========================================
     // 自定义 SplitText 模拟 (模拟逐行/词动画)
-    // -------------------------------------------
+    // ===========================================
     function initSplitTextAnimations() {
         const targets = document.querySelectorAll('.split-text-target');
 
@@ -52,7 +45,7 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
                 stagger: 0.1,
                 scrollTrigger: {
                     trigger: target,
-                    start: "top 90%", 
+                    start: "top 90%",
                 }
             });
         });
@@ -100,7 +93,7 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
                 
                 onToggle: (self) => {
                     if (self.isActive) {
-                        document.body.classList.toggle('light-theme', !isDark);
+                        document.body.classList.toggle('light-theme-nav', !isDark);
                     } else {
                         const scrollPos = ScrollTrigger.scroller.scrollTop;
                         const triggerPos = self.start;
@@ -109,7 +102,7 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
                             const prevSection = section.previousElementSibling;
                             const prevTheme = prevSection && prevSection.classList.contains('section') ? prevSection.getAttribute('data-theme') : 'dark';
 
-                            document.body.classList.toggle('light-theme', (prevTheme !== 'dark'));
+                            document.body.classList.toggle('light-theme-nav', (prevTheme !== 'dark'));
                         } 
                     }
                 }
@@ -118,53 +111,50 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     }
     
     // ===========================================
-    // 横向滚动文本 (Marquee/Sliding Text)
+    // 作品筛选逻辑 (Works Filter) - NEW FUNCTION
     // ===========================================
-    function initSlidingText() {
-        const marquee = document.querySelector('.sliding-text');
-        if (!marquee) return;
-        
-        marquee.innerHTML += marquee.innerHTML;
+    function initWorksFilter() {
+        const filterButtons = document.querySelectorAll('.works-filter .filter-btn');
+        const worksGrid = document.querySelector('.works-grid');
+        if (!worksGrid) return;
+        const workItems = worksGrid.querySelectorAll('.work-item');
 
-        gsap.to(marquee, {
-            xPercent: -50,
-            duration: 15, 
-            repeat: -1, 
-            ease: "linear",
-        });
-    }
+        filterButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const filter = e.target.getAttribute('data-filter');
 
+                // 1. 切换按钮的 active 状态
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
 
-    // ===========================================
-    // 语言切换逻辑 (Language Switch Logic)
-    // ===========================================
-    function switchLanguage(lang) {
-        // 仅处理按钮和页面语言设置
-        if (lang === 'cn') {
-            document.documentElement.lang = 'zh-CN';
-            localStorage.setItem('userLang', 'cn');
-        } else {
-            document.documentElement.lang = 'en';
-            localStorage.setItem('userLang', 'kr');
-        }
-        
-        updateLanguageButtonStates(lang);
-    }
-
-    function updateLanguageButtonStates(lang) {
-        const buttons = [
-            document.getElementById('btn-cn-footer'),
-            document.getElementById('btn-kr-footer'),
-            document.getElementById('btn-cn-mobile'),
-            document.getElementById('btn-kr-mobile')
-        ];
-
-        buttons.forEach(btn => {
-            if (btn) {
-                const btnLang = btn.id.includes('-cn-') ? 'cn' : 'kr';
-                btn.classList.toggle('active', btnLang === lang);
-                btn.onclick = () => switchLanguage(btnLang);
-            }
+                // 2. 筛选作品
+                workItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    const shouldShow = filter === 'all' || category === filter;
+                    
+                    if (shouldShow) {
+                        // 显示元素
+                        item.style.display = 'block';
+                        gsap.to(item, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.5,
+                            delay: Math.random() * 0.1, 
+                            clearProps: "all" // 确保清除所有 GSAP 设置的样式，恢复 CSS 控制
+                        });
+                    } else {
+                        // 隐藏元素
+                        gsap.to(item, {
+                            opacity: 0,
+                            scale: 0.95,
+                            duration: 0.3,
+                            onComplete: () => {
+                                item.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
         });
     }
 
@@ -207,18 +197,15 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     // 页面加载完成
     // ===========================================
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. 尝试自动播放视频 (移动端修复)
-        initVideoAutoplay(); 
+        // 1. 仅在首页尝试自动播放视频
+        if (document.querySelector('.hero-video')) {
+             initVideoAutoplay(); 
+        }
+       
+        // 2. 初始化作品筛选功能 (works.html 专用)
+        initWorksFilter();
         
-        // 2. 初始化横向滚动
-        initSlidingText(); 
-
-        // 3. 检查本地存储的语言设置并应用
-        const userPreferredLang = localStorage.getItem('userLang') || 'cn'; 
-        window.switchLanguage = switchLanguage; 
-        switchLanguage(userPreferredLang); 
-        
-        // 4. 初始动画 (SplitText, FadeIn, Nav Swap)
+        // 3. 初始动画 (SplitText, FadeIn, Nav Swap)
         initAnimations();
     });
 }
