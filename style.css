@@ -1,401 +1,135 @@
-:root {
-    /* 颜色变量 (模仿原站蓝/白/黑) */
-    --color-dark: #000000;
-    --color-blue: #002bba; /* 主题蓝色 */
-    --color-light-blue: #f7f7f7; 
-    --color-white: #ffffff;
-    
-    /* 默认主题颜色 */
-    --bg-color-dark: var(--color-dark);
-    --text-color-dark: var(--color-white);
+/* --- 新增页面内容样式 --- */
 
-    --bg-color-light: var(--color-light-blue);
-    --text-color-light: var(--color-dark);
-
-    /* 字体 */
-    --font-heading: 'Montserrat', sans-serif;
-    --font-body: 'Noto Sans SC', 'Noto Sans KR', sans-serif;
+/* 页面通用顶部区域 (Page Hero) - 区分于主页的 is-hero */
+.page-hero {
+    /* 继承主页的简洁风格，但使用浅色背景，适配默认的深色主题 */
+    background-color: var(--color-light-blue);
+    color: var(--color-dark);
+    padding: 8rem 0 6rem 0; 
+    text-align: center;
 }
-
-/* Base Styles & Resets */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    font-family: var(--font-body);
-    /* 默认深色主题 */
-    background-color: var(--bg-color-dark); 
-    color: var(--text-color-dark);
-    line-height: 1.6;
-    overflow-x: hidden;
-    transition: background-color 0.4s ease, color 0.4s ease; /* 平滑过渡 */
-}
-body.light-theme {
-    background-color: var(--bg-color-light);
-    color: var(--text-color-light);
-}
-
-a { text-decoration: none; color: inherit; }
-.hidden { display: none !important; }
-.no-scroll { overflow: hidden; } 
-
-/* 容器和间距 */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-.section { padding: 8rem 0; position: relative; } 
-.is-dark { background-color: var(--color-dark); color: var(--color-white); }
-.is-light-blue { background-color: var(--color-light-blue); color: var(--color-dark); }
-
-
-/* === Typography & Animation Prep === */
-
-/* 核心标题动画结构 */
-.line-wrapper { 
-    overflow: hidden; 
-    display: block; 
-    line-height: 1em; /* 确保行高贴合，防止动画时跳动 */
-}
-.line-inner {  
-    display: inline-block;  
-    transform: translateY(100%);  /* 动画初始状态：向下偏移 100% */
-    opacity: 0;
-    will-change: transform, opacity;
-}
-
-.fade-in {
-    opacity: 0; /* 动画初始状态：透明 */
-    transform: translateY(1.5rem); /* 动画初始状态：向下偏移 */
-    will-change: transform, opacity;
-}
-
-.hero-headline {
-    font-family: var(--font-heading); 
-    font-weight: 900; 
-    font-size: clamp(3rem, 10vw, 8rem); 
-    line-height: 1.1;
-}
-.large-copy {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: clamp(1.2rem, 3vw, 2.5rem);
-    line-height: 1.4;
-    max-width: 600px;
-}
-.section-title {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: clamp(2rem, 5vw, 4rem);
-    margin-bottom: 2rem;
-}
-.section-sub-title {
-    font-family: var(--font-heading);
-    font-weight: 400;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    color: var(--color-blue);
-}
-.contact-item span {
-    font-weight: 700;
-    color: var(--color-blue);
-}
-
-
-/* === Navigation Styles (Sticky & Theme Swapping) === */
-.nav-wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 1rem 0;
-    transition: background-color 0.4s ease;
-}
-.nav-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-/* 默认深色主题下的样式 */
-.nav-wrap {
-    color: var(--text-color-dark); 
-}
-.nav-wrap .logo-light-theme { display: none; }
-.nav-wrap .logo-dark-theme { display: block; }
-.nav-wrap .nav-contact-btn { 
-    background-color: var(--color-white); 
-    color: var(--color-dark); 
-    border: 1px solid var(--color-white);
-}
-
-/* 浅色主题激活时的样式 (由 JS 切换 body.light-theme) */
-body.light-theme .nav-wrap {
-    color: var(--text-color-light); 
-}
-body.light-theme .nav-wrap .logo-dark-theme { display: none; }
-body.light-theme .nav-wrap .logo-light-theme { display: block; }
-body.light-theme .nav-wrap .nav-contact-btn { 
-    background-color: var(--color-dark); 
-    color: var(--color-white); 
-    border: 1px solid var(--color-dark);
-}
-
-.logo-link {
+.page-hero h1 {
     font-family: var(--font-heading);
     font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+.page-hero p {
     font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 作品页 - 画廊网格 */
+.gallery-section {
+    padding: 6rem 0;
+    /* 默认深色背景 */
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+.work-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 移动端单列 */
+    gap: 2rem;
+    margin-top: 3rem;
+}
+.work-item {
     display: block;
+    overflow: hidden;
+    position: relative;
 }
-.logo-img {
-    height: 15rem; /* 假设 Logo 高度 */
-    width: auto;
+.work-item img {
+    width: 100%;
+    height: 400px; /* 示例高度 */
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
 }
-.nav-desktop { display: none; gap: 2rem; align-items: center; }
-.nav-item { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
-
-/* 按钮样式 */
-.button {
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-align: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
+.work-item:hover img {
+    transform: scale(1.03);
+    filter: brightness(0.9);
 }
-.button:hover {
-    opacity: 0.8;
-}
-
-/* 移动菜单按钮 */
-.menu-button {
-    background: none; border: none; cursor: pointer;
-    font-size: 1rem; font-family: var(--font-heading);
-    font-weight: 600; text-transform: uppercase;
-    color: inherit;
-}
-
-
-/* Mobile Navigation Panel */
-.nav-overlay {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-    z-index: 999; display: none; opacity: 0; transition: opacity 0.3s ease;
-}
-.nav-overlay.active { display: block; opacity: 1; }
-.mobile-nav {
-    position: fixed; top: 0; right: 0; width: 85%; max-width: 350px; height: 100%;
-    background-color: var(--color-dark); color: var(--color-white); 
-    padding: 2rem; transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1); z-index: 1000;
-    display: flex; flex-direction: column; justify-content: space-between;
-}
-.mobile-nav.active { transform: translateX(0); }
-.close-btn { position: absolute; top: 1rem; left: 1rem; font-size: 2rem; background: none; border: none; cursor: pointer; color: var(--color-white); }
-.mobile-menu-list { list-style: none; padding-top: 1rem; }
-.mobile-menu-list li a {
+.work-title {
     font-family: var(--font-heading);
-    font-weight: 700; font-size: 1.8rem; display: block; padding: 15px 0;
-    transition: color 0.3s ease;
-}
-.mobile-menu-list li a:hover { color: var(--color-blue); }
-.lang-switch-mobile {
-    display: flex; gap: 10px; font-size: 1.2rem; margin-top: auto; padding-top: 20px;
-    font-family: var(--font-heading);
-}
-.lang-switch-mobile button {
-    background: none; border: none; color: var(--color-white); cursor: pointer;
-    font-weight: 500; font-size: 1rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-top: 1rem;
     text-transform: uppercase;
 }
-.lang-switch-mobile button.active {
-    color: var(--color-blue); font-weight: 700;
+/* 桌面端作品网格 */
+@media (min-width: 992px) {
+    .work-grid {
+        grid-template-columns: repeat(3, 1fr); /* 桌面端三列 */
+    }
 }
 
 
-/* === Hero Section (Full-Screen Video) === */
-.is-hero {
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-}
-.hero-video-wrapper {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    overflow: hidden;
-}
-.hero-video {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: brightness(0.7);
-}
-.hero-content {
-    position: relative;
-    z-index: 10;
-}
-
-
-/* === Services/Mission Section === */
-.services-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
+/* 服务页 - 服务列表 */
+.service-list {
+    padding: 6rem 0;
+    /* 使用 light-theme 样式以配合 page-hero */
+    background-color: var(--color-light-blue);
+    color: var(--color-dark);
 }
 .service-item {
-    padding-top: 2rem;
-    margin-top: 2rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 2rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
-.service-item h3 {
+.service-item h2 {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 2rem;
     margin-bottom: 0.5rem;
-    text-transform: uppercase;
+    color: var(--color-blue);
 }
 .service-item p {
-    font-family: var(--font-body);
-    color: rgba(0, 0, 0, 0.7);
-}
-
-/* Sliding Text Row */
-.sliding-row-wrapper {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    padding: 1rem 0;
-    background-color: var(--color-blue);
-    color: var(--color-white);
-}
-.sliding-text {
-    white-space: nowrap;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 4vw;
-    display: inline-block;
-    will-change: transform;
-}
-.sliding-text span {
-    margin-right: 2rem;
-}
-
-
-/* === Portfolio Section === */
-.portfolio-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-top: 4rem;
-}
-.portfolio-item {
-    display: block;
-    position: relative;
-    height: 350px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.portfolio-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.85);
-    transition: transform 0.5s ease;
-}
-.portfolio-item:hover .portfolio-img {
-    transform: scale(1.05);
-}
-.portfolio-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1.5rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-}
-.portfolio-info h3 {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.4rem;
-    margin-bottom: 0.25rem;
-}
-.cta-wrap {
-    text-align: center;
-    margin-top: 4rem;
-}
-.cta-button {
-    background-color: var(--color-blue);
-    color: var(--color-white);
-    padding: 1rem 2rem;
-}
-
-
-/* === About/Contact Section === */
-.about-contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4rem;
-}
-.contact-info {
-    margin-top: 2rem;
-}
-.contact-item {
     font-size: 1.1rem;
-    line-height: 2;
+    max-width: 700px;
 }
 
-/* === Footer === */
-.main-footer {
-    background-color: var(--color-dark); 
+/* 关于页 - 内容 */
+.about-content {
+    padding: 6rem 0;
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+.about-content h2 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+}
+.about-content p {
+    font-size: 1.1rem;
+}
+.contact-prompt {
+    margin-top: 4rem;
+    font-style: italic;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+
+/* CTA 区域 (行动号召) */
+.cta-section {
+    text-align: center;
+    padding: 4rem 0;
+    background-color: var(--color-blue);
     color: var(--color-white);
-    padding: 2rem 0;
 }
-.footer-flex {
-    display: flex; flex-direction: column; justify-content: space-between;
-    align-items: center; gap: 1.5rem; font-family: var(--font-heading);
+.cta-section h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
 }
-.footer-logo { font-weight: 900; font-size: 1.2rem;}
-.copyright { font-size: 0.8rem; color: #aaa; }
-.lang-switch-desktop {
-    display: none; 
+/* 继承并覆盖 .button 样式 */
+.cta-section .cta-button {
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    padding: 1rem 3rem;
 }
-.lang-switch-desktop button {
-    background: none; border: none; color: var(--color-white); cursor: pointer;
-    font-weight: 500; font-size: 0.9rem; text-transform: uppercase;
-}
-.lang-switch-desktop button.active {
-    color: var(--color-blue); font-weight: 700;
-}
-
-
-/* =========================================
-   Media Queries (Desktop)
-   ========================================= */
-
-@media (min-width: 992px) {
-    .nav-desktop { display: flex; }
-    .menu-button { display: none; }
-    
-    .services-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 8rem;
-    }
-    .service-left { order: 2; }
-    .service-right { order: 1; }
-
-    .portfolio-list {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .about-contact-grid {
-        grid-template-columns: 1.5fr 1fr;
-        gap: 5rem;
-    }
-    .lang-switch-desktop {
-        display: flex; 
-        gap: 10px;
-    }
-    .footer-flex { flex-direction: row; gap: 0; }
+.cta-section .cta-button:hover {
+    background-color: #eee;
 }
