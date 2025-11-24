@@ -40,7 +40,12 @@
             </div>
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <!-- 添加您的英雄区域内容 -->
+                <h1 class="fade-in" data-delay="0" style="font-family: var(--font-heading); font-size: clamp(3rem, 7vw, 6rem); font-weight: 900; color: white; line-height: 1.1;">
+                    用视觉<br>定义品牌价值
+                </h1>
+                <p class="fade-in" data-delay="0.3" style="font-size: clamp(1rem, 2vw, 1.4rem); color: #ccc; margin-top: 20px;">
+                    商业影像、平面设计与创意策划，我们是您的全方位视觉伙伴。
+                </p>
             </div>
             <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
         </section>
@@ -65,70 +70,82 @@
                 <h2 class="section-sub-title fade-in">精选</h2>
                 <h2 class="section-title fade-in">最新案例作品</h2>
                 
-                <!-- 修复后的作品网格 -->
                 <div class="portfolio-grid">
                     <a href="javascript:void(0);" class="portfolio-item fade-in" 
                        data-video="assets/videos/work-01.mp4" 
                        data-title="作品 01" 
-                       data-description="作品分类/短描述">
+                       data-description="品牌宣传片 / 2025">
                         <div class="portfolio-img-wrapper">
-                            
+                             <img src="assets/images/work-01.jpg" alt="作品 01 封面" class="portfolio-img lazy-load-img">
                         </div>
                         <div class="portfolio-info">
                             <h3>作品 01</h3>
-                            <p>作品分类/短描述</p>
+                            <p>品牌宣传片 / 2025</p>
                         </div>
                     </a>
                     
                     <a href="javascript:void(0);" class="portfolio-item fade-in" 
                        data-video="assets/videos/work-02.mp4" 
                        data-title="作品 02" 
-                       data-description="作品分类/短描述">
+                       data-description="产品短视频 / 2025">
                         <div class="portfolio-img-wrapper">
-                            
+                             <img src="assets/images/work-02.jpg" alt="作品 02 封面" class="portfolio-img lazy-load-img">
                         </div>
                         <div class="portfolio-info">
                             <h3>作品 02</h3>
-                            <p>作品分类/短描述</p>
+                            <p>产品短视频 / 2025</p>
                         </div>
                     </a>
 
                     <a href="javascript:void(0);" class="portfolio-item fade-in" 
                        data-video="assets/videos/work-03.mp4" 
                        data-title="作品 03" 
-                       data-description="作品分类/短描述">
+                       data-description="活动纪实 / 2024">
                         <div class="portfolio-img-wrapper">
-                            
+                             <img src="assets/images/work-03.jpg" alt="作品 03 封面" class="portfolio-img lazy-load-img">
                         </div>
                         <div class="portfolio-info">
                             <h3>作品 03</h3>
-                            <p>作品分类/短描述</p>
+                            <p>活动纪实 / 2024</p>
                         </div>
                     </a>
                     
                     <a href="javascript:void(0);" class="portfolio-item fade-in" 
                        data-video="assets/videos/work-04.mp4" 
                        data-title="作品 04" 
-                       data-description="作品分类/短描述">
+                       data-description="商业摄影 / 2024">
                         <div class="portfolio-img-wrapper">
-                            
+                             <img src="assets/images/work-04.jpg" alt="作品 04 封面" class="portfolio-img lazy-load-img">
                         </div>
                         <div class="portfolio-info">
                             <h3>作品 04</h3>
-                            <p>作品分类/短描述</p>
+                            <p>商业摄影 / 2024</p>
                         </div>
                     </a>
 
                     <a href="javascript:void(0);" class="portfolio-item fade-in" 
                        data-video="assets/videos/work-05.mp4" 
                        data-title="作品 05" 
-                       data-description="作品分类/短描述">
+                       data-description="平面设计 / 2024">
                         <div class="portfolio-img-wrapper">
-                            
+                             <img src="assets/images/work-05.jpg" alt="作品 05 封面" class="portfolio-img lazy-load-img">
                         </div>
                         <div class="portfolio-info">
                             <h3>作品 05</h3>
-                            <p>作品分类/短描述</p>
+                            <p>平面设计 / 2024</p>
+                        </div>
+                    </a>
+                    
+                     <a href="javascript:void(0);" class="portfolio-item fade-in" 
+                       data-video="assets/videos/work-06.mp4" 
+                       data-title="作品 06" 
+                       data-description="短片制作 / 2024">
+                        <div class="portfolio-img-wrapper">
+                             <img src="assets/images/work-06.jpg" alt="作品 06 封面" class="portfolio-img lazy-load-img">
+                        </div>
+                        <div class="portfolio-info">
+                            <h3>作品 06</h3>
+                            <p>短片制作 / 2024</p>
                         </div>
                     </a>
                 </div>
@@ -154,8 +171,7 @@
             <h4>合作指南</h4>
             <div class="notes-content">
                 <p>我们致力于提供高质量的拍摄服务。为确保项目顺利进行，请您在合作前了解并同意以下条款：</p>
-                <!-- 保持原有内容 -->
-            </div>
+                </div>
             <p class="disclaimer">© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
         </div>
     </div>
@@ -172,7 +188,6 @@
         <span style="font-size: 1.2rem;">↑</span>
     </a>
 
-    <!-- 视频弹窗播放器 -->
     <div class="video-modal" id="videoModal">
         <div class="video-modal-content">
             <button class="video-modal-close" id="videoClose">&times;</button>
