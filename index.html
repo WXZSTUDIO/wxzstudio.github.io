@@ -11,8 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-
     <link rel="icon" href="icons/favicon.ico">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -27,136 +25,118 @@
             
             <nav class="nav-desktop">
                 <a href="works.html" class="nav-item">案例作品</a>
-                <a href="contact.html" class="nav-contact-btn button">联系我们</a> 
+                <a href="contact.html" class="nav-contact-btn">联系我们</a> 
             </nav>
         </div>
     </div>
     
     <main>
         <section class="section is-dark is-hero" data-theme="dark">
-            <div class="hero-video-wrapper" data-parallax-speed="0.2">
-                <video id="hero-video" autoplay muted loop playsinline poster="assets/images/hero-fallback.jpg">
-                    <source src="assets/video/hero-loop.mp4" type="video/mp4">
+            <div class="hero-video-wrapper">
+                <video class="hero-video" autoplay loop muted playsinline>
+                    <source src="images/hero-video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                </div>
+            <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
+        </section>
 
-            <div class="container hero-content">
-                <h1 class="headline-large fade-in">用光影，<br>创造超越期待的价值。</h1>
-                <p class="fade-in delay-0-3">WXZ Studio. 视觉设计与高端摄影服务</p>
-                <a href="works.html" class="button cta-button fade-in delay-0-6">查看案例作品</a>
+        <section class="section is-light" data-theme="light">
+            <div class="container core-business-grid">
+                <div class="business-item fade-in" data-delay="0">
+                    <h3>商业影像与摄影</h3>
+                    <p>短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍。我们提供高品质的视觉资产，全方位覆盖您的商业影像需求。</p>
+                </div>
+                
+                <div class="business-item fade-in" data-delay="0.2">
+                    <h3>平面视觉设计</h3>
+                    <p>从品牌标识、海报设计到社交媒体视觉企划。通过专业设计，助力品牌建立统一、引人注目的视觉形象。</p>
+                </div>
             </div>
+             <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
         </section>
 
         <section class="section is-dark" data-theme="dark">
             <div class="container">
-                <h2 class="section-title fade-in">精选作品</h2>
+                <h2 class="section-sub-title fade-in">精选</h2>
+                <h2 class="section-title fade-in">最新案例作品</h2>
                 
                 <div class="portfolio-grid">
-                    
-                    <a href="javascript:void(0);" class="portfolio-item work-item-trigger fade-in" data-video-id="VIDEO_ID_01" data-video-source="youtube"> 
-                        <div class="aspect-ratio-3-4">
-                            <img src="assets/images/work-01-cover.jpg" alt="作品 01 封面" class="portfolio-img"> 
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>作品 01</h3>
-                            <p>作品分类/短描述</p>
-                        </div>
-                    </a>
-                    
-                    <a href="javascript:void(0);" class="portfolio-item work-item-trigger fade-in" data-video-id="VIDEO_ID_02" data-video-source="vimeo"> 
-                        <div class="aspect-ratio-3-4">
-                            <img src="assets/images/work-02-cover.jpg" alt="作品 02 封面" class="portfolio-img"> 
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>作品 02</h3>
-                            <p>作品分类/短描述</p>
-                        </div>
-                    </a>
+    
+    <a href="works.html#work-01" class="portfolio-item fade-in">
+        <img src="assets/images/work-01-cover.jpg" alt="作品 01 封面" class="portfolio-img"> 
+        <div class="portfolio-info">
+            <h3>作品 01</h3>
+            <p>作品分类/短描述</p>
+        </div>
+    </a>
+    
+    <a href="works.html#work-02" class="portfolio-item fade-in">
+        <img src="assets/images/work-02-cover.jpg" alt="作品 02 封面" class="portfolio-img"> 
+        <div class="portfolio-info">
+            <h3>作品 02</h3>
+            <p>作品分类/短描述</p>
+        </div>
+    </a>
 
-                    <a href="javascript:void(0);" class="portfolio-item work-item-trigger fade-in" data-video-id="VIDEO_ID_03" data-video-source="youtube"> 
-                        <div class="aspect-ratio-3-4">
-                            <img src="assets/images/work-03-cover.jpg" alt="作品 03 封面" class="portfolio-img"> 
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>作品 03</h3>
-                            <p>作品分类/短描述</p>
-                        </div>
-                    </a>
-                    
-                    <a href="javascript:void(0);" class="portfolio-item work-item-trigger fade-in" data-video-id="VIDEO_ID_04" data-video-source="vimeo"> 
-                        <div class="aspect-ratio-3-4">
-                            <img src="assets/images/work-04-cover.jpg" alt="作品 04 封面" class="portfolio-img"> 
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>作品 04</h3>
-                            <p>作品分类/短描述</p>
-                        </div>
-                    </a>
+    <a href="works.html#work-03" class="portfolio-item fade-in">
+        <img src="assets/images/work-03-cover.jpg" alt="作品 03 封面" class="portfolio-img"> 
+        <div class="portfolio-info">
+            <h3>作品 03</h3>
+            <p>作品分类/短描述</p>
+        </div>
+    </a>
+    
+    <a href="works.html#work-04" class="portfolio-item fade-in">
+        <img src="assets/images/work-04-cover.jpg" alt="作品 04 封面" class="portfolio-img"> 
+        <div class="portfolio-info">
+            <h3>作品 04</h3>
+            <p>作品分类/短描述</p>
+        </div>
+    </a>
 
-                    <a href="javascript:void(0);" class="portfolio-item work-item-trigger fade-in" data-video-id="VIDEO_ID_05" data-video-source="youtube"> 
-                        <div class="aspect-ratio-3-4">
-                            <img src="assets/images/work-05-cover.jpg" alt="作品 05 封面" class="portfolio-img"> 
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>作品 05</h3>
-                            <p>作品分类/短描述</p>
-                        </div>
-                    </a>
-                    
-                    <a href="javascript:void(0);" class="portfolio-item work-item-trigger fade-in" data-video-id="VIDEO_ID_06" data-video-source="vimeo"> 
-                        <div class="aspect-ratio-3-4">
-                            <img src="assets/images/work-06-cover.jpg" alt="作品 06 封面" class="portfolio-img"> 
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>作品 06</h3>
-                            <p>作品分类/短描述</p>
-                        </div>
-                    </a>
-
-                </div>
-                <div style="text-align: center; margin-top: 60px;">
-                    <a href="works.html" class="button">查看更多作品</a>
+    <a href="works.html#work-05" class="portfolio-item fade-in">
+        <img src="assets/images/work-05-cover.jpg" alt="作品 05 封面" class="portfolio-img"> 
+        <div class="portfolio-info">
+            <h3>作品 05</h3>
+            <p>作品分类/短描述</p>
+        </div>
+    </a>
+</div>
+                
+                <div class="view-all-cta fade-in">
+                    <a href="works.html" class="nav-contact-btn is-dark-theme" style="border-radius: 9999px;">查看更多案例</a>
                 </div>
             </div>
         </section>
 
-        <section class="section is-light" data-theme="light">
+        <section class="section is-light contact-cta-footer" data-theme="light">
             <div class="container">
-                <h2 class="section-title fade-in">核心业务</h2>
-                <div class="core-business-grid">
-                    <div class="business-item fade-in">
-                        <h3>品牌视觉策略</h3>
-                        <p>从品牌 DNA 出发，打造一套极具辨识度的视觉语言体系，贯穿平面、动态及环境体验。</p>
-                    </div>
-                    <div class="business-item fade-in delay-0-2">
-                        <h3>高端商业摄影</h3>
-                        <p>专注于产品、肖像及空间摄影，以精湛的布光和构图，呈现超越商业价值的艺术质感。</p>
-                    </div>
-                    <div class="business-item fade-in delay-0-4">
-                        <h3>创意视频制作</h3>
-                        <p>涵盖广告片、宣传片、纪录片等，从脚本策划到后期调色，提供一站式高品质视频解决方案。</p>
-                    </div>
-                </div>
+                <h2 class="section-title fade-in">开启您的项目</h2>
+                <a href="contact.html" class="nav-contact-btn button fade-in is-black-btn">联系我们</a>
             </div>
+            <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
         </section>
 
-        <section class="sliding-text-section is-dark">
-            <div class="sliding-text-container" data-direction="right" data-speed="25">
-                <div class="sliding-text-inner">
-                    <span>VISUAL EXCELLENCE · CREATIVE INNOVATION · WXZ STUDIO ·</span>
-                    <span>VISUAL EXCELLENCE · CREATIVE INNOVATION · WXZ STUDIO ·</span>
-                    <span>VISUAL EXCELLENCE · CREATIVE INNOVATION · WXZ STUDIO ·</span>
-                </div>
-            </div>
-        </section>
+    </main>
 
-        <section class="section is-light terms-section">
-            <h2 class="section-title fade-in">服务条款摘要</h2>
-            <div class="container terms-content">
+    <div class="regulatory-notes">
+        <div class="notes-container">
+            <h4>合作指南</h4>
+            <div class="notes-content">
+                <p>我们致力于提供高质量的拍摄服务。为确保项目顺利进行，请您在合作前了解并同意以下条款：</p>
+
                 <p>
-                    <strong>预订与定金 (Booking & Deposit)</strong><br>
-                    预付定金：项目预定以定金到账为准。定金一旦支付，即视为档期锁定，若非 WXZ STUDIO 方面原因导致的项目延期或取消，定金不予退还。
+                    <strong>排期确认与预付定金 (Deposit & Scheduling)</strong><br>
+                    定金标准：首次合作的客户，请在确认您的专属拍摄排期时，预付约定总金额的 50% 作为项目定金。排期将在定金到账后正式锁定。
+                </p>
+
+                <p>
+                    <strong>项目取消政策 (Cancellation Policy)</strong><br>
+                    当日取消：除非发生不可抗力情况，否则在拍摄项目当日取消，您所支付的定金将不予退还。
                 </p>
 
                 <p>
@@ -182,22 +162,20 @@
                 <p>期待与您共同创造精彩作品。</p>
             </div>
             <p class="disclaimer">© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
-        </section>
-
-    </main>
-
-    <div id="video-modal">
-        <span class="modal-close-btn">&times;</span>
-        <div class="modal-content">
-            <div id="video-player"></div>
         </div>
     </div>
-    <div class="mobile-nav">
-        <a href="index.html" class="mobile-nav-item is-active"><i class="fas fa-home"></i><span>首页</span></a>
-        <a href="works.html" class="mobile-nav-item"><i class="fas fa-camera-retro"></i><span>作品</span></a>
-        <a href="about.html" class="mobile-nav-item"><i class="fas fa-users"></i><span>关于</span></a>
-        <a href="contact.html" class="mobile-nav-item"><i class="fas fa-envelope"></i><span>联系</span></a>
+    
+    <div class="mobile-nav" id="mobileMenu">
+        <ul class="mobile-menu-list">
+            <li><a href="index.html" class="active">主页</a></li>
+            <li><a href="works.html">案例作品</a></li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
     </div>
+    
+    <a href="index.html" class="floating-back-home" id="floatingBackHome">
+        <span style="font-size: 1.2rem;">↑</span>
+    </a>
 
     <script src="script.js"></script>
 </body>
