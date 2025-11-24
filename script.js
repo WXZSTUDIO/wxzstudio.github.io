@@ -270,3 +270,107 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         initLazyLoading(); // 及时加载优化
     });
 }
+
+// ===========================================
+// 视频弹窗播放器功能
+// ===========================================
+function initVideoModal() {
+    const videoModal = document.getElementById('videoModal');
+    const modalVideo = document.getElementById('modalVideo');
+    const videoClose = document.getElementById('videoClose');
+    const videoTitle = document.getElementById('videoTitle');
+    const videoDescription = document.getElementById('videoDescription');
+    
+    if (!videoModal || !modalVideo) return;
+    
+    // 获取所有作品项
+    const portfolioItems = document.querySelectorAll('.portfolio-item[data-video]');
+    
+    // 为每个作品项添加点击事件
+    portfolioItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const videoSrc = this.getAttribute('data-video');
+            const title = this.getAttribute('data-title');
+            const description = this.getAttribute('data-description');
+            
+            // 设置视频源和相关信息
+            modalVideo.src = videoSrc;
+            videoTitle.textContent = title;
+            videoDescription.textContent = description;
+            
+            // 显示弹窗
+            videoModal.classList.add('active');
+            document.body.classList.add('no-scroll');
+            
+            // 播放视频
+            modalVideo.play().catch(e => {
+                console.log('自动播放被阻止，需要用户交互');
+            });
+        });
+    });
+    
+    // 关闭弹窗
+    videoClose.addEventListener('click', closeVideoModal);
+    
+    // 点击弹窗背景关闭
+    videoModal.addEventListener('click', function(e) {
+        if (e.target === videoModal) {
+            closeVideoModal();
+        }
+    });
+    
+    // ESC键关闭
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+            closeVideoModal();
+        }
+    });
+    
+    function closeVideoModal() {
+        videoModal.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+        
+        // 暂停视频
+        modalVideo.pause();
+        modalVideo.currentTime = 0;
+    }
+    
+    // 视频播放结束处理
+    modalVideo.addEventListener('ended', function() {
+        // 可选：视频播放结束后自动关闭或显示重播按钮
+        // closeVideoModal();
+    });
+}
+
+// ===========================================
+// URL参数处理（用于从首页跳转时自动播放）
+// ===========================================
+function handleURLParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const playVideo = urlParams.get('play');
+    
+    if (playVideo) {
+        // 查找对应的作品项并触发点击
+        const targetItem = document.querySelector(`[data-video*="${playVideo}"]`);
+        if (targetItem) {
+            // 延迟执行以确保页面加载完成
+            setTimeout(() => {
+                targetItem.click();
+            }, 500);
+        }
+    }
+}
+
+// ===========================================
+// 更新总初始化函数
+// ===========================================
+function initAnimations() {
+    initParallax();
+    initFadeInAnimations();
+    initNavThemeSwap();
+    initRippleButtons();
+    initVideoModal(); // 新增视频弹窗初始化
+    handleURLParameters(); // 处理URL参数
+}

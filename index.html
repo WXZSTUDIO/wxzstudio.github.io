@@ -64,42 +64,52 @@
                 <h2 class="section-sub-title fade-in">精选</h2>
                 <h2 class="section-title fade-in">最新案例作品</h2>
                 
-                <div class="portfolio-grid">
-    
-    <a href="works.html#work-01" class="portfolio-item fade-in">
-        <img src="assets/images/work-01-cover.jpg" alt="作品 01 封面" class="portfolio-img"> 
+                <!-- 替换原有的作品网格部分 -->
+<div class="portfolio-grid">
+    <a href="works.html#work-01" class="portfolio-item fade-in" data-video="assets/videos/work-01.mp4" data-title="作品 01" data-description="作品分类/短描述">
+        <div class="portfolio-img-wrapper">
+             
+        </div>
         <div class="portfolio-info">
             <h3>作品 01</h3>
             <p>作品分类/短描述</p>
         </div>
     </a>
     
-    <a href="works.html#work-02" class="portfolio-item fade-in">
-        <img src="assets/images/work-02-cover.jpg" alt="作品 02 封面" class="portfolio-img"> 
+    <a href="works.html#work-02" class="portfolio-item fade-in" data-video="assets/videos/work-02.mp4" data-title="作品 02" data-description="作品分类/短描述">
+        <div class="portfolio-img-wrapper">
+             
+        </div>
         <div class="portfolio-info">
             <h3>作品 02</h3>
             <p>作品分类/短描述</p>
         </div>
     </a>
 
-    <a href="works.html#work-03" class="portfolio-item fade-in">
-        <img src="assets/images/work-03-cover.jpg" alt="作品 03 封面" class="portfolio-img"> 
+    <a href="works.html#work-03" class="portfolio-item fade-in" data-video="assets/videos/work-03.mp4" data-title="作品 03" data-description="作品分类/短描述">
+        <div class="portfolio-img-wrapper">
+             
+        </div>
         <div class="portfolio-info">
             <h3>作品 03</h3>
             <p>作品分类/短描述</p>
         </div>
     </a>
     
-    <a href="works.html#work-04" class="portfolio-item fade-in">
-        <img src="assets/images/work-04-cover.jpg" alt="作品 04 封面" class="portfolio-img"> 
+    <a href="works.html#work-04" class="portfolio-item fade-in" data-video="assets/videos/work-04.mp4" data-title="作品 04" data-description="作品分类/短描述">
+        <div class="portfolio-img-wrapper">
+             
+        </div>
         <div class="portfolio-info">
             <h3>作品 04</h3>
             <p>作品分类/短描述</p>
         </div>
     </a>
 
-    <a href="works.html#work-05" class="portfolio-item fade-in">
-        <img src="assets/images/work-05-cover.jpg" alt="作品 05 封面" class="portfolio-img"> 
+    <a href="works.html#work-05" class="portfolio-item fade-in" data-video="assets/videos/work-05.mp4" data-title="作品 05" data-description="作品分类/短描述">
+        <div class="portfolio-img-wrapper">
+             
+        </div>
         <div class="portfolio-info">
             <h3>作品 05</h3>
             <p>作品分类/短描述</p>
@@ -178,5 +188,20 @@
     </a>
 
     <script src="script.js"></script>
+    <!-- 视频弹窗播放器 -->
+<div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+        <button class="video-modal-close" id="videoClose">&times;</button>
+        <div class="video-modal-player">
+            <video id="modalVideo" controls>
+                您的浏览器不支持视频播放。
+            </video>
+        </div>
+        <div class="video-modal-info">
+            <h3 id="videoTitle"></h3>
+            <p id="videoDescription"></p>
+        </div>
+    </div>
+</div>
 </body>
 </html>
