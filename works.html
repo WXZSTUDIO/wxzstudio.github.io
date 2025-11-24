@@ -76,19 +76,19 @@
         // **********************************************
         const WORKS_DATA = [
             {
-                title: "明星侧拍 - 幕后花絮",
+                title: "明星侧拍 - 幕后花絮 A",
                 cover: "assets/images/cover_star_bts.jpg", // 封面图路径
                 videoUrl: "assets/videos/star_bts_a.mp4", // 视频文件路径
                 tags: ["明星侧拍", "幕后花絮", "时尚"]
             },
             {
-                title: "美妆产品 - 产品特写",
+                title: "新品手机发布 - 产品特写",
                 cover: "assets/images/cover_product_phone.jpg", // 封面图路径
                 videoUrl: "assets/videos/product_phone.mp4", // 视频文件路径
                 tags: ["产品拍摄", "科技", "广告片"]
             },
             {
-                title: "情绪短片 - 氛围短片",
+                title: "高定服装目录 - 氛围短片",
                 cover: "assets/images/cover_fashion_short.jpg", // 封面图路径
                 videoUrl: "assets/videos/fashion_short.mp4", // 视频文件路径
                 tags: ["时尚", "产品拍摄", "高定"]
@@ -109,17 +109,13 @@
             worksContainer.innerHTML = ''; // 清空容器
             
             WORKS_DATA.forEach(work => {
-                // 收集所有独特的标签
                 work.tags.forEach(tag => allTags.add(tag));
                 
-                // 生成作品卡片HTML
-                const item = document.createElement('a'); // 使用 a 标签，语义更好
-                item.className = 'work-item video-item'; // 添加 video-item 类名
-                // 当点击卡片时，调用 showVideoModal，阻止默认链接行为
+                const item = document.createElement('a');
+                item.className = 'work-item video-item';
                 item.setAttribute('onclick', `showVideoModal('${work.videoUrl}', event)`);
-                item.href = '#'; // 设置 href 为 #，使其表现得像链接
+                item.href = '#'; 
                 
-                // 标签 HTML
                 const tagsHtml = work.tags.map(tag => `<span class="work-tag">#${tag}</span>`).join('');
                 
                 item.innerHTML = `
@@ -127,7 +123,8 @@
                         <div class="work-cover-aspect">
                             <img src="${work.cover}" alt="${work.title} 封面" class="work-cover-img">
                         </div>
-                        <span class="play-icon">&#9658;</span> </div>
+                        <span class="play-icon">&#9658;</span> 
+                    </div>
                     <div class="work-info">
                         <h3 class="work-title">${work.title}</h3>
                         <div class="work-tags">${tagsHtml}</div>
@@ -136,8 +133,8 @@
                 worksContainer.appendChild(item);
             });
 
-            // 动态生成标签过滤按钮 (确保只生成一次)
-            if (filterButtonsContainer.children.length === 1) { // 检查是否只有“全部”按钮
+            // 动态生成标签过滤按钮 (只生成一次)
+            if (filterButtonsContainer.children.length === 1) { 
                 allTags.forEach(tag => {
                     const button = document.createElement('span');
                     button.className = 'filter-button';
@@ -147,14 +144,14 @@
                     filterButtonsContainer.appendChild(button);
                 });
             }
+            
+            // 默认执行一次过滤，显示所有作品
+            filterWorks('all', document.querySelector('.filter-button[data-tag="all"]'));
         }
 
         // 2. 过滤逻辑
         window.filterWorks = function(tag, clickedButton) {
-            // 移除所有按钮的 active 状态
             document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-            
-            // 设置当前点击按钮为 active
             if (clickedButton) {
                 clickedButton.classList.add('active');
             }
@@ -163,8 +160,6 @@
             
             document.querySelectorAll('.work-item').forEach((item, index) => {
                 const work = WORKS_DATA[index];
-                
-                // 过滤逻辑：如果是 'all' 或 作品标签包含当前标签
                 const isVisible = (tag === 'all' || work.tags.includes(tag));
 
                 item.style.display = isVisible ? 'block' : 'none';
@@ -173,38 +168,33 @@
                 }
             });
 
-            // 显示/隐藏“未找到”消息
             noWorksMessage.style.display = foundCount === 0 ? 'block' : 'none';
         };
 
 
         // 3. Modal 弹窗逻辑
-        
-        // 显示视频弹窗
         window.showVideoModal = function(videoUrl, event) {
             if (event) {
-                event.preventDefault(); // 阻止 a 标签默认跳转
+                event.preventDefault();
             }
 
-            videoPlayer.src = videoUrl; // 设置视频源
-            videoModal.style.display = 'flex'; // 显示弹窗
-            document.body.classList.add('no-scroll'); // 防止背景滚动
+            videoPlayer.src = videoUrl;
+            videoModal.style.display = 'flex';
+            document.body.classList.add('no-scroll');
             
-            // 延迟播放以确保 Modal 已完全渲染
             setTimeout(() => {
                 videoPlayer.play();
             }, 100);
         };
 
-        // 关闭视频弹窗
         window.closeModal = function() {
-            videoPlayer.pause(); // 暂停播放
-            videoPlayer.removeAttribute('src'); // 移除源，防止后台播放
-            videoModal.style.display = 'none'; // 隐藏弹窗
-            document.body.classList.remove('no-scroll'); // 恢复背景滚动
+            videoPlayer.pause();
+            // 确保移除 source 才能真正阻止加载和后台播放
+            videoPlayer.removeAttribute('src'); 
+            videoModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
         };
         
-        // 键盘 Esc 键关闭
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && videoModal.style.display === 'flex') {
                 closeModal();
@@ -213,8 +203,8 @@
 
         // 页面加载完成时初始化
         document.addEventListener('DOMContentLoaded', () => {
-            initializeWorks(); // 渲染作品和标签
-            // 确保其他页面的 JS 逻辑，如菜单开关，仍然可用
+            initializeWorks(); 
+            // 确保调用 script.js 中的菜单和动画初始化函数
             if (typeof window.initAnimations === 'function') {
                 window.initAnimations();
             }
@@ -223,5 +213,7 @@
             }
         });
     </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>

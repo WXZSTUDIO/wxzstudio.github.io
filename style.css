@@ -783,19 +783,134 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 /* ===========================================
+   --- WORKS PAGE 视频作品样式 & Modal ---
+   =========================================== */
+
+/* 标签过滤区样式 */
+.filter-buttons { 
+    margin: 40px auto; 
+    text-align: center; 
+    max-width: 900px;
+}
+.filter-button {
+    display: inline-block;
+    padding: 6px 14px;
+    margin: 4px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--color-secondary);
+    transition: all 0.2s ease;
+    font-size: 14px;
+    user-select: none;
+}
+.filter-button:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.filter-button.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+/* 作品卡片样式 */
+.work-item {
+    display: block;
+    background-color: var(--color-background);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none; /* 移除 a 标签下划线 */
+}
+.work-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 封面图容器 (3:4 竖版比例) */
+.work-cover-wrapper {
+    position: relative;
+    width: 100%;
+}
+.work-cover-aspect {
+    width: 100%;
+    padding-top: 133.33%; /* 4 / 3 * 100% = 133.33% */
+    position: relative;
+    overflow: hidden;
+}
+
+.work-cover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s;
+}
+
+/* 播放图标 */
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: var(--color-white);
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 10;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s;
+}
+.work-item:hover .play-icon {
+    opacity: 1;
+}
+
+/* 作品信息和标签 */
+.work-info {
+    padding: 15px;
+}
+.work-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: var(--color-primary); /* 标题使用主色 */
+}
+.work-tags {
+    margin-top: 5px;
+}
+.work-tag {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: var(--color-secondary);
+    padding: 2px 6px;
+    margin-right: 4px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+/* ===========================================
    --- 视频播放弹窗 (Modal) 样式 ---
    =========================================== */
 
+/* 阻止背景滚动 */
+.no-scroll {
+    overflow: hidden;
+}
+
 .modal {
-    display: none; /* 默认隐藏 */
+    display: none; 
     position: fixed;
-    z-index: 10000; /* 确保在最顶层，高于所有元素 */
+    z-index: 10000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.95); /* 更深的背景，突出视频 */
-    /* 使用 flex 居中内容 */
+    background-color: rgba(0, 0, 0, 0.95);
     display: flex; 
     align-items: center; 
     justify-content: center;
@@ -805,12 +920,11 @@ body.light-theme-nav .logo-light-theme { display: block; }
 .modal-content {
     position: relative;
     width: 90%;
-    max-width: 1200px; /* 最大宽度 */
+    max-width: 1200px;
     padding: 0;
-    background-color: transparent; /* 内容区背景透明 */
+    background-color: transparent;
 }
 
-/* 视频播放器容器 (16:9 比例) */
 .video-container {
     position: relative;
     width: 100%;
@@ -824,27 +938,27 @@ body.light-theme-nav .logo-light-theme { display: block; }
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 确保视频在 16:9 容器内完全显示 */
+    object-fit: contain; 
 }
 
 /* 关闭按钮 */
 .close-button {
     color: #fff;
     font-size: 48px;
-    font-weight: 300; /* 字体更细，更优雅 */
+    font-weight: 300; 
     cursor: pointer;
     position: absolute;
-    top: -50px; /* 放在容器外部的右上角 */
+    top: -50px; 
     right: 0px;
     line-height: 1;
     z-index: 10001;
 }
 .close-button:hover,
 .close-button:focus {
-    color: var(--color-accent); /* 悬停变强调色 */
+    color: var(--color-accent); 
 }
 
-/* 确保移动端也能正确关闭 */
+/* 移动端优化 */
 @media (max-width: 768px) {
     .close-button {
         font-size: 36px;
@@ -855,6 +969,6 @@ body.light-theme-nav .logo-light-theme { display: block; }
     .modal-content {
         width: 100%;
         margin: 0;
-        align-self: flex-start; /* 视频从顶部开始，在小屏上体验更好 */
+        align-self: flex-start; 
     }
 }
