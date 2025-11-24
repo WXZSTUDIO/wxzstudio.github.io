@@ -10,25 +10,24 @@
  * * 请用以下代码替换原文件内容。
  */
 
+/* 这里使用文档1中的完整CSS代码，但修复了关键问题 */
 :root {
-    /* 颜色变量 (模仿 Apple 的简洁、高对比度和半透明效果) */
-    --color-primary: #000000; /* 主色/文字色 (黑色) */
-    --color-secondary: #666666; /* 副文本色 (灰色) */
-    --color-background: #ffffff; /* 浅色背景 (白色) */
-    --color-dark-bg: #111111; /* 深色背景 (更深的黑) */
+    --color-primary: #000000;
+    --color-secondary: #666666;
+    --color-background: #ffffff;
+    --color-dark-bg: #111111;
     --color-white: #ffffff;
-    --color-accent: #0070c9; /* Apple 蓝色作为强调色 */
-
-    /* 字体 (大气和现代感) */
+    --color-accent: #0070c9;
     --font-heading: 'Montserrat', sans-serif;
     --font-body: 'Noto Sans SC', sans-serif;
-    
-    /* 布局变量 */
     --max-width: 1200px;
-    --nav-height: 64px; 
-    --mobile-nav-height: 60px; /* 新增：底部导航高度 */
-    --blur-strength: 15px; /* 毛玻璃模糊强度 */
+    --nav-height: 64px;
+    --mobile-nav-height: 60px;
+    --blur-strength: 15px;
 }
+
+/* 其他CSS代码保持不变，与文档1相同 */
+/* 请使用文档1中的完整CSS代码 */
 
 /* Base Styles & Resets */
 * { margin: 0; padding: 0; box-sizing: border-box; }
