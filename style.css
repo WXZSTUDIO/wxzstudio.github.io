@@ -5,7 +5,7 @@
  * 2. 调整 .nav-inner 在小屏下的布局，实现 Logo 居中。
  * 3. 移除顶部 .menu-button 的隐藏。
  * 4. 新增作品详情页（视频）样式。
- * 5. 新增 works 页面竖版 3:4 封面和桌面端居中窄显示布局。
+ * 5. 修改 works 页面布局：PC端改为一行最多 3 个作品，并保持居中显示和 3:4 竖版封面。
  * * 请用以下代码替换原文件内容。
  */
 
@@ -227,7 +227,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
 /* === Portfolio Grid === */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 默认为单列 */
     gap: 30px;
     margin-top: 40px;
 }
@@ -241,8 +241,10 @@ body.light-theme-nav .logo-light-theme { display: block; }
 .portfolio-item:hover {
     transform: translateY(-5px); 
 }
+/* 移除这里的固定高度，交给 .portfolio-img-wrapper 来控制比例 */
 .portfolio-img {
-    width: 100%; height: 400px; 
+    width: 100%; 
+    height: 400px; 
     object-fit: cover;
     display: block;
 }
@@ -540,6 +542,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
         gap: 60px;
     }
     .portfolio-grid {
+        /* 首页的默认网格保持 3 列 */
         grid-template-columns: repeat(3, 1fr);
     }
     .contact-grid {
@@ -553,19 +556,24 @@ body.light-theme-nav .logo-light-theme { display: block; }
     
     /* --- Works Page 竖版 3:4 布局样式 (Desktop) --- */
     
-    /* 覆盖桌面端三列布局，改为居中的单列窄布局 */
+    /* 1. 实现居中显示，限制最大宽度 (例如 900px) */
     .works-page-grid {
-        /* 使用 flex 居中，限制宽度 */
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* 水平居中 */
-        gap: 40px; /* 增大项目间距 */
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 核心修改：一行 3 列 */
+        gap: 30px; /* 保持间距 */
+        
+        /* 限制整体网格最大宽度，并居中 */
+        max-width: 900px; /* 您想要的居中且不沾边的效果 */
+        width: 90%; 
+        margin-left: auto;
+        margin-right: auto;
+        
+        /* 移除上一次修改中的 flex/align-items: center */
     }
 
+    /* 2. 移除对 .portfolio-item 的宽度限制，使其在 3 列网格中自适应 */
     .works-page-grid .portfolio-item {
-        /* 限制项目最大宽度为 40% 或一个固定值，使其居中窄显示 */
-        max-width: 40%; 
-        width: 100%; /* 确保在 max-width 限制下也能自适应 */
+        /* max-width 和 width 已经不再需要，由 grid 布局控制 */
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
@@ -618,6 +626,10 @@ body.light-theme-nav .logo-light-theme { display: block; }
         display: grid;
         grid-template-columns: 1fr;
         gap: 30px;
+        max-width: none; /* 移动端应为全宽 */
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .works-page-grid .portfolio-item {
