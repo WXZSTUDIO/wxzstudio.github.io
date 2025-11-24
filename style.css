@@ -1,10 +1,9 @@
 /*
  * style.css
  * * 修改内容:
- * 1. 统一 .mobile-nav 的毛玻璃样式，并移除阴影（Apple 风格）。
- * 2. 调整 .nav-inner 在小屏下的布局，实现 Logo 居中。
- * 3. 移除顶部 .menu-button 的隐藏。
- * 4. 新增作品详情页（视频）样式。
+ * 1. 调整 .works-container-grid 布局，使其能够包含封面和详情区。
+ * 2. 调整 .work-item-wrapper 布局。
+ * 3. 移除旧的 work-detail-section 样式，新增 .hidden-detail 样式控制展开/收起。
  * * 请用以下代码替换原文件内容。
  */
 
@@ -223,22 +222,33 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 
-/* === Portfolio Grid === */
-.portfolio-grid {
+/* === Portfolio Grid (Works.html 作品列表) === */
+
+/* 新的 works 页面容器 */
+.works-container-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
+    grid-template-columns: 1fr; /* 移动端单列 */
+    gap: 30px; /* 封面卡片间的间距 */
     margin-top: 40px;
 }
+
+/* 单个作品项目 wrapper，包含封面和详情 */
+.work-item-wrapper {
+    display: contents; /* 关键：让子元素直接参与 works-container-grid 布局 */
+}
+
+/* 作品封面卡片 (可点击区域) */
 .portfolio-item {
     display: block;
     overflow: hidden;
     position: relative;
     border-radius: 12px; 
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 .portfolio-item:hover {
     transform: translateY(-5px); 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 .portfolio-img {
     width: 100%; height: 400px; 
@@ -264,6 +274,63 @@ body.light-theme-nav .logo-light-theme { display: block; }
     text-align: center;
     margin-top: 60px;
 }
+
+/* === 作品详情展开区域样式 (Work Detail Section) === */
+.work-detail-section {
+    grid-column: 1 / -1; /* 展开占据整行 */
+    padding: 30px 0;
+    margin-top: -20px; /* 向上移动一点，与卡片衔接 */
+    margin-bottom: 30px; 
+    background-color: #f7f7f7; /* 浅色背景 */
+    border-radius: 12px;
+    overflow: hidden;
+
+    /* 初始状态：高度为 0，隐藏，使用 GSAP/JS 控制展开/收起动画 */
+    height: 0; 
+    visibility: hidden;
+    opacity: 0;
+    transition: none !important; /* JS 动画接管，关闭 CSS transition */
+}
+.work-detail-section.active {
+    /* JS 会控制 height, visibility, opacity */
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 详情内部容器 (确保内容不沾边) */
+.detail-inner {
+    padding: 30px 0;
+    text-align: center;
+}
+.detail-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+.detail-copy {
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+/* 视频容器 */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 比例 */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.work-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 
 /* === Contact Button Footer (CTA 区域) === */
 .contact-cta-footer {
@@ -334,11 +401,6 @@ body.light-theme-nav .logo-light-theme { display: block; }
     margin: 0 auto;
     text-align: center;
     min-height: 80vh;
-}
-.contact-page-content h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    margin-bottom: 50px;
 }
 .contact-grid {
     display: grid;
@@ -467,59 +529,6 @@ body.light-theme-nav .logo-light-theme { display: block; }
     visibility: visible;
 }
 
-/* --- 新增作品详情页视频样式 --- */
-
-.work-detail-section {
-    padding-top: 80px;
-    padding-bottom: 80px;
-    /* 区分奇偶数作品详情的深浅主题 */
-}
-
-.work-detail-section:nth-child(even) {
-    background-color: var(--color-background); /* 浅色背景 */
-    color: var(--color-primary);
-}
-
-.work-detail-section:nth-child(odd) {
-    background-color: var(--color-dark-bg); /* 深色背景 */
-    color: var(--color-white);
-}
-
-.work-detail-section .section-title {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.work-detail-section .large-copy {
-    max-width: 800px;
-    margin: 0 auto 40px;
-    text-align: center;
-}
-.work-detail-section.is-dark .large-copy {
-    color: #aaaaaa;
-}
-
-/* 视频容器：实现视频宽度自适应 */
-.video-container {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 比例 (9 / 16 * 100%) */
-    height: 0;
-    overflow: hidden;
-    max-width: 100%;
-    background: #000;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* 视频标签：填充容器 */
-.work-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 
 /* =========================================
    Media Queries (Desktop)
@@ -538,9 +547,16 @@ body.light-theme-nav .logo-light-theme { display: block; }
         grid-template-columns: repeat(2, 1fr);
         gap: 60px;
     }
-    .portfolio-grid {
+
+    /* Works Grid 桌面端 3 列 */
+    .works-container-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+    
+    .portfolio-grid { /* Index 页面仍使用这个，保持 3 列 */
+        grid-template-columns: repeat(3, 1fr);
+    }
+
     .contact-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 40px;
@@ -580,9 +596,17 @@ body.light-theme-nav .logo-light-theme { display: block; }
         display: none;
     }
 
+    /* Works Grid 移动端 1 列 */
+    .works-container-grid {
+        grid-template-columns: 1fr;
+    }
+
     /* 移动端视频详情优化 */
     .work-detail-section {
-        padding-top: 40px;
-        padding-bottom: 40px;
+        padding: 20px 0;
+        margin-bottom: 20px;
+    }
+    .detail-inner {
+        padding: 20px 0;
     }
 }
