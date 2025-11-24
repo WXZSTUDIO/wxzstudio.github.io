@@ -11,6 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+
     <link rel="icon" href="assets/icons/favicon.ico">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,7 +27,7 @@
             
             <nav class="nav-desktop">
                 <a href="works.html" class="nav-item is-active">案例作品</a>
-                <a href="contact.html" class="nav-contact-btn">联系我们</a> 
+                <a href="contact.html" class="nav-contact-btn button">联系我们</a> 
             </nav>
         </div>
     </div>
@@ -33,400 +35,97 @@
     <main>
         <section class="section is-light page-header">
             <div class="container">
-                <h1 class="fade-in">作品档案</h1>
-                <p class="large-copy fade-in delay-2">探索我们从概念设计到最终交付的视觉叙事案例。点击封面图展开视频详情。</p>
+                <h1 class="fade-in">全部作品</h1>
+                <p class="fade-in delay-0-3">从品牌到艺术，探索我们跨领域的视觉创造力。</p>
             </div>
         </section>
-        
-        <section class="section is-light page-works-grid">
+
+        <section class="section is-light works-container-section" style="padding-top: 0;">
             <div class="container">
-                
                 <div class="works-container-grid">
-                    
-                    <div class="work-item-wrapper" data-work-id="work-01">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-01-cover.jpg" alt="作品 01 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 01</h3>
-                                <p>视频作品 / 2025</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-01-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 01 - 详情</h2>
-                                <p class="detail-copy">这是作品 01 的详细描述。请在这里介绍您的项目背景、拍摄理念、技术细节或客户需求等。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-01-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-01-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="work-item-wrapper" data-work-id="work-02">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-02-cover.jpg" alt="作品 02 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 02</h3>
-                                <p>视频作品 / 2025</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-02-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 02 - 详情</h2>
-                                <p class="detail-copy">这是作品 02 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-02-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-02-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
+                    <a href="javascript:void(0);" class="work-item-trigger fade-in" data-video-id="VIDEO_ID_A" data-video-source="youtube">
+                        <div class="aspect-ratio-3-4">
+                            <img src="assets/images/works-a-cover.jpg" alt="作品 A 封面" class="portfolio-img">
                         </div>
-                    </div>
-                    
-                    <div class="work-item-wrapper" data-work-id="work-03">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-03-cover.jpg" alt="作品 03 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 03</h3>
-                                <p>视频作品 / 2025</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-03-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 03 - 详情</h2>
-                                <p class="detail-copy">这是作品 03 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-03-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-03-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
+                        <div class="portfolio-info">
+                            <h3>品牌宣传片 A</h3>
+                            <p>品牌 / 商业摄影</p>
                         </div>
-                    </div>
-                    
-                    <div class="work-item-wrapper" data-work-id="work-04">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-04-cover.jpg" alt="作品 04 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 04</h3>
-                                <p>视频作品 / 2024</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-04-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 04 - 详情</h2>
-                                <p class="detail-copy">这是作品 04 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-04-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-04-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="work-item-wrapper" data-work-id="work-05">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-05-cover.jpg" alt="作品 05 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 05</h3>
-                                <p>视频作品 / 2024</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-05-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 05 - 详情</h2>
-                                <p class="detail-copy">这是作品 05 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-05-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-05-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="work-item-wrapper" data-work-id="work-06">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-06-cover.jpg" alt="作品 06 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 06</h3>
-                                <p>视频作品 / 2024</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-06-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 06 - 详情</h2>
-                                <p class="detail-copy">这是作品 06 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-06-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-06-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="work-item-wrapper" data-work-id="work-07">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-07-cover.jpg" alt="作品 07 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 07</h3>
-                                <p>视频作品 / 2023</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-07-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 07 - 详情</h2>
-                                <p class="detail-copy">这是作品 07 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-07-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-07-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="work-item-wrapper" data-work-id="work-08">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-08-cover.jpg" alt="作品 08 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 08</h3>
-                                <p>视频作品 / 2023</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-08-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 08 - 详情</h2>
-                                <p class="detail-copy">这是作品 08 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-08-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-08-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="work-item-wrapper" data-work-id="work-09">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-09-cover.jpg" alt="作品 09 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 09</h3>
-                                <p>视频作品 / 2023</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-09-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 09 - 详情</h2>
-                                <p class="detail-copy">这是作品 09 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-09-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-09-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
 
-                    <div class="work-item-wrapper" data-work-id="work-10">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-10-cover.jpg" alt="作品 10 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 10</h3>
-                                <p>视频作品 / 2022</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-10-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 10 - 详情</h2>
-                                <p class="detail-copy">这是作品 10 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-10-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-10-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
+                    <a href="javascript:void(0);" class="work-item-trigger fade-in" data-video-id="VIDEO_ID_B" data-video-source="vimeo">
+                        <div class="aspect-ratio-3-4">
+                            <img src="assets/images/works-b-cover.jpg" alt="作品 B 封面" class="portfolio-img">
                         </div>
-                    </div>
+                        <div class="portfolio-info">
+                            <h3>时尚大片 B</h3>
+                            <p>时尚 / 艺术</p>
+                        </div>
+                    </a>
 
-                    <div class="work-item-wrapper" data-work-id="work-11">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-11-cover.jpg" alt="作品 11 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 11</h3>
-                                <p>视频作品 / 2022</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-11-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 11 - 详情</h2>
-                                <p class="detail-copy">这是作品 11 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-11-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-11-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
+                    <a href="javascript:void(0);" class="work-item-trigger fade-in" data-video-id="VIDEO_ID_C" data-video-source="youtube">
+                        <div class="aspect-ratio-3-4">
+                            <img src="assets/images/works-c-cover.jpg" alt="作品 C 封面" class="portfolio-img">
                         </div>
-                    </div>
+                        <div class="portfolio-info">
+                            <h3>纪录短片 C</h3>
+                            <p>人文 / 纪录</p>
+                        </div>
+                    </a>
 
-                    <div class="work-item-wrapper" data-work-id="work-12">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-12-cover.jpg" alt="作品 12 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 12</h3>
-                                <p>视频作品 / 2022</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-12-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 12 - 详情</h2>
-                                <p class="detail-copy">这是作品 12 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-12-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-12-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
+                    <a href="javascript:void(0);" class="work-item-trigger fade-in" data-video-id="VIDEO_ID_D" data-video-source="vimeo">
+                        <div class="aspect-ratio-3-4">
+                            <img src="assets/images/works-d-cover.jpg" alt="作品 D 封面" class="portfolio-img">
                         </div>
-                    </div>
+                        <div class="portfolio-info">
+                            <h3>汽车广告 D</h3>
+                            <p>汽车 / 商业</p>
+                        </div>
+                    </a>
 
-                    <div class="work-item-wrapper" data-work-id="work-13">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-13-cover.jpg" alt="作品 13 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 13</h3>
-                                <p>视频作品 / 2021</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-13-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 13 - 详情</h2>
-                                <p class="detail-copy">这是作品 13 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-13-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-13-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
+                    <a href="javascript:void(0);" class="work-item-trigger fade-in" data-video-id="VIDEO_ID_E" data-video-source="youtube">
+                        <div class="aspect-ratio-3-4">
+                            <img src="assets/images/works-e-cover.jpg" alt="作品 E 封面" class="portfolio-img">
                         </div>
-                    </div>
+                        <div class="portfolio-info">
+                            <h3>美食摄影 E</h3>
+                            <p>餐饮 / 平面</p>
+                        </div>
+                    </a>
 
-                    <div class="work-item-wrapper" data-work-id="work-14">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-14-cover.jpg" alt="作品 14 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 14</h3>
-                                <p>视频作品 / 2021</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-14-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 14 - 详情</h2>
-                                <p class="detail-copy">这是作品 14 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-14-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-14-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
+                    <a href="javascript:void(0);" class="work-item-trigger fade-in" data-video-id="VIDEO_ID_F" data-video-source="vimeo">
+                        <div class="aspect-ratio-3-4">
+                            <img src="assets/images/works-f-cover.jpg" alt="作品 F 封面" class="portfolio-img">
                         </div>
-                    </div>
+                        <div class="portfolio-info">
+                            <h3>概念视觉 F</h3>
+                            <p>艺术 / 概念</p>
+                        </div>
+                    </a>
                     
-                    <div class="work-item-wrapper" data-work-id="work-15">
-                        <a href="#" class="portfolio-item fade-in work-cover-trigger">
-                            <img src="assets/images/work-15-cover.jpg" alt="作品 15 封面" class="portfolio-img">
-                            <div class="portfolio-info">
-                                <h3>作品 15</h3>
-                                <p>视频作品 / 2021</p>
-                            </div>
-                        </a>
-                        <div class="work-detail-section hidden-detail" id="work-15-detail">
-                            <div class="detail-inner container">
-                                <h2 class="detail-title">作品 15 - 详情</h2>
-                                <p class="detail-copy">这是作品 15 的详细描述。</p>
-                                <div class="video-container">
-                                    <video controls poster="assets/images/work-15-cover.jpg" class="work-video">
-                                        <source src="assets/images/work-15-video.mp4" type="video/mp4">
-                                        您的浏览器不支持视频播放。
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    
-                </div>
                 </div>
         </section>
 
-        <a class="floating-back-home hidden" id="back-to-top">
-            <i class="fas fa-chevron-up"></i>
-        </a>
-        
+        <section class="section is-light" style="text-align: center;">
+            <a href="contact.html" class="button cta-button">开始您的项目</a>
+        </section>
     </main>
 
-    <footer class="regulatory-notes">
-        <div class="notes-container">
-            <h4>合作注意事项</h4>
-            <div class="notes-content">
-                <p>
-                    <strong>预订与取消 (Booking & Cancellation)</strong><br>
-                    预付定金：项目预定以定金到账为准。定金一旦支付，即视为档期锁定，若非 WXZ STUDIO 方面原因导致的项目延期或取消，定金不予退还。
-                </p>
-
-                <p>
-                    <strong>创意与执行 (Project Briefing & Execution)</strong><br>
-                    内容规划：为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。
-                </p>
-
-                <p>
-                    <strong>费用结算与超时 (Billing & Overtime)</strong><br>
-                    尾款结算：剩余的款项请在拍摄服务完成后的 24 小时内结清。 超时计费：若实际工作时间超出原定计划 30 分钟或以上，我们将按照合同拟定的单价以 1 小时进行额外计费。
-                </p>
-
-                <p>
-                    <strong>文件交付与管理 (File Delivery & Archiving)</strong><br>
-                    下载期限：最终交付文件上传成功后，请您务必在 30 日内完成下载并妥善备份。超过此期限，WXZ STUDIO 不保证文件的永久存储。
-                </p>
-
-                <p>
-                    <strong>作品宣传权利 (Portfolio Use)</strong><br>
-                    默认授权：除非事先另有约定，WXZ STUDIO 默认同意在项目交付后一周将部分非涉密作品用于社交媒体和官方渠道的宣传展示。 保密需求：如您有任何保密或特殊使用限制，请务必在正式签订合作合同前明确提出并以书面形式确认。
-                </p>
-
-                <p>期待与您共同创造精彩作品。</p>
-            </div>
-            <p class="disclaimer">© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+    <div id="video-modal">
+        <span class="modal-close-btn">&times;</span>
+        <div class="modal-content">
+            <div id="video-player"></div>
         </div>
-    </footer>
-    
-    <div class="mobile-nav">
-        <ul class="mobile-menu-list">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="works.html" class="active">作品</a></li>
-            <li><a href="about.html">关于</a></li>
-            <li><a href="contact.html">联系</a></li>
-        </ul>
     </div>
-    
+    <div class="mobile-nav">
+        <a href="index.html" class="mobile-nav-item"><i class="fas fa-home"></i><span>首页</span></a>
+        <a href="works.html" class="mobile-nav-item is-active"><i class="fas fa-camera-retro"></i><span>作品</span></a>
+        <a href="about.html" class="mobile-nav-item"><i class="fas fa-users"></i><span>关于</span></a>
+        <a href="contact.html" class="mobile-nav-item"><i class="fas fa-envelope"></i><span>联系</span></a>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
