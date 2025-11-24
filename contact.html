@@ -11,8 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-    <link rel="icon" href="icons/favicon.ico">
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" href="assets/icons/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
@@ -32,65 +32,52 @@
     
     <main>
         <section class="section is-light contact-page-content">
-            <h1 class="fade-in">与我们共同创造</h1>
-            <p class="large-copy fade-in" style="margin-bottom: 60px; max-width: 600px; margin: 0 auto 60px;">
-                无论是商业合作还是项目洽谈，期待与您取得联系。我们目前坐标韩国首尔，可服务全球客户。
-            </p>
-            
+            <h1 class="fade-in">联系我们</h1>
+            <p class="large-copy fade-in delay-2">我们期待与您合作，将您的愿景变为现实。请通过以下方式联系我们。</p>
+
             <div class="contact-grid">
-                
-                <div class="contact-block fade-in" data-delay="0.1">
+                <div class="contact-block fade-in delay-3">
                     <div class="contact-icon-box">
-                        <span class="contact-icon">🌐</span>
-                    </div>
-                    <h3>WeChat ID</h3>
-                    <span class="id-value">icf304</span>
+                        <span class="contact-icon">@</span> </div>
+                    <h3>邮件沟通</h3>
+                    <a href="mailto:your_email@example.com" class="id-value">your_email@example.com</a>
                 </div>
                 
-                <div class="contact-block fade-in" data-delay="0.2">
+                <div class="contact-block fade-in delay-4">
                     <div class="contact-icon-box">
-                        <span class="contact-icon">💬</span>
-                    </div>
-                    <h3>KakaoTalk ID</h3>
-                    <span class="id-value">icf304</span>
+                        <span class="contact-icon">📞</span> </div>
+                    <h3>电话/微信</h3>
+                    <a href="tel:+861234567890" class="id-value">+86 123 4567 890</a>
                 </div>
-                
-                <a href="https://www.xiaohongshu.com/user/profile/5fd363ac000000000101cffc" target="_blank" class="contact-block fade-in" data-delay="0.3" style="text-decoration: none;">
+
+                <div class="contact-block fade-in delay-5">
                     <div class="contact-icon-box">
-                        <span class="contact-icon">📸</span>
-                    </div>
-                    <h3>小红书主页</h3>
-                    <span class="id-value" style="font-size: 1.5rem; font-weight: 500;">点击跳转</span>
-                </a>
-            </div>
-            
-            <div style="margin-top: 50px; font-size: 0.9rem; color: var(--color-secondary);">
-                如需快速响应，请添加以上社交平台账户。<br>
-                时区: GMT+9 (韩国标准时间)
+                        <span class="contact-icon">📍</span> </div>
+                    <h3>工作室地址</h3>
+                    <p class="id-value" style="font-size: 1.2rem; font-weight: 500;">某市某区某街道</p>
+                </div>
             </div>
             
         </section>
+
+        <a class="floating-back-home hidden" id="back-to-top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+        
     </main>
 
-    <div class="regulatory-notes">
+    <footer class="regulatory-notes">
         <div class="notes-container">
-            <h4>合作指南</h4>
+            <h4>合作注意事项</h4>
             <div class="notes-content">
-                <p>我们致力于提供高质量的拍摄服务。为确保项目顺利进行，请您在合作前了解并同意以下条款：</p>
-
                 <p>
-                    <strong>排期确认与预付定金 (Deposit & Scheduling)</strong><br>
-                    定金标准：首次合作的客户，请在确认您的专属拍摄排期时，预付约定总金额的 50% 作为项目定金。排期将在定金到账后正式锁定。
-                </p>
-
-                <p>
-                    <strong>项目取消政策 (Cancellation Policy)</strong><br>
-                    当日取消：除非发生不可抗力情况，否则在拍摄项目当日取消，您所支付的定金将不予退还。
+                    <strong>预订与取消 (Booking & Cancellation)</strong><br>
+                    预付定金：项目预定以定金到账为准。定金一旦支付，即视为档期锁定，若非 WXZ STUDIO 方面原因导致的项目延期或取消，定金不予退还。
                 </p>
 
                 <p>
                     <strong>创意与执行 (Project Briefing & Execution)</strong><br>
-                    内容规划：为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。
+                    内容规划：为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。\
                 </p>
 
                 <p>
@@ -112,19 +99,16 @@
             </div>
             <p class="disclaimer">© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
         </div>
-    </div>
+    </footer>
     
-    <div class="mobile-nav" id="mobileMenu">
+    <div class="mobile-nav">
         <ul class="mobile-menu-list">
-            <li><a href="index.html">主页</a></li>
-            <li><a href="works.html">案例作品</a></li>
-            <li><a href="contact.html" class="active">联系我们</a></li>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="works.html">作品</a></li>
+            <li><a href="about.html">关于</a></li>
+            <li><a href="contact.html" class="active">联系</a></li>
         </ul>
     </div>
-    
-    <a href="index.html" class="floating-back-home" id="floatingBackHome">
-        <span style="font-size: 1.2rem;">↑</span>
-    </a>
     
     <script src="script.js"></script>
 </body>
