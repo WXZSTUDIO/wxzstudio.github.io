@@ -1,65 +1,66 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WXZ STUDIO - 联系方式</title>
-    <link rel="preload" href="src/css/main.css" as="style">
-    <link rel="stylesheet" href="src/css/main.css">
-    <script defer src="src/js/app.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="page-contact">
+<body>
 
-    <header class="navbar desktop-nav">
-        <a href="index.html" class="logo-link">
-            <img id="header-logo" src="src/img/logo/logo-blue.svg" alt="WXZ STUDIO Logo">
-        </a>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="nav-link" data-page="index">首页</a></li>
-                <li><a href="video.html" class="nav-link" data-page="video">视频作品</a></li>
-                <li><a href="design.html" class="nav-link" data-page="design">平面设计作品</a></li>
-                <li><a href="contact.html" class="nav-link" data-page="contact">联系方式</a></li>
-            </ul>
-        </nav>
+    <header class="header-nav frosted-glass">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo-blue.svg" alt="WXZ Studio Logo">
+                </a>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="video.html">视频作品</a></li>
+                    <li><a href="design.html">平面设计作品</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main class="container contact-main">
-        <h1 class="page-header-title">✉️ 联系我们</h1>
-        <p class="contact-intro">我们期待与您合作，共同创造令人难忘的视觉作品。请通过以下方式联系我们，预约您的下一个项目。</p>
+    <nav class="mobile-nav frosted-glass">
+        <ul>
+            <li><a href="index.html"><span class="icon">🏠</span>首页</a></li>
+            <li><a href="video.html"><span class="icon">🎬</span>视频</a></li>
+            <li><a href="design.html"><span class="icon">🎨</span>设计</a></li>
+            <li><a href="contact.html"><span class="icon">📞</span>联系</a></li>
+        </ul>
+    </nav>
 
-        <div class="contact-info-grid">
-            <div class="contact-card">
-                <h3>微信 / KakaoTalk ID</h3>
-                <p class="contact-detail">icf304</p>
-                <div class="qr-code-placeholder">
-                    <p>[请在此放置您的微信/KakaoTalk二维码图片]</p>
+    <section class="contact-section" style="min-height: 70vh; margin-top: var(--navbar-height);">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">联系我们</h2>
+            <p style="font-size: 18px; margin-bottom: 30px;">期待与您沟通您的视觉项目需求。</p>
+
+            <div class="contact-details">
+                <div class="contact-item">
+                    <strong>微信 (WeChat ID):</strong> icf304
                 </div>
-            </div>
-            <div class="contact-card">
-                <h3>社交媒体</h3>
-                <p class="contact-detail">在小红书上关注我们的日常与最新动态！</p>
-                <a href="https://xhslink.com/m/AfISV77MaVG" target="_blank" class="cta-button social-button xhs-button">
-                    <i class="icon-xiaohongshu"></i> 跳转到小红书主页
+                <div class="contact-item">
+                    <strong>KakaoTalk ID:</strong> icf304
+                </div>
+                
+                <a href="https://xhslink.com/m/AfISV77MaVG" target="_blank" class="social-btn">
+                    <span class="icon">🔗</span> 跳转小红书主页
                 </a>
             </div>
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <div class="footer-content container">
-            <p>© 2025 WXZ Studio. 保留所有权利。</p>
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright © 2025 WXZ Studio. 保留所有权利。</p>
         </div>
     </footer>
 
-    <nav class="mobile-nav">
-        <ul>
-            <li><a href="index.html" class="nav-link" data-page="index"><i class="icon-home"></i> 首页</a></li>
-            <li><a href="video.html" class="nav-link" data-page="video"><i class="icon-video"></i> 视频</a></li>
-            <li><a href="design.html" class="nav-link" data-page="design"><i class="icon-design"></i> 平面</a></li>
-            <li><a href="contact.html" class="nav-link" data-page="contact"><i class="icon-contact"></i> 联系</a></li>
-        </ul>
-    </nav>
-    
+    <script src="js/script.js"></script>
 </body>
 </html>
