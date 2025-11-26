@@ -139,15 +139,16 @@ ul {
 }
 
 .mobile-menu-icons {
-    /* 优化: 使用 space-between 和设置链接宽度，确保平均分布 */
+    /* FIX #2: 使用 space-evenly 确保平均分布，不挤在一起 */
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-evenly; /* 均匀分布 */
+    align-items: center;
     height: 100%;
+    width: 100%; /* 确保占据全部宽度 */
 }
 
 .mobile-menu-icons a {
-    /* 强制每个图标占据 25% 宽度，确保平均分布 */
-    width: 25%;
+    flex: 1; /* 占据均等空间 */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -262,22 +263,42 @@ h2::after {
     font-size: 24px;
 }
 
-/* Clients Wall (信息墙) */
+/* Clients Wall (信息墙 - 横向滚动) */
 .clients-section {
     background-color: var(--secondary-color);
+    padding: 80px 0; 
 }
 
 .clients-wall {
+    /* 容器是滚动区域，限制在 .container 宽度内 */
+    overflow-x: auto; 
+    padding: 40px 0; /* 垂直方向间距 */
+    /* 隐藏滚动条 */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+/* Webkit 隐藏滚动条 */
+.clients-wall::-webkit-scrollbar {
+    display: none;
+}
+
+.clients-list-inner {
+    /* FIX #1: 新增的内部 Flex 容器，用于强制宽度和排列 */
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px 0;
+    flex-wrap: nowrap; /* 强制不换行 */
+    gap: 30px; 
+    justify-content: flex-start;
+    
+    /* 强制设置一个足够大的最小宽度以保证内容溢出，触发父容器滚动 */
+    /* 12 个 logo (90px) + 11 个 gap (30px) = 1410px */
+    min-width: 1410px; 
+    width: fit-content; 
 }
 
 .client-logo {
-    width: 100px;
-    height: 100px;
+    flex-shrink: 0; /* 确保不被压缩 */
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -297,6 +318,8 @@ h2::after {
 }
 
 /* Featured Work & Portfolio Grid (混合自适应裁切比例) */
+/* ... (Keep remaining styles) ... */
+
 .featured-work-grid {
     display: grid;
     /* 响应式网格布局，最小列宽 280px */
