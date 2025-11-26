@@ -1,173 +1,126 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="zh">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WXZ Studio - 视觉设计与摄影</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WXZ Studio — 首页</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body class="is-dark is-homepage">
-  <!-- Navigation -->
-  <nav class="nav-wrap" id="navWrap">
-    <div class="container nav-inner">
-      <a href="index.html" class="logo-link">WXZ STUDIO</a>
-      <div class="nav-desktop">
-        <a href="works.html" class="nav-item">案例作品</a>
-        <a href="contact.html" class="nav-contact-btn">联系我们</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="section is-dark is-hero" data-theme="dark">
-    <div class="hero-video-wrapper" data-parallax-speed="0.2">
-      <video autoplay muted loop playsinline class="hero-video">
-        <source src="assets/videos/hero-video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1 class="fade-in headline-split" data-delay="0.1">WXZ STUDIO</h1>
-      <p class="large-copy fade-in" data-delay="0.4" style="color: rgba(255, 255, 255, 0.8);">
-        用视觉力量，驱动品牌价值
-      </p>
-    </div>
-    <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
-  </section>
-
-  <!-- Business Grid -->
-  <section class="section is-light" data-theme="light">
-    <div class="container core-business-grid">
-      <div class="business-item fade-in" data-delay="0">
-        <h3>商业影像与摄影</h3>
-        <p>短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍。我们提供高品质的视觉资产，全方位覆盖您的商业影像需求。</p>
-      </div>
-      <div class="business-item fade-in" data-delay="0.2">
-        <h3>平面视觉设计</h3>
-        <p>从品牌标识、海报设计到社交媒体视觉企划。通过专业设计，助力品牌建立统一、引人注目的视觉形象。</p>
-      </div>
-    </div>
-    <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
-  </section>
-
-  <!-- Portfolio Preview -->
-  <section class="section is-dark" data-theme="dark">
-    <div class="container">
-      <h2 class="section-title fade-in">精选作品</h2>
-      <div class="portfolio-grid">
-        <a href="works.html#work-01" class="portfolio-item fade-in">
-          <div class="portfolio-img-wrapper">
-            <img src="assets/images/work-01-cover.jpg" alt="作品 01 封面" class="portfolio-img lazy-load-img" data-src="assets/images/work-01-cover.jpg">
-          </div>
-          <div class="portfolio-info">
-            <h3>作品 01</h3>
-            <p>短视频 / 2025</p>
-          </div>
-        </a>
-        <a href="works.html#work-02" class="portfolio-item fade-in" data-delay="0.2">
-          <div class="portfolio-img-wrapper">
-            <img src="assets/images/work-02-cover.jpg" alt="作品 02 封面" class="portfolio-img lazy-load-img" data-src="assets/images/work-02-cover.jpg">
-          </div>
-          <div class="portfolio-info">
-            <h3>作品 02</h3>
-            <p>平面设计 / 2025</p>
-          </div>
-        </a>
-        <a href="works.html#work-03" class="portfolio-item fade-in" data-delay="0.4">
-          <div class="portfolio-img-wrapper">
-            <img src="assets/images/work-03-cover.jpg" alt="作品 03 封面" class="portfolio-img lazy-load-img" data-src="assets/images/work-03-cover.jpg">
-          </div>
-          <div class="portfolio-info">
-            <h3>作品 03</h3>
-            <p>摄影 / 2025</p>
-          </div>
-        </a>
-      </div>
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="works.html" class="nav-contact-btn ripple-btn" style="border-width: 2px;">
-          查看全部案例作品
-        </a>
-      </div>
-    </div>
-    <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
-  </section>
-
-  <!-- Testimonials -->
-  <section class="section is-light" data-theme="light">
-    <div class="container">
-      <h2 class="section-title fade-in" style="text-align: center;">客户评价</h2>
-      <div class="review-grid">
-        <div class="review-item fade-in">
-          <p class="review-text">“WXZ Studio 的团队非常专业且富有创意。他们对细节的把控，使我们的新产品宣传片效果超出预期，是一次高效、愉快的合作。”</p>
-          <p class="review-author">—— [客户名称] 品牌部总监</p>
-        </div>
-        <div class="review-item fade-in" data-delay="0.2">
-          <p class="review-text">“我们非常喜欢他们捕捉光影的方式，照片充满生命力和艺术感。这是我们进行企业形象升级中最正确的选择。”</p>
-          <p class="review-author">—— [客户名称] 创始人</p>
-        </div>
-      </div>
-    </div>
-    <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
-  </section>
-
-  <!-- CTA Footer -->
-  <section class="section is-dark contact-cta-footer" data-theme="dark">
-    <div class="container">
-      <h2 class="section-title fade-in">准备好开始了吗？</h2>
-      <a href="contact.html" class="nav-contact-btn is-black-btn ripple-btn fade-in" style="border-width: 2px;">
-        联系我们
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="index.html" title="返回首页">
+        <img src="assets/images/logo.png" alt="WXZ Studio Logo">
+        <span>WXZ STUDIO</span>
       </a>
+      <nav class="main-nav">
+        <a href="index.html">首页</a>
+        <a href="videos.html">视频作品</a>
+        <a href="designs.html">平面设计</a>
+        <a href="contact.html">联系方式</a>
+      </nav>
+      <button class="nav-toggle" aria-label="菜单切换">☰</button>
     </div>
-    <div class="nav-theme-trigger" style="position: absolute; bottom: 0; height: 1px; width: 100%;"></div>
+  </header>
+
+  <!-- Hero (video) -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-poster.jpg">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+      你的浏览器不支持 video 标签。
+    </video>
   </section>
 
-  <!-- Regulatory Notes -->
-  <section class="regulatory-notes is-light">
-    <div class="notes-container">
-      <h4>服务须知与条款</h4>
-      <div class="notes-content">
-        <p class="fade-in">
-          <strong>预订与定金 (Booking & Deposit)</strong><br>
-          定金支付：为正式预留档期，您需要支付项目总额 50% 的定金。在收到定金后，WXZ STUDIO 才会正式确认档期并开始前期准备工作。<br>
-          取消政策：定金不可退还，但在拍摄档期前 7 天，您有一次免费延期的机会。
-        </p>
-        <p class="fade-in">
-          <strong>创意与执行 (Project Briefing & Execution)</strong><br>
-          内容规划：为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。
-        </p>
-        <p class="fade-in">
-          <strong>费用结算与超时 (Billing & Overtime)</strong><br>
-          尾款结算：剩余的款项请在拍摄服务完成后的 24 小时内结清。 超时计费：若实际工作时间超出原定计划 30 分钟或以上，我们将按照合同拟定的单价以 1 小时进行额外计费。
-        </p>
-        <p class="fade-in">
-          <strong>文件交付与管理 (File Delivery & Archiving)</strong><br>
-          下载期限：最终交付文件上传成功后，请您务必在 30 日内完成下载并妥善备份。超过此期限，WXZ STUDIO 不保证文件的永久存储。
-        </p>
-        <p class="fade-in">
-          <strong>作品宣传权利 (Portfolio Use)</strong><br>
-          默认授权：除非事先另有约定，WXZ STUDIO 默认同意在项目交付后一周将部分非涉密作品用于社交媒体和官方渠道的宣传展示。 保密需求：如您有任何保密或特殊使用限制，请务必在正式签订合作合同前明确提出并以书面形式确认。
-        </p>
-        <p>期待与您共同创造精彩作品。</p>
+  <main class="wrap main-content">
+    <!-- 服务 -->
+    <section class="services">
+      <div class="service">
+        <h3>商业摄影</h3>
+        <p class="muted">短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍</p>
+        <p>我们提供高品质的视觉资产，全方位覆盖您的商业影像需求：脚本、拍摄、后期与投放优化。</p>
       </div>
-      <p class="disclaimer">© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+      <div class="service">
+        <h3>平面视觉设计</h3>
+        <p class="muted">品牌标识、海报设计到社交媒体视觉企划</p>
+        <p>从视觉系统到社媒模板，帮助品牌建立一致性的视觉语言与传播素材。</p>
+      </div>
+    </section>
+
+    <!-- 客户墙 -->
+    <section class="clients">
+      <h3>服务客户</h3>
+      <div class="clients-grid" id="clientsGrid">
+        <!-- 客户 logo 将按 assets/images/clients/*.png 加载 -->
+      </div>
+    </section>
+
+    <!-- 精选作品（由 scripts.js 自动填充 featured 项） -->
+    <section class="featured">
+      <h3>精选作品</h3>
+      <div class="featured-grid" id="featuredGrid" aria-live="polite"></div>
+      <p><a class="btn" href="videos.html">查看全部作品</a></p>
+    </section>
+
+    <!-- 联系 CTA -->
+    <section class="cta-card">
+      <h3>准备好开始了吗？</h3>
+      <p>点击下方按钮进入联系方式，或直接使用微信 / KakaoTalk ID: <strong>icf304</strong></p>
+      <p><a class="btn" href="contact.html">联系我们</a></p>
+    </section>
+
+    <!-- 须知 / 服务条款 -->
+    <section class="terms card">
+      <h3>须知（Booking & Terms）</h3>
+      <div class="term-block">
+        <h4>预订与定金 (Booking & Deposit)</h4>
+        <ul>
+          <li>定金支付：为正式预留档期，需支付项目总额 50% 的定金。</li>
+          <li>取消政策：定金不可退还，但在拍摄档期前 7 天，可免费延期一次。</li>
+        </ul>
+      </div>
+      <div class="term-block">
+        <h4>创意与执行 (Project Briefing & Execution)</h4>
+        <ul>
+          <li>内容规划：建议提供详细脚本或创意大纲，如无请提前沟通核心想法。</li>
+        </ul>
+      </div>
+      <div class="term-block">
+        <h4>费用结算与超时 (Billing & Overtime)</h4>
+        <ul>
+          <li>尾款：拍摄完成后 24 小时内结清。</li>
+          <li>超时计费：超出原计划 30 分钟以上，按合同单价以 1 小时计费。</li>
+        </ul>
+      </div>
+      <div class="term-block">
+        <h4>文件交付与管理 (File Delivery & Archiving)</h4>
+        <ul>
+          <li>下载期限：最终交付文件上传成功后，请在 30 日内下载并备份。</li>
+        </ul>
+      </div>
+      <div class="term-block">
+        <h4>作品宣传权利 (Portfolio Use)</h4>
+        <ul>
+          <li>默认授权：除非另有约定，WXZ STUDIO 有权在交付后一周内将部分非涉密作品用于宣传。</li>
+          <li>保密需求：如需限制，请在签约前书面确认。</li>
+        </ul>
+      </div>
+      <p class="muted">© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <small>© 2025 WXZ Studio</small>
+      <nav class="foot-nav">
+        <a href="index.html">首页</a>
+        <a href="videos.html">视频</a>
+        <a href="designs.html">平面设计</a>
+        <a href="contact.html">联系方式</a>
+      </nav>
     </div>
-  </section>
+  </footer>
 
-  <!-- Mobile Nav -->
-  <div class="mobile-nav">
-    <a href="index.html" class="mobile-nav-item active">首页</a>
-    <a href="works.html" class="mobile-nav-item">作品</a>
-    <a href="contact.html" class="mobile-nav-item">联系</a>
-  </div>
-
-  <button class="floating-back-home hidden" id="backToTopButton">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
-  </button>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="script.js"></script>
+  <script src="assets/js/scripts.js" defer></script>
 </body>
 </html>

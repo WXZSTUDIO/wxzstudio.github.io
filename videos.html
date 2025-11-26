@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WXZ Studio — 视频作品</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <!-- header 同 index -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="index.html" title="返回首页">
+        <img src="assets/images/logo.png" alt="WXZ Studio Logo">
+        <span>WXZ STUDIO</span>
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">首页</a>
+        <a href="videos.html" class="active">视频作品</a>
+        <a href="designs.html">平面设计</a>
+        <a href="contact.html">联系方式</a>
+      </nav>
+      <button class="nav-toggle" aria-label="菜单切换">☰</button>
+    </div>
+  </header>
+
+  <main class="wrap main-content">
+    <h1>视频 / 摄影作品</h1>
+    <p class="muted">标签筛选：#明星侧拍 #产品拍摄 #抖音信息流</p>
+
+    <div class="controls" id="video-tags">
+      <button class="tag active" data-tag="all">全部</button>
+      <button class="tag" data-tag="明星侧拍">#明星侧拍</button>
+      <button class="tag" data-tag="产品拍摄">#产品拍摄</button>
+      <button class="tag" data-tag="抖音信息流">#抖音信息流</button>
+    </div>
+
+    <div class="grid" id="video-grid" aria-live="polite">
+      <!-- 由 scripts.js 填充至少 10 项 -->
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><small>© 2025 WXZ Studio</small></div>
+  </footer>
+
+  <script src="assets/js/scripts.js" defer></script>
+</body>
+</html>
