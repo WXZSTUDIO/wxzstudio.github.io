@@ -6,6 +6,7 @@
  * 3. 移除顶部 .menu-button 的隐藏。
  * 4. 新增作品详情页（视频）样式。
  * 5. 修改 works 页面布局：PC端改为一行最多 3 个作品，并保持居中显示和 3:4 竖版封面。
+ * 6. 新增作品标签（Tag）样式。
  * * 请用以下代码替换原文件内容。
  */
 
@@ -228,47 +229,203 @@ body.light-theme-nav .logo-light-theme { display: block; }
 .portfolio-grid {
     display: grid;
     grid-template-columns: 1fr; /* 默认为单列 */
-    gap: 30px;
-    margin-top: 40px;
+    gap: 40px;
+    margin: 0 auto; /* 居中 */
+    width: 100%;
 }
-.portfolio-item {
-    display: block;
-    overflow: hidden;
-    position: relative;
-    border-radius: 12px; 
-    transition: transform 0.3s ease;
-}
-.portfolio-item:hover {
-    transform: translateY(-5px); 
-}
-/* 移除这里的固定高度，交给 .portfolio-img-wrapper 来控制比例 */
-.portfolio-img {
-    width: 100%; 
-    height: 400px; 
-    object-fit: cover;
-    display: block;
-}
+/* 作品信息区 */
 .portfolio-info {
-    position: absolute; bottom: 0; left: 0; width: 100%;
-    padding: 20px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-    color: var(--color-white);
+    padding: 15px 0 0;
+    text-align: left;
 }
 .portfolio-info h3 {
-    font-size: 1.3rem;
-    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0 0 5px;
 }
 .portfolio-info p {
     font-size: 0.9rem;
-    margin: 0;
-    color: #ccc;
+    color: var(--color-secondary);
 }
-.view-all-cta {
-    text-align: center;
-    margin-top: 60px;
+/* 作品图片容器 (强制 3:4 竖版比例) */
+.portfolio-img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 133.33%; /* 4/3 = 1.3333... */
+    overflow: hidden;
+    border-radius: 8px; /* 圆角 */
+}
+/* 图片本身 */
+.portfolio-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.portfolio-item:hover .portfolio-img {
+    transform: scale(1.05); /* 悬停放大效果 */
+}
+/* 作品卡片 */
+.portfolio-item {
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* === Contact Button Footer (CTA 区域) === */
+/* --- 新增作品标签样式 --- */
+.work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* 标签之间的间距 */
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.tag-item {
+    font-size: 0.75rem; /* 小号字体 */
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 9999px; /* 胶囊形状 */
+    background-color: #f0f0f0; /* 浅灰色背景 */
+    color: var(--color-secondary); /* 深灰文字 */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* 确保标签不会被作品信息区裁剪 */
+    white-space: nowrap;
+}
+
+/* 深色模式下的标签样式 */
+.is-dark .tag-item {
+    background-color: rgba(255, 255, 255, 0.1); /* 半透明白 */
+    color: var(--color-white);
+}
+
+/* 浅色模式下的标签样式 (默认在 is-light 或 body 上) */
+body.is-light .tag-item {
+    background-color: #e5e5e5; 
+    color: var(--color-primary); 
+}
+/* --- 作品标签样式结束 --- */
+
+
+/* === Works Page Grid (PC) === */
+.works-page-grid {
+    grid-template-columns: repeat(3, 1fr); /* PC 端三列 */
+    max-width: 1000px; /* 限制作品网格宽度并居中 */
+    margin-left: auto;
+    margin-right: auto;
+}
+/* 移除 work-detail-section 的默认 padding-top/bottom */
+.works-page-grid .work-detail-section {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+/* Works Page 卡片特殊悬停效果 */
+.works-page-grid .portfolio-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+/* Works Page 头部 */
+.page-header {
+    padding-top: calc(var(--nav-height) + 60px);
+    text-align: center;
+}
+
+
+/* === About Page Styles === */
+.page-hero-section {
+    padding-top: calc(var(--nav-height) + 80px);
+    padding-bottom: 80px;
+    text-align: center;
+}
+.page-hero-section h1 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+.page-hero-section p {
+    font-size: 1.2rem;
+    color: var(--color-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+}
+.is-dark .page-hero-section p {
+    color: #aaaaaa;
+}
+.about-content-section {
+    padding-top: 0;
+}
+.about-content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 1000px;
+}
+.about-item h2 {
+    font-family: var(--font-body);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--color-accent);
+    padding-left: 15px;
+}
+.about-item p {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* === Contact Page Styles === */
+.contact-page-content {
+    padding-top: calc(var(--nav-height) + 60px);
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+.contact-page-content h1 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+    text-align: center;
+}
+.contact-block {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #f5f5f7;
+    transition: all 0.3s ease;
+}
+.contact-block:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+.contact-icon-box {
+    width: 60px; height: 60px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    margin: 0 auto 15px;
+}
+.contact-icon {
+    font-size: 2rem;
+    color: var(--color-white);
+}
+.contact-block h4 {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+.contact-block a {
+    color: var(--color-accent);
+    font-weight: 500;
+}
+/* --- Contact CTA Footer --- */
 .contact-cta-footer {
     padding: 80px 0;
     text-align: center;
@@ -276,7 +433,7 @@ body.light-theme-nav .logo-light-theme { display: block; }
 .contact-cta-footer .nav-contact-btn {
     font-size: 1.1rem;
     padding: 0.8rem 2.5rem;
-    border-radius: 9999px;
+    border-radius: 9999px; 
     border-width: 2px;
 }
 /* 新增：CTA 按钮为黑底白字 */
@@ -293,8 +450,8 @@ body.light-theme-nav .logo-light-theme { display: block; }
 
 /* === Regulatory Notes (纯文本/优化排版) === */
 .regulatory-notes {
-    background-color: #f5f5f7; 
-    color: #515154; 
+    background-color: #f5f5f7;
+    color: #515154;
     padding: 40px 0 60px; /* 增加底部间距 */
     font-size: 0.9rem;
     line-height: 1.8;
@@ -330,127 +487,135 @@ body.light-theme-nav .logo-light-theme { display: block; }
 }
 
 
-/* --- Contact Page Styles --- */
-.contact-page-content {
-    padding-top: calc(var(--nav-height) + 60px);
-    max-width: 1000px; 
+/* --- 新增作品详情页视频样式 --- */
+.work-detail-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+.work-detail-content {
+    max-width: 900px; /* 居中内容区域 */
     margin: 0 auto;
-    text-align: center;
-    min-height: 80vh;
 }
-.contact-page-content h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    margin-bottom: 50px;
+.work-detail-video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 比例 */
+    margin-bottom: 40px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+.work-detail-video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
 }
-.contact-block {
-    background-color: #f5f5f7; 
-    border-radius: 20px;
-    padding: 40px 20px;
-    text-align: center;
-    transition: background-color 0.3s;
-}
-.contact-block:hover {
-    background-color: #e9e9eb; 
-}
-.contact-block h3 {
-    font-size: 1.1rem;
-    color: var(--color-secondary);
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-.contact-block .id-value {
+.work-detail-info h2 {
     font-family: var(--font-heading);
-    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--color-primary);
-    display: block;
-    margin-top: 15px; 
-}
-.contact-icon-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-bottom: 15px;
 }
-.contact-icon {
-    height: 40px; 
-    width: 40px;
-    display: inline-block;
-    color: var(--color-primary); 
-    font-size: 2rem; /* 临时图标大小 */
+.work-detail-info p {
+    font-size: 1rem;
+    color: var(--color-secondary);
+    margin-bottom: 10px;
 }
-.contact-icon img {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
+.work-detail-info strong {
+    font-weight: 600;
+    color: var(--color-primary);
 }
 
 
-/* === 移动端底部固定导航栏 (Mobile Nav Redesign - Apple Glassmorphism) === */
+/* === Mobile Navigation (底部固定栏) === */
 .mobile-nav {
     position: fixed;
-    bottom: 0; left: 0; width: 100%;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     height: var(--mobile-nav-height);
-    z-index: 999;
-    
-    /* 统一为 Apple 风格的半透明和毛玻璃效果 */
-    background-color: rgba(255, 255, 255, 0.8); /* 浅色半透明背景 */
-    backdrop-filter: blur(var(--blur-strength)); 
-    -webkit-backdrop-filter: blur(var(--blur-strength)); 
-    box-shadow: none; /* 移除阴影，更简洁 */
-    border-top: 1px solid rgba(0, 0, 0, 0.05); /* 添加微弱的顶部边框 */
-
+    z-index: 1001;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    transition: transform 0.3s ease;
+    
+    /* 统一毛玻璃样式（Apple 风格） */
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(var(--blur-strength));
+    -webkit-backdrop-filter: blur(var(--blur-strength));
+    border-top: 1px solid rgba(0, 0, 0, 0.05); /* 顶部细线分隔 */
+    /* 移除阴影 */
 }
 
-.mobile-menu-list {
-    list-style: none;
+/* 深色主题下的底部导航 */
+body.is-dark .mobile-nav {
+    background-color: rgba(17, 17, 17, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav-item {
     display: flex;
-    width: 100%;
-    justify-content: space-around;
-    padding: 0;
-    margin: 0;
-}
-.mobile-menu-list li {
-    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-}
-.mobile-menu-list a {
-    display: block;
-    padding: 10px 0;
-    font-size: 0.9rem;
+    flex-grow: 1;
+    padding: 5px 0;
+    font-size: 0.7rem;
     font-weight: 500;
     color: var(--color-secondary);
     transition: color 0.2s ease;
 }
-.mobile-menu-list a:hover,
-.mobile-menu-list a.active {
+.mobile-nav-item:before {
+    /* 简单的图标占位符，如果需要请用实际图标替换 */
+    content: '•';
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+.mobile-nav-item.active {
     color: var(--color-primary);
     font-weight: 600;
+}
+body.is-dark .mobile-nav-item.active {
+    color: var(--color-white);
+}
+
+/* === Mobile Menu (侧边栏) - 保持原有结构但隐藏 */
+.mobile-menu {
+    /* 保持原有结构，但已隐藏 */
+    position: fixed; top: 0; right: 0; width: 100%; max-width: 300px;
+    height: 100%; transform: translateX(100%); z-index: 2000;
+    background-color: var(--color-background); 
+    padding: calc(var(--nav-height) + 20px) 20px 20px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Apple-like Slower ease-out */
+}
+.mobile-menu.active { transform: translateX(0); }
+.mobile-menu-list { list-style: none; padding: 0; }
+.mobile-menu-list li { margin-bottom: 20px; }
+.mobile-menu-list a { 
+    font-family: var(--font-heading); font-size: 1.5rem; font-weight: 400; 
+    display: block; color: var(--color-secondary);
+    transition: color 0.2s ease;
+}
+.mobile-menu-list a:hover, .mobile-menu-list a.active { 
+    color: var(--color-primary); font-weight: 600; 
 }
 
 /* 隐藏不再需要的元素 */
 .nav-overlay, .close-btn { display: none !important; }
 
+
 /* === Floating Back-to-Home Button (悬浮图标) - 调整位置以避开底部导航 === */
 .floating-back-home {
     position: fixed;
     bottom: calc(var(--mobile-nav-height) + 20px); /* 向上移动 */
-    right: 30px;
+    right: 30px; 
     /* ... 保持原有样式 ... */
-    width: 50px;
-    height: 50px;
+    width: 50px; height: 50px;
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.7); 
+    background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
     color: var(--color-white);
     display: flex;
@@ -464,130 +629,65 @@ body.light-theme-nav .logo-light-theme { display: block; }
     opacity: 0;
     visibility: hidden;
 }
-
 .floating-back-home.show {
     opacity: 1;
     visibility: visible;
 }
 
-/* --- 新增作品详情页视频样式 --- */
 
-.work-detail-section {
-    padding-top: 80px;
-    padding-bottom: 80px;
-    /* 区分奇偶数作品详情的深浅主题 */
-}
-
-.work-detail-section:nth-child(even) {
-    background-color: var(--color-background); /* 浅色背景 */
-    color: var(--color-primary);
-}
-
-.work-detail-section:nth-child(odd) {
-    background-color: var(--color-dark-bg); /* 深色背景 */
-    color: var(--color-white);
-}
-
-.work-detail-section .section-title {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.work-detail-section .large-copy {
-    max-width: 800px;
-    margin: 0 auto 40px;
-    text-align: center;
-}
-.work-detail-section.is-dark .large-copy {
-    color: #aaaaaa;
-}
-
-/* 视频容器：实现视频宽度自适应 */
-.video-container {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 比例 (9 / 16 * 100%) */
-    height: 0;
-    overflow: hidden;
-    max-width: 100%;
-    background: #000;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* 视频标签：填充容器 */
-.work-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* =========================================
-   Media Queries (Desktop)
-   ========================================= */
-
+/* ========================================= Media Queries (Desktop - 992px 及以上) ========================================= */
 @media (min-width: 992px) {
-    /* 桌面端隐藏底部导航，并取消 padding-bottom */
-    body { padding-bottom: 0; }
-    .mobile-nav { display: none; } 
-    .nav-desktop { display: flex; }
     
-    .section {
-        padding: 120px 0;
+    /* PC 导航栏显示 */
+    .nav-desktop {
+        display: flex;
     }
-    .core-business-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 60px;
+    .nav-wrap {
+        /* PC 端的导航栏加高一点 */
+        height: var(--nav-height); 
     }
-    .portfolio-grid {
-        /* 首页的默认网格保持 3 列 */
-        grid-template-columns: repeat(3, 1fr);
+    .nav-item {
+        position: relative;
+        padding: 5px 0;
     }
-    .contact-grid {
+    .nav-item::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: var(--color-white);
+        transition: width 0.3s ease;
+    }
+    body.light-theme-nav .nav-item::after {
+        background-color: var(--color-primary);
+    }
+    .nav-item:hover::after, .nav-item.is-active::after {
+        width: 100%;
+    }
+    .mobile-nav {
+        display: none; /* 隐藏底部导航 */
+    }
+    .mobile-nav-spacer {
+        display: none;
+    }
+    body {
+        padding-bottom: 0; /* 移除底部间距 */
+    }
+
+    /* PC 端作品网格间距和样式 */
+    .works-page-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 40px;
+        max-width: 1100px;
     }
-    .floating-back-home {
-        bottom: 40px; /* 桌面端回到原位 */
-        right: 40px;
-    }
-    
-    /* --- Works Page 竖版 3:4 布局样式 (Desktop) --- */
-    
-    /* 1. 实现居中显示，限制最大宽度 (例如 900px) */
-    .works-page-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 核心修改：一行 3 列 */
-        gap: 30px; /* 保持间距 */
-        
-        /* 限制整体网格最大宽度，并居中 */
-        max-width: 900px; /* 您想要的居中且不沾边的效果 */
-        width: 90%; 
-        margin-left: auto;
-        margin-right: auto;
-        
-        /* 移除上一次修改中的 flex/align-items: center */
-    }
-
-    /* 2. 移除对 .portfolio-item 的宽度限制，使其在 3 列网格中自适应 */
-    .works-page-grid .portfolio-item {
-        /* max-width 和 width 已经不再需要，由 grid 布局控制 */
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    /* 悬停效果优化 */
-    .works-page-grid .portfolio-item:hover {
-        transform: translateY(-8px); 
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
+    /* 移除冗余的 width 已经不再需要，由 grid 布局控制 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-/* =========================================
-   Media Queries (Mobile - 991px 及以下)
-   ========================================= */
+/* ========================================= Media Queries (Mobile - 991px 及以下) ========================================= */
 @media (max-width: 991px) {
     /* 顶部导航栏 Logo 居中 */
     .nav-inner {
@@ -633,30 +733,49 @@ body.light-theme-nav .logo-light-theme { display: block; }
     }
     
     .works-page-grid .portfolio-item {
-        max-width: 100%; 
+        /* 移除冗余的 transform 已经在 works-page-grid:hover 中处理 */
+        /* 移除 box-shadow */
+        box-shadow: none;
+        transform: none;
     }
-}
-
-/* --- WXZ Studio - Works Page 竖版 3:4 布局样式 (通用) --- */
-
-/* 1. 强制 3:4 比例 (通过 padding-bottom) */
-.portfolio-img-wrapper {
-    position: relative;
-    width: 100%;
-    /* 3:4 比例 (4 / 3 * 100% = 133.333%) */
-    padding-bottom: 133.33%; 
-    height: 0;
-    overflow: hidden;
-    display: block; /* 确保它能包裹图片 */
-}
-
-/* 2. 覆盖原有样式，让图片填充比例容器 */
-.portfolio-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover;
-    display: block;
+    
+    /* 悬停效果优化 */
+    .works-page-grid .portfolio-item:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    /* Page Header 优化 */
+    .page-header {
+        padding-top: calc(var(--nav-height) + 40px);
+        padding-bottom: 40px;
+    }
+    .page-hero-section h1, .contact-page-content h1 {
+        font-size: 2.5rem;
+    }
+    .about-content-grid {
+        grid-template-columns: 1fr;
+    }
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    .contact-block {
+        text-align: left;
+    }
+    .contact-icon-box {
+        margin: 0 15px 15px 0;
+        float: left;
+    }
+    .contact-info-text {
+        overflow: hidden;
+    }
+    
+    /* 确保移动端标签不会被裁剪 */
+    .work-tags {
+        gap: 6px;
+    }
+    .tag-item {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+    }
 }
