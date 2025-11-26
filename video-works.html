@@ -1,63 +1,169 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WXZ Studio | 视频作品</title>
+    <title>WXZ STUDIO - 视频作品</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.ico">
+    <style>
+        /* 页面主体内容上边距，避免被固定导航栏遮挡 */
+        .content-page-main {
+            padding-top: 6rem; 
+        }
+
+        .works-portfolio-section {
+            padding: 2rem 0 6rem;
+        }
+
+        .works-portfolio-section h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--color-primary);
+        }
+
+        /* 标签筛选样式（与 design-works.html 保持一致） */
+        .tag-filters {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .filter-tag {
+            background-color: #f3f4f6;
+            color: var(--color-text-dark);
+            border: 1px solid var(--color-border);
+            padding: 0.5rem 1.25rem;
+            margin: 0 0.5rem 0.5rem 0.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+            font-weight: 500;
+        }
+
+        .filter-tag:hover {
+            background-color: #e5e7eb;
+        }
+
+        .filter-tag.active {
+            background-color: var(--color-secondary);
+            color: var(--color-text-light);
+            border-color: var(--color-secondary);
+            transform: scale(1.05);
+        }
+
+        /* 移动端标签布局 */
+        @media (max-width: 600px) {
+            .tag-filters {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .filter-tag {
+                margin: 0.25rem;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <header class="main-header">
-        <div class="logo">
-            <a href="index.html">WXZ Studio</a>
+        <div class="logo-container">
+            <a href="index.html">
+                <img id="site-logo" src="assets/logos/logo-white.svg" alt="WXZ STUDIO Logo">
+            </a>
         </div>
-        <nav class="desktop-nav">
-            <ul>
+        
+        <nav class="nav-menu">
+            <ul class="nav-links">
                 <li><a href="index.html">首页</a></li>
-                <li class="active"><a href="video-works.html">视频作品</a></li>
-                <li><a href="graphic-works.html">平面设计作品</a></li>
+                <li><a href="video-works.html" class="active">视频作品</a></li>
+                <li><a href="design-works.html">平面设计作品</a></li>
                 <li><a href="contact.html">联系方式</a></li>
             </ul>
         </nav>
-        <button class="menu-toggle" aria-label="Toggle navigation">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+        
+        <button class="menu-toggle" aria-label="Toggle Navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
-        <nav class="mobile-nav">
-            <ul>
-                <li><a href="index.html">首页</a></li>
-                <li class="active"><a href="video-works.html">视频作品</a></li>
-                <li><a href="graphic-works.html">平面设计作品</a></li>
-                <li><a href="contact.html">联系方式</a></li>
-            </ul>
-        </nav>
     </header>
 
-    <main class="container">
-        <h1>视频作品集</h1>
+    <main class="content-page-main">
+        <section class="works-portfolio-section container">
+            <h1>🎥 视频作品集</h1>
+            
+            <div class="tag-filters">
+                <button class="filter-tag active" data-tag="all">全部</button>
+                <button class="filter-tag" data-tag="star">#明星侧拍</button>
+                <button class="filter-tag" data-tag="product">#产品拍摄</button>
+                <button class="filter-tag" data-tag="douyin">#抖音信息流</button>
+                 <button class="filter-tag" data-tag="featured">精选作品</button>
+            </div>
+            
+            <div class="works-grid responsive-grid">
 
-        <div class="tag-filter-container">
-            <button class="tag-button active" data-tag="all">全部</button>
-            <button class="tag-button" data-tag="明星侧拍">#明星侧拍</button>
-            <button class="tag-button" data-tag="产品拍摄">#产品拍摄</button>
-            <button class="tag-button" data-tag="抖音信息流">#抖音信息流</button>
-        </div>
+                <div class="work-item" data-tags="star featured">
+                    <img src="assets/images/video-previews/video-1-star.jpg" alt="明星侧拍作品1" class="landscape">
+                    <p class="caption">明星活动现场跟拍 / 纪实风格</p>
+                </div>
+                
+                <div class="work-item" data-tags="product">
+                    <img src="assets/images/video-previews/video-2-product.jpg" alt="产品拍摄作品2" class="square">
+                    <p class="caption">美妆产品广告 / 质感特写</p>
+                </div>
 
-        <section class="works-grid" id="video-works-container">
-            </section>
+                <div class="work-item" data-tags="douyin">
+                    <img src="assets/images/video-previews/video-3-douyin.jpg" alt="抖音信息流作品3" class="portrait">
+                    <p class="caption">抖音信息流 / 快节奏种草视频</p>
+                </div>
+
+                <div class="work-item" data-tags="star">
+                    <img src="assets/images/video-previews/video-4-star.jpg" alt="明星侧拍作品4" class="landscape">
+                    <p class="caption">艺人宣传片 / 电影感调色</p>
+                </div>
+                
+                <div class="work-item" data-tags="product featured">
+                    <img src="assets/images/video-previews/video-5-product.jpg" alt="产品拍摄作品5" class="square">
+                    <p class="caption">科技产品发布会宣传片</p>
+                </div>
+                
+                <div class="work-item" data-tags="douyin">
+                    <img src="assets/images/video-previews/video-6-douyin.jpg" alt="抖音信息流作品6" class="portrait">
+                    <p class="caption">电商直播切片 / 爆款营销</p>
+                </div>
+
+                <div class="work-item" data-tags="star">
+                    <img src="assets/images/video-previews/video-7-star.jpg" alt="明星侧拍作品7" class="square">
+                    <p class="caption">演唱会VCR制作</p>
+                </div>
+
+                <div class="work-item" data-tags="product">
+                    <img src="assets/images/video-previews/video-8-product.jpg" alt="产品拍摄作品8" class="landscape">
+                    <p class="caption">食品类短视频广告</p>
+                </div>
+                
+                <div class="work-item" data-tags="douyin featured">
+                    <img src="assets/images/video-previews/video-9-douyin.jpg" alt="抖音信息流作品9" class="portrait">
+                    <p class="caption">旅行Vlog风格 / 推广合作</p>
+                </div>
+
+                <div class="work-item" data-tags="star">
+                    <img src="assets/images/video-previews/video-10-star.jpg" alt="明星侧拍作品10" class="square">
+                    <p class="caption">艺人写真拍摄花絮</p>
+                </div>
+
+                </div>
+        </section>
     </main>
 
-    <footer class="main-footer">
-        <p>© 2025 WXZ Studio. 保留所有权利。</p>
+    <footer>
+        <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
     </footer>
 
     <script src="js/script.js"></script>
-    <script>
-        // 初始化作品集页面
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeWorksPage('video');
-        });
-    </script>
 </body>
 </html>

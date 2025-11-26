@@ -1,94 +1,83 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WXZ Studio | 联系我们</title>
+    <title>WXZ STUDIO - 联系方式</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 0;
+            margin-top: 50px; /* 避开固定导航栏 */
+        }
+        .contact-item {
+            background-color: #f7f7f7;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .contact-item h3 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+        .contact-item p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            word-break: break-all;
+        }
+        .xiaohongshu-button {
+            display: inline-block;
+            background-color: #ff2d55; /* 小红书红色 */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .xiaohongshu-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+    </style>
 </head>
 <body>
     <header class="main-header">
-        <div class="logo">
-            <a href="index.html">WXZ Studio</a>
-        </div>
-        <nav class="desktop-nav">
-            <ul>
-                <li><a href="index.html">首页</a></li>
-                <li><a href="video-works.html">视频作品</a></li>
-                <li><a href="graphic-works.html">平面设计作品</a></li>
-                <li class="active"><a href="contact.html">联系方式</a></li>
-            </ul>
-        </nav>
-        <button class="menu-toggle" aria-label="Toggle navigation">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <nav class="mobile-nav">
-            <ul>
-                <li><a href="index.html">首页</a></li>
-                <li><a href="video-works.html">视频作品</a></li>
-                <li><a href="graphic-works.html">平面设计作品</a></li>
-                <li class="active"><a href="contact.html">联系方式</a></li>
-            </ul>
-        </nav>
-    </header>
+        </header>
 
-    <main class="container contact-page">
-        <h1>联系我们，开启合作</h1>
+    <main class="content-page-main">
+        <section class="contact-section container">
+            <h1>📞 联系我们</h1>
+            <p style="text-align:center; font-size:1.1rem; margin-bottom:3rem;">期待您的创意合作邀约。</p>
+            
+            <div class="contact-details">
+                
+                <div class="contact-item">
+                    <h3>微信 / KakaoTalk ID</h3>
+                    <p>icf304</p>
+                    <small>请备注：合作/咨询</small>
+                </div>
 
-        <section class="contact-info-grid">
-            <div class="contact-card">
-                <h3>微信 / Wechat</h3>
-                <p class="contact-id">ID: **icf304**</p>
-                <div class="qr-placeholder">[微信二维码占位图]</div>
-            </div>
-            <div class="contact-card">
-                <h3>KakaoTalk</h3>
-                <p class="contact-id">ID: **icf304**</p>
-            </div>
-            <div class="contact-card">
-                <h3>小红书 (Xiaohongshu)</h3>
-                <p>了解更多作品和幕后故事</p>
-                <a href="https://xhslink.com/m/AfISV77MaVG" target="_blank" class="primary-button xhs-button">
-                    访问小红书主页 →
-                </a>
+                <div class="contact-item">
+                    <h3>小红书 (Xiaohongshu)</h3>
+                    <p>WXZ STUDIO 官方主页</p>
+                    <a href="https://xhslink.com/m/AfISV77MaVG" target="_blank" class="xiaohongshu-button">
+                        前往 小红书 主页
+                    </a>
+                </div>
             </div>
         </section>
-        
-        <section class="contact-form-section">
-            <h2>合作咨询表单</h2>
-            <form action="#" method="POST" class="contact-form">
-                <div class="form-group">
-                    <label for="name">您的姓名/公司名称</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">联系邮箱</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="project">项目类型</label>
-                    <select id="project" name="project" required>
-                        <option value="">请选择项目类型</option>
-                        <option value="video">商业摄影/短视频</option>
-                        <option value="graphic">平面设计/品牌标识</option>
-                        <option value="other">其他</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">项目需求简述</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="primary-button submit-button">发送咨询</button>
-            </form>
-        </section>
-
     </main>
 
-    <footer class="main-footer">
-        <p>© 2025 WXZ Studio. 保留所有权利。</p>
-    </footer>
+    <footer>
+        </footer>
 
     <script src="js/script.js"></script>
 </body>
