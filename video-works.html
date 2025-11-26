@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WXZ Studio | 视频作品</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">WXZ Studio</a>
+        </div>
+        <nav class="desktop-nav">
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li class="active"><a href="video-works.html">视频作品</a></li>
+                <li><a href="graphic-works.html">平面设计作品</a></li>
+                <li><a href="contact.html">联系方式</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li class="active"><a href="video-works.html">视频作品</a></li>
+                <li><a href="graphic-works.html">平面设计作品</a></li>
+                <li><a href="contact.html">联系方式</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>视频作品集</h1>
+
+        <div class="tag-filter-container">
+            <button class="tag-button active" data-tag="all">全部</button>
+            <button class="tag-button" data-tag="明星侧拍">#明星侧拍</button>
+            <button class="tag-button" data-tag="产品拍摄">#产品拍摄</button>
+            <button class="tag-button" data-tag="抖音信息流">#抖音信息流</button>
+        </div>
+
+        <section class="works-grid" id="video-works-container">
+            </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>© 2025 WXZ Studio. 保留所有权利。</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // 初始化作品集页面
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeWorksPage('video');
+        });
+    </script>
+</body>
+</html>

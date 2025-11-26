@@ -1,0 +1,536 @@
+/* ====================================
+    CSS Reset & Global Variables
+==================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* 颜色方案 */
+    --color-primary: #1A1A1A;     /* 主色：深黑/近黑 */
+    --color-secondary: #007bff;   /* 强调色：蓝色 (用于按钮/链接hover) */
+    --color-accent: #FFD700;      /* 辅助色：金色/亮黄 (可选) */
+    --color-background: #FFFFFF;  /* 背景色：白色 */
+    --color-text: #333333;        /* 文字色：深灰 */
+    --color-light-text: #666666;  /* 浅文字色 */
+
+    /* 字体 */
+    --font-primary: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-serif: Georgia, 'Times New Roman', Times, serif;
+
+    /* 间距 */
+    --spacing-s: 1rem;
+    --spacing-m: 2rem;
+    --spacing-l: 4rem;
+}
+
+body {
+    font-family: var(--font-primary);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-s);
+}
+
+h1, h2, h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-s);
+    line-height: 1.2;
+}
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--color-secondary);
+}
+
+ul {
+    list-style: none;
+}
+
+/* ====================================
+    Header & Navigation
+==================================== */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem var(--spacing-m);
+    background-color: var(--color-background);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo a {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    letter-spacing: 1px;
+}
+
+/* 桌面导航 */
+.desktop-nav ul {
+    display: flex;
+    gap: var(--spacing-m);
+}
+.desktop-nav a {
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 5px;
+}
+.desktop-nav a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-secondary);
+    transition: width 0.3s ease-in-out;
+}
+.desktop-nav a:hover:after,
+.desktop-nav .active a:after {
+    width: 100%;
+}
+
+/* 移动端菜单切换按钮 */
+.menu-toggle {
+    display: none; /* 默认隐藏 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+.icon-bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 4px 0;
+    background-color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+/* 移动端导航 */
+.mobile-nav {
+    display: none; /* 默认隐藏 */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-background);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: var(--spacing-s) 0;
+}
+.mobile-nav.open {
+    display: block;
+}
+.mobile-nav ul {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.mobile-nav li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.mobile-nav a {
+    display: block;
+    padding: 10px;
+    font-size: 1.2rem;
+}
+
+/* ====================================
+    Buttons & CTA
+==================================== */
+.primary-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border: 2px solid var(--color-primary);
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.primary-button:hover {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+    color: var(--color-background);
+}
+.cta-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--color-secondary);
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s;
+}
+.cta-link:hover {
+    border-bottom: 2px solid var(--color-secondary);
+}
+
+/* ====================================
+    1. Hero Section (index.html)
+==================================== */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 90vh; /* 占据大部分视口高度 */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2); /* 略微变暗以保护文字 */
+    z-index: 2;
+}
+
+/* ====================================
+    2. Services Section
+==================================== */
+.services-section {
+    padding: var(--spacing-l) 0;
+    text-align: center;
+}
+.services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-m);
+    margin-top: var(--spacing-m);
+}
+.service-item {
+    padding: var(--spacing-m);
+    border-left: 5px solid var(--color-secondary);
+    text-align: left;
+    background-color: #f9f9f9;
+}
+.service-item h3 {
+    margin-top: 0;
+    color: var(--color-secondary);
+}
+
+/* ====================================
+    3. Clients Section (信息墙)
+==================================== */
+.clients-section {
+    padding: var(--spacing-l) 0;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+.clients-wall {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-s);
+    margin-top: var(--spacing-m);
+}
+.clients-wall img {
+    max-width: 150px;
+    height: auto;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    filter: grayscale(100%); /* 统一风格 */
+}
+.clients-wall img:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+}
+
+/* ====================================
+    4. Featured Works (index.html)
+==================================== */
+.featured-works-section {
+    padding: var(--spacing-l) 0;
+    text-align: center;
+}
+.featured-works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-m);
+    margin: var(--spacing-m) 0;
+}
+.work-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-m);
+    margin-top: var(--spacing-m);
+}
+
+/* ====================================
+    5. Policy Section (须知内容)
+==================================== */
+.policy-section {
+    padding: var(--spacing-l) 0;
+    border-top: 1px solid #ddd;
+}
+.policy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-m);
+}
+.policy-grid article {
+    background-color: #fff;
+    padding: var(--spacing-s);
+    border-left: 3px solid var(--color-primary);
+}
+.policy-grid ul {
+    list-style: disc;
+    padding-left: var(--spacing-m);
+}
+.policy-grid li {
+    margin-bottom: 10px;
+}
+
+/* ====================================
+    6. Works Pages (video-works.html, graphic-works.html)
+==================================== */
+.tag-filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: var(--spacing-m);
+    padding: var(--spacing-s) 0;
+    border-bottom: 1px solid #eee;
+}
+.tag-button {
+    background-color: #eee;
+    color: var(--color-light-text);
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+.tag-button:hover {
+    background-color: #ddd;
+}
+.tag-button.active {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+}
+
+/* 响应式作品展示区 */
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 响应式列 */
+    gap: var(--spacing-m);
+    padding-bottom: var(--spacing-l);
+}
+
+.work-item {
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    background-color: var(--color-background);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.work-item.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    height: 0;
+    padding: 0;
+    margin: 0;
+    visibility: hidden;
+}
+
+.work-item img {
+    width: 100%;
+    height: 250px; /* 统一图片高度 */
+    object-fit: cover;
+    display: block;
+}
+
+.work-item-info {
+    padding: var(--spacing-s);
+}
+.work-item-info p {
+    color: var(--color-light-text);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+.work-item-info .work-tags {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--color-secondary);
+}
+.work-item-info .is-featured {
+    color: var(--color-accent);
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+
+/* ====================================
+    7. Contact Page
+==================================== */
+.contact-page {
+    padding-top: var(--spacing-l);
+}
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-m);
+    margin-bottom: var(--spacing-l);
+}
+.contact-card {
+    padding: var(--spacing-m);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+.contact-card h3 {
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+}
+.contact-id {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+.qr-placeholder {
+    width: 100%;
+    height: 100px;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #999;
+}
+.xhs-button {
+    background-color: #ff5757; /* 小红书颜色 */
+    border-color: #ff5757;
+}
+.xhs-button:hover {
+    background-color: #e04444;
+    border-color: #e04444;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-m);
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+.form-group {
+    margin-bottom: var(--spacing-s);
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+.submit-button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ====================================
+    Footer
+==================================== */
+.main-footer {
+    padding: var(--spacing-m) 0;
+    text-align: center;
+    border-top: 1px solid #eee;
+    color: var(--color-light-text);
+    font-size: 0.9rem;
+}
+
+
+/* ====================================
+    Media Queries (移动端自适应)
+==================================== */
+@media (max-width: 768px) {
+    /* 导航栏切换 */
+    .desktop-nav {
+        display: none;
+    }
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        height: 60vh;
+    }
+
+    /* Services Section */
+    .services-grid {
+        grid-template-columns: 1fr; /* 单列布局 */
+    }
+
+    /* Policy Section */
+    .policy-grid {
+        grid-template-columns: 1fr;
+    }
+    .policy-grid article {
+        border-left: none;
+        border-bottom: 3px solid var(--color-primary);
+        padding-bottom: var(--spacing-s);
+    }
+    
+    /* 间距调整 */
+    h2 { font-size: 1.6rem; }
+    .container { padding: 0 var(--spacing-s); }
+}
+
+/* Hamburger Menu Animations (JS will add/remove .open class) */
+.menu-toggle.open .icon-bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+.menu-toggle.open .icon-bar:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.open .icon-bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}

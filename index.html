@@ -3,307 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WXZ Studio - 视觉资产与创意设计</title>
-    <!-- 引入 Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- 引入自定义样式文件 -->
-    <link rel="stylesheet" href="style.css">
+    <title>WXZ Studio | 首页</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preload" href="css/style.css" as="style">
 </head>
-<body class="antialiased">
+<body>
 
-<!-- 导航栏 (Nav Bar) - 固定顶部，适应移动端 -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-        <!-- Logo (点击返回首页) -->
-        <a href="#home" class="text-2xl font-extrabold tracking-wider text-stone-900 transition duration-150 ease-in-out hover:text-purple-600" onclick="showPage('home')">WXZ STUDIO</a>
-        
-        <!-- 桌面端菜单 -->
-        <div class="hidden sm:flex space-x-8 text-sm font-medium">
-            <a href="#home" class="nav-link transition duration-150 ease-in-out text-stone-700 hover:text-purple-600" onclick="showPage('home')">首页</a>
-            <a href="#video" class="nav-link transition duration-150 ease-in-out text-stone-700 hover:text-purple-600" onclick="showPage('video')">视频作品</a>
-            <a href="#design" class="nav-link transition duration-150 ease-in-out text-stone-700 hover:text-purple-600" onclick="showPage('design')">平面设计作品</a>
-            <a href="#contact" class="px-3 py-1 border border-stone-300 rounded-full text-stone-700 hover:bg-stone-100 transition duration-150 ease-in-out" onclick="showPage('contact')">联系方式</a>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">WXZ Studio</a>
         </div>
-
-        <!-- 移动端汉堡菜单按钮 -->
-        <button id="mobile-menu-button" class="sm:hidden p-2 text-stone-700 hover:text-purple-600 focus:outline-none">
-            <!-- 汉堡图标 (由 JS 控制切换显示) -->
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-            </svg>
+        <nav class="desktop-nav">
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="video-works.html">视频作品</a></li>
+                <li><a href="graphic-works.html">平面设计作品</a></li>
+                <li><a href="contact.html">联系方式</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
         </button>
-    </nav>
-</header>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="video-works.html">视频作品</a></li>
+                <li><a href="graphic-works.html">平面设计作品</a></li>
+                <li><a href="contact.html">联系方式</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<!-- 移动端菜单下拉 -->
-<div id="mobile-menu" class="fixed top-16 left-0 right-0 bg-white shadow-lg z-40 hidden sm:hidden">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-        <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-50" onclick="showPage('home')">首页</a>
-        <a href="#video" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-50" onclick="showPage('video')">视频作品</a>
-        <a href="#design" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-50" onclick="showPage('design')">平面设计作品</a>
-        <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-purple-600 bg-purple-50 hover:bg-purple-100" onclick="showPage('contact')">联系方式</a>
-    </div>
-</div>
+    <main>
+        <section class="hero-section">
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="assets/videos/hero-video.mp4" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+            <div class="hero-overlay">
+                </div>
+        </section>
 
-<main id="app" class="pt-16">
-    <!-- 首页 (Home Page) -->
-    <div id="home-page" class="page-view">
-        
-        <!-- 1. Hero 视频/封面 -->
-        <section class="hero-video-container relative flex items-center justify-center text-center p-8 bg-stone-900">
-            <div class="absolute inset-0 w-full h-full overflow-hidden">
-                <!-- 视频元素：请将 [YOUR_VIDEO_URL] 替换为您实际的视频链接 -->
-                <!-- 如果使用视频，请取消注释下面的代码并删除 CSS 中的 .hero-video-container 占位符背景 -->
-                <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-70">
-                    <source src="[YOUR_VIDEO_URL]" type="video/mp4">
-                    您的浏览器不支持视频标签。
-                </video>
-            </div>
-            <div class="relative z-10 py-20">
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
-                    <span class="block">WE DESIGN</span>
-                    <span class="block mt-2">THE FEELING OF YOU</span>
-                </h1>
-                <a href="#contact" class="mt-8 inline-block bg-purple-600 text-white font-semibold py-3 px-8 rounded-lg shadow-xl hover:bg-purple-700 transition duration-300 transform hover:scale-105" onclick="showPage('contact')">
-                    立即预订档期
-                </a>
+        <section class="services-section container">
+            <h2>我们提供的服务</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>商业摄影 (Commercial Photography & Video)</h3>
+                    <p>短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍。</p>
+                    <p>我们提供高品质的视觉资产，全方位覆盖您的商业影像需求。</p>
+                </div>
+                <div class="service-item">
+                    <h3>平面视觉设计 (Graphic Visual Design)</h3>
+                    <p>品牌标识、海报设计到社交媒体视觉企划。</p>
+                    <p>用富有创意的设计，提升您的品牌价值和市场影响力。</p>
+                </div>
             </div>
         </section>
 
-        <!-- 2. 提供服务 (Services) -->
-        <section class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold mb-12 text-center">我们提供的服务</h2>
-            <div class="grid md:grid-cols-2 gap-10">
-                <!-- 商业摄影与视频 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-purple-600">
-                    <h3 class="text-3xl font-semibold mb-4">商业摄影与视频</h3>
-                    <ul class="space-y-2 text-stone-600 mb-4 list-disc list-inside">
-                        <li>短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍</li>
+        <section class="clients-section">
+            <div class="container">
+                <h2>服务客户</h2>
+                <div class="clients-wall">
+                    <img src="assets/images/clients/idle.png" alt="IDLE Logo" loading="lazy">
+                    <img src="assets/images/clients/zerobaseone.png" alt="ZEROBASEONE Logo" loading="lazy">
+                    <img src="assets/images/clients/shinsegae.png" alt="新世界免税店 Logo" loading="lazy">
+                    <img src="assets/images/clients/amorepacific.png" alt="爱茉莉太平洋 Logo" loading="lazy">
+                    <img src="assets/images/clients/hera.png" alt="HERA Logo" loading="lazy">
+                    <img src="assets/images/clients/iope.png" alt="IOPE Logo" loading="lazy">
+                    <img src="assets/images/clients/cosrx.png" alt="COSRX Logo" loading="lazy">
+                    <img src="assets/images/clients/neogem.png" alt="内可美 Logo" loading="lazy">
+                    <img src="assets/images/clients/highgogo.png" alt="丹普斯high&gogo Logo" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-works-section container">
+            <h2>精选作品</h2>
+            <div class="featured-works-grid" id="featured-works-container">
+                <p>加载中...</p>
+            </div>
+            <div class="work-links">
+                <a href="video-works.html" class="cta-link">查看全部视频作品 →</a>
+                <a href="graphic-works.html" class="cta-link">查看全部平面设计作品 →</a>
+            </div>
+        </section>
+
+        <section class="contact-cta-section container">
+            <h2>共同创造精彩作品</h2>
+            <a href="contact.html" class="primary-button">联系我们 →</a>
+        </section>
+
+        <section class="policy-section container">
+            <h2>合作须知</h2>
+            <div class="policy-grid">
+                <article>
+                    <h3>预订与定金 (Booking & Deposit)</h3>
+                    <ul>
+                        <li>**定金支付**：为正式预留档期，您需要支付项目总额 **50% 的定金**。在收到定金后，WXZ STUDIO 才会正式确认档期并开始前期准备工作。</li>
+                        <li>**取消政策**：定金不可退还，但在拍摄档期前 **7 天**，您有一次免费延期的机会。</li>
                     </ul>
-                    <p class="text-stone-700 leading-relaxed">
-                        我们提供高品质的视觉资产，全方位覆盖您的商业影像需求。从动态捕捉到静物特写，确保您的品牌形象引人注目。
-                    </p>
-                </div>
-                <!-- 平面视觉设计 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-purple-600">
-                    <h3 class="text-3xl font-semibold mb-4">平面视觉设计</h3>
-                    <ul class="space-y-2 text-stone-600 mb-4 list-disc list-inside">
-                        <li>品牌标识、海报设计到社交媒体视觉企划 (SNS Content)</li>
+                </article>
+                <article>
+                    <h3>创意与执行 (Project Briefing & Execution)</h3>
+                    <p>为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。</p>
+                </article>
+                <article>
+                    <h3>费用结算与超时 (Billing & Overtime)</h3>
+                    <ul>
+                        <li>**尾款结算**：剩余的款项请在拍摄服务完成后的 **24 小时内**结清。</li>
+                        <li>**超时计费**：若实际工作时间超出原定计划 30 分钟或以上，我们将按照合同拟定的单价以 1 小时进行额外计费。</li>
                     </ul>
-                    <p class="text-stone-700 leading-relaxed">
-                        从品牌标识、海报设计到社交媒体视觉企划，我们提供完整的创意解决方案，助力品牌实现视觉升级。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. 服务客户 (Clients) -->
-        <section class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 bg-white/70">
-            <h2 class="text-4xl font-bold mb-12 text-center">我们的服务客户</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
-                <!-- 客户 Logo 墙 - 图片路径请确保在 assets/clients/ 下 -->
-                
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/idle.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=(G)I-DLE';" alt="(G)I-DLE Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/zb1.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=ZB1';" alt="ZB1 Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/shinsegae.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=新世界';" alt="新世界免税店 Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/amorepacific.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=爱茉莉';" alt="爱茉莉太平洋 Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/hera.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=HERA';" alt="HERA Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/iope.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=IOPE';" alt="IOPE Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/cosrx.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=COSRX';" alt="COSRX Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/nacific.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=内可美';" alt="内可美 Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/tempus.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=丹普斯';" alt="丹普斯 Logo" class="h-10 object-contain mx-auto">
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-24">
-                    <img src="assets/clients/highgogo.png" onerror="this.onerror=null;this.src='https://placehold.co/120x60/f7f7f7/8b5cf6?text=High%26Gogo';" alt="High&Gogo Logo" class="h-10 object-contain mx-auto">
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. 精选作品 (Featured Works) -->
-        <section class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold mb-12 text-center">精选作品</h2>
-            <div id="featured-works-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- JS将在此处加载精选作品 -->
-            </div>
-            <div class="text-center mt-12">
-                <a href="#video" class="inline-block text-purple-600 font-semibold hover:text-purple-800 transition duration-300" onclick="showPage('video')">
-                    查看所有作品 &rarr;
-                </a>
-            </div>
-        </section>
-        
-        <!-- 5. 联系我们按钮 -->
-        <section class="bg-purple-600 py-16 text-white text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-4">准备好启动您的下一个项目了吗？</h2>
-            <p class="text-xl mb-8">点击下方按钮，与我们开始一次新的合作！</p>
-            <a href="#contact" class="inline-block bg-white text-purple-600 font-extrabold py-4 px-10 rounded-full shadow-2xl hover:bg-stone-50 transition duration-300 transform hover:scale-105" onclick="showPage('contact')">
-                联系我们
-            </a>
-        </section>
-
-        <!-- 6. 须知内容 (Studio Policy) -->
-        <section class="max-w-4xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold mb-8 text-center text-purple-600">合作须知</h2>
-            <div class="space-y-8 text-stone-700">
-                <!-- 预订与定金 -->
-                <div>
-                    <h3 class="text-xl font-bold mb-2">预订与定金 (Booking & Deposit)</h3>
-                    <ul class="list-disc list-inside space-y-2 bg-stone-50 p-4 rounded-lg">
-                        <li><strong class="font-semibold">定金支付：</strong>为正式预留档期，您需要支付项目总额 50% 的定金。在收到定金后，WXZ STUDIO 才会正式确认档期并开始前期准备工作。</li>
-                        <li><strong class="font-semibold">取消政策：</strong>定金不可退还，但在拍摄档期前 7 天，您有一次免费延期的机会。</li>
+                </article>
+                <article>
+                    <h3>文件交付与管理 (File Delivery & Archiving)</h3>
+                    <ul>
+                        <li>**下载期限**：最终交付文件上传成功后，请您务必在 **30 日内**完成下载并妥善备份。超过此期限，WXZ STUDIO 不保证文件的永久存储。</li>
                     </ul>
-                </div>
-                <!-- 创意与执行 -->
-                <div>
-                    <h3 class="text-xl font-bold mb-2">创意与执行 (Project Briefing & Execution)</h3>
-                    <ul class="list-disc list-inside space-y-2 bg-stone-50 p-4 rounded-lg">
-                        <li><strong class="font-semibold">内容规划：</strong>为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。</li>
+                </article>
+                <article>
+                    <h3>作品宣传权利 (Portfolio Use)</h3>
+                    <ul>
+                        <li>**默认授权**：除非事先另有约定，WXZ STUDIO 默认同意在项目交付后一周将部分非涉密作品用于社交媒体和官方渠道的宣传展示。</li>
+                        <li>**保密需求**：如您有任何保密或特殊使用限制，请务必在正式签订合作合同前明确提出并以书面形式确认。</li>
                     </ul>
-                </div>
-                <!-- 费用结算与超时 -->
-                <div>
-                    <h3 class="text-xl font-bold mb-2">费用结算与超时 (Billing & Overtime)</h3>
-                    <ul class="list-disc list-inside space-y-2 bg-stone-50 p-4 rounded-lg">
-                        <li><strong class="font-semibold">尾款结算：</strong>剩余的款项请在拍摄服务完成后的 24 小时内结清。</li>
-                        <li><strong class="font-semibold">超时计费：</strong>若实际工作时间超出原定计划 30 分钟或以上，我们将按照合同拟定的单价以 1 小时进行额外计费。</li>
-                    </ul>
-                </div>
-                <!-- 文件交付与管理 -->
-                <div>
-                    <h3 class="text-xl font-bold mb-2">文件交付与管理 (File Delivery & Archiving)</h3>
-                    <ul class="list-disc list-inside space-y-2 bg-stone-50 p-4 rounded-lg">
-                        <li><strong class="font-semibold">下载期限：</strong>最终交付文件上传成功后，请您务必在 30 日内完成下载并妥善备份。超过此期限，WXZ STUDIO 不保证文件的永久存储。</li>
-                    </ul>
-                </div>
-                <!-- 作品宣传权利 -->
-                <div>
-                    <h3 class="text-xl font-bold mb-2">作品宣传权利 (Portfolio Use)</h3>
-                    <ul class="list-disc list-inside space-y-2 bg-stone-50 p-4 rounded-lg">
-                        <li><strong class="font-semibold">默认授权：</strong>除非事先另有约定，WXZ STUDIO 默认同意在项目交付后一周将部分非涉密作品用于社交媒体和官方渠道的宣传展示。</li>
-                        <li><strong class="font-semibold">保密需求：</strong>如您有任何保密或特殊使用限制，请务必在正式签订合作合同前明确提出并以书面形式确认。</li>
-                    </ul>
-                </div>
-            </div>
-            <p class="mt-10 text-center text-lg italic text-purple-600">期待与您共同创造精彩作品。</p>
-        </section>
-
-    </div>
-
-    <!-- 视频作品页 (Video Portfolio Page) -->
-    <div id="video-page" class="page-view hidden">
-        <section class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-5xl font-extrabold mb-4 text-center">视频作品集</h1>
-            <p class="text-center text-xl text-stone-600 mb-12">动态影像，捕捉品牌与故事的灵魂。</p>
-            
-            <!-- 标签筛选器 -->
-            <div id="videos-tags" class="flex flex-wrap justify-center space-x-3 sm:space-x-4 mb-12">
-                <!-- JS将在此处加载标签 -->
-            </div>
-            
-            <!-- 作品网格 -->
-            <div id="videos-portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- JS将在此处加载作品 -->
+                </article>
             </div>
         </section>
-    </div>
+    </main>
 
-    <!-- 平面设计作品页 (Graphic Design Portfolio Page) -->
-    <div id="design-page" class="page-view hidden">
-        <section class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-5xl font-extrabold mb-4 text-center">平面设计作品集</h1>
-            <p class="text-center text-xl text-stone-600 mb-12">平面视觉，定义品牌调性与风格。</p>
-            
-            <!-- 标签筛选器 -->
-            <div id="designs-tags" class="flex flex-wrap justify-center space-x-3 sm:space-x-4 mb-12">
-                <!-- JS将在此处加载标签 -->
-            </div>
-            
-            <!-- 作品网格 -->
-            <div id="designs-portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- JS将在此处加载作品 -->
-            </div>
-        </section>
-    </div>
+    <footer class="main-footer">
+        <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+    </footer>
 
-    <!-- 联系方式页 (Contact Page) -->
-    <div id="contact-page" class="page-view hidden">
-        <section class="max-w-4xl mx-auto py-16 px-4 sm:px-6 lg:px-8 text-center min-h-screen-minus-nav">
-            <h1 class="text-5xl font-extrabold mb-4">联系 WXZ STUDIO</h1>
-            <p class="text-xl text-stone-600 mb-16">期待您的合作邀请，让我们共同创造精彩！</p>
-            
-            <div class="grid md:grid-cols-2 gap-10">
-                <!-- 联系信息卡片 -->
-                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-purple-600">
-                    <h3 class="text-3xl font-semibold mb-6 text-purple-600">即时通讯</h3>
-                    <div class="space-y-6 text-left">
-                        <p class="text-xl">
-                            <strong class="block font-bold">微信 (WeChat ID):</strong>
-                            <span class="text-2xl font-mono text-stone-800">icf304</span>
-                        </p>
-                        <p class="text-xl">
-                            <strong class="block font-bold">KakaoTalk ID:</strong>
-                            <span class="text-2xl font-mono text-stone-800">icf304</span>
-                        </p>
-                        <!-- 复制按钮 -->
-                        <button onclick="copyToClipboard('icf304', 'contact-message')" class="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-900 transition duration-300 transform hover:scale-[1.01]">
-                            点击复制 ID
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 社交媒体/小红书 -->
-                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-purple-600">
-                    <h3 class="text-3xl font-semibold mb-6 text-purple-600">关注我们</h3>
-                    <p class="text-stone-700 mb-8">在小红书上查看更多日常分享与幕后花絮。</p>
-                    <a href="https://xhslink.com/m/AfISV77MaVG" target="_blank" rel="noopener noreferrer" class="w-full inline-block bg-red-500 text-white font-extrabold py-3 rounded-lg shadow-md hover:bg-red-600 transition duration-300 transform hover:scale-[1.01]">
-                        <!-- 小红书图标 SVG Placeholder -->
-                        <svg class="w-6 h-6 inline-block mr-2 -mt-1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0zm-1.8 17.5c.345.05.69.075 1.03.075.337 0 .674-.025 1.01-.075.29-.044.577-.105.86-.192l.142-.04.095-.028.085-.028.095-.038c.34-.112.67-.253.99-.42l.09-.047.075-.04.075-.045c.42-.24.815-.52 1.185-.84l.055-.05.06-.055.05-.055c.315-.31.6-.64.85-1.02l.05-.07.03-.045.035-.055c.21-.35.39-.715.54-1.09l.02-.06.015-.065.01-.065.005-.07c0-.065-.005-.13-.015-.195l-.01-.06-.02-.06c-.15-.365-.325-.72-.515-1.065l-.035-.055-.04-.06c-.195-.36-.405-.71-.645-1.045l-.06-.08-.06-.085c-.325-.46-.69-.88-1.08-1.25l-.065-.065-.07-.065c-.415-.375-.865-.7-1.355-.955l-.095-.045-.09-.04c-1.32-.625-2.825-.95-4.445-.95-1.62 0-3.125.325-4.445.95l-.09.04-.095.045c-.49.255-.94.58-1.355.955l-.07.065-.065.065c-.39.37-.755.79-1.08 1.25l-.06.085-.06.08c-.24.335-.45.685-.645 1.045l-.04.06-.035.055c-.19.345-.365.7-.515 1.065l-.02.06-.015.065-.01.065c-.005.07-.005.135 0 .195l.005.07.01.065.015.06.02.06c.15.375.33.74.54 1.09l.035.055.03.045.05.07c.25.38.535.71.85 1.02l.05.055.06.055.055.05c.37.32.765.6 1.185.84l.075.045.075.04.09.047c.32.167.65.308.99.42l.095.038.085.028.095.028.142.04c.283.087.57.148.86.192zM12 7.75c1.47 0 2.75 1.28 2.75 2.75s-1.28 2.75-2.75 2.75-2.75-1.28-2.75-2.75 1.28-2.75 2.75-2.75z"/></svg>
-                        跳转 小红书主页
-                    </a>
-                </div>
-            </div>
-            
-            <!-- 提示信息 Modal (用于替代 alert) -->
-            <div id="contact-message" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4" onclick="this.classList.add('hidden')">
-                <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full" onclick="event.stopPropagation()">
-                    <h4 class="text-xl font-bold mb-3 text-purple-600">操作成功</h4>
-                    <p class="text-stone-700" id="contact-message-text">ID 已复制到剪贴板！</p>
-                    <button class="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg" onclick="document.getElementById('contact-message').classList.add('hidden')">确定</button>
-                </div>
-            </div>
-        </section>
-    </div>
-
-</main>
-
-<!-- 底部版权 (Footer) -->
-<footer class="bg-stone-900 text-white py-6 mt-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-        <p class="mb-2">&copy; 2025 WXZ Studio. 保留所有权利。</p>
-        <p>服务条款可能随时更新，请以最新版合同为准。</p>
-    </div>
-</footer>
-
-<!-- 引入自定义脚本文件 -->
-<script src="script.js"></script>
-
+    <script src="js/script.js"></script>
 </body>
 </html>
