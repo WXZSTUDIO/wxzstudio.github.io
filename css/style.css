@@ -139,7 +139,7 @@ ul {
 }
 
 .mobile-menu-icons {
-    /* FIX #2: 使用 space-evenly 确保平均分布，不挤在一起 */
+    /* FIX: 使用 space-evenly 确保平均分布，不挤在一起 */
     display: flex;
     justify-content: space-evenly; /* 均匀分布 */
     align-items: center;
@@ -283,7 +283,7 @@ h2::after {
 }
 
 .clients-list-inner {
-    /* FIX #1: 新增的内部 Flex 容器，用于强制宽度和排列 */
+    /* 新增的内部 Flex 容器，用于强制宽度和排列 */
     display: flex;
     flex-wrap: nowrap; /* 强制不换行 */
     gap: 30px; 
@@ -318,8 +318,6 @@ h2::after {
 }
 
 /* Featured Work & Portfolio Grid (混合自适应裁切比例) */
-/* ... (Keep remaining styles) ... */
-
 .featured-work-grid {
     display: grid;
     /* 响应式网格布局，最小列宽 280px */
