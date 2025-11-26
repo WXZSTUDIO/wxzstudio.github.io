@@ -8,8 +8,9 @@
     --primary-color: #333;
     --secondary-color: #f5f5f7;
     --accent-color: #007aff; /* Apple Blue for links/accents */
-    --glass-background: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
+    --dark-glass-background: rgba(0, 0, 0, 0.6); /* 统一暗色菜单背景 */
+    --light-glass-background: rgba(255, 255, 255, 0.8); /* 手机底部菜单背景 */
+    --glass-border: rgba(255, 255, 255, 0.1);
     --mobile-nav-height: 60px;
 }
 
@@ -57,7 +58,7 @@ ul {
     font-style: normal;
 }
 
-/* 3. Header/Navigation (Desktop) */
+/* 3. Header/Navigation (Desktop & All Pages) */
 .header {
     position: fixed;
     top: 0;
@@ -65,12 +66,11 @@ ul {
     width: 100%;
     z-index: 1000;
     padding: 0 40px;
-    /* Apple Semi-transparent Frosted Glass (Glassmorphism) */
-    background-color: var(--glass-background);
+    /* 始终为暗色半透明磨砂玻璃 */
+    background-color: var(--dark-glass-background); 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--glass-border);
-    transition: background-color 0.3s, border-bottom 0.3s;
 }
 
 .nav-content {
@@ -84,19 +84,8 @@ ul {
     font-family: 'Raleway-WXZ', sans-serif;
     font-size: 24px;
     font-weight: 700;
-    color: var(--primary-color); /* 浅色背景下Logo颜色 */
+    color: #fff !important; /* Logo始终为白色 */
 }
-
-/* 菜单深浅颜色变更逻辑：在JS中添加 .dark 类 */
-.header.dark {
-    background-color: rgba(0, 0, 0, 0.6);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.header.dark .logo a,
-.header.dark .nav-menu a {
-    color: #fff; /* 深色背景下Logo和菜单文字颜色 */
-}
-
 
 .nav-menu ul {
     display: flex;
@@ -110,6 +99,11 @@ ul {
     font-size: 16px;
     padding: 5px 0;
     position: relative;
+    color: #fff; /* 菜单文字始终为白色 */
+}
+
+.nav-menu a:hover {
+    color: var(--accent-color); /* 悬停颜色不变 */
 }
 
 .nav-menu a::after {
@@ -138,24 +132,26 @@ ul {
     height: var(--mobile-nav-height);
     z-index: 1000;
     /* 磨砂玻璃效果 */
-    background-color: rgba(255, 255, 255, 0.9); 
+    background-color: var(--light-glass-background); 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-top: 1px solid #ddd;
 }
 
 .mobile-menu-icons {
+    /* 优化: 使用 space-between 和设置链接宽度，确保平均分布 */
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; 
     height: 100%;
 }
 
 .mobile-menu-icons a {
+    /* 强制每个图标占据 25% 宽度，确保平均分布 */
+    width: 25%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 25%;
     color: var(--primary-color);
     opacity: 0.6;
     transition: opacity 0.3s;
@@ -174,18 +170,15 @@ ul {
 
 /* 5. Mobile Media Query (小于 768px 视为手机端) */
 @media (max-width: 767px) {
-    /* 隐藏桌面菜单文字，保留居中Logo */
+    /* 隐藏桌面菜单文字 */
     .nav-menu {
         display: none;
     }
+    
     .header {
         height: 60px;
         padding: 0 20px;
-        /* 手机端顶部菜单改为透明，只显示居中Logo */
-        background-color: transparent; 
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        border-bottom: none;
+        /* 保持顶部菜单的暗色半透明和白色Logo */
     }
 
     .nav-content {
@@ -210,7 +203,7 @@ ul {
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    margin-top: -70px; 
+    margin-top: -70px; /* 补偿 header height */
     z-index: 1;
 }
 

@@ -1,29 +1,14 @@
 /*
  * WXZ STUDIO Website JavaScript
  * Author: Gemini
- * Functions: Portfolio Filtering, Header Scroll Effect
+ * Functions: Portfolio Filtering
+ * 备注: 移除 Header Scroll Effect，因为菜单栏现已固定为暗色。
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. Header Scroll Effect (菜单深浅颜色切换) ---
-    // 在Hero视频或深色区域时切换导航栏样式
-    const header = document.querySelector('.header');
-    if (header) {
-        window.addEventListener('scroll', () => {
-            // 当滚动超过50px时添加 'scrolled' 类，模拟颜色切换
-            if (window.scrollY > 50) {
-                header.classList.add('dark');
-            } else {
-                header.classList.remove('dark');
-            }
-        });
-        // 初始检查
-        if (window.scrollY > 50) {
-            header.classList.add('dark');
-        }
-    }
-
+    // --- 1. Header Scroll Effect (已移除，根据用户要求菜单栏始终为暗色) ---
+    
     // --- 2. Portfolio Filtering Logic (作品筛选) ---
     const filterButtons = document.querySelectorAll('.tag-filter button');
     const workItems = document.querySelectorAll('.work-item');
