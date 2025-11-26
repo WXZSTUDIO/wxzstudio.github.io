@@ -1,149 +1,163 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WXZ STUDIO - 首页</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preload" href="assets/fonts/Raleway-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
 </head>
 <body>
 
-    <header class="header-nav frosted-glass">
-        <div class="container">
+    <header class="header">
+        <div class="nav-content container">
             <div class="logo">
-                <a href="index.html">
-                    <img src="assets/images/logo-blue.svg" alt="WXZ Studio Logo">
-                </a>
+                <a href="index.html">WXZ STUDIO</a>
             </div>
+            
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="index.html">首页</a></li>
-                    <li><a href="video.html">视频作品</a></li>
-                    <li><a href="design.html">平面设计作品</a></li>
+                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="video-portfolio.html">视频作品</a></li>
+                    <li><a href="graphic-portfolio.html">平面设计作品</a></li>
                     <li><a href="contact.html">联系方式</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <nav class="mobile-nav frosted-glass">
-        <ul>
-            <li><a href="index.html"><span class="icon">🏠</span>首页</a></li>
-            <li><a href="video.html"><span class="icon">🎬</span>视频</a></li>
-            <li><a href="design.html"><span class="icon">🎨</span>设计</a></li>
-            <li><a href="contact.html"><span class="icon">📞</span>联系</a></li>
-        </ul>
+    <nav class="mobile-nav">
+        <div class="mobile-menu-icons">
+            <a href="index.html" class="active">
+                <img src="assets/images/mobile-menu-home.png" alt="首页">
+            </a>
+            <a href="video-portfolio.html">
+                <img src="assets/images/mobile-menu-video.png" alt="视频作品">
+            </a>
+            <a href="graphic-portfolio.html">
+                <img src="assets/images/mobile-menu-graphic.png" alt="平面设计作品">
+            </a>
+            <a href="contact.html">
+                <img src="assets/images/mobile-menu-contact.png" alt="联系方式">
+            </a>
+        </div>
     </nav>
+    
+    <main class="main-content">
+        
+        <section class="hero-video-section">
+            <video autoplay muted loop playsinline id="heroVideo" preload="metadata">
+                <source src="assets/videos/hero-video.mp4" type="video/mp4">
+                您的浏览器不支持视频标签。
+            </video>
+        </section>
 
-    <section class="hero-section">
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="assets/video/hero.mp4" type="video/mp4">
-            您的浏览器不支持HTML5视频。
-        </video>
-    </section>
-
-    <section class="services-section">
-        <div class="container">
-            <h2 class="section-title">我们提供的服务</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>商业摄影</h3>
-                    <p>短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍。</p>
-                    <p>我们提供**高品质的视觉资产**，全方位覆盖您的商业影像需求。</p>
-                </div>
-                <div class="service-card">
-                    <h3>平面视觉设计</h3>
-                    <p>品牌标识、海报设计到社交媒体视觉企划。</p>
-                    <p>创造**独特且有影响力**的视觉传达，提升您的品牌形象。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="clients-section">
-        <div class="container">
-            <h2 class="section-title">服务客户</h2>
-            <div class="client-grid">
-                <div class="client-logo"><img src="assets/images/client_idle.png" alt="(G)I-DLE Logo"></div>
-                <div class="client-logo"><img src="assets/images/client_zerobaseone.png" alt="ZEROBASEONE Logo"></div>
-                <div class="client-logo"><img src="assets/images/client_shinsegae.png" alt="新世界免税店 Logo"></div>
-                <div class="client-logo"><img src="assets/images/client_amore.png" alt="爱茉莉太平洋 Logo"></div>
-                <div class="client-logo"><img src="assets/images/client_hera.png" alt="HERA Logo"></div>
-                <div class="client-logo"><img src="assets/images/client_iope.png" alt="IOPE Logo"></div>
-                <div class="client-logo"><img src="assets/images/client_cosrx.png" alt="COSRX Logo"></div>
-                <div class="client-logo"><img src="assets/images/client_neokem.png" alt="内可美 Logo"></div>
-                <div class="client-logo"><img src="assets/images/client_damps.png" alt="丹普斯high&gogo Logo"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="featured-works-section">
-        <div class="container">
-            <h2 class="section-title">精选作品</h2>
-            <div class="works-grid">
-                <div class="work-item">
-                    <div class="work-item-cover">
-                        <img src="assets/images/work_video_1.jpg" alt="精选视频作品1">
+        <section class="services-section">
+            <div class="container">
+                <h2>我们提供的服务</h2>
+                <div class="services-grid">
+                    <div class="service-item">
+                        <h3>商业摄影</h3>
+                        <p>短视频拍摄｜产品摄影｜商业活动｜婚礼旅拍。我们提供高品质的视觉资产，全方位覆盖您的商业影像需求。</p>
                     </div>
-                </div>
-                <div class="work-item">
-                    <div class="work-item-cover">
-                        <img src="assets/images/work_design_1.jpg" alt="精选平面设计作品1">
-                    </div>
-                </div>
-                <div class="work-item">
-                    <div class="work-item-cover">
-                        <img src="assets/images/work_video_2.jpg" alt="精选视频作品2">
+                    <div class="service-item">
+                        <h3>平面视觉设计</h3>
+                        <p>品牌标识、海报设计到社交媒体视觉企划。</p>
+                        <p>为您打造统一、吸引人的视觉形象。</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="contact-btn-section">
-        <a href="contact.html" class="contact-btn">联系我们，开启合作</a>
-    </section>
-...
-    <section class="booking-info-section">
-        <div class="container">
-            <h2 class="section-title" style="color: var(--color-light);">须知内容</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <h4>预订</h4>
-                    <ul>
-                        <li>定金支付：为正式预留档期，您需要支付项目总额 50% 的定金。在收到定金后，WXZ STUDIO 才会正式确认档期并开始前期准备工作。</li>
-                        <li>取消政策：定金不可退还，但在拍摄档期前 7 天，您有一次免费延期的机会。</li>
-                    </ul>
-                </div>
-                <div class="info-item">
-                    <h4>执行</h4>
-                    <ul>
-                        <li>内容规划：为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。</li>
-                    </ul>
-                </div>
-                <div class="info-item">
-                    <h4>结算</h4>
-                    <ul>
-                        <li>尾款结算：剩余的款项请在拍摄服务完成后的 24 小时内结清。</li>
-                        <li>超时计费：若实际工作时间超出原定计划 30 分钟或以上，我们将按照合同拟定的单价以 1 小时进行额外计费。</li>
-                    </ul>
-                </div>
-                <div class="info-item">
-                    <h4>交付</h4>
-                    <ul>
-                        <li>下载期限：最终交付文件上传成功后，请您务必在 30 日内完成下载并妥善备份。超过此期限，WXZ STUDIO 不保证文件的永久存储。</li>
-                        <li>作品宣传权利：除非事先另有约定，WXZ STUDIO 默认同意在项目交付后一周将部分非涉密作品用于社交媒体和官方渠道的宣传展示。 保密需求：如您有任何保密或特殊使用限制，请务必在正式签订合作合同前明确提出并以书面形式确认。</li>
-                    </ul>
+        <section class="clients-section">
+            <div class="container">
+                <h2>服务客户</h2>
+                <div class="clients-wall">
+                    <div class="client-logo"><img src="assets/images/client-logos/idle.png" alt="(G)I-DLE"></div>
+                    <div class="client-logo"><img src="assets/images/client-logos/zerobaseone.png" alt="ZEROBASEONE"></div>
+                    <div class="client-logo"><img src="assets/images/client-logos/shinsegae.png" alt="新世界免税店"></div>
+                    <div class="client-logo"><img src="assets/images/client-logos/amorepacific.png" alt="爱茉莉太平洋"></div>
+                    <div class="client-logo"><img src="assets/images/client-logos/hera.png" alt="HERA"></div>
+                    <div class="client-logo"><img src="assets/images/client-logos/iope.png" alt="IOPE"></div>
+                    <div class="client-logo"><img src="assets/images/client-logos/cosrx.png" alt="COSRX"></div>
+                    <div class="client-logo"><img src="assets/images/client-logos/nekome.png" alt="内可美"></div>
+                    <div class="client-logo"><img src="assets/images/client-logos/highgogo.png" alt="丹普斯high&gogo"></div>
                 </div>
             </div>
-            <p style="text-align: center; margin-top: 50px;">期待与您共同创造精彩作品。</p>
-        </div>
-    </section>
+        </section>
 
+        <section class="featured-work-section">
+            <div class="container">
+                <h2>精选作品</h2>
+                <div class="featured-work-grid">
+                    <div class="work-item">
+                        <div class="work-cover">
+                            <img src="assets/portfolio/featured-1.jpg" alt="精选作品1">
+                        </div>
+                        <div class="work-info">
+                            <p>作品名称：明星形象宣传片 | 标签：#明星侧拍</p>
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-cover" style="padding-top: 56.25%;"> <img src="assets/portfolio/featured-2.jpg" alt="精选作品2">
+                        </div>
+                        <div class="work-info">
+                            <p>作品名称：品牌视觉系统设计 | 标签：#网页设计</p>
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-cover" style="padding-top: 100%;"> <img src="assets/portfolio/featured-3.jpg" alt="精选作品3">
+                        </div>
+                        <div class="work-info">
+                            <p>作品名称：高端产品摄影 | 标签：#产品拍摄</p>
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-cover">
+                            <img src="assets/portfolio/featured-4.jpg" alt="精选作品4">
+                        </div>
+                        <div class="work-info">
+                            <p>作品名称：社交媒体运营视觉 | 标签：#社媒设计</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-button">
+                    <a href="contact.html">联系我们</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="terms-section">
+            <div class="container">
+                <h2>合作须知</h2>
+                
+                <h3>预订与定金 (Booking & Deposit)</h3>
+                <p>定金支付：为正式预留档期，您需要支付项目总额 50% 的定金。在收到定金后，WXZ STUDIO 才会正式确认档期并开始前期准备工作。</p>
+                <p>取消政策：定金不可退还，但在拍摄档期前 7 天，您有一次免费延期的机会。</p>
+
+                <h3>创意与执行 (Project Briefing & Execution)</h3>
+                <p>内容规划：为达到最佳效果，我们强烈建议您提供详细的拍摄脚本或创意大纲。如果暂无，请务必提前与我们充分沟通拍摄的核心想法和预期视角。</p>
+                
+                <h3>费用结算与超时 (Billing & Overtime)</h3>
+                <p>尾款结算：剩余的款项请在拍摄服务完成后的 24 小时内结清。</p>
+                <p>超时计费：若实际工作时间超出原定计划 30 分钟或以上，我们将按照合同拟定的单价以 1 小时进行额外计费。</p>
+
+                <h3>文件交付与管理 (File Delivery & Archiving)</h3>
+                <p>下载期限：最终交付文件上传成功后，请您务必在 30 日内完成下载并妥善备份。超过此期限，WXZ STUDIO 不保证文件的永久存储。</p>
+                
+                <h3>作品宣传权利 (Portfolio Use)</h3>
+                <p>默认授权：除非事先另有约定，WXZ STUDIO 默认同意在项目交付后一周将部分非涉密作品用于社交媒体和官方渠道的宣传展示。</p>
+                <p>保密需求：如您有任何保密或特殊使用限制，请务必在正式签订合作合同前明确提出并以书面形式确认。</p>
+                
+                <p style="text-align: center; margin-top: 40px; font-style: italic;">期待与您共同创造精彩作品。</p>
+            </div>
+        </section>
+
+    </main>
+    
     <footer class="footer">
-        <div class="container">
-            <p>Copyright © 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
-        </div>
+        <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
     </footer>
 
     <script src="js/script.js"></script>

@@ -1,65 +1,62 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const filterButtons = document.querySelectorAll('.filter-tabs button');
-    const workItems = document.querySelectorAll('.work-grid-item');
-    const logoImage = document.querySelector('.logo img');
+/*
+ * WXZ STUDIO Website JavaScript
+ * Author: Gemini
+ * Functions: Portfolio Filtering, Header Scroll Effect
+ */
 
-    // 1. 作品筛选功能
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. Header Scroll Effect (菜单深浅颜色切换) ---
+    // 在Hero视频或深色区域时切换导航栏样式
+    const header = document.querySelector('.header');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            // 当滚动超过50px时添加 'scrolled' 类，模拟颜色切换
+            if (window.scrollY > 50) {
+                header.classList.add('dark');
+            } else {
+                header.classList.remove('dark');
+            }
+        });
+        // 初始检查
+        if (window.scrollY > 50) {
+            header.classList.add('dark');
+        }
+    }
+
+    // --- 2. Portfolio Filtering Logic (作品筛选) ---
+    const filterButtons = document.querySelectorAll('.tag-filter button');
+    const workItems = document.querySelectorAll('.work-item');
+
     if (filterButtons.length > 0 && workItems.length > 0) {
         filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const filter = button.dataset.filter;
-                
-                // Update active button state
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+            button.addEventListener('click', (e) => {
+                // 获取点击的标签 (data-tag)
+                const filterTag = e.target.dataset.tag;
 
-                // Filter works
+                // 切换按钮的 active 状态
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+
+                // 筛选作品
                 workItems.forEach(item => {
-                    item.classList.remove('show');
-                    if (filter === 'all' || item.dataset.tags.includes(filter)) {
-                        item.classList.add('show');
+                    // 获取作品的标签列表 (从 data-tags)
+                    const itemTags = item.dataset.tags ? item.dataset.tags.split(' ') : [];
+
+                    // 判断是否显示
+                    if (filterTag === 'all' || itemTags.includes(filterTag)) {
+                        item.style.display = 'block'; // 显示
+                    } else {
+                        item.style.display = 'none'; // 隐藏
                     }
                 });
             });
         });
-
-        // Initialize by clicking the 'All' button (if present)
-        const allButton = document.querySelector('.filter-tabs button[data-filter="all"]');
-        if (allButton) {
+        
+        // 页面加载时自动点击 '全部' 按钮进行初始化
+        const allButton = document.querySelector('.tag-filter button[data-tag="all"]');
+        if(allButton) {
             allButton.click();
         }
     }
-
-    // 2. Logo切换逻辑 (Simplification: always use white/default logo on light background)
-    // The provided index.html uses a light background for most parts. 
-    // We'll keep the logic simple to ensure the white logo is used by default.
-
-    // A more complex implementation would involve an IntersectionObserver to check
-    // if the header is over a dark section, but for simplicity, we use the white logo
-    // since the navbar itself is a light-colored frosted glass.
-    
-    // For the dark footer section, the logo in the mobile nav should ideally be white.
-    // However, the mobile nav is fixed at the bottom and uses frosted glass.
-    
-    // Let's assume the 'logo-blue.svg' is for general use on light backgrounds
-    // and 'logo-white.svg' is for dark backgrounds (like the hero section if it were dark).
-    // Given the frosted glass, logo-blue.svg (or any dark logo) is better for contrast.
-    
-    // Default logo for all pages (using the blue/dark logo for contrast on light glass):
-    if (logoImage) {
-        // You can use a single dark logo (logo-blue.svg) for all navbars (frosted glass/light background)
-        // or keep the default (logo-blue.svg) and change only for dark sections.
-        // For simplicity with frosted glass: use logo-blue.svg
-        // The HTML is set to use 'logo-blue.svg' by default on the desktop nav for better contrast.
-        // We ensure all links, including the logo, point to index.html
-        document.querySelectorAll('a[href="#home"], .logo a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                if (link.getAttribute('href') === '#home' || link.closest('.logo')) {
-                    e.preventDefault();
-                    window.location.href = 'index.html';
-                }
-            });
-        });
-    }
-
 });

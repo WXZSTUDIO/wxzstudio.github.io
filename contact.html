@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,57 +8,68 @@
 </head>
 <body>
 
-    <header class="header-nav frosted-glass">
-        <div class="container">
+    <header class="header dark">
+        <div class="nav-content container">
             <div class="logo">
-                <a href="index.html">
-                    <img src="assets/images/logo-blue.svg" alt="WXZ Studio Logo">
-                </a>
+                <a href="index.html">WXZ STUDIO</a>
             </div>
             <nav class="nav-menu">
                 <ul>
                     <li><a href="index.html">首页</a></li>
-                    <li><a href="video.html">视频作品</a></li>
-                    <li><a href="design.html">平面设计作品</a></li>
-                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="video-portfolio.html">视频作品</a></li>
+                    <li><a href="graphic-portfolio.html">平面设计作品</a></li>
+                    <li><a href="contact.html" class="active">联系方式</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <nav class="mobile-nav frosted-glass">
-        <ul>
-            <li><a href="index.html"><span class="icon">🏠</span>首页</a></li>
-            <li><a href="video.html"><span class="icon">🎬</span>视频</a></li>
-            <li><a href="design.html"><span class="icon">🎨</span>设计</a></li>
-            <li><a href="contact.html"><span class="icon">📞</span>联系</a></li>
-        </ul>
+    <nav class="mobile-nav">
+        <div class="mobile-menu-icons">
+            <a href="index.html">
+                <img src="assets/images/mobile-menu-home.png" alt="首页">
+            </a>
+            <a href="video-portfolio.html">
+                <img src="assets/images/mobile-menu-video.png" alt="视频作品">
+            </a>
+            <a href="graphic-portfolio.html">
+                <img src="assets/images/mobile-menu-graphic.png" alt="平面设计作品">
+            </a>
+            <a href="contact.html" class="active">
+                <img src="assets/images/mobile-menu-contact.png" alt="联系方式">
+            </a>
+        </div>
     </nav>
+    
+    <main class="main-content">
+        <section class="contact-section">
+            <div class="container">
+                <h2>联系我们</h2>
+                <p style="margin-bottom: 40px; font-size: 18px; color: #666;">期待与您合作，共创卓越视觉作品。</p>
 
-    <section class="contact-section" style="min-height: 70vh; margin-top: var(--navbar-height);">
-        <div class="container" style="text-align: center;">
-            <h2 class="section-title">联系我们</h2>
-            <p style="font-size: 18px; margin-bottom: 30px;">期待与您沟通您的视觉项目需求。</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>微信 (WeChat) ID</h3>
+                        <p>icf304</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Kakaotalk ID</h3>
+                        <p>icf304</p>
+                    </div>
+                    
+                    <div class="xiaohongshu-button">
+                        <a href="https://xhslink.com/m/AfISV77MaVG" target="_blank" rel="noopener noreferrer">
+                            前往 小红书 主页
+                        </a>
+                    </div>
+                </div>
 
-            <div class="contact-details">
-                <div class="contact-item">
-                    <strong>微信 (WeChat ID):</strong> icf304
-                </div>
-                <div class="contact-item">
-                    <strong>KakaoTalk ID:</strong> icf304
-                </div>
-                
-                <a href="https://xhslink.com/m/AfISV77MaVG" target="_blank" class="social-btn">
-                    <span class="icon">🔗</span> 跳转小红书主页
-                </a>
             </div>
-        </div>
-    </section>
-
+        </section>
+    </main>
+    
     <footer class="footer">
-        <div class="container">
-            <p>Copyright © 2025 WXZ Studio. 保留所有权利。</p>
-        </div>
+        <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
     </footer>
 
     <script src="js/script.js"></script>
