@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WXZ STUDIO - 平面设计作品</title>
+    <link rel="preload" href="src/css/main.css" as="style">
+    <link rel="stylesheet" href="src/css/main.css">
+    <script defer src="src/js/app.js"></script>
+</head>
+<body class="page-design">
+
+    <header class="navbar desktop-nav">
+        <a href="index.html" class="logo-link">
+            <img id="header-logo" src="src/img/logo/logo-blue.svg" alt="WXZ STUDIO Logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link" data-page="index">首页</a></li>
+                <li><a href="video.html" class="nav-link" data-page="video">视频作品</a></li>
+                <li><a href="design.html" class="nav-link" data-page="design">平面设计作品</a></li>
+                <li><a href="contact.html" class="nav-link" data-page="contact">联系方式</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container portfolio-main">
+        <h1 class="page-header-title">🎨 平面设计作品集</h1>
+
+        <div class="tag-filter-container">
+            <button class="tag-button active" data-filter="all">全部作品</button>
+            <button class="tag-button" data-filter="web-design">#网页设计</button>
+            <button class="tag-button" data-filter="social-media">#社媒设计</button>
+        </div>
+        
+        <div class="work-grid graphic-grid" id="portfolio-grid">
+            <div class="work-item" data-tag="web-design" data-featured="true">
+                <img src="src/img/portfolio/graphic_01.jpg" alt="平面作品1">
+                <p class="work-caption">品牌官网 UI/UX 设计 [精选]</p>
+            </div>
+            <div class="work-item" data-tag="social-media">
+                <img src="src/img/portfolio/graphic_02.jpg" alt="平面作品2">
+                <p class="work-caption">Hera 社交媒体系列海报</p>
+            </div>
+            <div class="work-item" data-tag="web-design">
+                <img src="src/img/portfolio/graphic_03.jpg" alt="平面作品3">
+                <p class="work-caption">App Landing Page 设计</p>
+            </div>
+            <div class="work-item" data-tag="social-media" data-featured="true">
+                <img src="src/img/portfolio/graphic_04.jpg" alt="平面作品4">
+                <p class="work-caption">IOPE 官方活动宣传图 [精选]</p>
+            </div>
+            <div class="work-item" data-tag="web-design">
+                <img src="src/img/portfolio/graphic_05.jpg" alt="平面作品5">
+                <p class="work-caption">电商平台首页视觉设计</p>
+            </div>
+            <div class="work-item" data-tag="social-media">
+                <img src="src/img/portfolio/graphic_06.jpg" alt="平面作品6">
+                <p class="work-caption">COSRX 季度产品推广</p>
+            </div>
+            <div class="work-item" data-tag="web-design">
+                <img src="src/img/portfolio/graphic_07.jpg" alt="平面作品7">
+                <p class="work-caption">后台管理系统 UI 模块</p>
+            </div>
+             <div class="work-item" data-tag="social-media" data-featured="true">
+                <img src="src/img/portfolio/graphic_08.jpg" alt="平面作品8">
+                <p class="work-caption">内可美 K-pop 联动社媒设计 [精选]</p>
+            </div>
+             <div class="work-item" data-tag="web-design">
+                <img src="src/img/portfolio/graphic_09.jpg" alt="平面作品9">
+                <p class="work-caption">品牌响应式 Logo 规范</p>
+            </div>
+             <div class="work-item" data-tag="social-media">
+                <img src="src/img/portfolio/graphic_10.jpg" alt="平面作品10">
+                <p class="work-caption">爱茉莉太平洋 招聘广告</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content container">
+            <p>© 2025 WXZ Studio. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="index.html" class="nav-link" data-page="index"><i class="icon-home"></i> 首页</a></li>
+            <li><a href="video.html" class="nav-link" data-page="video"><i class="icon-video"></i> 视频</a></li>
+            <li><a href="design.html" class="nav-link" data-page="design"><i class="icon-design"></i> 平面</a></li>
+            <li><a href="contact.html" class="nav-link" data-page="contact"><i class="icon-contact"></i> 联系</a></li>
+        </ul>
+    </nav>
+    
+</body>
+</html>
