@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (showMoreButton && clientLogos.length > maxInitialClients) {
         
+        // 逻辑：点击后，将隐藏的 Logo 设置为 display: block，让它们继续按 3x3 形式排列
         showMoreButton.addEventListener('click', () => {
             for (let i = maxInitialClients; i < clientLogos.length; i++) {
                 clientLogos[i].style.display = 'block'; 
@@ -81,9 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
             event.stopPropagation(); 
             wechatQrcodePopup.style.display = 'block';
             
-            // 检查屏幕方向并设置弹出框位置（可选：如果弹出框位置需要微调）
-            // 目前 CSS 已经通过 absolute/transform 相对 wechat-icon-container 居中，无需 JS 调整
-            
             setTimeout(() => {
                 wechatQrcodePopup.classList.add('show');
             }, 10); 
@@ -100,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 点击弹出框外部时隐藏弹出框
         document.addEventListener('click', (event) => {
-            // 检查点击目标是否在弹出框内部、或是否是 Icon 本身
             if (wechatQrcodePopup.classList.contains('show') && !wechatQrcodePopup.contains(event.target) && event.target !== wechatIcon) {
                 wechatQrcodePopup.classList.remove('show');
                 setTimeout(() => {

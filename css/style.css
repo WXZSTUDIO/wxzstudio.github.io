@@ -1,7 +1,7 @@
 /*
  * WXZ STUDIO Website CSS Styles (Final Update: Hero Video & Logo Fix)
  * Author: Gemini
- * Focus: Hero Video Centering, Logo Wall Mobile Grid Fix, Contact Page Icons
+ * Focus: Hero Video Centering, Logo Wall Mobile Grid Fix, Prevent Horizontal Scrolling
  */
 
 :root {
@@ -26,6 +26,8 @@ body {
     color: var(--primary-color);
     line-height: 1.6;
     background-color: #f8f8f8;
+    /* 关键修复：防止页面在手机端左右拖拽 */
+    overflow-x: hidden;
 }
 
 a {
@@ -184,7 +186,7 @@ ul {
     opacity: 1;
 }
 
-/* 5. Hero Video Fix (修复视频裁切问题) */
+/* 5. Hero Video (全屏裁切居中) */
 .hero-video-section {
     position: relative;
     width: 100%;
@@ -195,7 +197,7 @@ ul {
 }
 
 #heroVideo {
-    /* 关键修复：确保视频居中并覆盖整个容器 */
+    /* 确保视频居中并覆盖整个容器 */
     position: absolute; 
     top: 50%;
     left: 50%;
@@ -230,8 +232,9 @@ h2::after {
     background-color: var(--accent-color);
 }
 
-/* 6. Client Logo General Styles (添加 Logo 图片默认样式) */
+/* 6. Client Logo Desktop Styles (横向滚动) */
 .clients-wall {
+    /* 桌面端: 允许横向滚动 */
     overflow-x: auto; 
     padding: 40px 0; 
     -ms-overflow-style: none; 
@@ -242,11 +245,12 @@ h2::after {
 }
 
 .clients-list-inner {
+    /* 桌面端: 强制横向排列 */
     display: flex;
     flex-wrap: nowrap;
     gap: 30px; 
     justify-content: flex-start;
-    min-width: 1410px; 
+    min-width: 1410px; /* 保证有足够宽度触发滚动 */
     width: fit-content; 
 }
 
@@ -262,15 +266,14 @@ h2::after {
     transition: transform 0.3s;
 }
 
-/* 确保 Logo 图片正确显示在容器内 */
 .client-logo img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 确保 Logo 图片不被裁切 */
-    padding: 10px; /* 增加内边距，避免 Logo 触碰边缘 */
+    object-fit: contain; 
+    padding: 10px; 
     opacity: 0.7;
     transition: opacity 0.3s;
 }
@@ -326,41 +329,40 @@ h2::after {
 
     /* === 移动端客户墙（Client Wall）布局覆盖 FIX === */
     .clients-wall {
+        /* 移动端: 强制隐藏横向滚动 */
         overflow-x: hidden; 
         padding: 20px 0; 
     }
 
     .clients-list-inner {
-        /* 使用 Grid 布局实现 3x3 */
+        /* 移动端: 使用 Grid 布局实现 3x3 */
         display: grid; 
         grid-template-columns: repeat(3, 1fr); 
         gap: 15px; 
         min-width: unset; 
         width: 100%; 
-        justify-content: center; /* 确保网格整体居中 */
+        justify-content: center; 
     }
 
     .client-logo {
-        /* 关键修复：移除冲突的 max-width 和 margin，让它填满 Grid 单元格 */
         width: 100%; 
         height: 0; 
-        padding-top: 100%; 
+        padding-top: 100%; /* 确保 Logo 容器为正方形 */
         position: relative;
         flex-shrink: 1; 
-        display: block !important; 
-        /* 移除 max-width: 80px 和 margin: 0 auto; */
+        /* 确保 display: block 能让它在 Grid 中正确显示 */
+        display: block; 
     }
     
     /* 默认隐藏第 10 个及之后的 Logo (仅在移动端生效) */
     .client-logo:nth-child(n+10) {
-        display: none;
+        display: none !important; /* 关键：强制隐藏 */
     }
     
     /* 移动端显示“显示更多”按钮 */
     .clients-section .show-more-button {
         display: inline-block;
     }
-
 
     /* 社交媒体 Icon 尺寸在移动端保持一致 */
     .social-icon-link img {
@@ -369,7 +371,7 @@ h2::after {
     }
 }
 
-/* 8. Portfolio Sections... (保持不变) */
+/* 8. Portfolio Sections... */
 .services-grid {
     display: flex;
     justify-content: center;
@@ -377,7 +379,6 @@ h2::after {
     margin-top: 40px;
     flex-wrap: wrap;
 }
-/* ... (其他作品集和页脚样式保持不变) */
 
 /* 9. Contact Page Specific Styles */
 /* ... (Contact Page 样式保持不变) ... */
