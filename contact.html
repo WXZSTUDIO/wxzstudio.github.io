@@ -2,58 +2,15 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WXZ STUDIO - 联系方式</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preload" href="assets/fonts/Raleway-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
-    
-    <style>
-        .feature-demo {
-            margin-top: 50px;
-            padding: 30px;
-            border: 1px dashed #ccc;
-            border-radius: 8px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: left;
-        }
-        .feature-demo button {
-            padding: 10px 20px;
-            margin: 10px 10px 20px 0;
-            background-color: #007aff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .feature-demo button:hover {
-            background-color: #0056b3;
-        }
-        #barcodeDataDisplay {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border: 1px solid #cceeff;
-            border-radius: 5px;
-            display: none; /* 默认隐藏，实现按需加载 */
-        }
-        #loadingMessage {
-            color: orange;
-            margin-top: 10px;
-            min-height: 20px;
-        }
-    </style>
 </head>
 <body>
-
     <header class="header">
         <div class="nav-content container">
-            <div class="logo">
-                <a href="index.html">WXZ STUDIO</a>
-            </div>
-            
+            <div class="logo"><a href="index.html">WXZ STUDIO</a></div>
             <nav class="nav-menu">
                 <ul>
                     <li><a href="index.html">首页</a></li>
@@ -68,79 +25,54 @@
     <nav class="mobile-nav">
         <div class="mobile-menu-icons">
             <a href="index.html">
-                <img src="assets/images/mobile-menu-home.png" alt="首页" class="icon-default">
-                <img src="assets/images/mobile-menu-home-active.png" alt="首页" class="icon-active">
+                <img src="assets/images/mobile-menu-home.png" class="icon-default">
+                <img src="assets/images/mobile-menu-home-active.png" class="icon-active">
             </a>
             <a href="video-portfolio.html">
-                <img src="assets/images/mobile-menu-video.png" alt="视频作品" class="icon-default">
-                <img src="assets/images/mobile-menu-video-active.png" alt="视频作品" class="icon-active">
+                <img src="assets/images/mobile-menu-video.png" class="icon-default">
+                <img src="assets/images/mobile-menu-video-active.png" class="icon-active">
             </a>
             <a href="graphic-portfolio.html">
-                <img src="assets/images/mobile-menu-graphic.png" alt="平面设计作品" class="icon-default">
-                <img src="assets/images/mobile-menu-graphic-active.png" alt="平面设计作品" class="icon-active">
+                <img src="assets/images/mobile-menu-graphic.png" class="icon-default">
+                <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active">
             </a>
             <a href="contact.html" class="active">
-                <img src="assets/images/mobile-menu-contact.png" alt="联系方式" class="icon-default">
-                <img src="assets/images/mobile-menu-contact-active.png" alt="联系方式" class="icon-active">
+                <img src="assets/images/mobile-menu-contact.png" class="icon-default">
+                <img src="assets/images/mobile-menu-contact-active.png" class="icon-active">
             </a>
         </div>
     </nav>
     
     <main class="main-content">
-        
-        <section class="contact-section">
-            <div class="container">
-                <h2>联系我们</h2>
+        <section class="contact-section container">
+            <h2>联系我们</h2>
+            <p class="contact-lead">期待与您合作，请通过以下社交媒体方式联系我们。</p>
 
-                <div class="contact-info">
-                    <div class="contact-details">
-                        <p>我们期待与您合作，创造下一个令人惊艳的视觉项目。</p>
-                        <p>请通过以下方式与我们取得联系：</p>
-                        <p><strong>邮箱：</strong>contact@wxzstudio.com</p>
-                        <p><strong>电话：</strong>+82 10-XXXX-XXXX (韩国)</p>
-                        <p><strong>地址：</strong>韩国首尔市江南区 (具体地址请邮件咨询)</p>
-                    </div>
-
-                    <div class="contact-icons">
-                        <div class="social-icon-container">
-                            <h3>微信 (WeChat)</h3>
-                            <img src="assets/images/social/wechat-qrcode.png" alt="微信二维码">
-                            <p>微信号：WXZ-Studio (请备注来意)</p>
-                        </div>
-
-                        <div class="social-icon-container">
-                            <h3>小红书 (Xiaohongshu)</h3>
-                            <img src="assets/images/social/xiaohongshu-qrcode.png" alt="小红书二维码">
-                            <p>小红书号：WXZStudio (查看更多作品)</p>
+            <div class="contact-info">
+                <div class="contact-icons">
+                    <div class="social-icon-link" id="wechatIcon">
+                        <img src="assets/images/wechat_icon.png" alt="微信">
+                        <span>微信</span>
+                        <div id="wechatModal" class="wechat-qrcode-popup">
+                            <img src="assets/images/wechat_qrcode.png" alt="QR Code">
+                            <p style="font-size:12px; color:#666; margin-top:5px;">长按识别二维码</p>
                         </div>
                     </div>
-                </div>
-                
-                <div class="feature-demo">
-                    <h3>混合应用功能演示区 (需在 App 环境测试)</h3>
-                    
-                    <h4>原生功能桥接 (JS Bridge)</h4>
-                    <button id="openSettingsBtn">点击调用原生 App 设置功能</button>
-                    <p style="font-size: 14px; color: #666;">（请在 App 环境中打开本页，并在浏览器控制台查看环境嗅探结果）</p>
 
-                    <h4 style="margin-top: 30px;">按需加载与缓存 (Lazy Loading & Caching)</h4>
-                    <button id="loadDataBtn">加载条形码/礼品卡数据</button>
-                    <p id="loadingMessage" style="font-size: 14px;"></p>
-                    <div id="barcodeDataDisplay">
-                        </div>
+                    <a href="https://xhslink.com/m/4FrLqFlYhZj" target="_blank" class="social-icon-link">
+                        <img src="assets/images/xiaohongshu_icon.png" alt="小红书">
+                        <span>小红书</span>
+                    </a>
                 </div>
-
+                <p class="contact-note">微信搜索：icf304，即可添加好友咨询。</p>
             </div>
         </section>
-
     </main>
     
     <footer class="footer">
         <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
     </footer>
-
     <button id="scrollToTopBtn" class="scroll-to-top-btn">↑</button>
-
     <script src="js/script.js"></script>
 </body>
 </html>
