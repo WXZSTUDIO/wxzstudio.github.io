@@ -139,7 +139,6 @@ ul {
 }
 
 .mobile-menu-icons {
-    /* FIX: 使用 space-evenly 确保平均分布，不挤在一起 */
     display: flex;
     justify-content: space-evenly; /* 均匀分布 */
     align-items: center;
@@ -154,19 +153,37 @@ ul {
     justify-content: center;
     align-items: center;
     color: var(--primary-color);
+    /* 保持透明度过渡用于悬停，但主要状态切换由 display 控制 */
     opacity: 0.6;
     transition: opacity 0.3s;
-}
-
-.mobile-menu-icons a.active,
-.mobile-menu-icons a:hover {
-    opacity: 1;
 }
 
 .mobile-menu-icons img {
     width: 28px; 
     height: 28px;
     object-fit: contain;
+    position: absolute; /* 使两个图标可以重叠 */
+}
+
+/* 1. 默认状态：只显示 icon-default，隐藏 icon-active */
+.mobile-menu-icons a .icon-active {
+    display: none;
+}
+.mobile-menu-icons a .icon-default {
+    display: block;
+}
+
+/* 2. 激活状态：当 a 标签有 active 类时，隐藏 icon-default，显示 icon-active */
+.mobile-menu-icons a.active .icon-default {
+    display: none;
+}
+.mobile-menu-icons a.active .icon-active {
+    display: block;
+}
+/* 3. 悬停和激活状态的透明度控制 */
+.mobile-menu-icons a:hover,
+.mobile-menu-icons a.active {
+    opacity: 1;
 }
 
 /* 5. Mobile Media Query (小于 768px 视为手机端) */
@@ -179,7 +196,6 @@ ul {
     .header {
         height: 60px;
         padding: 0 20px;
-        /* 保持顶部菜单的暗色半透明和白色Logo */
     }
 
     .nav-content {
