@@ -58,10 +58,18 @@
                     <h3>社交媒体</h3>
                     <div class="icon-links">
                         
-                        <a href="javascript:void(0);" id="wechatIcon" class="social-icon-link wechat">
-                            <img src="assets/images/wechat_icon.png" alt="微信联系">
-                            <span>微信</span>
-                        </a>
+                        <div class="wechat-icon-container">
+                            <a href="javascript:void(0);" id="wechatIcon" class="social-icon-link wechat">
+                                <img src="assets/images/wechat_icon.png" alt="微信联系">
+                                <span>微信</span>
+                            </a>
+                            <div id="wechatModal" class="wechat-qrcode-popup">
+                                <h3>扫描二维码添加微信</h3>
+                                <img src="assets/images/wechat_qrcode.png" alt="微信二维码" class="qrcode-img">
+                                <p>长按图片保存或识别二维码。</p>
+                                <span class="close-btn">&times;</span>
+                            </div>
+                        </div>
 
                         <a href="https://xhslink.com/m/4FrLqFlYhZj" target="_blank" class="social-icon-link xiaohongshu">
                             <img src="assets/images/xiaohongshu_icon.png" alt="小红书">
@@ -71,22 +79,13 @@
                     </div>
                 </div>
                 
-                <p class="contact-note">如果您需要面对面洽谈，请提前预约。</p>
+                <p class="contact-note">微信搜索：icf304，即可添加好友咨询。</p>
 
             </div>
         </section>
 
     </main>
     
-    <div id="wechatModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h3>扫描二维码添加微信</h3>
-            <img src="assets/images/wechat_qrcode.png" alt="微信二维码" class="qrcode-img">
-            <p>长按图片保存或识别二维码。</p>
-        </div>
-    </div>
-
     <button id="scrollToTopBtn" class="scroll-to-top-btn" title="返回顶部">
         &#9650; </button>
     

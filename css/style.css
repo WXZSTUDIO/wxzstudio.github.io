@@ -1,7 +1,7 @@
 /*
- * WXZ STUDIO Website CSS Styles (Final Update)
+ * WXZ STUDIO Website CSS Styles (Final Update: Enhanced Contact Page)
  * Author: Gemini
- * Focus: Mobile Icon Fix, Contact Page Modal, Scroll-to-Top Button
+ * Focus: Wechat Qrcode Pop-up, Larger Social Icons, Text Update
  */
 
 :root {
@@ -142,7 +142,6 @@ ul {
     width: 100%; 
 }
 
-/* 关键修复点：为 a 标签添加相对定位 */
 .mobile-menu-icons a {
     flex: 1; 
     position: relative; 
@@ -156,7 +155,6 @@ ul {
     transition: opacity 0.3s;
 }
 
-/* 底部图标尺寸和居中定位 */
 .mobile-menu-icons img {
     width: 22px; 
     height: 22px; 
@@ -167,7 +165,6 @@ ul {
     transform: translate(-50%, -50%);
 }
 
-/* Icon 状态切换逻辑 */
 .mobile-menu-icons a .icon-active {
     display: none;
 }
@@ -175,7 +172,6 @@ ul {
     display: block;
 }
 
-/* 当 a 标签具有 active 类时，切换 Icon */
 .mobile-menu-icons a.active .icon-default {
     display: none;
 }
@@ -325,8 +321,10 @@ h2::after {
 
 .icon-links {
     display: flex;
-    justify-content: center;
-    gap: 30px;
+    /* 更改为上下排列 */
+    flex-direction: column; 
+    align-items: center; /* 水平居中 */
+    gap: 40px; /* 增加上下间距 */
     margin-top: 15px;
 }
 
@@ -337,6 +335,7 @@ h2::after {
     color: var(--primary-color);
     font-size: 14px;
     transition: transform 0.3s;
+    position: relative; /* 为二维码弹出层提供相对定位 */
 }
 
 .social-icon-link:hover {
@@ -345,64 +344,73 @@ h2::after {
 }
 
 .social-icon-link img {
-    width: 40px; 
-    height: 40px;
+    /* Icon 尺寸放大 200% (40px * 2 = 80px) */
+    width: 80px; 
+    height: 80px;
     margin-bottom: 8px;
     border-radius: 50%;
     object-fit: contain;
 }
 
-/* 8. 微信二维码模态框 (Modal) 样式 - 新增 */
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 2000; /* 确保在最上层 */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.8); /* 黑色半透明背景 */
+/* 8. 微信二维码弹出样式 (Qrcode Pop-up) - 新增 */
+.wechat-icon-container {
+    position: relative; /* 确保二维码弹出层相对于这个容器定位 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 居中显示 */
+.wechat-qrcode-popup {
+    display: none; /* 默认隐藏 */
+    position: absolute;
+    /* 定位在 Icon 上方，并水平居中 */
+    bottom: calc(100% + 15px); /* 距离 Icon 底部 15px */
+    left: 50%;
+    transform: translateX(-50%); /* 水平居中 */
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    width: 90%; 
-    max-width: 350px;
-    text-align: center;
-    position: relative;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    z-index: 100; /* 确保在其他内容之上 */
+    opacity: 0; /* 初始透明 */
+    visibility: hidden; /* 初始不可见 */
+    transition: opacity 0.3s ease-out, bottom 0.3s ease-out, visibility 0.3s;
+    width: 250px; /* 二维码弹出框的宽度 */
 }
 
-.modal-content h3 {
+.wechat-qrcode-popup.show {
+    opacity: 1;
+    visibility: visible;
+    bottom: calc(100% + 25px); /* 向上移动一点形成弹出效果 */
+}
+
+.wechat-qrcode-popup h3 {
     margin-bottom: 15px;
     color: var(--primary-color);
+    font-size: 18px;
 }
 
-.qrcode-img {
-    width: 200px;
-    height: 200px;
-    display: block;
+.wechat-qrcode-popup .qrcode-img {
+    width: 150px; /* 二维码图片尺寸 */
+    height: 150px;
     margin: 0 auto 15px;
+    border-radius: 0; /* 二维码图片不需要圆角 */
 }
 
-.close-btn {
+.wechat-qrcode-popup .close-btn {
     color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 5px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
     cursor: pointer;
     transition: color 0.3s;
 }
 
-.close-btn:hover,
-.close-btn:focus {
+.wechat-qrcode-popup .close-btn:hover,
+.wechat-qrcode-popup .close-btn:focus {
     color: var(--accent-color);
     text-decoration: none;
 }
@@ -438,7 +446,6 @@ h2::after {
 /* 调整移动端返回顶部按钮位置 */
 @media (max-width: 767px) {
     .scroll-to-top-btn {
-        /* 避免被底部菜单栏遮挡 */
         bottom: calc(var(--mobile-nav-height) + 20px); 
     }
 }

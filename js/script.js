@@ -1,7 +1,7 @@
 /*
- * WXZ STUDIO Website JavaScript (Updated with Scroll-to-Top)
+ * WXZ STUDIO Website JavaScript (Final Update: Enhanced Contact Page)
  * Author: Gemini
- * Functions: Portfolio Filtering, Client Show More, Scroll-to-Top
+ * Functions: Portfolio Filtering, Client Show More, Scroll-to-Top, Wechat Qrcode Popup
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -51,15 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. Scroll To Top Button Logic (返回顶部) - 新增功能 ---
+    // --- 3. Scroll To Top Button Logic (返回顶部) ---
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-    
-    // 显示/隐藏按钮的阈值 (例如滚动 300px 后显示)
     const scrollThreshold = 300;
 
-    // 监听滚动事件
     window.addEventListener('scroll', () => {
-        // 检查页面卷曲高度
         if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
             scrollToTopBtn.style.display = 'block';
         } else {
@@ -67,11 +63,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 监听点击事件，实现平滑滚动
     scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // 实现平滑滚动效果
+            behavior: 'smooth' 
         });
     });
+
+    // --- 4. Wechat Qrcode Pop-up Logic (微信二维码弹出) ---
+    const wechatIcon = document.getElementById('wechatIcon');
+    const wechatQrcodePopup = document.getElementById('wechatModal'); // 注意这里 id 保持一致
+    const closeBtn = wechatQrcodePopup ? wechatQrcodePopup.querySelector('.close-btn') : null;
+
+    if (wechatIcon && wechatQrcodePopup && closeBtn) {
+        // 点击 Icon 时显示弹出框
+        wechatIcon.addEventListener('click', (event) => {
+            event.stopPropagation(); // 阻止事件冒泡到 window，防止立即关闭
+            wechatQrcodePopup.style.display = 'block';
+            // 添加 show 类触发 CSS 过渡
+            setTimeout(() => {
+                wechatQrcodePopup.classList.add('show');
+            }, 10); // 短暂延迟，确保 display: block 生效后再添加类
+        });
+
+        // 点击关闭按钮时隐藏弹出框
+        closeBtn.addEventListener('click', (event) => {
+            event.stopPropagation(); // 阻止事件冒泡
+            wechatQrcodePopup.classList.remove('show');
+            setTimeout(() => {
+                wechatQrcodePopup.style.display = 'none';
+            }, 300); // 等待过渡完成再隐藏
+        });
+
+        // 点击弹出框外部时隐藏弹出框 (在 document 而不是 window 上监听)
+        document.addEventListener('click', (event) => {
+            if (wechatQrcodePopup.classList.contains('show') && !wechatQrcodePopup.contains(event.target) && event.target !== wechatIcon) {
+                wechatQrcodePopup.classList.remove('show');
+                setTimeout(() => {
+                    wechatQrcodePopup.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
 });
