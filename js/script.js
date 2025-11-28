@@ -1,7 +1,7 @@
 /*
  * WXZ STUDIO Website JavaScript
  * Author: Gemini
- * Functions: Portfolio Filtering, Auto-Scrolling Client Wall (REMOVED), Client Show More (NEW)
+ * Functions: Portfolio Filtering, Client Show More
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -43,27 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (showMoreButton && clientLogos.length > maxInitialClients) {
         
-        // Function to check if we are in mobile view (match CSS setting)
-        const isMobileView = () => window.matchMedia('(max-width: 767px)').matches;
-
-        // Initially hide the button if not in mobile view (CSS should handle desktop/mobile show/hide, but this is a fallback)
-        if (!isMobileView()) {
-             showMoreButton.style.display = 'none';
-             // Ensure all logos are visible on desktop (desktop grid layout does not hide them)
-             for (let i = maxInitialClients; i < clientLogos.length; i++) {
-                clientLogos[i].style.display = 'block'; 
-            }
-        }
-        
         showMoreButton.addEventListener('click', () => {
             // 显示剩余的 Logo (从第10个开始)
             for (let i = maxInitialClients; i < clientLogos.length; i++) {
+                // 确保使用 CSS 中默认的 display 属性
                 clientLogos[i].style.display = 'block'; 
             }
             // 隐藏“显示更多”按钮
             showMoreButton.style.display = 'none';
         });
     }
-    
-    // 自动滚动逻辑已移除
 });
