@@ -1,7 +1,7 @@
 /*
- * WXZ STUDIO Website CSS Styles (Final Update: Hero Video & Logo Fix)
+ * WXZ STUDIO Website CSS Styles (Final Update: Logo Shuffle, Show More Fix, Terms Section Style)
  * Author: Gemini
- * Focus: Hero Video Centering, Logo Wall Mobile Grid Fix, Prevent Horizontal Scrolling
+ * Focus: Hero Video Centering, Logo Wall Mobile Grid Fix, Prevent Horizontal Scrolling, Terms Section Styling
  */
 
 :root {
@@ -350,13 +350,17 @@ h2::after {
         padding-top: 100%; /* 确保 Logo 容器为正方形 */
         position: relative;
         flex-shrink: 1; 
-        /* 确保 display: block 能让它在 Grid 中正确显示 */
         display: block; 
     }
     
     /* 默认隐藏第 10 个及之后的 Logo (仅在移动端生效) */
     .client-logo:nth-child(n+10) {
         display: none !important; /* 关键：强制隐藏 */
+    }
+
+    /* 修复：点击“显示更多”后 Logo 无法显示的问题 */
+    .client-logo.is-visible {
+        display: block !important;
     }
     
     /* 移动端显示“显示更多”按钮 */
@@ -478,4 +482,44 @@ h2::after {
     .scroll-to-top-btn {
         bottom: calc(var(--mobile-nav-height) + 20px); 
     }
+}
+
+/* 12. 合作须知排版样式 FIX (黑底小字) */
+.terms-section {
+    background-color: var(--primary-color); /* 深黑色背景 */
+    color: white; /* 白色文字 */
+    padding: 60px 0;
+    text-align: left; /* 文字左对齐 */
+}
+
+.terms-section h2 {
+    color: white; /* 确保标题颜色为白色 */
+    text-align: center; /* 标题居中 */
+}
+
+.terms-section h2::after {
+    background-color: white; /* 标题下划线改为白色 */
+}
+
+.terms-section h3 {
+    font-size: 16px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    color: var(--accent-color); /* 小标题使用亮色 */
+}
+
+.terms-section p {
+    font-size: 14px; /* 调整为小字 */
+    margin-bottom: 10px;
+    line-height: 1.8;
+    color: #ccc; /* 浅灰色文字 */
+}
+
+/* 13. 页脚样式 FIX (居中显示版权信息) */
+.footer {
+    background-color: #222;
+    color: #aaa;
+    padding: 20px 0;
+    font-size: 12px;
+    text-align: center; /* 关键：居中显示 */
 }

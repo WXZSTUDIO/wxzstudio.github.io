@@ -1,12 +1,37 @@
 /*
- * WXZ STUDIO Website JavaScript (Final Update: Enhanced Contact Page)
+ * WXZ STUDIO Website JavaScript (Final Update: Logo Shuffle & Show More Fix)
  * Author: Gemini
- * Functions: Portfolio Filtering, Client Show More, Scroll-to-Top, Wechat Qrcode Popup
+ * Functions: Portfolio Filtering, Client Show More, Scroll-to-Top, Wechat Qrcode Popup, Logo Shuffle
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 1. Utility: Fisher-Yates Shuffle Algorithm (实现随机排序) ---
+    const shuffleElements = (parentSelector, itemSelector) => {
+        const parent = document.querySelector(parentSelector);
+        if (!parent) return;
+
+        const items = Array.from(document.querySelectorAll(itemSelector));
+
+        // Fisher-Yates 算法
+        for (let i = items.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            // 交换位置
+            if (i !== j) {
+                const itemA = items[i];
+                const itemB = items[j];
+
+                // 重新插入 DOM (确保 Logo 列表随机排列)
+                parent.insertBefore(itemA, itemB);
+                parent.insertBefore(itemB, itemA);
+            }
+        }
+    };
+
+    // 在页面加载时，随机排列服务客户 Logo
+    shuffleElements('.clients-list-inner', '.clients-list-inner .client-logo');
     
-    // --- 1. Portfolio Filtering Logic (作品筛选) ---
+    // --- 2. Portfolio Filtering Logic (作品筛选, 保持不变) ---
     const filterButtons = document.querySelectorAll('.tag-filter button');
     const workItems = document.querySelectorAll('.work-item');
 
@@ -36,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 2. Client Logo Show More Logic (Mobile Only) ---
+    // --- 3. Client Logo Show More Logic (Mobile Only) ---
     const showMoreButton = document.getElementById('showMoreClients');
     const clientLogos = document.querySelectorAll('.clients-list-inner .client-logo');
     const maxInitialClients = 9;
@@ -45,19 +70,24 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 逻辑：点击后，将隐藏的 Logo 设置为 display: block，让它们继续按 3x3 形式排列
         showMoreButton.addEventListener('click', () => {
+            // 修复：确保被隐藏的 Logo 被正确显示
             for (let i = maxInitialClients; i < clientLogos.length; i++) {
-                clientLogos[i].style.display = 'block'; 
+                // 确保移除所有内联 display: none 样式
+                clientLogos[i].style.display = ''; 
+                // 确保移除 mobile CSS 中的 display: none !important (如果需要，使用样式表覆盖)
+                clientLogos[i].classList.add('is-visible'); 
             }
             showMoreButton.style.display = 'none';
         });
     }
 
-    // --- 3. Scroll To Top Button Logic (返回顶部) ---
+    // --- 4. Scroll To Top Button Logic (返回顶部) ---
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
     const scrollThreshold = 300;
 
     window.addEventListener('scroll', () => {
-        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+        const currentScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        if (currentScroll > scrollThreshold) {
             scrollToTopBtn.style.display = 'block';
         } else {
             scrollToTopBtn.style.display = 'none';
@@ -71,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 4. Wechat Qrcode Pop-up Logic (微信二维码弹出) ---
+    // --- 5. Wechat Qrcode Pop-up Logic (微信二维码弹出) ---
     const wechatIcon = document.getElementById('wechatIcon');
     const wechatQrcodePopup = document.getElementById('wechatModal'); 
     const closeBtn = wechatQrcodePopup ? wechatQrcodePopup.querySelector('.close-btn') : null;
