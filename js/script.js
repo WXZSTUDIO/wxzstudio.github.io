@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showMoreButton.addEventListener('click', () => {
             // 显示剩余的 Logo (从第10个开始)
             for (let i = maxInitialClients; i < clientLogos.length; i++) {
-                // 确保使用 CSS 中默认的 display 属性
+                // 将 display 重新设置为 block，覆盖 CSS 中的 display: none;
                 clientLogos[i].style.display = 'block'; 
             }
             // 隐藏“显示更多”按钮
