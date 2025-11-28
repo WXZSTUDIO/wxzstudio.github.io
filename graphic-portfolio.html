@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WXZ STUDIO - 平面设计作品</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preload" href="assets/fonts/Raleway-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
 </head>
 <body>
 
@@ -13,6 +14,7 @@
             <div class="logo">
                 <a href="index.html">WXZ STUDIO</a>
             </div>
+            
             <nav class="nav-menu">
                 <ul>
                     <li><a href="index.html">首页</a></li>
@@ -27,120 +29,99 @@
     <nav class="mobile-nav">
         <div class="mobile-menu-icons">
             <a href="index.html">
-                <img src="assets/images/mobile-menu-home.png" alt="首页">
+                <img src="assets/images/mobile-menu-home.png" alt="首页" class="icon-default">
+                <img src="assets/images/mobile-menu-home-active.png" alt="首页" class="icon-active">
             </a>
             <a href="video-portfolio.html">
-                <img src="assets/images/mobile-menu-video.png" alt="视频作品">
+                <img src="assets/images/mobile-menu-video.png" alt="视频作品" class="icon-default">
+                <img src="assets/images/mobile-menu-video-active.png" alt="视频作品" class="icon-active">
             </a>
             <a href="graphic-portfolio.html" class="active">
-                <img src="assets/images/mobile-menu-graphic.png" alt="平面设计作品">
+                <img src="assets/images/mobile-menu-graphic.png" alt="平面设计作品" class="icon-default">
+                <img src="assets/images/mobile-menu-graphic-active.png" alt="平面设计作品" class="icon-active">
             </a>
             <a href="contact.html">
-                <img src="assets/images/mobile-menu-contact.png" alt="联系方式">
+                <img src="assets/images/mobile-menu-contact.png" alt="联系方式" class="icon-default">
+                <img src="assets/images/mobile-menu-contact-active.png" alt="联系方式" class="icon-active">
             </a>
         </div>
     </nav>
     
     <main class="main-content">
+        
         <section class="portfolio-section">
             <div class="container">
-                <div class="portfolio-header">
-                    <h2>平面设计作品集</h2>
-                </div>
+                <h2>平面设计作品集</h2>
 
                 <div class="tag-filter">
                     <button data-tag="all" class="active">全部</button>
-                    <button data-tag="网页设计">#网页设计</button>
-                    <button data-tag="社媒设计">#社媒设计</button>
+                    <button data-tag="branding">品牌标识</button>
+                    <button data-tag="packaging">包装设计</button>
+                    <button data-tag="social">社媒视觉</button>
+                    <button data-tag="poster">海报设计</button>
                 </div>
 
-                <div class="featured-work-grid">
-                    <div class="work-item" data-tags="网页设计 featured">
-                        <div class="work-cover" style="padding-top: 56.25%;"> <img src="assets/portfolio/graphic-1.jpg" alt="平面设计作品 1">
+                <div class="portfolio-grid">
+                    <div class="work-item" data-tags="branding">
+                        <div class="work-cover" style="padding-top: 100%;"> <img src="assets/portfolio/featured-3.jpg" alt="平面作品1">
                         </div>
                         <div class="work-info">
-                            <p>作品名称：品牌官网界面设计 | 标签：#网页设计</p>
+                            <h3>护肤品牌 Logo & VI 设计</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">品牌标识</span>
+                                <span class="work-tag">视觉系统</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="work-item" data-tags="社媒设计">
-                        <div class="work-cover" style="padding-top: 100%;"> <img src="assets/portfolio/graphic-2.jpg" alt="平面设计作品 2">
+
+                    <div class="work-item" data-tags="social">
+                        <div class="work-cover" style="padding-top: 75%;"> <img src="assets/portfolio/featured-4.jpg" alt="平面作品2">
                         </div>
                         <div class="work-info">
-                            <p>作品名称：Instagram/小红书系列海报 | 标签：#社媒设计</p>
+                            <h3>IOPE 新品推广系列图</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">社媒视觉</span>
+                                <span class="work-tag">产品推广</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="work-item" data-tags="网页设计">
-                        <div class="work-cover" style="padding-top: 56.25%;">
-                            <img src="assets/portfolio/graphic-3.jpg" alt="平面设计作品 3">
+
+                    <div class="work-item" data-tags="poster">
+                        <div class="work-cover" style="padding-top: 141.4%;"> <img src="assets/portfolio/featured-2.jpg" alt="平面作品3">
                         </div>
                         <div class="work-info">
-                            <p>作品名称：App Landing Page 设计 | 标签：#网页设计</p>
+                            <h3>ZEROBASEONE 粉丝见面会海报</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">海报设计</span>
+                                <span class="work-tag">活动宣传</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="work-item" data-tags="社媒设计 featured">
+                    
+                    <div class="work-item" data-tags="packaging">
                         <div class="work-cover" style="padding-top: 100%;">
-                            <img src="assets/portfolio/graphic-4.jpg" alt="平面设计作品 4">
+                            <img src="assets/portfolio/featured-1.jpg" alt="平面作品4">
                         </div>
                         <div class="work-info">
-                            <p>作品名称：新品发布倒计时图 | 标签：#社媒设计</p>
-                        </div>
-                    </div>
-                    <div class="work-item" data-tags="网页设计">
-                        <div class="work-cover" style="padding-top: 75%;">
-                            <img src="assets/portfolio/graphic-5.jpg" alt="平面设计作品 5">
-                        </div>
-                        <div class="work-info">
-                            <p>作品名称：品牌设计指南手册 | 标签：#网页设计</p>
-                        </div>
-                    </div>
-                    <div class="work-item" data-tags="社媒设计">
-                        <div class="work-cover" style="padding-top: 100%;">
-                            <img src="assets/portfolio/graphic-6.jpg" alt="平面设计作品 6">
-                        </div>
-                        <div class="work-info">
-                            <p>作品名称：节日营销主题图 | 标签：#社媒设计</p>
-                        </div>
-                    </div>
-                    <div class="work-item" data-tags="网页设计">
-                        <div class="work-cover" style="padding-top: 75%;">
-                            <img src="assets/portfolio/graphic-7.jpg" alt="平面设计作品 7">
-                        </div>
-                        <div class="work-info">
-                            <p>作品名称：活动宣传页设计 | 标签：#网页设计</p>
-                        </div>
-                    </div>
-                    <div class="work-item" data-tags="社媒设计">
-                        <div class="work-cover" style="padding-top: 100%;">
-                            <img src="assets/portfolio/graphic-8.jpg" alt="平面设计作品 8">
-                        </div>
-                        <div class="work-info">
-                            <p>作品名称：品牌故事长图 | 标签：#社媒设计</p>
-                        </div>
-                    </div>
-                    <div class="work-item" data-tags="网页设计">
-                        <div class="work-cover" style="padding-top: 56.25%;">
-                            <img src="assets/portfolio/graphic-9.jpg" alt="平面设计作品 9">
-                        </div>
-                        <div class="work-info">
-                            <p>作品名称：电商着陆页设计 | 标签：#网页设计</p>
-                        </div>
-                    </div>
-                    <div class="work-item" data-tags="社媒设计 featured">
-                        <div class="work-cover" style="padding-top: 100%;">
-                            <img src="assets/portfolio/graphic-10.jpg" alt="平面设计作品 10">
-                        </div>
-                        <div class="work-info">
-                            <p>作品名称：品牌调性视觉设计 | 标签：#社媒设计</p>
+                            <h3>醒可安健康饮品包装设计</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">包装设计</span>
+                                <span class="work-tag">消费品</span>
+                            </div>
                         </div>
                     </div>
                     </div>
+
             </div>
         </section>
-    </main>
 
+    </main>
+    
     <footer class="footer">
         <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
     </footer>
+
+    <button id="scrollToTopBtn" class="scroll-to-top-btn">↑</button>
 
     <script src="js/script.js"></script>
 </body>
