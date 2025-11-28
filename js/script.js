@@ -1,7 +1,7 @@
 /*
  * WXZ STUDIO Website JavaScript
  * Author: Gemini
- * Functions: Portfolio Filtering, Auto-Scrolling Client Wall
+ * Functions: Portfolio Filtering, Auto-Scrolling Client Wall (REMOVED), Client Show More (NEW)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -36,40 +36,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 2. Automatic Client Logo Wall Scrolling ---
-    const clientsWall = document.querySelector('.clients-wall');
+    // --- 2. Client Logo Show More Logic (Mobile Only) ---
+    const showMoreButton = document.getElementById('showMoreClients');
+    const clientLogos = document.querySelectorAll('.clients-list-inner .client-logo');
+    const maxInitialClients = 9;
 
-    if (clientsWall) {
-        const scrollSpeed = 0.5; // 滚动速度 (像素/10毫秒)
-        const intervalTime = 10; // 滚动间隔 (毫秒)
-        let scrollInterval;
-
-        const startScrolling = () => {
-            // 清除任何可能存在的旧间隔
-            if (scrollInterval) clearInterval(scrollInterval); 
-            
-            scrollInterval = setInterval(() => {
-                // 检查是否到达末尾 (使用 clientsWall.scrollWidth 确保能检测到内部内容宽度)
-                // -1 用于解决浏览器渲染的微小误差
-                if (clientsWall.scrollLeft + clientsWall.clientWidth >= clientsWall.scrollWidth - 1) {
-                    // 到达末尾后，瞬间跳回开头
-                    clientsWall.scrollLeft = 0;
-                } else {
-                    // 否则，继续滚动
-                    clientsWall.scrollLeft += scrollSpeed;
-                }
-            }, intervalTime);
-        };
-
-        // 鼠标悬停时停止滚动，提供良好的用户体验
-        clientsWall.addEventListener('mouseover', () => {
-            clearInterval(scrollInterval);
-        });
+    if (showMoreButton && clientLogos.length > maxInitialClients) {
         
-        // 鼠标移出时重新开始滚动
-        clientsWall.addEventListener('mouseout', startScrolling);
+        // Function to check if we are in mobile view (match CSS setting)
+        const isMobileView = () => window.matchMedia('(max-width: 767px)').matches;
 
-        // 页面加载时开始自动滚动
-        startScrolling();
+        // Initially hide the button if not in mobile view (CSS should handle desktop/mobile show/hide, but this is a fallback)
+        if (!isMobileView()) {
+             showMoreButton.style.display = 'none';
+             // Ensure all logos are visible on desktop (desktop grid layout does not hide them)
+             for (let i = maxInitialClients; i < clientLogos.length; i++) {
+                clientLogos[i].style.display = 'block'; 
+            }
+        }
+        
+        showMoreButton.addEventListener('click', () => {
+            // 显示剩余的 Logo (从第10个开始)
+            for (let i = maxInitialClients; i < clientLogos.length; i++) {
+                clientLogos[i].style.display = 'block'; 
+            }
+            // 隐藏“显示更多”按钮
+            showMoreButton.style.display = 'none';
+        });
     }
+    
+    // 自动滚动逻辑已移除
 });
