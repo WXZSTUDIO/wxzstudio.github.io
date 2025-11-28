@@ -1,5 +1,5 @@
 /*
- * WXZ STUDIO Website JavaScript (Final Update: Universal Fixes)
+ * WXZ STUDIO Website JavaScript 
  * Author: Gemini
  * Functions: Portfolio Filtering, Client Show More, Scroll-to-Top, Logo Shuffle
  */
@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
     const scrollThreshold = 300;
     
-    // 如果没有返回顶部按钮，则忽略后续逻辑
     if (!scrollToTopBtn) return; 
 
     window.addEventListener('scroll', () => {

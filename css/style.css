@@ -1,7 +1,7 @@
 /*
- * WXZ STUDIO Website CSS Styles (Final Update: Portfolio & Contact Page Fix)
+ * WXZ STUDIO Website CSS Styles (Final Update: Desktop/Mobile Layout Separation FIX)
  * Author: Gemini
- * Focus: Portfolio Grid 3x3, Tags Styling, Contact Layout, Universal Footer
+ * Focus: Portfolio Grid 3x3 (Desktop) vs 2x2 (Mobile), Contact Layout Stacked (Mobile)
  */
 
 :root {
@@ -122,7 +122,7 @@ ul {
 
 /* 4. Mobile Navigation (Fixed Bottom Bar) */
 .mobile-nav {
-    display: none; 
+    display: none; /* 默认隐藏 */
     position: fixed;
     bottom: 0;
     left: 0;
@@ -187,29 +187,8 @@ ul {
 
 /* 5. Section General Styles */
 .main-content {
-    /* 确保内容在固定导航栏下方 */
     padding-top: 70px;
 }
-.hero-video-section {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    margin-top: -70px; 
-    z-index: 1;
-}
-#heroVideo {
-    position: absolute; 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%; 
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: cover;
-}
-
 section {
     padding: 80px 0;
     text-align: center;
@@ -231,9 +210,9 @@ h2::after {
     background-color: var(--accent-color);
 }
 
-/* === 6. Portfolio Grid Styles (视频/平面作品页) === */
+/* --- 6. Portfolio Grid Styles (Desktop) --- */
 .portfolio-section {
-    padding-top: 100px; /* 调整顶部间距 */
+    padding-top: 100px;
 }
 
 /* 标签筛选按钮组 */
@@ -261,10 +240,10 @@ h2::after {
     border-color: var(--accent-color);
 }
 
-/* 作品网格布局 */
+/* 作品网格布局 (桌面端：每行 3 个) */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 桌面端：每行 3 个 */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 40px 30px;
     max-width: 1000px;
     margin: 0 auto;
@@ -278,7 +257,7 @@ h2::after {
 }
 .work-cover {
     width: 100%;
-    padding-top: 56.25%; /* 16:9 视频比例 */
+    padding-top: 56.25%; 
     position: relative;
 }
 .work-cover img {
@@ -290,16 +269,8 @@ h2::after {
     object-fit: cover;
     transition: transform 0.5s;
 }
-.work-item:hover .work-cover img {
-    transform: scale(1.05);
-}
 .work-info {
     padding: 15px;
-}
-.work-info h3 {
-    font-size: 18px;
-    margin-bottom: 5px;
-    color: var(--primary-color);
 }
 .work-tags {
     margin-top: 10px;
@@ -312,30 +283,27 @@ h2::after {
     padding: 4px 10px;
     background-color: #eee;
     color: #666;
-    border-radius: 12px; /* 圆角标签 */
+    border-radius: 12px; 
     font-size: 12px;
 }
 
-/* === 7. Contact Page Styles (联系方式左右排版 FIX) === */
+/* --- 7. Contact Page Styles (Desktop: Side-by-Side) --- */
 .contact-info {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
 }
-
 .contact-details p {
     font-size: 18px;
     margin-bottom: 15px;
 }
-
 .contact-icons {
     display: flex;
     justify-content: center;
-    gap: 50px; /* 两个图标之间的间距 */
+    gap: 50px; /* 桌面端：左右间距 */
     margin-top: 40px;
     flex-wrap: wrap;
 }
-
 .social-icon-container {
     text-align: center;
     padding: 20px;
@@ -355,76 +323,109 @@ h2::after {
     object-fit: contain;
     margin-bottom: 10px;
 }
-.social-icon-container p {
-    font-size: 14px;
-    color: #666;
+
+/* --- 8. Client Logo Section (无限滚动相关样式) --- */
+.clients-wall {
+    overflow-x: hidden; 
+    padding: 40px 0; 
+}
+@keyframes scroll-logos {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+.clients-scroll-container {
+    display: flex;
+    width: 200%; 
+    animation: scroll-logos 60s linear infinite; 
+}
+.clients-scroll-container:hover {
+    animation-play-state: paused;
+}
+.clients-list-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 30px; 
+    justify-content: flex-start;
+    width: 50%; 
+}
+.client-logo {
+    flex-shrink: 0; 
+    width: 90px; 
+    height: 90px; 
+    padding-top: 0; 
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+.client-logo img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    padding: 10px; 
+    opacity: 0.7;
+    transition: opacity 0.3s;
 }
 
 
-/* 8. Client Logo & Terms Section (保持不变) */
-/* ... (Client Logo Styles 保持不变，包含无限滚动和移动端 3x3 逻辑) ... */
-
-/* 12. 合作须知排版样式 (黑底小字) */
-.terms-section {
-    background-color: var(--primary-color); 
-    color: white; 
-    padding: 60px 0;
-    text-align: left; 
-}
-
-.terms-section h2 {
-    color: white; 
-    text-align: center; 
-}
-
-.terms-section h2::after {
-    background-color: white; 
-}
-
-.terms-section h3 {
-    font-size: 16px;
-    margin-top: 25px;
-    margin-bottom: 5px;
-    color: var(--accent-color); 
-}
-
-.terms-section p {
-    font-size: 14px; 
-    margin-bottom: 10px;
-    line-height: 1.8;
-    color: #ccc; 
-}
-
-/* 13. 页脚样式 FIX (居中显示版权信息) */
+/* --- 9. Footer and Misc --- */
 .footer {
     background-color: #222;
     color: #aaa;
     padding: 20px 0;
     font-size: 12px;
-    text-align: center; /* 关键：居中显示 */
+    text-align: center;
+}
+
+.scroll-to-top-btn {
+    display: none; 
+    position: fixed;
+    bottom: 80px; 
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+    z-index: 999;
 }
 
 
-/* 14. Mobile Media Query (小于 767px 视为手机端) */
+/* === 10. Mobile Media Query (小于 767px 视为手机端) === */
 @media (max-width: 767px) {
-    /* ... (Mobile Nav, Hero Video, Clients Wall 样式保持不变) ... */
+    /* 显示底部导航，隐藏顶部菜单，为内容留出空间 */
+    .nav-menu {
+        display: none;
+    }
     .mobile-nav {
-        display: flex;
+        display: flex; /* 关键：显示底部菜单 */
     }
     .main-content {
         padding-bottom: var(--mobile-nav-height); 
+        padding-top: 60px; /* 适应移动端较矮的顶部导航 */
     }
     .portfolio-section {
         padding-top: 80px;
     }
-
-    /* 移动端作品网格：改为每行 2 个 */
+    
+    /* 关键修复 1: 移动端作品网格：强制改为每行 2 个 */
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr); 
         gap: 20px 15px;
     }
 
-    /* 移动端联系方式：改为纵向排列 */
+    /* 关键修复 2: 移动端联系方式：强制改为纵向堆叠 */
     .contact-icons {
         flex-direction: column;
         gap: 30px;
@@ -432,5 +433,37 @@ h2::after {
     }
     .social-icon-container {
         min-width: 90%;
+    }
+
+    /* 客户端 Logo 移动端排版修复 (来自上一个步骤) */
+    .clients-scroll-container {
+        display: block; 
+        width: 100%;
+        animation: none;
+    }
+    .clients-list-inner {
+        display: grid; 
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 15px; 
+        width: 100%; 
+    }
+    .clients-list-inner:nth-child(2) {
+        display: none !important;
+    }
+    .client-logo {
+        width: 100%; 
+        height: 0; 
+        padding-top: 100%; 
+    }
+    .client-logo:nth-child(n+10) {
+        display: none !important;
+    }
+    .clients-section .show-more-button {
+        display: inline-block;
+    }
+
+    /* 移动端返回顶部按钮位置修正 */
+    .scroll-to-top-btn {
+        bottom: calc(var(--mobile-nav-height) + 20px); 
     }
 }
