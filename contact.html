@@ -6,6 +6,45 @@
     <title>WXZ STUDIO - 联系方式</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preload" href="assets/fonts/Raleway-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+    
+    <style>
+        .feature-demo {
+            margin-top: 50px;
+            padding: 30px;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+        .feature-demo button {
+            padding: 10px 20px;
+            margin: 10px 10px 20px 0;
+            background-color: #007aff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .feature-demo button:hover {
+            background-color: #0056b3;
+        }
+        #barcodeDataDisplay {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border: 1px solid #cceeff;
+            border-radius: 5px;
+            display: none; /* 默认隐藏，实现按需加载 */
+        }
+        #loadingMessage {
+            color: orange;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -75,6 +114,20 @@
                             <p>小红书号：WXZStudio (查看更多作品)</p>
                         </div>
                     </div>
+                </div>
+                
+                <div class="feature-demo">
+                    <h3>混合应用功能演示区 (需在 App 环境测试)</h3>
+                    
+                    <h4>原生功能桥接 (JS Bridge)</h4>
+                    <button id="openSettingsBtn">点击调用原生 App 设置功能</button>
+                    <p style="font-size: 14px; color: #666;">（请在 App 环境中打开本页，并在浏览器控制台查看环境嗅探结果）</p>
+
+                    <h4 style="margin-top: 30px;">按需加载与缓存 (Lazy Loading & Caching)</h4>
+                    <button id="loadDataBtn">加载条形码/礼品卡数据</button>
+                    <p id="loadingMessage" style="font-size: 14px;"></p>
+                    <div id="barcodeDataDisplay">
+                        </div>
                 </div>
 
             </div>
