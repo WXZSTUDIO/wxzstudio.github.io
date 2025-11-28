@@ -1,7 +1,7 @@
 /*
- * WXZ STUDIO Website JavaScript
+ * WXZ STUDIO Website JavaScript (Updated with Scroll-to-Top)
  * Author: Gemini
- * Functions: Portfolio Filtering, Client Show More
+ * Functions: Portfolio Filtering, Client Show More, Scroll-to-Top
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,13 +44,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (showMoreButton && clientLogos.length > maxInitialClients) {
         
         showMoreButton.addEventListener('click', () => {
-            // 显示剩余的 Logo (从第10个开始)
             for (let i = maxInitialClients; i < clientLogos.length; i++) {
-                // 将 display 重新设置为 block，覆盖 CSS 中的 display: none;
                 clientLogos[i].style.display = 'block'; 
             }
-            // 隐藏“显示更多”按钮
             showMoreButton.style.display = 'none';
         });
     }
+
+    // --- 3. Scroll To Top Button Logic (返回顶部) - 新增功能 ---
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    
+    // 显示/隐藏按钮的阈值 (例如滚动 300px 后显示)
+    const scrollThreshold = 300;
+
+    // 监听滚动事件
+    window.addEventListener('scroll', () => {
+        // 检查页面卷曲高度
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            scrollToTopBtn.style.display = 'block';
+        } else {
+            scrollToTopBtn.style.display = 'none';
+        }
+    });
+
+    // 监听点击事件，实现平滑滚动
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // 实现平滑滚动效果
+        });
+    });
 });

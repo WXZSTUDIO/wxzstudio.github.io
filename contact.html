@@ -13,6 +13,7 @@
             <div class="logo">
                 <a href="index.html">WXZ STUDIO</a>
             </div>
+            
             <nav class="nav-menu">
                 <ul>
                     <li><a href="index.html">首页</a></li>
@@ -27,49 +28,72 @@
     <nav class="mobile-nav">
         <div class="mobile-menu-icons">
             <a href="index.html">
-                <img src="assets/images/mobile-menu-home.png" alt="首页">
+                <img src="assets/images/mobile-menu-home.png" alt="首页" class="icon-default">
+                <img src="assets/images/mobile-menu-home-active.png" alt="首页" class="icon-active">
             </a>
             <a href="video-portfolio.html">
-                <img src="assets/images/mobile-menu-video.png" alt="视频作品">
+                <img src="assets/images/mobile-menu-video.png" alt="视频作品" class="icon-default">
+                <img src="assets/images/mobile-menu-video-active.png" alt="视频作品" class="icon-active">
             </a>
             <a href="graphic-portfolio.html">
-                <img src="assets/images/mobile-menu-graphic.png" alt="平面设计作品">
+                <img src="assets/images/mobile-menu-graphic.png" alt="平面设计作品" class="icon-default">
+                <img src="assets/images/mobile-menu-graphic-active.png" alt="平面设计作品" class="icon-active">
             </a>
             <a href="contact.html" class="active">
-                <img src="assets/images/mobile-menu-contact.png" alt="联系方式">
+                <img src="assets/images/mobile-menu-contact.png" alt="联系方式" class="icon-default">
+                <img src="assets/images/mobile-menu-contact-active.png" alt="联系方式" class="icon-active">
             </a>
         </div>
     </nav>
     
     <main class="main-content">
-        <section class="contact-section">
-            <div class="container">
-                <h2>联系我们</h2>
-                <p style="margin-bottom: 40px; font-size: 18px; color: #666;">期待与您合作，共创卓越视觉作品。</p>
+        
+        <section class="contact-section container">
+            <h2>联系我们</h2>
+            <p class="contact-lead">我们期待与您合作，请通过以下方式联系我们获取定制化服务方案。</p>
 
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <h3>微信 (WeChat) ID</h3>
-                        <p>icf304</p>
-                    </div>
-                    <div class="contact-item">
-                        <h3>Kakaotalk ID</h3>
-                        <p>icf304</p>
+            <div class="contact-info">
+                
+                <div class="contact-item">
+                    <h3>电子邮箱</h3>
+                    <p><a href="mailto:info@wxzstudio.com">info@wxzstudio.com</a></p>
+                </div>
+
+                <div class="contact-item">
+                    <h3>联系电话</h3>
+                    <p><a href="tel:+8613800138000">+86 138 0013 8000</a></p>
+                </div>
+
+                <div class="contact-item social-icons">
+                    <h3>社交媒体</h3>
+                    <div class="icon-links">
+                        
+                        <a href="javascript:void(0);" onclick="alert('请通过微信扫码联系')" class="social-icon-link wechat">
+                            <img src="assets/images/wechat_icon.png" alt="微信联系">
+                            <span>微信</span>
+                        </a>
+
+                        <a href="[您的定制小红书跳转链接]" target="_blank" class="social-icon-link xiaohongshu">
+                            <img src="assets/images/xiaohongshu_icon.png" alt="小红书">
+                            <span>小红书</span>
+                        </a>
+
                     </div>
                     
-                    <div class="xiaohongshu-button">
-                        <a href="https://xhslink.com/m/AfISV77MaVG" target="_blank" rel="noopener noreferrer">
-                            前往 小红书 主页
-                        </a>
-                    </div>
                 </div>
+                
+                <p class="contact-note">如果您需要面对面洽谈，请提前通过邮件或电话预约。</p>
 
             </div>
         </section>
+
     </main>
     
+    <button id="scrollToTopBtn" class="scroll-to-top-btn" title="返回顶部">
+        &#9650; </button>
+    
     <footer class="footer">
-        <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+        <p>© 2025 WXZ Studio. 保留所有权利。</p>
     </footer>
 
     <script src="js/script.js"></script>
