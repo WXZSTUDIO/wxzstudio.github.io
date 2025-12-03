@@ -154,23 +154,34 @@ ul {
     flex: 1; 
     position: relative; 
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* 垂直排列图标和文字 */
     justify-content: center;
     align-items: center;
     height: 100%; 
     color: var(--primary-color);
     opacity: 0.5;
     transition: opacity 0.3s;
+    padding-top: 5px; /* 留出顶部空间给图标 */
 }
 
+/* 调整图标位置，不再使用绝对定位 */
 .mobile-menu-icons img {
     width: 24px;
     height: 24px; 
     object-fit: contain;
-    position: absolute; 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: static; /* 恢复为文档流内定位 */
+    top: auto; 
+    left: auto;
+    transform: none;
+    margin-bottom: 2px; /* 图标和文字间距 */
+}
+
+/* 新增：手机底部导航文字样式 */
+.mobile-menu-icons span {
+    font-size: 10px; /* 小字 */
+    line-height: 1;
+    font-weight: 500;
+    color: var(--primary-color);
 }
 
 .mobile-menu-icons a .icon-active { display: none; }
@@ -181,7 +192,7 @@ ul {
 
 .mobile-menu-icons a.active { opacity: 1; }
 
-/* 4. Hero Video */
+/* 4. Hero Video (FIX: Scrollability & White Bar) */
 .hero-video-section {
     position: relative; 
     width: 100vw;
@@ -227,7 +238,7 @@ h2::after {
     background-color: var(--accent-color);
 }
 
-/* 6. Services Section */
+/* 6. Services Section (排版修复) */
 .services-grid {
     display: flex;
     justify-content: space-between;
@@ -255,14 +266,169 @@ h2::after {
     line-height: 1.8;
 }
 
-/* 7. Clients Wall (Existing styles) */
-/* ... styles ... */
+/* 7. Clients Wall - 恢复动画效果 */
+.clients-wall {
+    overflow: hidden; /* 隐藏溢出内容 */
+    padding: 40px 0; 
+    width: 100%;
+}
 
-/* 8. Portfolio Grid (Existing styles) */
-/* ... styles ... */
+@keyframes scroll-logos {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
 
-/* 9. Contact Page (Existing styles) */
-/* ... styles ... */
+.clients-scroll-container {
+    display: flex;
+    width: 200%; /* 确保有足够的宽度进行滚动 */
+    animation: scroll-logos 40s linear infinite;
+}
+
+.clients-scroll-container:hover {
+    animation-play-state: paused;
+}
+
+.clients-list-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 40px; 
+    justify-content: flex-start;
+    width: 50%; /* 每个副本占据一半宽度 */
+    padding-right: 40px;
+}
+
+.client-logo {
+    flex-shrink: 0; 
+    width: 90px; 
+    height: 90px; 
+    background: #fff;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.client-logo img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+
+.clients-section .show-more-button {
+    display: none;
+}
+
+/* 8. Portfolio Grid */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.work-item {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.work-cover {
+    width: 100%;
+    padding-top: 56.25%;
+    position: relative;
+}
+
+.work-cover img {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.work-item:hover .work-cover img {
+    transform: scale(1.05);
+}
+
+.work-info { padding: 15px; text-align: left; }
+.work-info h3 { font-size: 16px; margin-bottom: 8px; color: var(--primary-color); }
+
+.work-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.work-tag {
+    font-size: 12px;
+    padding: 3px 10px;
+    background: #eee;
+    color: #666;
+    border-radius: 12px;
+}
+
+/* 9. Contact Page */
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 40px;
+}
+
+.social-icon-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.social-icon-link img {
+    width: 80px; 
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* WeChat Popup (Shared) - 居中弹出样式 */
+.wechat-qrcode-popup {
+    display: none;
+    position: fixed; /* 改为fixed以覆盖整个视口 */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8); /* 半透明黑色背景 */
+    z-index: 2000;
+    
+    /* 居中内容 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 二维码容器 */
+.wechat-qrcode-content {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    width: 250px; /* 调整弹窗宽度 */
+    max-width: 90%;
+    position: relative;
+}
+
+.wechat-qrcode-popup.show { 
+    display: flex; /* 确保显示时是flex */
+}
+
+/* 移除旧的小箭头样式，因为现在是居中弹窗 */
+.wechat-qrcode-popup::after {
+    content: none;
+}
+
+.wechat-qrcode-content img { 
+    width: 100% !important; 
+    height: auto !important; 
+    margin: 0; 
+    display: block;
+}
 
 /* 10. Terms Section (合作须知) - DESKTOP Default */
 .terms-section {
@@ -296,18 +462,21 @@ h2::after {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
     overflow: hidden;
-    padding: 15px 20px; /* Desktop spacing for consistency if needed */
+    padding: 15px 20px; 
 }
 .terms-section .term-card h3 {
     color: var(--primary-color);
     margin-top: 0;
     margin-bottom: 5px;
+    font-size: 18px; /* Desktop size */
 }
 .terms-section .term-card p {
     color: #666;
     margin-bottom: 0;
+    font-size: 14px; /* Desktop size */
 }
 /* ----------------------------------------------------------------- */
+
 
 /* 11. Footer */
 .footer {
@@ -318,8 +487,19 @@ h2::after {
     text-align: center;
 }
 
-/* Scroll Top Button (Existing styles) */
-/* ... styles ... */
+/* Scroll Top Button */
+.scroll-to-top-btn {
+    display: none;
+    position: fixed;
+    bottom: 80px; right: 20px;
+    width: 40px; height: 40px;
+    background: var(--accent-color);
+    color: #fff;
+    border: none; border-radius: 50%;
+    font-size: 18px; cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 999;
+}
 
 /* ========================================= */
 /* === MOBILE STYLES (Max Width 767px) === */
@@ -330,20 +510,22 @@ h2::after {
     .nav-content { justify-content: center; }
     .mobile-nav { display: flex; }
     
-    /* Main Content Padding Fix */
+    /* FIX 2: Mobile Overlap Fix (Crucial) */
     .main-content {
         padding-top: 60px; 
         padding-bottom: var(--mobile-nav-height); 
     }
+
     .index-page .main-content {
         padding-top: 0; 
     }
+    
     .hero-video-section {
         margin-top: -60px; 
     }
 
 
-    /* === SERVICES SECTION MOBILE FIX === */
+    /* === SERVICES SECTION MOBILE FIX (Stacked Cards) === */
     .services-grid {
         flex-direction: column;
         gap: 20px;
@@ -357,6 +539,13 @@ h2::after {
     }
 
 
+    /* === CLIENTS WALL MOBILE FIX - 恢复动画后，移除此处的覆盖样式 === */
+    /* 保持桌面端的动画样式，但隐藏show-more-button */
+    .clients-section .show-more-button {
+        display: none;
+    }
+    /* 移除所有与 grid 布局和隐藏元素相关的样式，恢复滚动动画 */
+
     /* === PORTFOLIO GRID MOBILE FIX === */
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -369,9 +558,9 @@ h2::after {
         gap: 40px;
     }
     
-    /* === TERMS SECTION MOBILE CARD FIX (合作须知) === */
+    /* === TERMS SECTION MOBILE CARD FIX (合作须知) - 小字卡片排版 === */
     .terms-section {
-        padding: 40px 0; /* Reduced padding */
+        padding: 40px 0;
         text-align: center;
     }
     
@@ -390,31 +579,31 @@ h2::after {
     .terms-section .term-card h3 {
         font-size: 14px; /* Small font */
         font-weight: bold;
+        margin-top: 0;
     }
     
     .terms-section .term-card p {
         font-size: 12px; /* Extra small font */
         line-height: 1.5;
+        margin-bottom: 0;
     }
     /* ----------------------------------------------------------------- */
     
     /* --- MOBILE STYLES FOR EXISTING HTML STRUCTURE (h3, p) --- */
-    /* This section simulates the card effect if the HTML is not changed */
-    .terms-section h3 {
-        /* H3 acts as the card header, starts a new block */
+    /* 如果没有修改HTML，使用相邻选择器模拟卡片效果 */
+    .terms-section h3:not(.term-card h3) {
         background-color: #f0f0f0;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
         padding: 10px 15px;
         margin-top: 15px;
         color: var(--primary-color);
-        font-size: 14px; /* Small font */
+        font-size: 14px;
         text-align: left;
-        display: block; /* Ensure it takes full width */
+        display: block;
     }
     
-    .terms-section h3 + p {
-        /* The paragraph immediately following H3 acts as the card body */
+    .terms-section h3:not(.term-card h3) + p {
         background-color: #fff;
         padding: 10px 15px 15px 15px;
         border-bottom-left-radius: 8px;
@@ -422,12 +611,11 @@ h2::after {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         margin-bottom: 20px;
         color: #666;
-        font-size: 12px; /* Extra small font */
+        font-size: 12px;
         text-align: left;
     }
     
     .terms-section p:last-child {
-        /* The final centered text needs to be excluded from card styles */
         background: none;
         box-shadow: none;
         padding: 0;
