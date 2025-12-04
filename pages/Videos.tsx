@@ -96,13 +96,19 @@ const Videos = () => {
     if (!scrollRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
     const totalScroll = scrollWidth - clientWidth;
+    
     // Avoid division by zero
     if (totalScroll <= 0) {
         setProgress(50); 
         return;
     }
+
     const currentProgress = (scrollLeft / totalScroll) * 100;
-    setProgress(currentProgress);
+    
+    // CLAMP values between 0 and 100 to prevent rubber-banding (overscroll) from breaking the visual
+    const clampedProgress = Math.max(0, Math.min(100, currentProgress));
+    
+    setProgress(clampedProgress);
   };
 
   useEffect(() => {
@@ -121,20 +127,23 @@ const Videos = () => {
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
 
-      {/* Header Area */}
-      <div className="absolute top-24 left-0 right-0 z-30 flex flex-col items-center animate-fade-in">
-        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 border-b border-white/10 pb-1 mb-6">
+      {/* Header Area 
+          - Updated: top-16 (was 24) to pull it up
+          - Updated: mb-10 (was 6) to push content away
+      */}
+      <div className="absolute top-16 md:top-24 left-0 right-0 z-30 flex flex-col items-center animate-fade-in">
+        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 border-b border-white/10 pb-1 mb-8 md:mb-6">
           作品浏览 / FOOTAGE MODE
         </span>
 
         {/* Categories Filter */}
-        <div className="flex gap-4 md:gap-8 overflow-x-auto max-w-[90vw] no-scrollbar px-4">
+        <div className="flex gap-4 md:gap-8 overflow-x-auto max-w-[90vw] no-scrollbar px-4 pb-2">
           {VIDEO_CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               onClick={() => {
                   setFilter(cat.id);
-                  setHasInitialScrolled(false); // Reset animation flag to re-trigger center scroll if desired, or let simple re-render handle it
+                  setHasInitialScrolled(false);
               }}
               className={`text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap ${
                 filter === cat.id ? 'text-white' : 'text-white/30 hover:text-white/60'
@@ -160,7 +169,6 @@ const Videos = () => {
         onMouseMove={handleMouseMove}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        // Initially 'auto' or 'smooth' logic is handled in useEffect for entrance animation
       >
         {filteredItems.map((item, index) => (
           <div 
@@ -213,10 +221,11 @@ const Videos = () => {
       </div>
 
       {/* 
-         Bottom Progress Bar - Styled like the screenshot 
-         A scale of ticks with a hollow rounded rectangle indicator
+         Bottom Progress Bar 
+         - Updated width: w-[70vw] for mobile to be visually centered better
+         - Updated bottom: bottom-8 for better mobile clearance
       */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-64 md:w-80 h-12 flex flex-col items-center justify-center z-20 pointer-events-none animate-fade-in-up">
+      <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 w-[70vw] md:w-80 h-12 flex flex-col items-center justify-center z-20 pointer-events-none animate-fade-in-up">
          
          {/* The Scale Container */}
          <div className="relative w-full h-full flex items-center justify-between px-4">
@@ -224,8 +233,6 @@ const Videos = () => {
             {/* Ticks Background */}
             <div className="absolute inset-0 flex justify-between items-center px-4">
                {[...Array(21)].map((_, i) => {
-                  // Make center ticks taller or different? 
-                  // Screenshot looks uniform mostly, maybe some variation.
                   const isMajor = i % 5 === 0;
                   return (
                     <div 
@@ -236,13 +243,14 @@ const Videos = () => {
                })}
             </div>
 
-            {/* The Moving Indicator - Hollow Rounded Rectangle */}
+            {/* The Moving Indicator - Hollow Rounded Rectangle 
+                - Updated logic: left is % based, transform handles centering of the thumb itself
+            */}
             <div 
-               className="absolute top-1/2 -translate-y-1/2 w-8 h-5 border-2 border-white rounded-[4px] shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all duration-100 ease-out bg-black/50 backdrop-blur-[1px]"
+               className="absolute top-1/2 -translate-y-1/2 w-8 h-5 border-2 border-white rounded-[4px] shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all duration-75 ease-out bg-black/50 backdrop-blur-[1px]"
                style={{ 
-                   // Map progress (0-100) to left position (approx 0% to 90% of container width minus indicator width)
-                   // We add a clamp to keep it within bounds visually
-                   left: `calc(${progress}% - 16px)` // 16px is half width of indicator (32px)
+                   left: `${progress}%`,
+                   transform: 'translate(-50%, -50%)' // Center the thumb on the point
                }} 
             />
          </div>
