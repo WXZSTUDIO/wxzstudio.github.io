@@ -27,9 +27,7 @@
                 <source src="assets/videos/hero-bg.mp4" type="video/mp4">
             </video>
             <div class="hero-overlay">
-                <h1>WXZ STUDIO</h1>
-                <p>创意影像，专业呈现</p>
-            </div>
+                </div>
         </section>
 
         <section class="services-section container">
@@ -119,5 +117,50 @@
             </a>
         </div>
     </nav>
+
+    <script>
+        /**
+         * 通用原生调用函数 (JS Bridge)。
+         * 自动检测运行环境并使用 Android (window.TsJSInterface) 或 iOS (webkit.messageHandlers) 进行调用。
+         * @param {string} methodName - Native 端暴露的方法名称。
+         * @param {object} [data={}] - 传递给 Native 端的数据对象。
+         * @returns {boolean} - 如果调用尝试成功返回 true，否则返回 false。
+         */
+        function callNative(methodName, data = {}) {
+            // 1. iOS 环境检测 (webkit.messageHandlers)
+            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers[methodName]) {
+                try {
+                    // iOS 通常通过 postMessage 传递一个 JSON 对象
+                    window.webkit.messageHandlers[methodName].postMessage(data);
+                    console.log(`[JS Bridge] iOS Call Success: ${methodName}`, data);
+                    return true;
+                } catch (e) {
+                    console.error(`[JS Bridge] iOS Call Failed: ${methodName}`, e);
+                    return false;
+                }
+            } 
+            // 2. Android 环境检测 (window.TsJSInterface)
+            else if (window.TsJSInterface && window.TsJSInterface[methodName]) {
+                try {
+                    // Android 通常要求传递 JSON 字符串
+                    const jsonString = JSON.stringify(data);
+                    window.TsJSInterface[methodName](jsonString);
+                    console.log(`[JS Bridge] Android Call Success: ${methodName}`, jsonString);
+                    return true;
+                } catch (e) {
+                    console.error(`[JS Bridge] Android Call Failed: ${methodName}`, e);
+                    return false;
+                }
+            } 
+            // 3. 默认/桌面环境
+            else {
+                console.warn(`[JS Bridge] Native call failed. Method '${methodName}' not found.`);
+                return false;
+            }
+        }
+        
+        // 示例：如果您需要分享内容，只需调用：
+        // callNative('shareContent', { title: 'WXZ作品集', url: window.location.href });
+    </script>
 </body>
 </html>
