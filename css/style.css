@@ -1,0 +1,290 @@
+/* style.css - 新增/修改的视觉重构样式 */
+
+/* ------------------------------------------------------------------- */
+/* 3. New Home Page (index.html) - Single Video Showcase 视觉重构 */
+/* ------------------------------------------------------------------- */
+.hero-showcase-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color); /* 纯黑背景 */
+}
+
+.hero-showcase-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: brightness(0.7); /* 封面略暗 */
+}
+
+.showcase-content {
+    position: relative;
+    z-index: 20;
+    width: 90%;
+    max-width: 1400px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end; /* 内容靠底对齐 */
+    justify-content: space-between;
+    padding: 0 5%;
+    padding-bottom: 120px; /* 底部留白 */
+    color: var(--secondary-color);
+}
+
+.showcase-title-box {
+    flex: 1;
+    text-align: left;
+    overflow: hidden; 
+    /* 初始隐藏，防止动画前的闪烁，在 JS 中设置可见 */
+    visibility: hidden; 
+}
+
+.showcase-title {
+    font-family: 'Raleway', var(--font-family);
+    font-size: clamp(30px, 6vw, 72px); 
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin: 0;
+    /* 流畅的入场效果：从底部滑入 */
+    transform: translateY(100%); 
+    animation: slideInTitle 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 0.5s;
+    display: block;
+}
+
+.showcase-subtitle {
+    font-size: clamp(14px, 1.5vw, 20px);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInText 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 1.0s;
+}
+
+.showcase-stats-box {
+    /* 初始隐藏，在 JS 中设置可见 */
+    visibility: hidden; 
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 50px;
+    opacity: 0;
+    animation: fadeInText 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 1.5s;
+}
+
+.stat-item {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 10px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+}
+
+/* 动画定义 */
+@keyframes slideInTitle {
+    to { transform: translateY(0); }
+}
+
+@keyframes fadeInText {
+    to { opacity: 1; transform: translateY(0); visibility: visible; }
+}
+
+
+/* ------------------------------------------------------------------- */
+/* 4. New Work Page (video-portfolio.html) - Footage Mode 视觉重构 */
+/* ------------------------------------------------------------------- */
+.footage-section {
+    padding: 0; 
+    width: 100vw;
+    /* 适应桌面/移动端导航栏高度 */
+    height: calc(100vh - var(--nav-height)); 
+    overflow: hidden;
+    position: relative;
+}
+
+.footage-scroll-wrapper {
+    display: flex;
+    height: 100%;
+    /* 启用横向滚动和拖拽 */
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory; /* 滚动捕捉，提高体验 */
+    -webkit-overflow-scrolling: touch; 
+}
+
+/* 隐藏滚动条 */
+.footage-scroll-wrapper::-webkit-scrollbar { display: none; }
+.footage-scroll-wrapper { -ms-overflow-style: none; scrollbar-width: none; }
+
+.footage-item {
+    flex: 0 0 90vw; /* 每个作品占据 90vw 的宽度 */
+    height: 80%; /* 留出上下空间 */
+    margin: auto 0;
+    margin-left: 5vw; 
+    position: relative;
+    scroll-snap-align: center; 
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    /* 初始位置：完全在左侧，用于入场动画 */
+    transform: translateX(-100vw); 
+    opacity: 1; /* 确保动画结束后可见 */
+}
+
+.footage-item:last-child {
+    margin-right: 5vw; 
+}
+
+/* 第一次进入页面时会有从左到右的线性动画 */
+@keyframes footageEntry {
+    to { transform: translateX(0); }
+}
+/* 对前几个元素设置延迟动画 */
+.footage-item:nth-child(1) { animation: footageEntry 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+.footage-item:nth-child(2) { animation: footageEntry 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards; animation-delay: 0.1s; }
+.footage-item:nth-child(3) { animation: footageEntry 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards; animation-delay: 0.2s; }
+/* 请在 HTML 中使用 img 作为封面 */
+.footage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.footage-info {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: var(--secondary-color);
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+.footage-info h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+/* 作品下方进度条 */
+.footage-progress-bar-container {
+    position: absolute;
+    bottom: 80px; /* 距离底部留白 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    max-width: 800px;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: 50;
+    pointer-events: none; 
+}
+
+#footageProgressBar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease-out;
+}
+
+/* ------------------------------------------------------------------- */
+/* 5. Video Modal (In-page player) 播放器样式更新 */
+/* ------------------------------------------------------------------- */
+
+.close-btn {
+    /* 类似风格的关闭按钮 */
+    position: absolute;
+    top: -40px; 
+    right: 0px; 
+    color: var(--secondary-color);
+    font-size: 40px;
+    font-weight: 200;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    opacity: 0.8;
+    line-height: 1;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.close-btn:hover {
+    opacity: 1;
+    transform: rotate(90deg); /* 旋转动画效果 */
+}
+
+/* ------------------------------------------------------------------- */
+/* 6. Media Queries 移动端适配 (新增/修改) */
+/* ------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    
+    /* 调整主内容区域，为移动端导航栏预留空间 */
+    .main-content {
+        margin-top: var(--mobile-nav-top-height);
+        margin-bottom: var(--mobile-nav-bottom-height);
+    }
+
+    /* 首页 Showcase 移动端调整 */
+    .showcase-content {
+        padding-bottom: 80px;
+        flex-direction: column; /* 垂直堆叠 */
+        align-items: flex-start;
+    }
+    
+    .showcase-stats-box {
+        margin-left: 0;
+        margin-top: 20px;
+        align-items: flex-start;
+    }
+    
+    /* 视频作品页 Footage Mode 移动端调整 */
+    .footage-section {
+        height: calc(100vh - var(--mobile-nav-top-height) - var(--mobile-nav-bottom-height));
+    }
+
+    .footage-item {
+        flex: 0 0 95vw; 
+        margin-left: 2.5vw;
+    }
+    
+    .footage-item:last-child {
+        margin-right: 2.5vw;
+    }
+
+    .footage-progress-bar-container {
+        width: 95vw;
+        bottom: 70px; /* 避开底部导航栏 */
+    }
+    
+    /* Modal 关闭按钮移动端样式 */
+    .close-btn {
+        top: 10px; 
+        right: 10px;
+        color: var(--primary-color); 
+        background-color: var(--secondary-color);
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1;
+        opacity: 0.9;
+        text-shadow: none;
+        z-index: 2010;
+    }
+}
