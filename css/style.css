@@ -11,7 +11,7 @@
     --nav-height: 80px;            /* 桌面 Header 高度 */
     --mobile-nav-top-height: 55px; /* **新增：移动端顶部 Header 高度** */
     --mobile-nav-bottom-height: 60px; /* 移动端底部 Header 高度 */
-    --footer-bottom-padding: 40px; /* **新增：底部空白高度** */
+    --footer-bottom-padding: 40px; /* **新增：底部空白高度** */ 
 }
 
 /* **新增：Logo 字体声明** */
@@ -101,7 +101,7 @@ a:hover {
 .nav-content {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* **确保桌面端 Logo 和导航菜单上下居中** */
+    align-items: center;
     height: 100%;
     padding: 0 5%;
 }
@@ -556,8 +556,8 @@ a:hover {
     .nav-content {
         /* 移动端 Logo 居中 */
         justify-content: center;
-        /* **新增：确保 Logo 上下居中** */
-        align-items: center;
+        /* **修复：确保 Logo 上下居中** */
+        align-items: center; /* 明确设置上下居中 */
     }
     .nav-menu {
         display: none; 
@@ -603,27 +603,27 @@ a:hover {
     }
     .clients-list-inner {
         display: grid;
-        /* 调整：增加网格间距 */
+        /* **调整：网格间距和对齐** */
         grid-template-columns: repeat(3, 1fr); /* 3 列网格 */
-        gap: 20px; /* **网格间距加大** */
+        gap: 20px 15px; /* 增加行间距，保持列间距 */
         align-items: center;
-        justify-items: center; /* 确保内容在单元格中居中 */
+        justify-items: center; /* 确保图标在单元格中居中 */
         padding: 10px 0; /* 增加上下留白 */
     }
     .clients-list-desktop-only {
         display: none;
     }
     .client-logo {
-        /* **修改：实现圆角正方形 Icon 容器** */
-        width: 80px; /* 固定宽度 */
-        height: 80px; /* 固定高度 */
+        /* **修改：实现圆形 Icon 容器** */
+        width: 80px; /* 固定宽高，使其成为正方形 */
+        height: 80px; 
         padding: 10px; 
         border: 1px solid #ddd; 
-        border-radius: 10px; /* 圆角效果 */
+        border-radius: 50%; /* **圆形容器** */
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: var(--secondary-color); /* 纯白背景 */
+        background-color: var(--secondary-color);
     }
     .client-logo img {
         /* 确保 Icon 图片能在新容器中自适应，并保持灰度 */
