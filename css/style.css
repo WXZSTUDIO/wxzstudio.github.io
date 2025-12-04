@@ -237,24 +237,33 @@ a:hover {
     100% { transform: translateX(-50%); }
 }
 
-/* 5.1 新增：重要须知块样式 */
+/* 5.1 更新：须知块样式 (应用于 .notice-section 和 .notice-block) */
+.notice-section {
+    padding: 80px 0;
+    background-color: var(--secondary-color);
+}
 .notice-block {
-    max-width: 800px;
-    margin: 80px auto 0 auto; /* 顶部留白，居中 */
+    max-width: 900px; /* 略微放宽 */
+    margin: 0 auto; 
     padding: 30px;
-    border: 1px solid #ddd; 
+    border: 1px solid #eee; 
     text-align: left;
-    background-color: var(--secondary-color); 
+    background-color: #f8f8f8; /* 浅灰色背景 */
 }
 
 .notice-block h4 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
-    margin-bottom: 20px;
-    letter-spacing: 0.1em;
+    margin-bottom: 25px;
+    letter-spacing: 0.05em;
     color: var(--primary-color);
-    border-bottom: 1px dashed #eee;
+    border-bottom: 1px dashed #ddd;
     padding-bottom: 10px;
+}
+.notice-block > p {
+    font-size: 14px;
+    color: var(--accent-color);
+    margin-bottom: 30px;
 }
 
 .notice-block ul {
@@ -263,10 +272,17 @@ a:hover {
 }
 
 .notice-block li {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.8;
     color: var(--accent-color);
+}
+.notice-block li h5 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    letter-spacing: 0.05em;
 }
 .notice-block li p {
     margin: 0; 
@@ -389,7 +405,7 @@ a:hover {
     color: var(--secondary-color);
 }
 
-/* 8. Video Playback Modal Styles (保持不变) */
+/* 8. Video Playback Modal Styles (已更新 close-btn 移动端隐藏) */
 .video-modal {
     display: none; 
     position: fixed;
@@ -587,23 +603,35 @@ a:hover {
         padding: 0;
         margin: 0;
     }
-
+    /* 移动端：隐藏右上角的关闭按钮，因为将使用系统自带的退出全屏操作 */
     .close-btn {
         display: none; 
     }
 
     /* 移动端须知块 */
+    .notice-section {
+        padding: 40px 0;
+    }
     .notice-block {
-        margin-top: 40px;
+        margin: 0 auto;
         padding: 20px;
         width: 90%;
     }
     .notice-block h4 {
-        font-size: 15px;
+        font-size: 16px;
         margin-bottom: 15px;
     }
-    .notice-block li {
+    .notice-block > p {
         font-size: 13px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    .notice-block li {
+        margin-bottom: 20px;
+    }
+    .notice-block li h5 {
+        font-size: 14px;
+    }
+    .notice-block li p {
+        font-size: 13px;
     }
 }

@@ -208,6 +208,29 @@
             // --- 随机封面功能结束 ---
 
             // 1. 播放器逻辑 
+            function closeModal() {
+                modal.classList.remove('show');
+                playerContainer.innerHTML = ''; 
+                // 确保退出全屏 (适用于桌面/兼容模式下的全屏)
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { 
+                    document.webkitExitFullscreen();
+                }
+            }
+
+            // 监听全屏退出事件，确保移动端播放完毕或退出全屏后关闭模态框
+            document.addEventListener('webkitfullscreenchange', (e) => {
+                if (!document.webkitIsFullScreen) {
+                    closeModal();
+                }
+            });
+            document.addEventListener('fullscreenchange', (e) => {
+                if (!document.fullscreenElement) {
+                    closeModal();
+                }
+            });
+
             workItems.forEach(item => {
                 item.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -225,12 +248,14 @@
                     playerContainer.innerHTML = '';
                     playerContainer.appendChild(videoElement);
 
+                    // 移动端尝试直接进入全屏以优化体验
                     if (window.innerWidth <= 1024) { 
                         videoElement.addEventListener('loadedmetadata', function() {
-                            if (videoElement.requestFullscreen) {
-                                videoElement.requestFullscreen();
-                            } else if (videoElement.webkitEnterFullscreen) { 
+                            // 兼容性处理：iOS Safari 使用 webkitEnterFullscreen，其他使用标准 API
+                            if (videoElement.webkitEnterFullscreen) { 
                                 videoElement.webkitEnterFullscreen();
+                            } else if (videoElement.requestFullscreen) {
+                                videoElement.requestFullscreen();
                             }
                         }, { once: true });
                     }
@@ -239,14 +264,9 @@
                 });
             });
 
-            // 关闭弹窗 
-            function closeModal() {
-                modal.classList.remove('show');
-                playerContainer.innerHTML = ''; 
-            }
-
             closeBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
+                // 点击背景关闭 (桌面端)
                 if (e.target === modal) {
                     closeModal();
                 }
