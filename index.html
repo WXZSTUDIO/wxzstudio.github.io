@@ -34,20 +34,20 @@
             <h2>我们的服务</h2>
             <div class="services-grid">
                 <div class="service-item">
-                    <h3>影视广告</h3>
-                    <p>品牌 TVC、短视频广告、活动记录。</p>
+                    <h3>商业活动</h3>
+                    <p>会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作。</p>
                 </div>
                 <div class="service-item">
-                    <h3>平面视觉</h3>
-                    <p>海报设计、品牌 VI、社交媒体内容制作。</p>
+                    <h3>产品拍摄</h3>
+                    <p>为电商及广告客户提供高质量的产品视频和摄影，突出产品特性与美感。</p>
                 </div>
                 <div class="service-item">
-                    <h3>品牌策略</h3>
-                    <p>视觉识别系统、内容营销规划。</p>
+                    <h3>品牌宣传</h3>
+                    <p>制作企业宣传片、品牌故事片和形象 TVC，提升品牌知名度与市场影响力。</p>
                 </div>
                 <div class="service-item">
-                    <h3>后期制作</h3>
-                    <p>专业剪辑、调色、动效与特效。</p>
+                    <h3>视觉设计</h3>
+                    <p>提供品牌 VI、海报、社交媒体图文等全方位的平面设计与视觉传达服务。</p>
                 </div>
             </div>
         </section>
@@ -83,7 +83,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="notice-block">
+                    <h4>重要须知</h4>
+                    <ul>
+                        <li><p>所有作品均包含 WXZ STUDIO 的创意劳动与知识产权，未经授权禁止转载、盗用或用于商业用途。</p></li>
+                        <li><p>部分展示作品已获得客户授权，仅用于展示本工作室的制作能力，具体内容请以最终合同为准。</p></li>
+                        <li><p>我们承诺严格保密客户的商业信息与未发布的作品内容。</p></li>
+                    </ul>
+                </div>
+                </div>
         </section>
     </main>
 
@@ -117,20 +126,15 @@
             </a>
         </div>
     </nav>
-    
+
     <script>
         /**
          * 通用原生调用函数 (JS Bridge)。
-         * 自动检测运行环境并使用 Android (window.TsJSInterface) 或 iOS (webkit.messageHandlers) 进行调用。
-         * @param {string} methodName - Native 端暴露的方法名称。
-         * @param {object} [data={}] - 传递给 Native 端的数据对象。
-         * @returns {boolean} - 如果调用尝试成功返回 true，否则返回 false。
          */
         function callNative(methodName, data = {}) {
             // 1. iOS 环境检测 (webkit.messageHandlers)
             if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers[methodName]) {
                 try {
-                    // iOS 通常通过 postMessage 传递一个 JSON 对象
                     window.webkit.messageHandlers[methodName].postMessage(data);
                     console.log(`[JS Bridge] iOS Call Success: ${methodName}`, data);
                     return true;
@@ -142,7 +146,6 @@
             // 2. Android 环境检测 (window.TsJSInterface)
             else if (window.TsJSInterface && window.TsJSInterface[methodName]) {
                 try {
-                    // Android 通常要求传递 JSON 字符串
                     const jsonString = JSON.stringify(data);
                     window.TsJSInterface[methodName](jsonString);
                     console.log(`[JS Bridge] Android Call Success: ${methodName}`, jsonString);

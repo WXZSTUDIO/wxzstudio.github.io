@@ -140,8 +140,6 @@ a:hover {
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    /* 移除 margin-top 补偿，让 main 的 margin-top 控制顶部间距 */
-    /* margin-top: calc(0px - var(--nav-height)); */ 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -195,7 +193,7 @@ a:hover {
     letter-spacing: 0.05em;
 }
 
-/* 5. Clients Wall Section (保持不变) */
+/* 5. Clients Wall Section */
 .clients-section {
     background-color: #f8f8f8;
     padding: 80px 0;
@@ -238,6 +236,43 @@ a:hover {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
 }
+
+/* 5.1 新增：重要须知块样式 */
+.notice-block {
+    max-width: 800px;
+    margin: 80px auto 0 auto; /* 顶部留白，居中 */
+    padding: 30px;
+    border: 1px solid #ddd; 
+    text-align: left;
+    background-color: var(--secondary-color); 
+}
+
+.notice-block h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.1em;
+    color: var(--primary-color);
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 10px;
+}
+
+.notice-block ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.notice-block li {
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--accent-color);
+}
+.notice-block li p {
+    margin: 0; 
+}
+/* 须知块样式结束 */
+
 
 /* 6. Contact Section (保持不变) */
 .contact-section {
@@ -468,21 +503,21 @@ a:hover {
     
     /* 1. Main 内容区域调整 */
     main {
-        margin-top: var(--mobile-nav-top-height); /* **新：避开顶部 Header** */
+        margin-top: var(--mobile-nav-top-height); 
         padding-bottom: 0; 
     }
     
     /* 2. 顶部 Header (Mobile Top Bar) */
     .header {
-        display: block; /* **显示顶部 Header** */
+        display: block; 
         height: var(--mobile-nav-top-height);
         background-color: rgba(255, 255, 255, 0.8); /* **白色半透明** */
         backdrop-filter: blur(8px); /* **毛玻璃效果** */
         -webkit-backdrop-filter: blur(8px);
-        border-bottom: none; /* 移除分隔线 */
+        border-bottom: none; 
     }
     .nav-menu {
-        display: none; /* **隐藏桌面菜单项** */
+        display: none; 
     }
 
     /* 强制显示底部导航 */
@@ -555,5 +590,20 @@ a:hover {
 
     .close-btn {
         display: none; 
+    }
+
+    /* 移动端须知块 */
+    .notice-block {
+        margin-top: 40px;
+        padding: 20px;
+        width: 90%;
+    }
+    .notice-block h4 {
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+    .notice-block li {
+        font-size: 13px;
+        margin-bottom: 10px;
     }
 }
