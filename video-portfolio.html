@@ -34,61 +34,80 @@
                 
                 <div class="portfolio-grid video-portfolio-grid">
                     
-                    <div class="work-item" data-tags="brand product" data-video-src="assets/videos/portfolio/video-01.mp4">
+                    <a class="work-item" data-tags="event,brand" data-video-src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" target="_blank">
                         <div class="work-media">
-                            <video muted loop preload="metadata">
-                                <source src="assets/videos/portfolio/video-01.mp4" type="video/mp4">
-                                您的浏览器不支持视频播放。
-                            </video>
+                            <img src="assets/images/video_thumbs/thumb01.jpg" alt="作品封面1">
                         </div>
                         <div class="work-info">
-                            <h3>2024年度混剪</h3>
-                            <div class="work-tags"><span class="work-tag">品牌宣传</span></div>
+                            <h3>某集团年会宣传片</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">商业活动</span>
+                                <span class="work-tag">品牌宣传</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="work-item" data-tags="brand event" data-video-src="assets/videos/portfolio/video-02.mp4">
+                    <a class="work-item" data-tags="product" data-video-src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1" target="_blank">
                         <div class="work-media">
-                            <video muted loop preload="metadata">
-                                <source src="assets/videos/portfolio/video-02.mp4" type="video/mp4">
-                                您的浏览器不支持视频播放。
-                            </video>
+                            <img src="assets/images/video_thumbs/thumb02.jpg" alt="作品封面2">
                         </div>
                         <div class="work-info">
-                            <h3>首尔时装周</h3>
-                            <div class="work-tags"><span class="work-tag">商业活动</span></div>
+                            <h3>全新智能手机产品发布</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">产品拍摄</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="work-item" data-tags="event" data-video-src="assets/videos/portfolio/video-03.mp4">
+                    <a class="work-item" data-tags="brand" data-video-src="https://player.vimeo.com/video/22439234?autoplay=1" target="_blank">
                         <div class="work-media">
-                            <video muted loop preload="metadata">
-                                <source src="assets/videos/portfolio/video-03.mp4" type="video/mp4">
-                                您的浏览器不支持视频播放。
-                            </video>
+                            <img src="assets/images/video_thumbs/thumb03.jpg" alt="作品封面3">
                         </div>
                         <div class="work-info">
-                            <h3>高端晚宴</h3>
-                            <div class="work-tags"><span class="work-tag">商业活动</span></div>
+                            <h3>城市文化旅游宣传片</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">品牌宣传</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="work-item" data-tags="brand product" data-video-src="assets/videos/portfolio/video-04.mp4">
+                    <a class="work-item" data-tags="event,product" data-video-src="https://www.bilibili.com/video/BV1nx411G7W5?autoplay=1" target="_blank">
                         <div class="work-media">
-                            <video muted loop preload="metadata">
-                                <source src="assets/videos/portfolio/video-04.mp4" type="video/mp4">
-                                您的浏览器不支持视频播放。
-                            </video>
+                            <img src="assets/images/video_thumbs/thumb04.jpg" alt="作品封面4">
                         </div>
                         <div class="work-info">
-                            <h3>新世界免税店 x 首尔月</h3>
-                            <div class="work-tags"><span class="work-tag">产品拍摄</span></div>
+                            <h3>户外装备极限测试</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">商业活动</span>
+                                <span class="work-tag">产品拍摄</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
+
+                    <a class="work-item" data-tags="brand" data-video-src="https://v.qq.com/iframe/player.html?vid=a0028tq2f4c&autoplay=1" target="_blank">
+                        <div class="work-media">
+                            <img src="assets/images/video_thumbs/thumb05.jpg" alt="作品封面5">
+                        </div>
+                        <div class="work-info">
+                            <h3>企业人才招募形象片</h3>
+                            <div class="work-tags">
+                                <span class="work-tag">品牌宣传</span>
+                            </div>
+                        </div>
+                    </a>
+                    
                 </div>
             </div>
         </section>
     </main>
+
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">&times;</span> 
+            <div id="videoPlayerContainer">
+                </div>
+        </div>
+    </div>
     
     <footer class="footer">
         <div class="container">
@@ -96,13 +115,6 @@
         </div>
     </footer>
 
-    <div id="videoModal" class="video-modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <div id="videoPlayerContainer"></div>
-        </div>
-    </div>
-    
     <nav class="mobile-nav">
         <div class="mobile-menu-icons">
             <a href="index.html">
@@ -127,143 +139,68 @@
             </a>
         </div>
     </nav>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const workItems = document.querySelectorAll('.work-item');
             const modal = document.getElementById('videoModal');
-            const closeBtn = document.querySelector('.close-btn');
-            const playerContainer = document.getElementById('videoPlayerContainer');
+            const closeBtn = document.getElementById('closeBtn');
+            const videoContainer = document.getElementById('videoPlayerContainer');
+            const workItems = document.querySelectorAll('.work-item');
 
-            // --- 关键新功能：随机视频帧生成封面 ---
-            function generateRandomPoster(videoElement) {
-                return new Promise((resolve) => {
-                    const videoSrc = videoElement.querySelector('source').src;
-                    const tempVideo = document.createElement('video');
-                    tempVideo.src = videoSrc;
-                    tempVideo.preload = 'metadata'; 
-                    tempVideo.muted = true; 
-
-                    tempVideo.onloadedmetadata = function() {
-                        const duration = tempVideo.duration;
-                        const randomTime = Math.random() * (duration - 2) + 1;
-                        tempVideo.currentTime = randomTime;
-
-                        tempVideo.onseeked = function() {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = tempVideo.videoWidth;
-                            canvas.height = tempVideo.videoHeight;
-                            const ctx = canvas.getContext('2d');
-                            
-                            ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
-                            
-                            const dataURL = canvas.toDataURL('image/jpeg', 0.8);
-                            resolve(dataURL);
-                            
-                            tempVideo.remove();
-                            canvas.remove();
-                        };
-
-                        tempVideo.onerror = () => {
-                            console.error('视频加载失败或无法 seek:', videoSrc);
-                            resolve(null);
-                            tempVideo.remove();
-                        };
-                    };
-                    
-                    tempVideo.onerror = () => resolve(null);
-                });
-            }
-
-            // 页面加载时，为每个视频作品生成随机封面
-            document.querySelectorAll('.portfolio-grid .work-item').forEach(item => {
-                const videoEl = item.querySelector('video');
-                
-                if (videoEl && !videoEl.getAttribute('poster')) {
-                    generateRandomPoster(videoEl).then(posterURL => {
-                        if (posterURL) {
-                            videoEl.setAttribute('poster', posterURL);
-                        } else {
-                            // 失败使用默认占位符
-                            videoEl.setAttribute('poster', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
-                        }
-                    });
-                }
-
-                // 鼠标悬停事件
-                const container = item.querySelector('.work-media');
-                if (container) {
-                    container.addEventListener('mouseenter', () => {
-                        videoEl.play().catch(error => {
-                            console.log('Video auto-play failed:', error);
-                        });
-                    });
-
-                    container.addEventListener('mouseleave', () => {
-                        videoEl.pause();
-                        videoEl.currentTime = 0; 
-                    });
-                }
-            });
-            // --- 随机封面功能结束 ---
-
-            // 1. 播放器逻辑 
+            // 【重要修复】关闭模态框和移除播放器的函数
             function closeModal() {
                 modal.classList.remove('show');
-                playerContainer.innerHTML = ''; 
-                // 确保退出全屏 (适用于桌面/兼容模式下的全屏)
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) { 
-                    document.webkitExitFullscreen();
+                // 移除所有子元素，停止视频播放
+                while (videoContainer.firstChild) {
+                    videoContainer.removeChild(videoContainer.firstChild);
                 }
+                // 恢复页面滚动（如果需要）
+                document.body.style.overflow = 'auto'; 
+                // 确保移动端底部导航显示 (如果它因为全屏被隐藏了)
+                document.querySelector('.mobile-nav').style.display = 'flex'; 
             }
 
-            // 监听全屏退出事件，确保移动端播放完毕或退出全屏后关闭模态框
-            document.addEventListener('webkitfullscreenchange', (e) => {
-                if (!document.webkitIsFullScreen) {
-                    closeModal();
-                }
-            });
-            document.addEventListener('fullscreenchange', (e) => {
-                if (!document.fullscreenElement) {
-                    closeModal();
-                }
-            });
-
+            // 1. 模态框播放逻辑
             workItems.forEach(item => {
+                // 确保点击事件只在桌面端或模态框功能可用时触发
                 item.addEventListener('click', function(e) {
-                    e.preventDefault();
+                    // 阻止默认的链接跳转行为 (target="_blank")
+                    e.preventDefault(); 
+                    
                     const videoSrc = this.getAttribute('data-video-src');
                     if (!videoSrc) return;
 
-                    const videoElement = document.createElement('video');
-                    videoElement.src = videoSrc;
-                    videoElement.controls = true; 
-                    videoElement.autoplay = true; 
-                    videoElement.muted = false; 
-                    videoElement.playsInline = true; 
-                    videoElement.classList.add('modal-video-player');
-
-                    playerContainer.innerHTML = '';
-                    playerContainer.appendChild(videoElement);
-
-                    // 移动端尝试直接进入全屏以优化体验
-                    if (window.innerWidth <= 1024) { 
-                        videoElement.addEventListener('loadedmetadata', function() {
-                            // 兼容性处理：iOS Safari 使用 webkitEnterFullscreen，其他使用标准 API
-                            if (videoElement.webkitEnterFullscreen) { 
-                                videoElement.webkitEnterFullscreen();
-                            } else if (videoElement.requestFullscreen) {
-                                videoElement.requestFullscreen();
-                            }
-                        }, { once: true });
+                    // 移动端：直接跳转到外部链接（或原生App处理），避免在小屏幕内嵌播放体验差
+                    if (window.innerWidth <= 1024) {
+                        // 尝试使用通用链接打开新标签页，或者使用 callNative
+                        window.open(this.href, '_blank');
+                        return; 
                     }
 
+
+                    // 桌面端：在模态框内播放
+                    
+                    // 创建 iframe 播放器
+                    const iframe = document.createElement('iframe');
+                    iframe.setAttribute('src', videoSrc);
+                    iframe.setAttribute('frameborder', '0');
+                    iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+                    iframe.setAttribute('allowfullscreen', '');
+                    iframe.classList.add('modal-video-player');
+                    
+                    // 清空并添加新播放器
+                    while (videoContainer.firstChild) {
+                        videoContainer.removeChild(videoContainer.firstChild);
+                    }
+                    videoContainer.appendChild(iframe);
+
                     modal.classList.add('show');
+                    // 禁用页面滚动
+                    document.body.style.overflow = 'hidden';
                 });
             });
 
+            // 桌面端关闭事件绑定
             closeBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
                 // 点击背景关闭 (桌面端)
@@ -278,7 +215,7 @@
             });
 
 
-            // 2. 筛选功能 
+            // 2. 筛选功能 (保持不变)
             document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
                 tag.addEventListener('click', function() {
                     document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));

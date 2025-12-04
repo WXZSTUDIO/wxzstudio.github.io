@@ -588,30 +588,30 @@ a:hover {
     
     /* 移动端 Clients Wall: 3x3 网格布局 */
     .clients-wall {
-        overflow: visible; /* 允许内容超出，为网格布局做准备 */
+        overflow: visible; 
         white-space: normal;
-        padding: 0; /* 移除 padding */
+        padding: 0; 
     }
     .clients-scroll-container {
         animation: none; 
-        display: block; /* 恢复为块级元素，不使用 flex */
+        display: block; 
     }
     .clients-list-inner {
         display: grid;
         grid-template-columns: repeat(3, 1fr); /* 3 列网格 */
         gap: 15px; /* 网格间距 */
         align-items: center;
-        /* 仅第一个 inner 用于网格展示，第二个用于桌面滚动的 inner 隐藏 */
         display: grid;
     }
     .clients-list-desktop-only {
         display: none;
     }
     .client-logo {
-        width: 100%; /* 占满网格列宽 */
-        height: 50px;
-        padding: 5px; /* 增加 logo 内部留白 */
-        border: 1px solid #eee; /* 增加边框以便区分网格 */
+        /* 调整：将高度从 50px 增加到 70px */
+        width: 100%; 
+        height: 70px; /* <--- 放大 Icon */
+        padding: 5px; 
+        border: 1px solid #eee; 
     }
     /* 默认隐藏第10个客户（index 9） */
     .clients-list-inner .client-logo:nth-child(n+10) {

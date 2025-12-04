@@ -154,39 +154,96 @@
     </nav>
 
     <script>
-        /**
-         * 通用原生调用函数 (JS Bridge)。
-         */
-        function callNative(methodName, data = {}) {
-            // 1. iOS 环境检测 (webkit.messageHandlers)
-            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers[methodName]) {
-                try {
-                    window.webkit.messageHandlers[methodName].postMessage(data);
-                    console.log(`[JS Bridge] iOS Call Success: ${methodName}`, data);
-                    return true;
-                } catch (e) {
-                    console.error(`[JS Bridge] iOS Call Failed: ${methodName}`, e);
-                    return false;
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const clientList = document.getElementById('client-list');
+            const showAllBtn = document.getElementById('show-all-clients-btn');
+            const clientLogos = clientList ? clientList.querySelectorAll('.client-logo') : [];
+
+            // 移动端客户展示逻辑 (3x3 网格)
+            if (clientList && showAllBtn && window.innerWidth <= 1024) {
+                
+                const limit = 9; // 默认展示前 9 个 (3x3)
+                let isAllVisible = false;
+
+                // 默认隐藏第 10 个及之后的客户 (CSS 媒体查询中也做了处理，这里确保JS逻辑同步)
+                clientLogos.forEach((logo, index) => {
+                    if (index >= limit) {
+                        logo.style.display = 'none';
+                    } else {
+                        // 确保前 9 个是 grid item 默认的 display
+                        logo.style.display = ''; 
+                    }
+                });
+
+                // 如果总数超过限制，则显示按钮
+                if (clientLogos.length > limit) {
+                    showAllBtn.style.display = 'block';
+                } else {
+                    showAllBtn.style.display = 'none';
                 }
-            } 
-            // 2. Android 环境检测 (window.TsJSInterface)
-            else if (window.TsJSInterface && window.TsJSInterface[methodName]) {
-                try {
-                    const jsonString = JSON.stringify(data);
-                    window.TsJSInterface[methodName](jsonString);
-                    console.log(`[JS Bridge] Android Call Success: ${methodName}`, jsonString);
-                    return true;
-                } catch (e) {
-                    console.error(`[JS Bridge] Android Call Failed: ${methodName}`, e);
-                    return false;
+
+                showAllBtn.addEventListener('click', () => {
+                    if (!isAllVisible) {
+                        // 显示所有客户
+                        clientLogos.forEach(logo => logo.style.display = ''); // 清除内联样式，恢复 CSS 默认的 grid item 显示
+                        showAllBtn.textContent = '收起'; 
+                        isAllVisible = true;
+                    } else {
+                        // 隐藏第 10 个及之后的客户
+                        clientLogos.forEach((logo, index) => {
+                            if (index >= limit) {
+                                logo.style.display = 'none';
+                            }
+                        });
+                        showAllBtn.textContent = '展示全部'; 
+                        isAllVisible = false;
+                        
+                        // 滚动回网格顶部
+                        clientList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            } else {
+                // 桌面端或非移动端，移除原来的 JS 逻辑，并确保 “展示全部” 按钮隐藏
+                if (showAllBtn) {
+                    showAllBtn.style.display = 'none';
                 }
-            } 
-            // 3. 默认/桌面环境
-            else {
-                console.warn(`[JS Bridge] Native call failed. Method '${methodName}' not found.`);
-                return false;
             }
-        }
+
+            /**
+             * 通用原生调用函数 (JS Bridge)。 (此部分代码保持不变，仅用于兼容原生App)
+             */
+            function callNative(methodName, data = {}) {
+                // 1. iOS 环境检测 (webkit.messageHandlers)
+                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers[methodName]) {
+                    try {
+                        window.webkit.messageHandlers[methodName].postMessage(data);
+                        console.log(`[JS Bridge] iOS Call Success: ${methodName}`, data);
+                        return true;
+                    } catch (e) {
+                        console.error(`[JS Bridge] iOS Call Failed: ${methodName}`, e);
+                        return false;
+                    }
+                } 
+                // 2. Android 环境检测 (window.TsJSInterface)
+                else if (window.TsJSInterface && window.TsJSInterface[methodName]) {
+                    try {
+                        const jsonString = JSON.stringify(data);
+                        window.TsJSInterface[methodName](jsonString);
+                        console.log(`[JS Bridge] Android Call Success: ${methodName}`, jsonString);
+                        return true;
+                    } catch (e) {
+                        console.error(`[JS Bridge] Android Call Failed: ${methodName}`, e);
+                        return false;
+                    }
+                } 
+                // 3. 默认/桌面环境
+                else {
+                    console.warn(`[JS Bridge] Native call failed. Method '${methodName}' not found.`);
+                    return false;
+                }
+            }
+        });
     </script>
 </body>
 </html>
