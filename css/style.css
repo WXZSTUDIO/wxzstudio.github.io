@@ -210,6 +210,7 @@ a:hover {
 }
 .clients-scroll-container {
     display: inline-flex;
+    /* 桌面端默认开启滚动动画 */
     animation: clients-scroll 40s linear infinite; 
     animation-play-state: running; 
 }
@@ -233,6 +234,11 @@ a:hover {
     opacity: 0.6;
     transition: opacity 0.3s;
 }
+/* **桌面端：仅显示第一份列表的 Logo 为矩形，第二份用于滚动** */
+.clients-list-inner:not(.clients-list-desktop-only) .client-logo {
+    border-radius: 0; /* 矩形/默认 */
+}
+
 @keyframes clients-scroll {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
@@ -591,30 +597,35 @@ a:hover {
         gap: 20px;
     }
     
-    /* 移动端 Clients Wall: 3x3 网格布局 */
+    /* 移动端 Clients Wall: 3x3 网格布局 (展开模式) */
     .clients-wall {
         overflow: visible; 
         white-space: normal;
         padding: 0; 
     }
     .clients-scroll-container {
+        /* **移动端：关闭滚动动画** */
         animation: none; 
         display: block; 
     }
+    
+    /* 隐藏用于桌面的滚动列表 */
+    .clients-list-desktop-only {
+        display: none;
+    }
+    
     .clients-list-inner {
-        display: grid;
-        /* **调整：网格间距和对齐** */
+        /* **移动端：强制使用 Grid 布局** */
+        display: grid; 
         grid-template-columns: repeat(3, 1fr); /* 3 列网格 */
         gap: 20px 15px; /* 增加行间距，保持列间距 */
         align-items: center;
         justify-items: center; /* 确保图标在单元格中居中 */
         padding: 10px 0; /* 增加上下留白 */
     }
-    .clients-list-desktop-only {
-        display: none;
-    }
+    
     .client-logo {
-        /* **修改：实现圆形 Icon 容器** */
+        /* **圆形 Icon 容器** */
         width: 80px; /* 固定宽高，使其成为正方形 */
         height: 80px; 
         padding: 10px; 
@@ -624,7 +635,9 @@ a:hover {
         align-items: center;
         justify-content: center;
         background-color: var(--secondary-color);
+        flex-shrink: 0; /* 确保在 Grid 布局下不压缩 */
     }
+    
     .client-logo img {
         /* 确保 Icon 图片能在新容器中自适应，并保持灰度 */
         max-width: 90%;
@@ -632,13 +645,12 @@ a:hover {
         filter: grayscale(100%); 
         opacity: 0.8;
     }
-    /* 默认隐藏第10个客户（index 9） */
-    .clients-list-inner .client-logo:nth-child(n+10) {
-        display: none !important;
-    }
-    /* 移动端：显示 “展示全部” 按钮 */
-    #show-all-clients-btn {
-        display: block !important;
+    
+    /* **注意：原先的 CSS 隐藏逻辑已被移除，现在由 index.html 中的 JS 处理 .client-logo:nth-child(n+10) 的 display: none/block ** */
+    
+    /* 移动端：显示 “展示全部” 按钮 (在 index.html 中通过 JS 进一步控制其显示/隐藏和文字) */
+    #showAllClientsBtn {
+        display: block; 
     }
     
     /* 移动端 Contact Icon 尺寸适配 */
