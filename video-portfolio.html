@@ -115,19 +115,18 @@
             // 1. 模态框播放逻辑
             function closeModal() {
                 modal.classList.remove('show');
-                playerContainer.innerHTML = ''; // 清除播放器内容
-                document.body.style.overflow = ''; // 恢复背景滚动
+                playerContainer.innerHTML = ''; 
+                document.body.style.overflow = ''; 
             }
             
             document.querySelectorAll('.footage-item').forEach(item => {
                 item.addEventListener('click', function() {
                     const videoSrc = this.getAttribute('data-video-src');
-                    // 页面内播放
                     playerContainer.innerHTML = `
                         <video id="fullPageVideoPlayer" src="${videoSrc}" controls autoplay playsinline loop></video>
                     `;
                     modal.classList.add('show');
-                    document.body.style.overflow = 'hidden'; // 阻止背景滚动
+                    document.body.style.overflow = 'hidden'; 
                 });
             });
 
@@ -143,7 +142,7 @@
                 }
             });
             
-            // 2. 进度条逻辑 (FIXED: 添加了过渡动画)
+            // 2. 进度条逻辑
             function updateProgressBar() {
                 if (!scrollWrapper || !progressBar) return;
 
@@ -151,7 +150,6 @@
                 if (scrollWidth > 0) {
                     const scrollPosition = scrollWrapper.scrollLeft;
                     const progress = (scrollPosition / scrollWidth) * 100;
-                    // CSS 的 transition 属性处理了平滑过渡
                     progressBar.style.width = `${progress}%`;
                 }
             }

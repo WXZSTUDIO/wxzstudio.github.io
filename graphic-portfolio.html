@@ -26,39 +26,37 @@
     </header>
 
     <main class="main-content">
-        <section class="portfolio-section">
-            <div class="container">
-                <h2>平面设计作品集</h2>
-                <div class="tags-filter">
-                    <span class="work-tag active" data-filter="all">全部</span>
-                    <span class="work-tag" data-filter="branding">品牌标识</span>
-                    <span class="work-tag" data-filter="social">社媒视觉</span>
-                    <span class="work-tag" data-filter="poster">海报设计</span>
-                </div>
-                
-                <div class="portfolio-grid graphic-portfolio-grid">
-                    <a href="path/to/design-detail-1.html" class="work-item" data-tags="branding">
-                        <img src="assets/images/graphic/graphic-01.jpg" alt="品牌标识作品 1">
-                        <div class="work-info">
-                            <h3>品牌重塑：未来科技</h3>
-                            <p>品牌标识</p>
-                        </div>
-                    </a>
-                    <a href="path/to/design-detail-2.html" class="work-item" data-tags="poster">
-                        <img src="assets/images/graphic/graphic-02.jpg" alt="海报设计作品 2">
-                        <div class="work-info">
-                            <h3>城市音乐节海报</h3>
-                            <p>海报设计</p>
-                        </div>
-                    </a>
-                     <a href="path/to/design-detail-3.html" class="work-item" data-tags="social">
-                        <img src="assets/images/graphic/graphic-03.jpg" alt="社媒视觉作品 3">
-                        <div class="work-info">
-                            <h3>社交媒体视觉包</h3>
-                            <p>社媒视觉</p>
-                        </div>
-                    </a>
+        <section class="portfolio-section container">
+            <h2>平面设计作品集</h2>
+            <div class="tags-filter">
+                <span class="work-tag active" data-filter="all">全部</span>
+                <span class="work-tag" data-filter="branding">品牌标识</span>
+                <span class="work-tag" data-filter="social">社媒视觉</span>
+                <span class="work-tag" data-filter="poster">海报设计</span>
+            </div>
+            
+            <div class="portfolio-grid graphic-portfolio-grid">
+                <a href="path/to/design-detail-1.html" class="work-item" data-tags="branding">
+                    <img src="assets/images/graphic/graphic-01.jpg" alt="品牌标识作品 1">
+                    <div class="work-info">
+                        <h3>品牌重塑：未来科技</h3>
+                        <p>品牌标识</p>
                     </div>
+                </a>
+                <a href="path/to/design-detail-2.html" class="work-item" data-tags="poster">
+                    <img src="assets/images/graphic/graphic-02.jpg" alt="海报设计作品 2">
+                    <div class="work-info">
+                        <h3>城市音乐节海报</h3>
+                        <p>海报设计</p>
+                    </div>
+                </a>
+                 <a href="path/to/design-detail-3.html" class="work-item" data-tags="social">
+                    <img src="assets/images/graphic/graphic-03.jpg" alt="社媒视觉作品 3">
+                    <div class="work-info">
+                        <h3>社交媒体视觉包</h3>
+                        <p>社媒视觉</p>
+                    </div>
+                </a>
             </div>
         </section>
     </main>
@@ -90,7 +88,7 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. 筛选功能（保持不变）
+            // 1. 筛选功能
             document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
                 tag.addEventListener('click', function() {
                     document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));
