@@ -513,6 +513,24 @@ a:hover {
     font-weight: 600;
 }
 
+/* 新增：展示全部按钮样式 */
+.show-all-clients-btn {
+    display: block; 
+    margin: 30px auto 0; 
+    padding: 10px 20px; 
+    border: 1px solid var(--primary-color); 
+    background: none; 
+    cursor: pointer; 
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+.show-all-clients-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
 
 /* === Media Queries (移动端适配) === */
 @media (max-width: 1024px) {
@@ -531,6 +549,10 @@ a:hover {
         backdrop-filter: blur(8px); /* **毛玻璃效果** */
         -webkit-backdrop-filter: blur(8px);
         border-bottom: none; 
+    }
+    .nav-content {
+        /* 移动端 Logo 居中 */
+        justify-content: center;
     }
     .nav-menu {
         display: none; 
@@ -564,23 +586,40 @@ a:hover {
         gap: 20px;
     }
     
-    /* 移动端 Clients Wall 改为手动横向滚动 */
+    /* 移动端 Clients Wall: 3x3 网格布局 */
     .clients-wall {
-        overflow-x: scroll; 
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap; 
-        padding: 20px 0;
+        overflow: visible; /* 允许内容超出，为网格布局做准备 */
+        white-space: normal;
+        padding: 0; /* 移除 padding */
     }
     .clients-scroll-container {
         animation: none; 
-        display: inline-flex;
+        display: block; /* 恢复为块级元素，不使用 flex */
     }
     .clients-list-inner {
-        gap: 30px; 
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 列网格 */
+        gap: 15px; /* 网格间距 */
+        align-items: center;
+        /* 仅第一个 inner 用于网格展示，第二个用于桌面滚动的 inner 隐藏 */
+        display: grid;
+    }
+    .clients-list-desktop-only {
+        display: none;
     }
     .client-logo {
-        width: 100px; 
+        width: 100%; /* 占满网格列宽 */
         height: 50px;
+        padding: 5px; /* 增加 logo 内部留白 */
+        border: 1px solid #eee; /* 增加边框以便区分网格 */
+    }
+    /* 默认隐藏第10个客户（index 9） */
+    .clients-list-inner .client-logo:nth-child(n+10) {
+        display: none !important;
+    }
+    /* 移动端：显示 “展示全部” 按钮 */
+    #show-all-clients-btn {
+        display: block !important;
     }
     
     /* 移动端 Contact Icon 尺寸适配 */

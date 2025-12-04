@@ -1,33 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 隐藏和显示移动端的“查看更多”按钮（如果需要）
-    const clientsScrollContainer = document.querySelector('.clients-scroll-container');
-    if (clientsScrollContainer && window.innerWidth <= 1024) {
-        const clientLogos = document.querySelectorAll('.clients-list-inner:first-child .client-logo');
-        const showMoreBtn = document.createElement('button');
-        showMoreBtn.textContent = '查看更多客户案例';
-        showMoreBtn.classList.add('show-more-button');
+    
+    const clientList = document.getElementById('client-list');
+    const showAllBtn = document.getElementById('show-all-clients-btn');
+    const clientLogos = clientList ? clientList.querySelectorAll('.client-logo') : [];
+
+    // 移动端客户展示逻辑 (3x3 网格)
+    if (clientList && showAllBtn && window.innerWidth <= 1024) {
         
-        // 假设只显示前 6 个 Logo
-        const limit = 6;
-        if (clientLogos.length > limit) {
-            clientLogos.forEach((logo, index) => {
-                if (index >= limit) {
-                    logo.style.display = 'none';
-                }
-            });
+        const limit = 9; // 默认展示前 9 个 (3x3)
+        let isAllVisible = false;
 
-            // 按钮插入到 clients-section 的 container 中
-            const clientsSectionContainer = document.querySelector('.clients-section .container');
-            if (clientsSectionContainer) {
-                clientsSectionContainer.appendChild(showMoreBtn);
-                showMoreBtn.style.cssText = 'display: block; margin: 30px auto 0; padding: 10px 20px; border: 1px solid #000; background: none; cursor: pointer; font-size: 14px;';
+        // 默认隐藏第 10 个及之后的客户 (CSS 媒体查询中也做了处理，这里确保JS逻辑同步)
+        clientLogos.forEach((logo, index) => {
+            if (index >= limit) {
+                logo.style.display = 'none';
+            } else {
+                 // 确保前 9 个是 grid item 默认的 display
+                logo.style.display = ''; 
             }
+        });
 
+        // 如果总数超过限制，则显示按钮
+        if (clientLogos.length > limit) {
+            showAllBtn.style.display = 'block';
+        } else {
+            showAllBtn.style.display = 'none';
+        }
 
-            showMoreBtn.addEventListener('click', () => {
-                clientLogos.forEach(logo => logo.style.display = 'flex'); // Flex 保证居中
-                showMoreBtn.style.display = 'none';
-            });
+        showAllBtn.addEventListener('click', () => {
+            if (!isAllVisible) {
+                // 显示所有客户
+                clientLogos.forEach(logo => logo.style.display = ''); // 清除内联样式，恢复 CSS 默认的 grid item 显示
+                showAllBtn.textContent = '收起'; 
+                isAllVisible = true;
+            } else {
+                // 隐藏第 10 个及之后的客户
+                clientLogos.forEach((logo, index) => {
+                    if (index >= limit) {
+                        logo.style.display = 'none';
+                    }
+                });
+                showAllBtn.textContent = '展示全部'; 
+                isAllVisible = false;
+                
+                // 滚动回网格顶部
+                clientList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    } else {
+        // 桌面端或非移动端，移除原来的 JS 逻辑，并确保 “展示全部” 按钮隐藏
+        if (showAllBtn) {
+            showAllBtn.style.display = 'none';
         }
     }
+    // 桌面端的滚动动画是通过 CSS 实现的，不需要额外的 JS。
 });
