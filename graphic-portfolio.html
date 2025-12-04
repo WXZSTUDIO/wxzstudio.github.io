@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WXZ STUDIO - 平面设计作品</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="preload" href="assets/fonts/Raleway-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
 </head>
 <body>
     <header class="header">
@@ -22,60 +21,34 @@
         </div>
     </header>
 
-    <nav class="mobile-nav">
-        <div class="mobile-menu-icons">
-            <a href="index.html">
-                <img src="assets/images/mobile-menu-home.png" class="icon-default">
-                <img src="assets/images/mobile-menu-home-active.png" class="icon-active">
-            </a>
-            <a href="video-portfolio.html">
-                <img src="assets/images/mobile-menu-video.png" class="icon-default">
-                <img src="assets/images/mobile-menu-video-active.png" class="icon-active">
-            </a>
-            <a href="graphic-portfolio.html" class="active">
-                <img src="assets/images/mobile-menu-graphic.png" class="icon-default">
-                <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active">
-            </a>
-            <a href="contact.html">
-                <img src="assets/images/mobile-menu-contact.png" class="icon-default">
-                <img src="assets/images/mobile-menu-contact-active.png" class="icon-active">
-            </a>
-        </div>
-    </nav>
-    
     <main class="main-content">
         <section class="portfolio-section">
             <div class="container">
-                <h2>平面设计作品集</h2>
-                <div class="tag-filter">
-                    <button data-tag="all" class="active">全部</button>
-                    <button data-tag="branding">品牌标识</button>
-                    <button data-tag="social">社媒视觉</button>
-                    <button data-tag="poster">海报设计</button>
-                </div>
+                <h2>平面设计精选</h2>
+                
                 <div class="portfolio-grid">
-                    <div class="work-item" data-tags="branding">
-                        <div class="work-cover"><img src="assets/portfolio/featured-1.jpg"></div>
+                    <a href="#" class="work-item" data-tags="branding">
+                        <div class="work-cover"><img src="assets/portfolio/featured-1.jpg" alt="护肤品牌 Logo & VI"></div>
                         <div class="work-info">
                             <h3>护肤品牌 Logo & VI</h3>
                             <div class="work-tags"><span class="work-tag">品牌标识</span></div>
                         </div>
-                    </div>
-                    <div class="work-item" data-tags="social">
-                        <div class="work-cover"><img src="assets/portfolio/featured-2.jpg"></div>
+                    </a>
+                    <a href="#" class="work-item" data-tags="social">
+                        <div class="work-cover"><img src="assets/portfolio/featured-2.jpg" alt="IOPE 新品推广"></div>
                         <div class="work-info">
                             <h3>IOPE 新品推广</h3>
                             <div class="work-tags"><span class="work-tag">社媒视觉</span></div>
                         </div>
-                    </div>
-                    <div class="work-item" data-tags="poster">
-                        <div class="work-cover"><img src="assets/portfolio/featured-3.jpg"></div>
+                    </a>
+                    <a href="#" class="work-item" data-tags="poster">
+                        <div class="work-cover"><img src="assets/portfolio/featured-3.jpg" alt="见面会海报"></div>
                         <div class="work-info">
                             <h3>见面会海报</h3>
                             <div class="work-tags"><span class="work-tag">海报设计</span></div>
                         </div>
+                    </a>
                     </div>
-                </div>
             </div>
         </section>
     </main>
@@ -83,7 +56,46 @@
     <footer class="footer">
         <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
     </footer>
+
+    <nav class="mobile-nav">
+        <div class="mobile-menu-icons">
+            <a href="index.html">
+                <img src="assets/images/mobile-menu-home.png" class="icon-default">
+                <img src="assets/images/mobile-menu-home-active.png" class="icon-active">
+                <span>首页</span>
+            </a>
+            <a href="video-portfolio.html">
+                <img src="assets/images/mobile-menu-video.png" class="icon-default">
+                <img src="assets/images/mobile-menu-video-active.png" class="icon-active">
+                <span>视频作品</span>
+            </a>
+            <a href="graphic-portfolio.html" class="active">
+                <img src="assets/images/mobile-menu-graphic.png" class="icon-default">
+                <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active">
+                <span>平面设计</span>
+            </a>
+            <a href="contact.html">
+                <img src="assets/images/mobile-menu-contact.png" class="icon-default">
+                <img src="assets/images/mobile-menu-contact-active.png" class="icon-active">
+                <span>联系方式</span>
+            </a>
+        </div>
+    </nav>
+    
     <button id="scrollToTopBtn" class="scroll-to-top-btn">↑</button>
-    <script src="js/script.js"></script>
+    <script>
+        // Scroll To Top Button (Repeated for standalone pages)
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        };
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>

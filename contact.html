@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WXZ STUDIO - 联系方式</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="preload" href="assets/fonts/Raleway-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
 </head>
 <body>
     <header class="header">
@@ -27,18 +26,22 @@
             <a href="index.html">
                 <img src="assets/images/mobile-menu-home.png" class="icon-default">
                 <img src="assets/images/mobile-menu-home-active.png" class="icon-active">
+                <span>首页</span>
             </a>
             <a href="video-portfolio.html">
                 <img src="assets/images/mobile-menu-video.png" class="icon-default">
                 <img src="assets/images/mobile-menu-video-active.png" class="icon-active">
+                <span>视频作品</span>
             </a>
             <a href="graphic-portfolio.html">
                 <img src="assets/images/mobile-menu-graphic.png" class="icon-default">
                 <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active">
+                <span>平面设计</span>
             </a>
             <a href="contact.html" class="active">
                 <img src="assets/images/mobile-menu-contact.png" class="icon-default">
                 <img src="assets/images/mobile-menu-contact-active.png" class="icon-active">
+                <span>联系方式</span>
             </a>
         </div>
     </nav>
@@ -50,29 +53,77 @@
 
             <div class="contact-info">
                 <div class="contact-icons">
-                    <div class="social-icon-link" id="wechatIcon">
+                    <a href="mailto:contact@wxzstudio.com" class="social-icon-link">
+                        <img src="assets/images/email_icon.png" alt="Email">
+                        <h3>Email: contact@wxzstudio.com</h3>
+                    </a>
+                    
+                    <div class="social-icon-link" onclick="toggleWechatPopup()">
                         <img src="assets/images/wechat_icon.png" alt="微信">
-                        <span>微信</span>
-                        <div id="wechatModal" class="wechat-qrcode-popup">
-                            <img src="assets/images/wechat_qrcode.png" alt="QR Code">
-                            <p style="font-size:12px; color:#666; margin-top:5px;">长按识别二维码</p>
-                        </div>
+                        <h3>微信: wxz_studio</h3>
                     </div>
 
                     <a href="https://xhslink.com/m/4FrLqFlYhZj" target="_blank" class="social-icon-link">
                         <img src="assets/images/xiaohongshu_icon.png" alt="小红书">
-                        <span>小红书</span>
+                        <h3>小红书: WXZ Studio</h3>
                     </a>
                 </div>
-                <p class="contact-note">微信搜索：icf304，即可添加好友咨询。</p>
+                <p class="contact-note" style="margin-top: 40px; color: var(--accent-color);">微信搜索：wxz_studio，即可添加好友咨询。</p>
+            </div>
+            
+            <div style="margin-top: 60px;">
+                <h3>办公地址</h3>
+                <p>上海市 xx 区 xx 街道 xx 创意园</p>
             </div>
         </section>
     </main>
     
+    <div class="wechat-qrcode-popup" id="wechat-popup">
+        <div class="wechat-qrcode-content">
+            <img src="assets/images/wechat_qrcode.png" alt="WeChat QR Code">
+            <p>扫描上方二维码添加微信咨询</p>
+        </div>
+    </div>
+
     <footer class="footer">
         <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
     </footer>
+
     <button id="scrollToTopBtn" class="scroll-to-top-btn">↑</button>
-    <script src="js/script.js"></script>
+
+    <script>
+        // 弹窗控制 JS (居中弹窗)
+        function toggleWechatPopup() {
+            const popup = document.getElementById('wechat-popup');
+            
+            if (popup.classList.contains('show')) {
+                popup.classList.remove('show');
+                document.body.style.overflow = ''; // 恢复背景滚动
+            } else {
+                popup.classList.add('show');
+                document.body.style.overflow = 'hidden'; // 阻止背景滚动
+            }
+        }
+
+        // 点击背景时关闭弹窗
+        document.getElementById('wechat-popup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleWechatPopup();
+            }
+        });
+        
+        // Scroll To Top Button (Repeated for standalone pages)
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        };
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>

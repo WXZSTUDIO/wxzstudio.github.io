@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WXZ STUDIO - 视频作品</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="preload" href="assets/fonts/Raleway-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
 </head>
 <body>
     <header class="header">
@@ -22,59 +21,33 @@
         </div>
     </header>
 
-    <nav class="mobile-nav">
-        <div class="mobile-menu-icons">
-            <a href="index.html">
-                <img src="assets/images/mobile-menu-home.png" class="icon-default">
-                <img src="assets/images/mobile-menu-home-active.png" class="icon-active">
-            </a>
-            <a href="video-portfolio.html" class="active">
-                <img src="assets/images/mobile-menu-video.png" class="icon-default">
-                <img src="assets/images/mobile-menu-video-active.png" class="icon-active">
-            </a>
-            <a href="graphic-portfolio.html">
-                <img src="assets/images/mobile-menu-graphic.png" class="icon-default">
-                <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active">
-            </a>
-            <a href="contact.html">
-                <img src="assets/images/mobile-menu-contact.png" class="icon-default">
-                <img src="assets/images/mobile-menu-contact-active.png" class="icon-active">
-            </a>
-        </div>
-    </nav>
-    
     <main class="main-content">
         <section class="portfolio-section">
             <div class="container">
-                <h2>视频作品集</h2>
-                <div class="tag-filter">
-                    <button data-tag="all" class="active">全部</button>
-                    <button data-tag="commercial">商业广告</button>
-                    <button data-tag="mv">音乐视频</button>
-                    <button data-tag="star">明星侧拍</button>
-                </div>
+                <h2>视频作品精选</h2>
+                
                 <div class="portfolio-grid">
-                    <div class="work-item" data-tags="commercial">
-                        <div class="work-cover"><img src="assets/portfolio/featured-1.jpg"></div>
+                    <a href="#" class="work-item" data-tags="commercial">
+                        <div class="work-cover"><img src="assets/portfolio/featured-1.jpg" alt="Hera 品牌宣传片"></div>
                         <div class="work-info">
                             <h3>Hera 品牌宣传片</h3>
                             <div class="work-tags"><span class="work-tag">商业广告</span></div>
                         </div>
-                    </div>
-                    <div class="work-item" data-tags="star">
-                        <div class="work-cover"><img src="assets/portfolio/featured-2.jpg"></div>
+                    </a>
+                    <a href="#" class="work-item" data-tags="star">
+                        <div class="work-cover"><img src="assets/portfolio/featured-2.jpg" alt="(G)I-DLE 演唱会 VCR"></div>
                         <div class="work-info">
                             <h3>(G)I-DLE 演唱会 VCR</h3>
                             <div class="work-tags"><span class="work-tag">明星侧拍</span></div>
                         </div>
-                    </div>
-                    <div class="work-item" data-tags="mv">
-                        <div class="work-cover"><img src="assets/portfolio/featured-3.jpg"></div>
+                    </a>
+                    <a href="#" class="work-item" data-tags="mv">
+                        <div class="work-cover"><img src="assets/portfolio/featured-3.jpg" alt="独立音乐人 MV"></div>
                         <div class="work-info">
                             <h3>独立音乐人 MV</h3>
                             <div class="work-tags"><span class="work-tag">音乐视频</span></div>
                         </div>
-                    </div>
+                    </a>
                     </div>
             </div>
         </section>
@@ -83,7 +56,46 @@
     <footer class="footer">
         <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
     </footer>
+
+    <nav class="mobile-nav">
+        <div class="mobile-menu-icons">
+            <a href="index.html">
+                <img src="assets/images/mobile-menu-home.png" class="icon-default">
+                <img src="assets/images/mobile-menu-home-active.png" class="icon-active">
+                <span>首页</span>
+            </a>
+            <a href="video-portfolio.html" class="active">
+                <img src="assets/images/mobile-menu-video.png" class="icon-default">
+                <img src="assets/images/mobile-menu-video-active.png" class="icon-active">
+                <span>视频作品</span>
+            </a>
+            <a href="graphic-portfolio.html">
+                <img src="assets/images/mobile-menu-graphic.png" class="icon-default">
+                <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active">
+                <span>平面设计</span>
+            </a>
+            <a href="contact.html">
+                <img src="assets/images/mobile-menu-contact.png" class="icon-default">
+                <img src="assets/images/mobile-menu-contact-active.png" class="icon-active">
+                <span>联系方式</span>
+            </a>
+        </div>
+    </nav>
+
     <button id="scrollToTopBtn" class="scroll-to-top-btn">↑</button>
-    <script src="js/script.js"></script>
+    <script>
+        // Scroll To Top Button (Repeated for standalone pages)
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        };
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>
