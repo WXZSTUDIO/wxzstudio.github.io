@@ -1,191 +1,196 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WXZ STUDIO - 首页</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="index-page">
+
     <header class="header">
         <div class="nav-content container">
             <div class="logo"><a href="index.html">WXZ STUDIO</a></div>
             <nav class="nav-menu">
                 <ul>
                     <li><a href="index.html" class="active">首页</a></li>
-                    <li><a href="video-portfolio.html">视频作品</a></li>
-                    <li><a href="graphic-portfolio.html">平面设计作品</a></li>
-                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="services.html">服务</a></li>
+                    <li><a href="portfolio.html">作品集</a></li>
+                    <li><a href="contact.html">联系</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="main-content">
-        <section class="hero-video-section">
-            <video autoplay loop muted playsinline>
-                <source src="assets/videos/hero-bg.mp4" type="video/mp4">
-            </video>
-            <div class="hero-overlay">
-                </div>
-        </section>
-
-        <section class="services-section container">
-            <h2>我们的服务</h2>
-            <div class="services-grid">
-                <div class="service-item">
-                    <h3>商业活动</h3>
-                    <p>会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作。</p>
-                </div>
-                <div class="service-item">
-                    <h3>产品拍摄</h3>
-                    <p>为电商及广告客户提供高质量的产品视频和摄影，突出产品特性与美感。</p>
-                </div>
-                <div class="service-item">
-                    <h3>品牌宣传</h3>
-                    <p>制作企业宣传片、品牌故事片和形象 TVC，提升品牌知名度与市场影响力。</p>
-                </div>
-                <div class="service-item">
-                    <h3>视觉设计</h3>
-                    <p>提供品牌 VI、海报、社交媒体图文等全方位的平面设计与视觉传达服务。</p>
-                </div>
-            </div>
-        </section>
         
-        <section class="clients-section">
+        <section class="hero-video-section">
+            <video id="heroVideo" autoplay loop muted playsinline>
+                <source src="videos/hero-bg.mp4" type="video/mp4">
+                </video>
+            </section>
+
+        <section class="services-section">
             <div class="container">
-                <h2>合作客户</h2>
-                <div class="clients-wall">
-                    <div class="clients-scroll-container">
-                         <div class="clients-list-inner">
-                            <div class="client-logo"><img src="assets/images/clients/client01.png" alt="Client 1"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client02.png" alt="Client 2"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client03.png" alt="Client 3"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client04.png" alt="Client 4"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client05.png" alt="Client 5"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client06.png" alt="Client 6"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client07.png" alt="Client 7"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client08.png" alt="Client 8"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client09.png" alt="Client 9"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client10.png" alt="Client 10"></div>
-                        </div>
-                        <div class="clients-list-inner">
-                             <div class="client-logo"><img src="assets/images/clients/client01.png" alt="Client 1"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client02.png" alt="Client 2"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client03.png" alt="Client 3"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client04.png" alt="Client 4"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client05.png" alt="Client 5"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client06.png" alt="Client 6"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client07.png" alt="Client 7"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client08.png" alt="Client 8"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client09.png" alt="Client 9"></div>
-                            <div class="client-logo"><img src="assets/images/clients/client10.png" alt="Client 10"></div>
-                        </div>
+                <h2>我们的服务</h2>
+                <div class="services-grid">
+                    <div class="service-item">
+                        <h3>影视广告制作</h3>
+                        <p>提供从前期创意、脚本创作到拍摄、后期制作的一站式影视广告服务。</p>
+                    </div>
+                    <div class="service-item">
+                        <h3>品牌宣传片</h3>
+                        <p>深度挖掘品牌故事与价值，打造高质量的企业宣传片、形象片。</p>
+                    </div>
+                    <div class="service-item">
+                        <h3>活动记录与直播</h3>
+                        <p>专业团队进行会议、活动、发布会的全程高清记录与多机位直播服务。</p>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section class="clients-section">
+            <div class="container">
+                <h2>服务客户</h2>
+                <div class="clients-wall">
+                    <div class="clients-scroll-container">
+                        <div class="clients-list-inner">
+                            <div class="client-logo"><img src="images/client1.png" alt="Client 1"></div>
+                            <div class="client-logo"><img src="images/client2.png" alt="Client 2"></div>
+                            <div class="client-logo"><img src="images/client3.png" alt="Client 3"></div>
+                            <div class="client-logo"><img src="images/client4.png" alt="Client 4"></div>
+                            <div class="client-logo"><img src="images/client5.png" alt="Client 5"></div>
+                            <div class="client-logo"><img src="images/client6.png" alt="Client 6"></div>
+                            <div class="client-logo"><img src="images/client7.png" alt="Client 7"></div>
+                            <div class="client-logo"><img src="images/client8.png" alt="Client 8"></div>
+                            <div class="client-logo"><img src="images/client9.png" alt="Client 9"></div>
+                            <div class="client-logo"><img src="images/client10.png" alt="Client 10"></div>
+                        </div>
+                        <div class="clients-list-inner">
+                            <div class="client-logo"><img src="images/client1.png" alt="Client 1"></div>
+                            <div class="client-logo"><img src="images/client2.png" alt="Client 2"></div>
+                            <div class="client-logo"><img src="images/client3.png" alt="Client 3"></div>
+                            <div class="client-logo"><img src="images/client4.png" alt="Client 4"></div>
+                            <div class="client-logo"><img src="images/client5.png" alt="Client 5"></div>
+                            <div class="client-logo"><img src="images/client6.png" alt="Client 6"></div>
+                            <div class="client-logo"><img src="images/client7.png" alt="Client 7"></div>
+                            <div class="client-logo"><img src="images/client8.png" alt="Client 8"></div>
+                            <div class="client-logo"><img src="images/client9.png" alt="Client 9"></div>
+                            <div class="client-logo"><img src="images/client10.png" alt="Client 10"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="show-more-button" id="showMoreClientsBtn">
+                    展示全部服务客户
+                </button>
+                </div>
+        </section>
+
     </main>
-    
-    <section class="notice-section">
-        <div class="container">
-            <div class="notice-block">
-                <h4>拍摄服务条款与条件 | 法律信息与通知</h4>
-                <p>本服务条款（“条款”）适用于您的摄影/摄像服务预约及相关事宜。确认预约即表示您同意本条款；如果您不同意，请勿进行预约。</p>
-                <ul>
-                    <li>
-                        <h5>预约与定金</h5>
-                        <p>对于首次预约本服务的客户，在确认拍摄排期时，需缴纳商议总金额的 50% 作为预约定金。若因非不可抗力原因在预定拍摄日期当天取消服务，该定金将不予退还。</p>
-                    </li>
-                    <li>
-                        <h5>创意材料与沟通</h5>
-                        <p>我们强烈建议您提供详细的拍摄剧本。若无具体剧本，您有责任在拍摄前大致说明拍摄角度、构图意向或创意概念，以确保交付结果符合预期。</p>
-                    </li>
-                    <li>
-                        <h5>服务范围与后期处理</h5>
-                        <p>我们的拍摄服务提供灵活的后期处理方案。后期剪辑工作（包括但不限于素材筛选、画面调色及特效制作）将独立于拍摄服务，另行单独计费，除非合约中已对整体打包费用作出明确约定。此举旨在保障您在后期制作流程中拥有充分的自主选择权，并确保所有服务成本的透明化。</p>
-                    </li>
-                    <li>
-                        <h5>付款与超时费用</h5>
-                        <p>剩余款项应在拍摄结束后的 24 小时内结清。关于拍摄时长的计算，若实际拍摄时间超出原定计划 30 分钟，将按照拟定的单价标准，以 1 小时为单位加收超时费用。</p>
-                    </li>
-                    <li>
-                        <h5>交付与数据保留</h5>
-                        <p>拍摄素材上传至交付平台后，您有责任在 30 日内完成下载并自行归档保存。对于因逾期未下载而导致的数据丢失，服务方不承担责任。</p>
-                    </li>
-                    <li>
-                        <h5>宣传与知识产权</h5>
-                        <p>除非您提前声明或签署特定的保密合约，否则即视为您默认同意服务方在拍摄结束一周后，将相关素材发布至社交媒体平台用于作品展示或宣传用途。</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 WXZ STUDIO. All Rights Reserved. </p>
+            <p>&copy; 2025 WXZ Studio. All Rights Reserved. | 服务条款</p>
         </div>
     </footer>
 
-    <nav class="mobile-nav">
+    <div class="mobile-nav">
         <div class="mobile-menu-icons">
             <a href="index.html" class="active">
-                <img src="assets/images/icons/home.png" class="icon-default" alt="首页">
-                <img src="assets/images/icons/home-active.png" class="icon-active" alt="首页 Active">
+                <img src="icons/home-default.png" class="icon-default" alt="Home">
+                <img src="icons/home-active.png" class="icon-active" alt="Home Active">
                 <span>首页</span>
             </a>
-            <a href="video-portfolio.html">
-                <img src="assets/images/icons/video.png" class="icon-default" alt="视频作品">
-                <img src="assets/images/icons/video-active.png" class="icon-active" alt="视频作品 Active">
-                <span>视频作品</span>
+            <a href="services.html">
+                <img src="icons/service-default.png" class="icon-default" alt="Service">
+                <img src="icons/service-active.png" class="icon-active" alt="Service Active">
+                <span>服务</span>
             </a>
-            <a href="graphic-portfolio.html">
-                <img src="assets/images/icons/graphic.png" class="icon-default" alt="平面设计">
-                <img src="assets/images/icons/graphic-active.png" class="icon-active" alt="平面设计 Active">
-                <span>平面设计</span>
+            <a href="portfolio.html">
+                <img src="icons/portfolio-default.png" class="icon-default" alt="Portfolio">
+                <img src="icons/portfolio-active.png" class="icon-active" alt="Portfolio Active">
+                <span>作品集</span>
             </a>
             <a href="contact.html">
-                <img src="assets/images/icons/contact.png" class="icon-default" alt="联系方式">
-                <img src="assets/images/icons/contact-active.png" class="icon-active" alt="联系方式 Active">
-                <span>联系方式</span>
+                <img src="icons/contact-default.png" class="icon-default" alt="Contact">
+                <img src="icons/contact-active.png" class="icon-active" alt="Contact Active">
+                <span>联系</span>
             </a>
         </div>
-    </nav>
+    </div>
+    
+    <button class="scroll-to-top-btn" id="scrollToTopBtn">↑</button>
 
     <script>
-        /**
-         * 通用原生调用函数 (JS Bridge)。
-         */
-        function callNative(methodName, data = {}) {
-            // 1. iOS 环境检测 (webkit.messageHandlers)
-            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers[methodName]) {
-                try {
-                    window.webkit.messageHandlers[methodName].postMessage(data);
-                    console.log(`[JS Bridge] iOS Call Success: ${methodName}`, data);
-                    return true;
-                } catch (e) {
-                    console.error(`[JS Bridge] iOS Call Failed: ${methodName}`, e);
-                    return false;
-                }
-            } 
-            // 2. Android 环境检测 (window.TsJSInterface)
-            else if (window.TsJSInterface && window.TsJSInterface[methodName]) {
-                try {
-                    const jsonString = JSON.stringify(data);
-                    window.TsJSInterface[methodName](jsonString);
-                    console.log(`[JS Bridge] Android Call Success: ${methodName}`, jsonString);
-                    return true;
-                } catch (e) {
-                    console.error(`[JS Bridge] Android Call Failed: ${methodName}`, e);
-                    return false;
-                }
-            } 
-            // 3. 默认/桌面环境
-            else {
-                console.warn(`[JS Bridge] Native call failed. Method '${methodName}' not found.`);
-                return false;
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('showMoreClientsBtn');
+            const clientsWall = document.querySelector('.clients-wall');
+            // Select logos from the first list-inner (desktop auto-scroll source)
+            const clients = document.querySelectorAll('.clients-list-inner:first-child .client-logo');
+            const totalClients = clients.length;
+            const initiallyVisible = 9; // 3 rows * 3 columns
+
+            if (!btn || totalClients <= initiallyVisible) {
+                if (btn) btn.style.display = 'none'; // Hide button if <= 9 clients
+                return;
             }
-        }
+
+            let isExpanded = false;
+
+            // Function to apply mobile display logic
+            function applyMobileDisplay() {
+                if (window.innerWidth <= 768) {
+                    btn.style.display = 'inline-block';
+                    if (!isExpanded) {
+                        for (let i = initiallyVisible; i < totalClients; i++) {
+                            clients[i].style.setProperty('display', 'none', 'important');
+                        }
+                    } else {
+                        // If expanded, ensure all are visible
+                        for (let i = initiallyVisible; i < totalClients; i++) {
+                            clients[i].style.setProperty('display', 'block', 'important');
+                        }
+                    }
+                } else {
+                    // Desktop view - ensure all clients are visible for scrolling
+                    clients.forEach(client => client.style.removeProperty('display'));
+                    btn.style.display = 'none';
+                    isExpanded = false;
+                    btn.textContent = '展示全部服务客户';
+                }
+            }
+
+            // Initial setup for mobile view
+            applyMobileDisplay(); 
+
+            btn.addEventListener('click', function() {
+                if (!isExpanded) {
+                    // Show all remaining clients
+                    for (let i = initiallyVisible; i < totalClients; i++) {
+                        clients[i].style.setProperty('display', 'block', 'important');
+                    }
+                    this.textContent = '收起';
+                    isExpanded = true;
+                } else {
+                    // Hide clients after the 9th
+                    for (let i = initiallyVisible; i < totalClients; i++) {
+                        clients[i].style.setProperty('display', 'none', 'important');
+                    }
+                    this.textContent = '展示全部服务客户';
+                    isExpanded = false;
+                    
+                    // Scroll back to the top of the clients section if possible
+                    const clientsSection = clientsWall.closest('.clients-section');
+                    if (clientsSection) {
+                        clientsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+            
+            // Re-apply display logic on resize
+            window.addEventListener('resize', applyMobileDisplay);
+        });
     </script>
 </body>
 </html>
