@@ -3,129 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title id="pageTitle" data-lang-zh="WXZ STUDIO - 平面设计作品" data-lang-en="WXZ STUDIO - Graphic Design" data-lang-kr="WXZ STUDIO - 그래픽 디자인" data-lang-tw="WXZ STUDIO - 平面設計作品">WXZ STUDIO - 平面设计作品</title>
+    <title>WXZ STUDIO - 平面设计作品</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-current-lang="zh">
+<body>
     <header class="header">
         <div class="nav-content container">
             <div class="logo"><a href="index.html">WXZ STUDIO</a></div>
-
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="index.html" data-lang-key="nav_home">首页</a></li>
-                    <li><a href="video-portfolio.html" data-lang-key="nav_video">视频作品</a></li>
-                    <li><a href="graphic-portfolio.html" class="active" data-lang-key="nav_graphic">平面设计作品</a></li>
-                    <li><a href="contact.html" data-lang-key="nav_contact">联系方式</a></li>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="video-portfolio.html">视频作品</a></li>
+                    <li><a href="graphic-portfolio.html" class="active">平面设计作品</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
                 </ul>
             </nav>
-            
-            <div class="desktop-lang-switcher">
-                <span class="lang-option" data-lang="en">EN</span>
-                <span class="lang-option" data-lang="kr">KR</span>
-                <span class="lang-option" data-lang="zh">简</span>
-                <span class="lang-option" data-lang="tw">繁</span>
-            </div>
-
-            <div class="mobile-lang-container">
-                <button class="mobile-lang-btn" id="mobileLangBtn" data-current-display="简">简</button>
-                <div class="mobile-lang-dropdown" id="mobileLangDropdown">
-                    <button data-lang="en">English (EN)</button>
-                    <button data-lang="kr">한국어 (KR)</button>
-                    <button data-lang="zh">简体中文 (简)</button>
-                    <button data-lang="tw">繁體中文 (繁)</button>
-                </div>
-            </div>
         </div>
     </header>
 
     <main class="main-content">
         <section class="portfolio-section">
             <div class="container">
-                <h2 data-lang-key="graphic_title">平面设计作品集</h2>
+                <h2>平面设计作品集</h2>
                 <div class="tags-filter">
-                    <span class="work-tag active" data-filter="all" data-lang-key="filter_all">全部</span>
-                    <span class="work-tag" data-filter="branding" data-lang-key="filter_branding">品牌标识</span>
-                    <span class="work-tag" data-filter="social" data-lang-key="filter_social">社媒视觉</span>
-                    <span class="work-tag" data-filter="poster" data-lang-key="filter_poster">海报设计</span>
+                    <span class="work-tag active" data-filter="all">全部</span>
+                    <span class="work-tag" data-filter="branding">品牌标识</span>
+                    <span class="work-tag" data-filter="social">社媒视觉</span>
+                    <span class="work-tag" data-filter="poster">海报设计</span>
                 </div>
                 
                 <div class="portfolio-grid graphic-portfolio-grid">
                     
-                    <a class="work-item" data-tags="branding">
+                    <div class="work-item" data-tags="branding">
                         <div class="work-media">
-                            <img src="assets/images/graphic_works/graphic01.jpg" alt="作品封面1">
+                            <img src="assets/portfolio/graphic-01.jpg" alt="护肤品牌 Logo & VI">
                         </div>
                         <div class="work-info">
-                            <h3 data-lang-key="graphic01_h">全新品牌 VI 设计</h3>
-                            <div class="work-tags">
-                                <span class="work-tag" data-lang-key="filter_branding_tag">品牌标识</span>
-                            </div>
+                            <h3>护肤品牌 Logo & VI</h3>
+                            <div class="work-tags"><span class="work-tag">品牌标识</span></div>
                         </div>
-                    </a>
+                    </div>
 
-                    <a class="work-item" data-tags="social">
+                    <div class="work-item" data-tags="social">
                         <div class="work-media">
-                            <img src="assets/images/graphic_works/graphic02.jpg" alt="作品封面2">
+                            <img src="assets/portfolio/graphic-02.jpg" alt="IOPE 新品推广">
                         </div>
                         <div class="work-info">
-                            <h3 data-lang-key="graphic02_h">美食推广社媒海报</h3>
-                            <div class="work-tags">
-                                <span class="work-tag" data-lang-key="filter_social_tag">社媒视觉</span>
-                            </div>
+                            <h3>IOPE 新品推广</h3>
+                            <div class="work-tags"><span class="work-tag">社媒视觉</span></div>
                         </div>
-                    </a>
+                    </div>
 
-                    <a class="work-item" data-tags="poster,event">
+                    <div class="work-item" data-tags="poster">
                         <div class="work-media">
-                            <img src="assets/images/graphic_works/graphic03.jpg" alt="作品封面3">
+                            <img src="assets/portfolio/graphic-03.jpg" alt="见面会海报">
                         </div>
                         <div class="work-info">
-                            <h3 data-lang-key="graphic03_h">年度艺术展览主视觉</h3>
-                            <div class="work-tags">
-                                <span class="work-tag" data-lang-key="filter_poster_tag">海报设计</span>
-                                <span class="work-tag" data-lang-key="filter_event_tag">活动宣传</span>
-                            </div>
+                            <h3>见面会海报</h3>
+                            <div class="work-tags"><span class="work-tag">海报设计</span></div>
                         </div>
-                    </a>
-
-                    <a class="work-item" data-tags="branding,social">
-                        <div class="work-media">
-                            <img src="assets/images/graphic_works/graphic04.jpg" alt="作品封面4">
-                        </div>
-                        <div class="work-info">
-                            <h3 data-lang-key="graphic04_h">科技公司 LOGO 优化</h3>
-                            <div class="work-tags">
-                                <span class="work-tag" data-lang-key="filter_branding_tag">品牌标识</span>
-                                <span class="work-tag" data-lang-key="filter_social_tag">社媒视觉</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="work-item" data-tags="poster">
-                        <div class="work-media">
-                            <img src="assets/images/graphic_works/graphic05.jpg" alt="作品封面5">
-                        </div>
-                        <div class="work-info">
-                            <h3 data-lang-key="graphic05_h">新电影上线概念海报</h3>
-                            <div class="work-tags">
-                                <span class="work-tag" data-lang-key="filter_poster_tag">海报设计</span>
-                            </div>
-                        </div>
-                    </a>
-                    
+                    </div>
                 </div>
             </div>
         </section>
     </main>
-
-    <footer class="footer footer-extra-padding">
-        <div class="footer-lang-switcher">
-            <span class="lang-option" data-lang="en">EN</span>
-            <span class="lang-option" data-lang="kr">KR</span>
-            <span class="lang-option" data-lang="zh">简</span>
-            <span class="lang-option" data-lang="tw">繁</span>
-        </div>
+    
+    <footer class="footer">
         <div class="container">
             <p>&copy; 2026 WXZ STUDIO. All Rights Reserved. </p>
         </div>
@@ -136,208 +79,164 @@
             <a href="index.html">
                 <img src="assets/images/icons/home.png" class="icon-default" alt="首页">
                 <img src="assets/images/icons/home-active.png" class="icon-active" alt="首页 Active">
-                <span data-lang-key="nav_home">首页</span>
+                <span>首页</span>
             </a>
             <a href="video-portfolio.html">
                 <img src="assets/images/icons/video.png" class="icon-default" alt="视频作品">
                 <img src="assets/images/icons/video-active.png" class="icon-active" alt="视频作品 Active">
-                <span data-lang-key="nav_video">视频作品</span>
+                <span>视频作品</span>
             </a>
             <a href="graphic-portfolio.html" class="active">
                 <img src="assets/images/icons/graphic.png" class="icon-default" alt="平面设计">
                 <img src="assets/images/icons/graphic-active.png" class="icon-active" alt="平面设计 Active">
-                <span data-lang-key="nav_graphic">平面设计</span>
+                <span>平面设计</span>
             </a>
             <a href="contact.html">
                 <img src="assets/images/icons/contact.png" class="icon-default" alt="联系方式">
                 <img src="assets/images/icons/contact-active.png" class="icon-active" alt="联系方式 Active">
-                <span data-lang-key="nav_contact">联系方式</span>
+                <span>联系方式</span><!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WXZ STUDIO - 平面设计作品</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-content container">
+            <div class="logo"><a href="index.html">WXZ STUDIO</a></div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="video-portfolio.html">视频作品</a></li>
+                    <li><a href="graphic-portfolio.html" class="active">平面设计作品</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="portfolio-section">
+            <div class="container">
+                <h2>平面设计作品集</h2>
+                <div class="tags-filter">
+                    <span class="work-tag active" data-filter="all">全部</span>
+                    <span class="work-tag" data-filter="branding">品牌标识</span>
+                    <span class="work-tag" data-filter="social">社媒视觉</span>
+                    <span class="work-tag" data-filter="poster">海报设计</span>
+                </div>
+                
+                <div class="portfolio-grid graphic-portfolio-grid">
+                    
+                    <div class="work-item" data-tags="branding">
+                        <div class="work-media">
+                            <img src="assets/portfolio/graphic-01.jpg" alt="护肤品牌 Logo & VI">
+                        </div>
+                        <div class="work-info">
+                            <h3>护肤品牌 Logo & VI</h3>
+                            <div class="work-tags"><span class="work-tag">品牌标识</span></div>
+                        </div>
+                    </div>
+
+                    <div class="work-item" data-tags="social">
+                        <div class="work-media">
+                            <img src="assets/portfolio/graphic-02.jpg" alt="IOPE 新品推广">
+                        </div>
+                        <div class="work-info">
+                            <h3>IOPE 新品推广</h3>
+                            <div class="work-tags"><span class="work-tag">社媒视觉</span></div>
+                        </div>
+                    </div>
+
+                    <div class="work-item" data-tags="poster">
+                        <div class="work-media">
+                            <img src="assets/portfolio/graphic-03.jpg" alt="见面会海报">
+                        </div>
+                        <div class="work-info">
+                            <h3>见面会海报</h3>
+                            <div class="work-tags"><span class="work-tag">海报设计</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 WXZ STUDIO. All Rights Reserved. </p>
+        </div>
+    </footer>
+
+    <nav class="mobile-nav">
+        <div class="mobile-menu-icons">
+            <a href="index.html">
+                <img src="assets/images/icons/home.png" class="icon-default" alt="首页">
+                <img src="assets/images/icons/home-active.png" class="icon-active" alt="首页 Active">
+                <span>首页</span>
+            </a>
+            <a href="video-portfolio.html">
+                <img src="assets/images/icons/video.png" class="icon-default" alt="视频作品">
+                <img src="assets/images/icons/video-active.png" class="icon-active" alt="视频作品 Active">
+                <span>视频作品</span>
+            </a>
+            <a href="graphic-portfolio.html" class="active">
+                <img src="assets/images/icons/graphic.png" class="icon-default" alt="平面设计">
+                <img src="assets/images/icons/graphic-active.png" class="icon-active" alt="平面设计 Active">
+                <span>平面设计</span>
+            </a>
+            <a href="contact.html">
+                <img src="assets/images/icons/contact.png" class="icon-default" alt="联系方式">
+                <img src="assets/images/icons/contact-active.png" class="icon-active" alt="联系方式 Active">
+                <span>联系方式</span>
             </a>
         </div>
     </nav>
     
     <script>
-        // -------------------------
-        // 1. 语言切换字典
-        // -------------------------
-        const translations = {
-            zh: {
-                pageTitle: 'WXZ STUDIO - 平面设计作品',
-                nav_home: '首页', nav_video: '视频作品', nav_graphic: '平面设计作品', nav_contact: '联系方式',
-                graphic_title: '平面设计作品集',
-                filter_all: '全部', filter_branding: '品牌标识', filter_social: '社媒视觉', filter_poster: '海报设计', filter_event: '活动宣传',
-                filter_branding_tag: '品牌标识', filter_social_tag: '社媒视觉', filter_poster_tag: '海报设计', filter_event_tag: '活动宣传',
-                graphic01_h: '全新品牌 VI 设计', graphic02_h: '美食推广社媒海报', graphic03_h: '年度艺术展览主视觉',
-                graphic04_h: '科技公司 LOGO 优化', graphic05_h: '新电影上线概念海报',
-            },
-            en: {
-                pageTitle: 'WXZ STUDIO - Graphic Design',
-                nav_home: 'Home', nav_video: 'Video Portfolio', nav_graphic: 'Graphic Design', nav_contact: 'Contact',
-                graphic_title: 'GRAPHIC DESIGN PORTFOLIO',
-                filter_all: 'All', filter_branding: 'Branding', filter_social: 'Social Media', filter_poster: 'Poster', filter_event: 'Event Promo',
-                filter_branding_tag: 'Branding', filter_social_tag: 'Social Media', filter_poster_tag: 'Poster', filter_event_tag: 'Event Promo',
-                graphic01_h: 'New Brand VI Design', graphic02_h: 'Food Promotion Social Poster', graphic03_h: 'Annual Art Exhibition Visual',
-                graphic04_h: 'Tech Company Logo Optimization', graphic05_h: 'New Movie Concept Poster',
-            },
-            kr: {
-                pageTitle: 'WXZ STUDIO - 그래픽 디자인',
-                nav_home: '홈', nav_video: '영상 포트폴리오', nav_graphic: '그래픽 디자인', nav_contact: '연락처',
-                graphic_title: '그래픽 디자인 포트폴리오',
-                filter_all: '전체', filter_branding: '브랜딩', filter_social: '소셜 미디어', filter_poster: '포스터', filter_event: '행사 홍보',
-                filter_branding_tag: '브랜딩', filter_social_tag: '소셜 미디어', filter_poster_tag: '포스터', filter_event_tag: '행사 홍보',
-                graphic01_h: '새 브랜드 VI 디자인', graphic02_h: '음식 프로모션 소셜 포스터', graphic03_h: '연례 미술 전시회 메인 비주얼',
-                graphic04_h: '기술 회사 LOGO 최적화', graphic05_h: '새 영화 개봉 컨셉 포스터',
-            },
-            tw: {
-                pageTitle: 'WXZ STUDIO - 平面設計作品',
-                nav_home: '首頁', nav_video: '視頻作品', nav_graphic: '平面設計作品', nav_contact: '聯絡方式',
-                graphic_title: '平面設計作品集',
-                filter_all: '全部', filter_branding: '品牌標識', filter_social: '社媒視覺', filter_poster: '海報設計', filter_event: '活動宣傳',
-                filter_branding_tag: '品牌標識', filter_social_tag: '社媒視覺', filter_poster_tag: '海報設計', filter_event_tag: '活動宣傳',
-                graphic01_h: '全新品牌 VI 設計', graphic02_h: '美食推廣社媒海報', graphic03_h: '年度藝術展覽主視覺',
-                graphic04_h: '科技公司 LOGO 優化', graphic05_h: '新電影上線概念海報',
-            }
-        };
-
-        // -------------------------
-        // 2. 语言切换核心函数 (通用)
-        // -------------------------
-        
-        const langDisplayNames = { 'en': 'EN', 'kr': 'KR', 'zh': '简', 'tw': '繁' };
-        
-        function getPreferredLang() {
-            const navLang = navigator.language || navigator.userLanguage;
-            if (navLang.startsWith('zh-TW') || navLang.startsWith('zh-HK') || navLang.startsWith('zh-MO')) return 'tw';
-            if (navLang.startsWith('zh')) return 'zh';
-            if (navLang.startsWith('ko')) return 'kr';
-            if (navLang.startsWith('en')) return 'en';
-            return 'zh';
-        }
-
-        function switchLanguage(langCode) {
-            const targetLang = translations[langCode] || translations['zh'];
-            
-            document.body.setAttribute('data-current-lang', langCode);
-
-            const pageTitleEl = document.getElementById('pageTitle');
-            if (pageTitleEl) {
-                const customTitle = pageTitleEl.getAttribute(`data-lang-${langCode}`);
-                pageTitleEl.textContent = customTitle || targetLang.pageTitle;
-            }
-
-            document.querySelectorAll('[data-lang-key]').forEach(el => {
-                const key = el.getAttribute('data-lang-key');
-                if (targetLang[key]) {
-                    el.textContent = targetLang[key];
-                }
-            });
-
-            document.querySelectorAll('.lang-option, .mobile-lang-dropdown button').forEach(el => {
-                el.classList.remove('active-lang');
-                if (el.getAttribute('data-lang') === langCode) {
-                    el.classList.add('active-lang');
-                }
-            });
-
-            const mobileBtn = document.getElementById('mobileLangBtn');
-            if (mobileBtn) {
-                mobileBtn.textContent = langDisplayNames[langCode];
-                mobileBtn.setAttribute('data-current-display', langDisplayNames[langCode]);
-            }
-        
-            document.getElementById('mobileLangDropdown').classList.remove('show');
-            localStorage.setItem('wxz_lang', langCode);
-            
-            // 确保筛选器标签也更新
-            document.querySelectorAll('.tags-filter .work-tag.active').forEach(tag => {
-                const filter = tag.getAttribute('data-filter');
-                if (filter !== 'all') {
-                    // 重新触发筛选以更新标签文本
-                    tag.click();
-                } else {
-                    // 单独处理“全部”的文本更新
-                    tag.textContent = targetLang.filter_all;
-                }
-            });
-        }
-
-        // -------------------------
-        // 3. DOMContentLoaded 事件
-        // -------------------------
+        // 筛选功能（保持不变）
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // 确定初始语言
-            const storedLang = localStorage.getItem('wxz_lang');
-            const initialLang = storedLang || getPreferredLang();
-            switchLanguage(initialLang);
-
-            // 语言切换事件绑定 (与首页相同)
-            document.querySelectorAll('.lang-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    switchLanguage(this.getAttribute('data-lang'));
-                });
-            });
-
-            document.querySelectorAll('#mobileLangDropdown button').forEach(button => {
-                button.addEventListener('click', function() {
-                    switchLanguage(this.getAttribute('data-lang'));
-                });
-            });
-
-            const mobileLangBtn = document.getElementById('mobileLangBtn');
-            const mobileLangDropdown = document.getElementById('mobileLangDropdown');
-            const mobileLangContainer = document.querySelector('.mobile-lang-container');
-
-            if (mobileLangBtn) {
-                mobileLangBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    mobileLangDropdown.classList.toggle('show');
-                });
-            }
-
-            document.addEventListener('click', (e) => {
-                if (mobileLangDropdown && !mobileLangContainer.contains(e.target)) {
-                    mobileLangDropdown.classList.remove('show');
-                }
-            });
-
-            // 筛选功能 
             document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
                 tag.addEventListener('click', function() {
-                    const currentLang = document.body.getAttribute('data-current-lang');
-                    const langPack = translations[currentLang];
-
-                    // 1. 更新标签选中状态
                     document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // 2. 更新标签文本
-                    document.querySelectorAll('.tags-filter .work-tag').forEach(t => {
-                        const key = `filter_${t.getAttribute('data-filter')}`;
-                        if (langPack[key]) {
-                            t.textContent = langPack[key];
-                        }
-                    });
-                    
-                    // 3. 执行筛选逻辑
                     const filter = this.getAttribute('data-filter');
                     const items = document.querySelectorAll('.portfolio-grid .work-item');
 
                     items.forEach(item => {
                         const tags = item.getAttribute('data-tags');
-                        const isEvent = tags.includes('event');
-                        
-                        // 特殊处理：平面设计作品集的 event 标签应使用 filter_event，而非 video 作品集的 filter_event
-                        const itemTagsContainer = item.querySelector('.work-tags');
-                        if (itemTagsContainer) {
-                             itemTagsContainer.querySelectorAll('.work-tag').forEach(tagEl => {
-                                 const tagKey = tagEl.getAttribute('data-lang-key');
-                                 if (langPack[tagKey]) {
-                                     tagEl.textContent = langPack[tagKey];
-                                 }
-                             });
+                        if (filter === 'all' || tags.includes(filter)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
                         }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+            </a>
+        </div>
+    </nav>
+    
+    <script>
+        // 筛选功能（保持不变）
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    const items = document.querySelectorAll('.portfolio-grid .work-item');
 
+                    items.forEach(item => {
+                        const tags = item.getAttribute('data-tags');
                         if (filter === 'all' || tags.includes(filter)) {
                             item.style.display = 'block';
                         } else {
