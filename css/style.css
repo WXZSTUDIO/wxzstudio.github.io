@@ -8,7 +8,7 @@
     --primary-color: #000000;      /* 纯黑 */
     --secondary-color: #ffffff;    /* 纯白 */
     --accent-color: #777777;       /* 辅助灰 */
-    --font-family: -apple-system, BlinkMacMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --nav-height: 80px;
     --mobile-nav-height: 60px;
 }
@@ -239,10 +239,10 @@ a:hover {
 }
 
 
-/* 8. Contact Section (联系方式) - 居中和图标缩小 */
+/* 8. Contact Section (联系方式) - 居中和图标放大 */
 .contact-section {
     text-align: center; /* 居中标题和引言 */
-    min-height: 50vh; /* 确保内容居中时有足够的空间 */
+    min-height: 50vh; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -252,7 +252,7 @@ a:hover {
 .contact-info {
     display: flex;
     flex-direction: column;
-    align-items: center; /* 核心：居中整个信息块 */
+    align-items: center; 
     padding-top: 40px;
     width: 100%;
 }
@@ -260,7 +260,7 @@ a:hover {
 .contact-icons {
     display: flex;
     justify-content: center;
-    gap: 80px; /* 图标间距 */
+    gap: 80px; 
     margin-bottom: 30px;
 }
 
@@ -271,44 +271,18 @@ a:hover {
     cursor: pointer;
     font-size: 14px;
     font-weight: 600;
-    position: relative; /* 用于二维码定位 */
+    position: relative;
 }
 
 .social-icon-link img {
-    width: 40px; /* 缩小图标 */
-    height: 40px; /* 缩小图标 */
+    width: 52px; /* 放大 30% (40px -> 52px) */
+    height: 52px; /* 放大 30% (40px -> 52px) */
     margin-bottom: 10px;
     transition: transform 0.2s;
 }
 
 .social-icon-link:hover img {
     transform: scale(1.05);
-}
-
-.wechat-qrcode-popup {
-    position: absolute;
-    top: 100%; /* 弹出位置在图标下方 */
-    transform: translateX(-50%);
-    background: white;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid #eee;
-    z-index: 3000;
-    display: none; /* 默认隐藏二维码 */
-    text-align: center;
-    min-width: 220px;
-    left: 50%;
-    margin-top: 15px; /* 弹窗与图标的间隔 */
-}
-
-.wechat-qrcode-popup.show {
-    display: block; /* 点击时显示 */
-}
-
-.wechat-qrcode-popup img {
-    width: 180px;
-    height: 180px;
-    margin-bottom: 5px;
 }
 
 .contact-lead {
@@ -319,8 +293,79 @@ a:hover {
     margin-top: 20px;
 }
 
+/* 9. Portfolio Grid (作品集) - 通用样式 */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
 
-/* === 9. Mobile Navigation (Mobile First) === */
+.work-item {
+    display: block;
+    text-decoration: none;
+}
+
+.work-media {
+    overflow: hidden;
+    position: relative;
+    padding-top: 56.25%; /* 16:9 比例 */
+    background-color: #f0f0f0;
+}
+
+.work-media video,
+.work-media img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.work-info {
+    padding: 15px 0 0;
+}
+
+.work-info h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    letter-spacing: normal;
+}
+
+.work-tags .work-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 2px 8px;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+
+.tags-filter {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tags-filter .work-tag {
+    cursor: pointer;
+    border: 1px solid #ddd;
+    color: var(--primary-color);
+    background-color: #f8f8f8;
+    transition: all 0.2s;
+}
+
+.tags-filter .work-tag:hover,
+.tags-filter .work-tag.active {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+
+
+/* === 10. Mobile Navigation (Mobile First) === */
 .mobile-nav {
     display: none; /* 桌面端隐藏 */
     position: fixed;
@@ -434,8 +479,16 @@ a:hover {
         gap: 40px; /* 减小间距 */
     }
 
-    .wechat-qrcode-popup {
-        top: 80%; /* 移动端弹出位置调整 */
-        margin-top: 10px;
+    /* 移动端 Portfolio 2列 */
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
+    .work-info h3 {
+        font-size: 14px;
+    }
+    .work-tags .work-tag {
+        font-size: 10px;
+    }
+
 }

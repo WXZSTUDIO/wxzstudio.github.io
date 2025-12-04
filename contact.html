@@ -28,13 +28,9 @@
 
             <div class="contact-info">
                 <div class="contact-icons">
-                    <div class="social-icon-link" id="wechatIcon">
+                    <div class="social-icon-link" id="wechatIcon" data-clipboard-text="icf304">
                         <img src="assets/images/wechat_icon.png" alt="微信">
-                        <span>微信咨询</span>
-                        <div id="wechatModal" class="wechat-qrcode-popup">
-                            <img src="assets/images/wechat_qrcode.png" alt="微信二维码">
-                            <p>长按识别二维码或点击关闭</p>
-                        </div>
+                        <span>点击复制微信号</span>
                     </div>
 
                     <a href="https://xhslink.com/m/4FrLqFlYhZj" target="_blank" class="social-icon-link">
@@ -43,7 +39,7 @@
                     </a>
                 </div>
                 
-                <p class="contact-note">或直接发送邮件至：<a href="mailto:contact@wxzstudio.com">contact@wxzstudio.com</a></p>
+                <p class="contact-note">微信搜索icf304即可添加好友</p>
             </div>
         </section>
     </main>
@@ -80,24 +76,37 @@
     </nav>
 
     <script>
-        // JS: 控制微信二维码弹窗的显示与隐藏
+        // JS: 复制微信号到剪贴板
         document.addEventListener('DOMContentLoaded', () => {
             const wechatIcon = document.getElementById('wechatIcon');
-            const wechatModal = document.getElementById('wechatModal');
+            const wechatID = 'icf304';
 
-            if (wechatIcon && wechatModal) {
-                wechatIcon.addEventListener('click', (e) => {
-                    e.stopPropagation(); // 阻止事件冒泡
-                    wechatModal.classList.toggle('show');
-                });
-                
-                // 点击弹窗或外部关闭
-                wechatModal.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    wechatModal.classList.remove('show');
-                });
-                document.body.addEventListener('click', () => {
-                    wechatModal.classList.remove('show');
+            if (wechatIcon) {
+                wechatIcon.addEventListener('click', () => {
+                    // 使用现代 Clipboard API
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(wechatID).then(() => {
+                            alert('已成功复制微信号: ' + wechatID);
+                        }).catch(err => {
+                            // 复制失败的备用方案
+                            console.error('无法复制文本: ', err);
+                            alert('复制失败，请手动添加 ' + wechatID);
+                        });
+                    } else {
+                        // 浏览器不支持 API 时的备用方案（例如 IE）
+                        const textArea = document.createElement("textarea");
+                        textArea.value = wechatID;
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        try {
+                            document.execCommand('copy');
+                            alert('已成功复制微信号: ' + wechatID);
+                        } catch (err) {
+                            alert('复制失败，请手动添加 ' + wechatID);
+                        }
+                        document.body.removeChild(textArea);
+                    }
                 });
             }
         });

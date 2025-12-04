@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -24,79 +24,146 @@
     <main class="main-content">
         <section class="portfolio-section">
             <div class="container">
-                <h2>视频作品精选</h2>
+                <h2>视频作品集</h2>
+                <div class="tags-filter">
+                    <span class="work-tag active" data-filter="all">全部</span>
+                    <span class="work-tag" data-filter="commercial">商业广告</span>
+                    <span class="work-tag" data-filter="brand">品牌宣传</span>
+                    <span class="work-tag" data-filter="mv">音乐视频</span>
+                </div>
                 
-                <div class="portfolio-grid">
-                    <a href="#" class="work-item" data-tags="commercial">
-                        <div class="work-cover"><img src="assets/portfolio/featured-1.jpg" alt="Hera 品牌宣传片"></div>
+                <div class="portfolio-grid video-portfolio-grid">
+                    
+                    <a href="video-detail-01.html" class="work-item" data-tags="commercial brand">
+                        <div class="work-media">
+                            <video muted loop preload="metadata" poster="assets/portfolio/video-cover-01.jpg">
+                                <source src="assets/videos/portfolio/video-01.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放。
+                            </video>
+                        </div>
                         <div class="work-info">
                             <h3>Hera 品牌宣传片</h3>
                             <div class="work-tags"><span class="work-tag">商业广告</span></div>
                         </div>
                     </a>
-                    <a href="#" class="work-item" data-tags="star">
-                        <div class="work-cover"><img src="assets/portfolio/featured-2.jpg" alt="(G)I-DLE 演唱会 VCR"></div>
-                        <div class="work-info">
-                            <h3>(G)I-DLE 演唱会 VCR</h3>
-                            <div class="work-tags"><span class="work-tag">明星侧拍</span></div>
+
+                    <a href="video-detail-02.html" class="work-item" data-tags="brand mv">
+                        <div class="work-media">
+                            <video muted loop preload="metadata" poster="assets/portfolio/video-cover-02.jpg">
+                                <source src="assets/videos/portfolio/video-02.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放。
+                            </video>
                         </div>
-                    </a>
-                    <a href="#" class="work-item" data-tags="mv">
-                        <div class="work-cover"><img src="assets/portfolio/featured-3.jpg" alt="独立音乐人 MV"></div>
                         <div class="work-info">
                             <h3>独立音乐人 MV</h3>
                             <div class="work-tags"><span class="work-tag">音乐视频</span></div>
                         </div>
                     </a>
-                    </div>
+
+                    <a href="video-detail-03.html" class="work-item" data-tags="commercial">
+                        <div class="work-media">
+                            <video muted loop preload="metadata" poster="assets/portfolio/video-cover-03.jpg">
+                                <source src="assets/videos/portfolio/video-03.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放。
+                            </video>
+                        </div>
+                        <div class="work-info">
+                            <h3>IOPE 新品推广</h3>
+                            <div class="work-tags"><span class="work-tag">商业广告</span></div>
+                        </div>
+                    </a>
+
+                    <a href="video-detail-04.html" class="work-item" data-tags="brand">
+                        <div class="work-media">
+                            <video muted loop preload="metadata" poster="assets/portfolio/video-cover-04.jpg">
+                                <source src="assets/videos/portfolio/video-04.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放。
+                            </video>
+                        </div>
+                        <div class="work-info">
+                            <h3>企业形象片</h3>
+                            <div class="work-tags"><span class="work-tag">品牌宣传</span></div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </section>
     </main>
     
     <footer class="footer">
         <div class="container">
-            <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+            <p>&copy; 2024 WXZ STUDIO. All Rights Reserved. </p>
         </div>
     </footer>
 
     <nav class="mobile-nav">
         <div class="mobile-menu-icons">
             <a href="index.html">
-                <img src="assets/images/mobile-menu-home.png" class="icon-default" alt="Home">
-                <img src="assets/images/mobile-menu-home-active.png" class="icon-active" alt="Home Active">
+                <img src="assets/images/icons/home.png" class="icon-default" alt="首页">
+                <img src="assets/images/icons/home-active.png" class="icon-active" alt="首页 Active">
                 <span>首页</span>
             </a>
             <a href="video-portfolio.html" class="active">
-                <img src="assets/images/mobile-menu-video.png" class="icon-default" alt="Video">
-                <img src="assets/images/mobile-menu-video-active.png" class="icon-active" alt="Video Active">
+                <img src="assets/images/icons/video.png" class="icon-default" alt="视频作品">
+                <img src="assets/images/icons/video-active.png" class="icon-active" alt="视频作品 Active">
                 <span>视频作品</span>
             </a>
             <a href="graphic-portfolio.html">
-                <img src="assets/images/mobile-menu-graphic.png" class="icon-default" alt="Graphic">
-                <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active" alt="Graphic Active">
+                <img src="assets/images/icons/graphic.png" class="icon-default" alt="平面设计">
+                <img src="assets/images/icons/graphic-active.png" class="icon-active" alt="平面设计 Active">
                 <span>平面设计</span>
             </a>
             <a href="contact.html">
-                <img src="assets/images/mobile-menu-contact.png" class="icon-default" alt="Contact">
-                <img src="assets/images/mobile-menu-contact-active.png" class="icon-active" alt="Contact Active">
+                <img src="assets/images/icons/contact.png" class="icon-default" alt="联系方式">
+                <img src="assets/images/icons/contact-active.png" class="icon-active" alt="联系方式 Active">
                 <span>联系方式</span>
             </a>
         </div>
     </nav>
-
-    <button id="scrollToTopBtn" class="scroll-to-top-btn">↑</button>
+    
     <script>
-        // Scroll To Top Button (Repeated for standalone pages)
-        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-        window.onscroll = function() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                scrollToTopBtn.classList.add('show');
-            } else {
-                scrollToTopBtn.classList.remove('show');
-            }
-        };
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoContainers = document.querySelectorAll('.work-media');
+
+            videoContainers.forEach(container => {
+                const video = container.querySelector('video');
+                
+                // 鼠标悬停播放
+                container.addEventListener('mouseenter', () => {
+                    // 确保视频从头开始播放，模拟 snap
+                    video.currentTime = 0; 
+                    video.play().catch(error => {
+                        console.log('Video auto-play failed:', error);
+                        // 移动端通常需要用户交互才能播放
+                    });
+                });
+
+                // 鼠标移开停止并重置
+                container.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0; // 重置到封面帧
+                });
+            });
+            
+            // 筛选功能（保持不变）
+            document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    const items = document.querySelectorAll('.portfolio-grid .work-item');
+
+                    items.forEach(item => {
+                        const tags = item.getAttribute('data-tags');
+                        if (filter === 'all' || tags.includes(filter)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
         });
     </script>
 </body>
