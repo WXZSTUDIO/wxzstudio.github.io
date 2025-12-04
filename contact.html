@@ -21,61 +21,32 @@
         </div>
     </header>
 
-    <nav class="mobile-nav">
-        <div class="mobile-menu-icons">
-            <a href="index.html">
-                <img src="assets/images/mobile-menu-home.png" class="icon-default">
-                <img src="assets/images/mobile-menu-home-active.png" class="icon-active">
-                <span>首页</span>
-            </a>
-            <a href="video-portfolio.html">
-                <img src="assets/images/mobile-menu-video.png" class="icon-default">
-                <img src="assets/images/mobile-menu-video-active.png" class="icon-active">
-                <span>视频作品</span>
-            </a>
-            <a href="graphic-portfolio.html">
-                <img src="assets/images/mobile-menu-graphic.png" class="icon-default">
-                <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active">
-                <span>平面设计</span>
-            </a>
-            <a href="contact.html" class="active">
-                <img src="assets/images/mobile-menu-contact.png" class="icon-default">
-                <img src="assets/images/mobile-menu-contact-active.png" class="icon-active">
-                <span>联系方式</span>
-            </a>
-        </div>
-    </nav>
-    
     <main class="main-content">
+        
         <section class="contact-section container">
             <h2>联系我们</h2>
-            <p class="contact-lead">期待与您合作，请通过以下社交媒体方式联系我们。</p>
+            <p class="contact-lead">期待与您合作，请通过以下方式联系我们。</p>
 
             <div class="contact-info">
                 <div class="contact-icons">
-                    <a href="mailto:contact@wxzstudio.com" class="social-icon-link">
-                        <img src="assets/images/email_icon.png" alt="Email">
-                        <h3>Email: contact@wxzstudio.com</h3>
-                    </a>
-                    
                     <div class="social-icon-link" onclick="toggleWechatPopup()">
                         <img src="assets/images/wechat_icon.png" alt="微信">
-                        <h3>微信: wxz_studio</h3>
-                    </div>
+                        </div>
 
                     <a href="https://xhslink.com/m/4FrLqFlYhZj" target="_blank" class="social-icon-link">
                         <img src="assets/images/xiaohongshu_icon.png" alt="小红书">
-                        <h3>小红书: WXZ Studio</h3>
-                    </a>
+                        </a>
                 </div>
-                <p class="contact-note" style="margin-top: 40px; color: var(--accent-color);">微信搜索：wxz_studio，即可添加好友咨询。</p>
+
+                <p class="contact-note" style="margin-top: 40px; color: var(--accent-color);">微信搜索：icf304，即可添加好友咨询。</p>
             </div>
             
             <div style="margin-top: 60px;">
                 <h3>办公地址</h3>
-                <p>上海市 xx 区 xx 街道 xx 创意园</p>
+                <p>上海市 xx 创意园</p>
             </div>
         </section>
+
     </main>
     
     <div class="wechat-qrcode-popup" id="wechat-popup">
@@ -86,9 +57,36 @@
     </div>
 
     <footer class="footer">
-        <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+        <div class="container">
+            <p>© 2025 WXZ Studio. 保留所有权利。服务条款可能随时更新，请以最新版合同为准。</p>
+        </div>
     </footer>
 
+    <nav class="mobile-nav">
+        <div class="mobile-menu-icons">
+            <a href="index.html">
+                <img src="assets/images/mobile-menu-home.png" class="icon-default" alt="Home">
+                <img src="assets/images/mobile-menu-home-active.png" class="icon-active" alt="Home Active">
+                <span>首页</span>
+            </a>
+            <a href="video-portfolio.html">
+                <img src="assets/images/mobile-menu-video.png" class="icon-default" alt="Video">
+                <img src="assets/images/mobile-menu-video-active.png" class="icon-active" alt="Video Active">
+                <span>视频作品</span>
+            </a>
+            <a href="graphic-portfolio.html">
+                <img src="assets/images/mobile-menu-graphic.png" class="icon-default" alt="Graphic">
+                <img src="assets/images/mobile-menu-graphic-active.png" class="icon-active" alt="Graphic Active">
+                <span>平面设计</span>
+            </a>
+            <a href="contact.html" class="active">
+                <img src="assets/images/mobile-menu-contact.png" class="icon-default" alt="Contact">
+                <img src="assets/images/mobile-menu-contact-active.png" class="icon-active" alt="Contact Active">
+                <span>联系方式</span>
+            </a>
+        </div>
+    </nav>
+    
     <button id="scrollToTopBtn" class="scroll-to-top-btn">↑</button>
 
     <script>
@@ -107,6 +105,7 @@
 
         // 点击背景时关闭弹窗
         document.getElementById('wechat-popup').addEventListener('click', function(e) {
+            // 确保只在点击背景（而不是二维码内容本身）时关闭
             if (e.target === this) {
                 toggleWechatPopup();
             }

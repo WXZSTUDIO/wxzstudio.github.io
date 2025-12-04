@@ -143,19 +143,24 @@ section {
 }
 
 
-/* 3. Hero Video Section */
+/* 3. Hero Video Section - 修正视频无法全屏显示的问题 */
 .hero-video-section {
     position: relative;
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    margin-top: -84px;
+    margin-top: -84px; /* 补偿 Header 高度 */
+    display: flex; /* 确保内容居中 */
+    justify-content: center;
+    align-items: center;
 }
 
 .hero-video-section video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* 确保视频铺满容器 */
+    min-width: 100%;
+    min-height: 100%;
 }
 
 /* 4. Services Section */
@@ -215,7 +220,7 @@ section {
 .clients-scroll-container {
     display: inline-flex;
     animation: clients-scroll 40s linear infinite; /* 滚动动画 */
-    animation-play-state: paused; /* 初始暂停，JS控制恢复 */
+    /* 移除 animation-play-state: paused; 让其默认运行，JS在移动端将其禁用 */
 }
 
 .clients-list-inner {
@@ -375,11 +380,12 @@ section {
 }
 
 .social-icon-link h3 {
+    /* 移除文字后，此部分不再需要 */
     font-size: 16px;
     color: var(--primary-text-color);
 }
 
-/* WeChat Popup (居中弹窗) */
+/* WeChat Popup (居中弹窗) - 修复图片比例 */
 .wechat-qrcode-popup {
     position: fixed;
     top: 0;
@@ -416,8 +422,10 @@ section {
 }
 
 .wechat-qrcode-content img {
-    width: 200px;
-    height: 200px;
+    /* 允许按原比例显示 */
+    max-width: 250px;
+    width: auto;
+    height: auto;
     border: 1px solid var(--accent-color);
 }
 
@@ -449,8 +457,25 @@ section {
     right: 20px;
     background-color: var(--accent-color);
     color: #fff;
-    /* ... 保持原有样式 ... */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 999;
 }
+
+.scroll-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+}
+
 
 /* === Media Queries (Mobile & Tablet) === */
 @media (max-width: 991px) {
@@ -467,7 +492,7 @@ section {
 
     /* Clients Wall Mobile Fix: Grid Layout */
     .clients-scroll-container {
-        animation: none; /* 禁用动画 */
+        animation: none !important; /* 禁用动画 */
     }
 
     .clients-list-inner {
@@ -485,7 +510,7 @@ section {
         margin: 0;
     }
     
-    /* === Mobile Navigation (App Style Bottom Bar) - 已添加文字 === */
+    /* === Mobile Navigation (App Style Bottom Bar) - 修复图标显示 === */
     .mobile-nav {
         display: block;
         position: fixed;
@@ -518,11 +543,11 @@ section {
     }
 
     .mobile-menu-icons a img {
-        width: 22px;
-        height: 22px;
+        width: 28px; /* 增大尺寸以确保可见 */
+        height: 28px;
         margin-bottom: 2px;
     }
-    /* 保持活动状态图标切换的逻辑 */
+    
     .mobile-menu-icons a .icon-active { display: none; }
     .mobile-menu-icons a.active { color: var(--accent-color); }
     .mobile-menu-icons a.active .icon-default { display: none; }
