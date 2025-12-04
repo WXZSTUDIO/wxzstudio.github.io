@@ -1,5 +1,5 @@
 /*
- * WXZ STUDIO Website CSS Styles - Kenya Hara Inspired Minimal Design
+ * WXZ STUDIO Website CSS Styles - Kenya Hara Inspired Minimal Design (Updated)
  * Author: Gemini
  */
 
@@ -135,31 +135,6 @@ a:hover {
     min-height: 100%;
 }
 
-.hero-title-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--secondary-color);
-    text-align: center;
-    z-index: 10;
-    /* 采用衬线字体增加设计感 */
-    font-family: serif; 
-    letter-spacing: 0.3em;
-}
-
-.hero-title-overlay h1 {
-    font-size: 6vw;
-    font-weight: 100;
-    margin-bottom: 5px;
-}
-
-.hero-title-overlay p {
-    font-size: 1.5vw;
-    font-weight: 100;
-}
-
-
 /* 4. Services Section (Flexbox 布局) */
 .services-grid {
     display: grid;
@@ -179,7 +154,7 @@ a:hover {
     font-weight: 600;
 }
 
-/* 5. Clients Wall Section (服务客户) */
+/* 5. Clients Wall Section (服务客户) - 已放大 */
 .clients-section {
     background-color: #f8f8f8;
     border-top: 1px solid #eee;
@@ -199,7 +174,7 @@ a:hover {
 .clients-scroll-container {
     display: inline-flex;
     animation: clients-scroll 40s linear infinite; /* 桌面端滚动动画 */
-    animation-play-state: running; /* 确保默认运行 */
+    animation-play-state: running; 
 }
 
 .clients-list-inner {
@@ -210,8 +185,8 @@ a:hover {
 
 .client-logo {
     flex-shrink: 0;
-    width: 120px;
-    height: 60px;
+    width: 160px; /* 放大 */
+    height: 80px; /* 放大 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,7 +239,88 @@ a:hover {
 }
 
 
-/* === 8. Mobile Navigation (Mobile First) === */
+/* 8. Contact Section (联系方式) - 居中和图标缩小 */
+.contact-section {
+    text-align: center; /* 居中标题和引言 */
+    min-height: 50vh; /* 确保内容居中时有足够的空间 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 核心：居中整个信息块 */
+    padding-top: 40px;
+    width: 100%;
+}
+
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    gap: 80px; /* 图标间距 */
+    margin-bottom: 30px;
+}
+
+.social-icon-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    position: relative; /* 用于二维码定位 */
+}
+
+.social-icon-link img {
+    width: 40px; /* 缩小图标 */
+    height: 40px; /* 缩小图标 */
+    margin-bottom: 10px;
+    transition: transform 0.2s;
+}
+
+.social-icon-link:hover img {
+    transform: scale(1.05);
+}
+
+.wechat-qrcode-popup {
+    position: absolute;
+    top: 100%; /* 弹出位置在图标下方 */
+    transform: translateX(-50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    z-index: 3000;
+    display: none; /* 默认隐藏二维码 */
+    text-align: center;
+    min-width: 220px;
+    left: 50%;
+    margin-top: 15px; /* 弹窗与图标的间隔 */
+}
+
+.wechat-qrcode-popup.show {
+    display: block; /* 点击时显示 */
+}
+
+.wechat-qrcode-popup img {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 5px;
+}
+
+.contact-lead {
+    color: var(--accent-color);
+}
+.contact-note {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+
+/* === 9. Mobile Navigation (Mobile First) === */
 .mobile-nav {
     display: none; /* 桌面端隐藏 */
     position: fixed;
@@ -330,15 +386,6 @@ a:hover {
         display: block;
     }
 
-    /* Hero 标题自适应 */
-    .hero-title-overlay h1 {
-        font-size: 10vw;
-    }
-
-    .hero-title-overlay p {
-        font-size: 3vw;
-    }
-
     /* 服务网格: 2列布局 */
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -377,8 +424,18 @@ a:hover {
 
     .client-logo {
         width: 100%;
-        height: 80px;
+        height: auto;
         padding: 10px;
         border: 1px solid #eee; /* 增加边框，保持简约感 */
+    }
+
+    /* 移动端 Contact 适配 */
+    .contact-icons {
+        gap: 40px; /* 减小间距 */
+    }
+
+    .wechat-qrcode-popup {
+        top: 80%; /* 移动端弹出位置调整 */
+        margin-top: 10px;
     }
 }

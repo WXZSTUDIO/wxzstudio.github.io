@@ -16,7 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            clientsScrollContainer.parentNode.appendChild(showMoreBtn);
+            // 按钮插入到 clients-section 的 container 中
+            const clientsSectionContainer = document.querySelector('.clients-section .container');
+            if (clientsSectionContainer) {
+                clientsSectionContainer.appendChild(showMoreBtn);
+                showMoreBtn.style.cssText = 'display: block; margin: 30px auto 0; padding: 10px 20px; border: 1px solid #000; background: none; cursor: pointer; font-size: 14px;';
+            }
+
 
             showMoreBtn.addEventListener('click', () => {
                 clientLogos.forEach(logo => logo.style.display = 'flex'); // Flex 保证居中
