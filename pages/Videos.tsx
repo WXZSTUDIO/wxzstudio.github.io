@@ -121,6 +121,9 @@ const Videos = () => {
     }
   }, [filteredItems]);
 
+  // Helper to check if media is video file
+  const isVideoFile = (src: string) => src.endsWith('.mp4') || src.endsWith('.mov') || src.endsWith('.webm');
+
   return (
     <div className="h-screen w-full bg-[#050505] overflow-hidden flex flex-col justify-center relative">
       
@@ -128,11 +131,11 @@ const Videos = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
 
       {/* Header Area 
-          - Updated: top-16 (was 24) to pull it up
-          - Updated: mb-10 (was 6) to push content away
+          - Updated: top-12 (was 16) to pull it up slightly more on mobile
+          - Updated: mb-10 (was 6/8) to create more space between categories and works
       */}
-      <div className="absolute top-16 md:top-24 left-0 right-0 z-30 flex flex-col items-center animate-fade-in">
-        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 border-b border-white/10 pb-1 mb-8 md:mb-6">
+      <div className="absolute top-12 md:top-24 left-0 right-0 z-30 flex flex-col items-center animate-fade-in">
+        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 border-b border-white/10 pb-1 mb-10 md:mb-10">
           作品浏览 / FOOTAGE MODE
         </span>
 
@@ -180,22 +183,34 @@ const Videos = () => {
               className="relative w-[280px] md:w-[360px] aspect-[2/3] overflow-hidden rounded-sm bg-[#111] border border-white/5 transition-all duration-500 group-hover:scale-105 group-hover:border-white/20 shadow-2xl"
               onClick={() => !isDragging && setSelectedVideo(item)}
             >
-              {/* Image */}
-              <img 
-                src={item.mediaSrc} 
-                alt={item.title} 
-                className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
-              />
+              {/* Image or Video Thumbnail */}
+              {item.type === 'video' && isVideoFile(item.mediaSrc) ? (
+                  <video 
+                    src={item.mediaSrc}
+                    muted
+                    playsInline
+                    loop
+                    className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0 pointer-events-none"
+                    onMouseOver={e => e.currentTarget.play()}
+                    onMouseOut={e => e.currentTarget.pause()}
+                  />
+              ) : (
+                  <img 
+                    src={item.mediaSrc} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
+                  />
+              )}
               
               {/* Play Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                  <div className="w-16 h-16 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm bg-black/20">
                     <Play fill="white" size={24} className="ml-1" />
                  </div>
               </div>
 
               {/* Top Film Holes Decoration */}
-              <div className="absolute top-0 left-0 right-0 h-4 bg-black/50 flex justify-between px-2 items-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute top-0 left-0 right-0 h-4 bg-black/50 flex justify-between px-2 items-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                  {[...Array(6)].map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/20"></div>)}
               </div>
             </div>
@@ -263,15 +278,25 @@ const Videos = () => {
           <div className="w-full h-full max-w-[1400px] flex flex-col justify-center relative">
              <div className="relative aspect-video w-full bg-black rounded-lg overflow-hidden border border-white/10 shadow-2xl">
                 {/* 
-                   Video Player Placeholder
-                   Replace img with: <video src={selectedVideo.mediaSrc} controls autoPlay className="w-full h-full" />
+                   Video Player Area
                 */}
                 <div className="w-full h-full flex items-center justify-center bg-[#111] relative">
-                    <img src={selectedVideo.mediaSrc} className="absolute inset-0 w-full h-full object-cover opacity-30" />
-                    <div className="z-10 text-center">
-                        <Play size={48} fill="white" className="mx-auto mb-4 opacity-80" />
-                        <p className="text-white/50 font-mono text-sm">正在播放: {selectedVideo.title}</p>
-                    </div>
+                    {selectedVideo.type === 'video' && isVideoFile(selectedVideo.mediaSrc) ? (
+                        <video 
+                            src={selectedVideo.mediaSrc}
+                            controls
+                            autoPlay
+                            className="w-full h-full object-contain"
+                        />
+                    ) : (
+                        <>
+                            <img src={selectedVideo.mediaSrc} className="absolute inset-0 w-full h-full object-cover opacity-30" />
+                            <div className="z-10 text-center">
+                                <Play size={48} fill="white" className="mx-auto mb-4 opacity-80" />
+                                <p className="text-white/50 font-mono text-sm">正在播放: {selectedVideo.title}</p>
+                            </div>
+                        </>
+                    )}
                 </div>
              </div>
              

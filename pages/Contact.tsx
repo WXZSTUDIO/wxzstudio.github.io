@@ -11,12 +11,10 @@ import { PortfolioItem, Client, Service } from './types';
 // 2. 命名规则 / Naming Rules:
 //    ❌ 不要使用中文或空格 (Don't use Chinese or spaces)
 //    ✅ 请使用英文、数字、下划线 (Use English, numbers, underscores)
-//       例如 (Example): seoul_fashion_week_2024.mp4
+//       例如 (Example): video-1.mp4, video-2.mp4
 //
 // 3. 代码引用 / Code Reference:
-//    在下方 VIDEO_PORTFOLIO 中修改 mediaSrc 字段:
-//    Change the 'mediaSrc' field below to:
-//    mediaSrc: '/assets/videos/your_filename.mp4'
+//    下方代码已预设为读取 video-1.mp4 到 video-7.mp4
 // ==========================================
 
 export const NAV_LINKS = [
@@ -58,7 +56,6 @@ export const SERVICES: Service[] = [
 ];
 
 export const CLIENTS: Client[] = [
-  // Updated Name from 'AK' to 'AEKYUNG'
   { id: 1, name: "AEKYUNG", logoInitial: 'A', logoSrc: '/assets/clients/AEKYUNG.png' },
   { id: 2, name: 'AMOREPACIFIC', logoInitial: 'A', logoSrc: '/assets/clients/AMOREPACIFIC.png' },
   { id: 3, name: 'COSRX', logoInitial: 'C', logoSrc: '/assets/clients/COSRX.png' },
@@ -81,10 +78,6 @@ export const VIDEO_CATEGORIES = [
   { id: 'product', label: '商业广告' },
 ];
 
-// Helper to generate consistent diverse images
-const getCinematicImage = (prompt: string) => 
-  `https://image.pollinations.ai/prompt/cinematic%20shot%20of%20${encodeURIComponent(prompt)}%20high%20quality%204k?width=1920&height=1080&nologo=true&seed=${Math.floor(Math.random()*1000)}`;
-
 export const VIDEO_PORTFOLIO: PortfolioItem[] = [
   {
     id: 'v1',
@@ -94,8 +87,7 @@ export const VIDEO_PORTFOLIO: PortfolioItem[] = [
     location: '全球',
     year: '2024',
     filterTags: ['brand'],
-    // 示例：如果您上传了视频，请改为 '/assets/videos/reel_2024.mp4'
-    mediaSrc: '/assets/videos/reel_2024.mp4', 
+    mediaSrc: '/assets/videos/video-1.mp4', 
     type: 'video',
     stats: {
       views: '12.5K',
@@ -108,9 +100,9 @@ export const VIDEO_PORTFOLIO: PortfolioItem[] = [
     id: 'v2',
     title: '首尔时装周',
     category: '活动回顾',
-    clientName: 'TouchinSoul',
+    clientName: 'SFW 主办方',
     location: '首尔',
-    year: '2024',
+    year: '2023',
     filterTags: ['event', 'brand'],
     mediaSrc: '/assets/videos/video-2.mp4',
     type: 'video',
@@ -123,11 +115,11 @@ export const VIDEO_PORTFOLIO: PortfolioItem[] = [
   },
   {
     id: 'v3',
-    title: '高端晚宴',
+    title: 'VOGUE 晚宴',
     category: '活动集锦',
-    clientName: 'TouchinSoul',
-    location: '首尔',
-    year: '2024',
+    clientName: 'VOGUE KOREA',
+    location: '釜山',
+    year: '2023',
     filterTags: ['event'],
     mediaSrc: '/assets/videos/video-3.mp4',
     type: 'video',
@@ -140,10 +132,10 @@ export const VIDEO_PORTFOLIO: PortfolioItem[] = [
   },
   {
     id: 'v4',
-    title: '新世界免税店x首尔月',
+    title: '免税店宣传片',
     category: '商业广告',
     clientName: '新世界百货',
-    location: '首尔',
+    location: '仁川',
     year: '2024',
     filterTags: ['product', 'brand'],
     mediaSrc: '/assets/videos/video-4.mp4',
@@ -163,7 +155,7 @@ export const VIDEO_PORTFOLIO: PortfolioItem[] = [
     location: '东京',
     year: '2023',
     filterTags: ['brand', 'documentary'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/tokyo%20street%20photography%20rain%20neon%20cyberpunk%20vibe%20umbrella?width=1920&height=1080&nologo=true',
+    mediaSrc: '/assets/videos/video-5.mp4',
     type: 'video',
     stats: {
       views: '33K',
@@ -180,7 +172,7 @@ export const VIDEO_PORTFOLIO: PortfolioItem[] = [
     location: '京都',
     year: '2023',
     filterTags: ['brand', 'documentary'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/japanese%20coffee%20shop%20barista%20pouring%20coffee%20warm%20light%20wood%20texture?width=1920&height=1080&nologo=true',
+    mediaSrc: '/assets/videos/video-6.mp4',
     type: 'video',
     stats: {
       views: '19K',
@@ -197,7 +189,7 @@ export const VIDEO_PORTFOLIO: PortfolioItem[] = [
     location: '香港',
     year: '2022',
     filterTags: ['brand'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/hong%20kong%20neon%20signs%20reflection%20puddle%20wong%20kar%20wai%20style?width=1920&height=1080&nologo=true',
+    mediaSrc: '/assets/videos/video-7.mp4',
     type: 'video',
     stats: {
       views: '11K',
