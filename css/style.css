@@ -1,4 +1,174 @@
-/* style.css - 新增/修改的视觉重构样式 */
+/*
+ * WXZ STUDIO Website CSS Styles - Kenya Hara Inspired Minimal Design (Restored & Fixed)
+ */
+
+/* 1. 全局样式与变量: 强调高对比度与留白 */
+:root {
+    --primary-color: #000000;      /* 纯黑 */
+    --secondary-color: #ffffff;    /* 纯白 */
+    --accent-color: #777777;       /* 辅助灰 */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --nav-height: 80px;            /* 桌面 Header 高度 */
+    --mobile-nav-top-height: 55px; /* **新增：移动端顶部 Header 高度** */
+    --mobile-nav-bottom-height: 60px; /* 移动端底部 Header 高度 */
+    --footer-bottom-padding: 40px; /* **新增：底部空白高度** */ 
+}
+
+/* **新增：Logo 字体声明** */
+@font-face {
+    font-family: 'Raleway';
+    src: url('../assets/fonts/Raleway-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900; 
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    overflow-x: hidden; /* 防止横向滚动条出现 */
+}
+
+/* Container & Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.main-content {
+    /* 适配桌面 Header 高度 */
+    padding-top: var(--nav-height); 
+    min-height: calc(100vh - 100px); /* 确保内容区足够高 */
+    padding-bottom: var(--footer-bottom-padding);
+}
+
+/* 2. Header & Menu 菜单设计重构：电影票风格 (FIXED) */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* 确保菜单在最上方 */
+    transition: background-color 0.3s ease;
+    background-color: transparent; /* 默认透明 */
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--nav-height);
+}
+
+.logo a {
+    font-family: 'Raleway', var(--font-family);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.header.dark .logo a, .hero-showcase-section .logo a {
+    color: var(--secondary-color); /* 在暗色/全屏背景下显示白色 Logo */
+}
+
+/* 移除原有 nav-menu 样式 */
+.nav-menu {
+    display: none; 
+}
+
+/* 电影票菜单容器 */
+.ticket-menu-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1010;
+}
+
+.menu-toggle-btn {
+    /* 展开前样式：类似票根 */
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    transition: background-color 0.3s ease;
+    /* 模拟电影票边缘的虚线 */
+    border-left: 2px dashed var(--secondary-color);
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.menu-toggle-btn:hover {
+    background-color: #333;
+}
+
+.menu-toggle-btn span {
+    margin-left: 5px;
+}
+
+.menu-items-wrapper {
+    /* 展开后样式 */
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    border-radius: 5px;
+    opacity: 0;
+    transform: scale(0.9);
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    transform-origin: top right;
+    min-width: 150px;
+}
+
+.menu-items-wrapper.show {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+}
+
+.menu-items-wrapper a {
+    display: block;
+    padding: 8px 0;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.menu-items-wrapper a:last-child {
+    border-bottom: none;
+}
+
+.menu-items-wrapper a:hover, .menu-items-wrapper a.active {
+    color: #cc0000; /* 激活/悬停颜色 */
+}
+
 
 /* ------------------------------------------------------------------- */
 /* 3. New Home Page (index.html) - Single Video Showcase 视觉重构 */
@@ -12,6 +182,16 @@
     justify-content: center;
     align-items: center;
     background-color: var(--primary-color); /* 纯黑背景 */
+    /* 确保头部 Logo 和菜单可见 */
+}
+
+.hero-showcase-section .nav-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    z-index: 10;
 }
 
 .hero-showcase-cover {
@@ -21,7 +201,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    filter: brightness(0.7); /* 封面略暗 */
+    filter: brightness(0.6); /* 封面略暗 */
 }
 
 .showcase-content {
@@ -43,7 +223,6 @@
     flex: 1;
     text-align: left;
     overflow: hidden; 
-    /* 初始隐藏，防止动画前的闪烁，在 JS 中设置可见 */
     visibility: hidden; 
 }
 
@@ -53,7 +232,6 @@
     font-weight: 700;
     letter-spacing: 0.1em;
     margin: 0;
-    /* 流畅的入场效果：从底部滑入 */
     transform: translateY(100%); 
     animation: slideInTitle 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
     animation-delay: 0.5s;
@@ -72,7 +250,6 @@
 }
 
 .showcase-stats-box {
-    /* 初始隐藏，在 JS 中设置可见 */
     visibility: hidden; 
     text-align: right;
     display: flex;
@@ -103,15 +280,16 @@
 
 
 /* ------------------------------------------------------------------- */
-/* 4. New Work Page (video-portfolio.html) - Footage Mode 视觉重构 */
+/* 4. New Videos Page (video-portfolio.html) - Footage Mode 视觉重构/优化 */
 /* ------------------------------------------------------------------- */
 .footage-section {
     padding: 0; 
     width: 100vw;
-    /* 适应桌面/移动端导航栏高度 */
+    /* 适配 Header 高度 */
     height: calc(100vh - var(--nav-height)); 
     overflow: hidden;
     position: relative;
+    background-color: var(--primary-color);
 }
 
 .footage-scroll-wrapper {
@@ -120,7 +298,9 @@
     /* 启用横向滚动和拖拽 */
     overflow-x: scroll;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory; /* 滚动捕捉，提高体验 */
+    /* 优化拖拽平滑度 */
+    scroll-behavior: smooth; 
+    scroll-snap-type: x mandatory; 
     -webkit-overflow-scrolling: touch; 
 }
 
@@ -129,54 +309,59 @@
 .footage-scroll-wrapper { -ms-overflow-style: none; scrollbar-width: none; }
 
 .footage-item {
-    flex: 0 0 90vw; /* 每个作品占据 90vw 的宽度 */
-    height: 80%; /* 留出上下空间 */
+    flex: 0 0 90vw; 
+    height: 80%; 
     margin: auto 0;
     margin-left: 5vw; 
     position: relative;
     scroll-snap-align: center; 
     overflow: hidden;
     cursor: pointer;
-    background-color: #f0f0f0;
-    border: 1px solid #e0e0e0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    /* 初始位置：完全在左侧，用于入场动画 */
-    transform: translateX(-100vw); 
-    opacity: 1; /* 确保动画结束后可见 */
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.5s ease;
+    transform: translateX(-100vw); /* 初始位置：完全在左侧，用于入场动画 */
+    opacity: 1; 
 }
 
 .footage-item:last-child {
     margin-right: 5vw; 
 }
 
+.footage-item:hover {
+    transform: scale(1.02) translateY(0);
+}
+
 /* 第一次进入页面时会有从左到右的线性动画 */
 @keyframes footageEntry {
     to { transform: translateX(0); }
 }
-/* 对前几个元素设置延迟动画 */
 .footage-item:nth-child(1) { animation: footageEntry 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 .footage-item:nth-child(2) { animation: footageEntry 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards; animation-delay: 0.1s; }
 .footage-item:nth-child(3) { animation: footageEntry 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards; animation-delay: 0.2s; }
-/* 请在 HTML 中使用 img 作为封面 */
+.footage-item:nth-child(4) { animation: footageEntry 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards; animation-delay: 0.3s; }
+
 .footage-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: opacity 0.5s ease;
 }
 
 .footage-info {
     position: absolute;
     bottom: 20px;
-    left: 20px;
+    left: 30px;
     color: var(--secondary-color);
-    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
     z-index: 10;
 }
 
 .footage-info h3 {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 28px;
+    font-weight: 700;
     margin-bottom: 5px;
     margin-top: 0;
 }
@@ -184,7 +369,7 @@
 /* 作品下方进度条 */
 .footage-progress-bar-container {
     position: absolute;
-    bottom: 80px; /* 距离底部留白 */
+    bottom: 40px; 
     left: 50%;
     transform: translateX(-50%);
     width: 90vw;
@@ -199,48 +384,100 @@
     height: 100%;
     width: 0%;
     background-color: var(--secondary-color);
-    transition: width 0.3s ease-out;
+    transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* 优化平滑过渡 */
 }
 
 /* ------------------------------------------------------------------- */
-/* 5. Video Modal (In-page player) 播放器样式更新 */
+/* 5. Video Modal (In-page player) 播放器样式更新 - 修复重叠问题 */
 /* ------------------------------------------------------------------- */
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: none; /* 默认隐藏 */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.video-modal.show {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    /* 增加顶部和右侧 padding，避免和 Fixed Header/Logo/关闭按钮重叠 */
+    padding-top: 60px; 
+    height: auto;
+    max-height: 90vh;
+}
+
+#videoPlayerContainer {
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 比例 */
+    position: relative;
+}
+
+#videoPlayerContainer video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
 
 .close-btn {
-    /* 类似风格的关闭按钮 */
-    position: absolute;
-    top: -40px; 
-    right: 0px; 
+    /* 类似风格的关闭按钮 - FIXED 修复重叠 */
+    position: fixed; 
+    top: 20px;
+    right: 20px;
+    z-index: 2020; 
     color: var(--secondary-color);
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 200;
     cursor: pointer;
-    transition: transform 0.3s ease;
-    opacity: 0.8;
+    transition: all 0.3s ease;
+    opacity: 0.9;
     line-height: 1;
-    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    /* 桌面端关闭按钮改为更明显的圆形 */
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: none;
 }
 
 .close-btn:hover {
-    opacity: 1;
-    transform: rotate(90deg); /* 旋转动画效果 */
+    background-color: rgba(255, 255, 255, 0.8);
+    color: var(--primary-color);
+    transform: rotate(90deg) scale(1.1); /* 旋转动画效果 */
 }
 
 /* ------------------------------------------------------------------- */
-/* 6. Media Queries 移动端适配 (新增/修改) */
+/* 6. Media Queries 移动端适配 */
 /* ------------------------------------------------------------------- */
 @media (max-width: 768px) {
     
-    /* 调整主内容区域，为移动端导航栏预留空间 */
+    /* 移动端主内容区域：为固定 Header 和底部 Nav 留出空间 */
     .main-content {
-        margin-top: var(--mobile-nav-top-height);
-        margin-bottom: var(--mobile-nav-bottom-height);
+        padding-top: var(--mobile-nav-top-height); 
+        padding-bottom: var(--mobile-nav-bottom-height);
     }
 
     /* 首页 Showcase 移动端调整 */
     .showcase-content {
         padding-bottom: 80px;
-        flex-direction: column; /* 垂直堆叠 */
+        flex-direction: column; 
         align-items: flex-start;
     }
     
@@ -248,6 +485,35 @@
         margin-left: 0;
         margin-top: 20px;
         align-items: flex-start;
+    }
+
+    /* 移动端头部 Logo/菜单位置 */
+    .header {
+        height: var(--mobile-nav-top-height);
+        background-color: var(--secondary-color);
+    }
+    .nav-content {
+        height: var(--mobile-nav-top-height);
+    }
+
+    /* 移动端 Logo 颜色调整 */
+    .header.dark .logo a, .hero-showcase-section .logo a {
+        color: var(--secondary-color); 
+    }
+    .header:not(.dark) .logo a {
+        color: var(--primary-color); /* 默认黑字 */
+    }
+
+    /* 移动端电影票菜单调整 */
+    .ticket-menu-container {
+        top: 10px;
+        right: 10px;
+    }
+    .menu-toggle-btn {
+        padding: 8px 15px;
+    }
+    .menu-items-wrapper {
+        padding: 15px;
     }
     
     /* 视频作品页 Footage Mode 移动端调整 */
@@ -258,6 +524,7 @@
     .footage-item {
         flex: 0 0 95vw; 
         margin-left: 2.5vw;
+        border-radius: 0;
     }
     
     .footage-item:last-child {
@@ -268,23 +535,61 @@
         width: 95vw;
         bottom: 70px; /* 避开底部导航栏 */
     }
+
+    /* 移动端底部导航栏 (保持不变) */
+    .mobile-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: var(--mobile-nav-bottom-height);
+        background-color: var(--secondary-color);
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        display: block;
+    }
+    .mobile-menu-icons {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+    }
+    .mobile-menu-icons a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--accent-color);
+        font-size: 10px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    .mobile-menu-icons a img {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 3px;
+    }
+    .mobile-menu-icons a .icon-active {
+        display: none;
+    }
+    .mobile-menu-icons a.active {
+        color: var(--primary-color);
+    }
+    .mobile-menu-icons a.active .icon-default {
+        display: none;
+    }
+    .mobile-menu-icons a.active .icon-active {
+        display: block;
+    }
     
-    /* Modal 关闭按钮移动端样式 */
+    /* 移动端 Modal 关闭按钮样式 (FIXED) */
     .close-btn {
         top: 10px; 
         right: 10px;
-        color: var(--primary-color); 
         background-color: var(--secondary-color);
-        border-radius: 50%;
+        color: var(--primary-color);
         width: 35px;
         height: 35px;
-        font-size: 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        line-height: 1;
-        opacity: 0.9;
-        text-shadow: none;
-        z-index: 2010;
+        z-index: 2020;
     }
 }
