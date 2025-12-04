@@ -48,12 +48,12 @@ export const SERVICES: Service[] = [
 ];
 
 export const CLIENTS: Client[] = [
-  { id: 1, name: 'AEKYUNG', logoInitial: 'A', logoSrc: '/assets/clients/AEKYUNG.png' },
+  { id: 1, name: 'AK BEAUTY', logoInitial: 'A', logoSrc: '/assets/clients/AEKYUNG.png' },
   { id: 2, name: 'AMOREPACIFIC', logoInitial: 'A', logoSrc: '/assets/clients/AMOREPACIFIC.png' },
   { id: 3, name: 'COSRX', logoInitial: 'C', logoSrc: '/assets/clients/COSRX.png' },
   { id: 4, name: 'HERA', logoInitial: 'H', logoSrc: '/assets/clients/HERA.png' },
   { id: 5, name: 'high&gogo', logoInitial: 'h', logoSrc: '/assets/clients/high&gogo.png' },
-  { id: 6, name: '(G)I-DLE', logoInitial: 'I', logoSrc: '/assets/clients/i-dle.png' },
+  { id: 6, name: 'G-IDLE', logoInitial: 'I', logoSrc: '/assets/clients/i-dle.png' },
   { id: 7, name: 'IOPE', logoInitial: 'I', logoSrc: '/assets/clients/IOPE.png' },
   { id: 8, name: 'LEADERS', logoInitial: 'L', logoSrc: '/assets/clients/LEADERS.png' },
   { id: 9, name: 'VITALBEAUTIE', logoInitial: 'V', logoSrc: '/assets/clients/VITALBEAUTIE.png' },

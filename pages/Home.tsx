@@ -57,7 +57,7 @@ const Home = () => {
         ))}
 
         {/* Content Overlay */}
-        <div className="absolute inset-0 z-30 container mx-auto px-6 md:px-12 h-full flex flex-col justify-end pb-12 md:pb-20">
+        <div className="absolute inset-0 z-30 container mx-auto px-6 md:px-12 h-full flex flex-col justify-end pb-24 md:pb-20">
            
            <div className="flex flex-col md:flex-row items-end justify-between w-full">
              
@@ -74,11 +74,12 @@ const Home = () => {
                      </span>
                   </div>
                   
-                  <h1 className="text-5xl md:text-8xl font-display font-black leading-[0.9] text-white uppercase tracking-tighter mb-6">
+                  {/* Adjusted Text Sizes for Mobile Proportion */}
+                  <h1 className="text-4xl sm:text-5xl md:text-8xl font-display font-black leading-[0.9] text-white uppercase tracking-tighter mb-4 md:mb-6 break-words">
                      {currentItem.title}
                   </h1>
 
-                  <p className="text-white/60 text-sm md:text-base max-w-lg leading-relaxed font-light mb-8">
+                  <p className="text-white/60 text-sm md:text-base max-w-lg leading-relaxed font-light mb-8 line-clamp-2 md:line-clamp-none">
                      {currentItem.stats?.quote || "An immersive visual experience crafted by WXZ Studio."}
                   </p>
                   
@@ -210,8 +211,10 @@ const Home = () => {
         ========================================
       */}
       <section className="pt-24 pb-0 bg-black border-t border-white/5 overflow-hidden">
-        <div className="container mx-auto px-6 mb-12 text-center">
-           <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/40 block mb-4">服务客户</span>
+        {/* Updated Client Header to match Service Header Size */}
+        <div className="container mx-auto px-6 mb-16 text-center">
+             <h2 className="text-3xl md:text-5xl font-display font-bold text-white uppercase tracking-tight mb-4">服务客户</h2>
+             <div className="w-24 h-1 bg-white mx-auto"></div>
         </div>
 
         {/* Marquee Track */}
@@ -220,12 +223,13 @@ const Home = () => {
            <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-black to-transparent z-20"></div>
            <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-black to-transparent z-20"></div>
 
-           <div className="flex animate-scroll whitespace-nowrap hover:[animation-play-state:paused]">
+           <div className="flex animate-scroll whitespace-nowrap hover:[animation-play-state:paused] items-center">
               {/* Duplicate list multiple times to ensure seamless infinite scroll */}
               {[...CLIENTS, ...CLIENTS, ...CLIENTS].map((client, index) => (
-                 <div key={`${client.id}-${index}`} className="flex items-center justify-center mx-8 md:mx-16 w-32 md:w-48 opacity-40 hover:opacity-100 transition-opacity duration-300">
+                 <div key={`${client.id}-${index}`} className="flex items-center justify-center mx-8 md:mx-16 w-48 md:w-64 opacity-50 hover:opacity-100 transition-opacity duration-300">
                     {client.logoSrc ? (
-                       <img src={client.logoSrc} alt={client.name} className="max-w-full h-12 object-contain grayscale" />
+                       // Enlarged Client Logos (h-24 approx 6rem/96px)
+                       <img src={client.logoSrc} alt={client.name} className="max-w-full h-20 md:h-24 object-contain grayscale hover:grayscale-0 transition-all duration-500" />
                     ) : (
                        <span className="text-2xl md:text-4xl font-display font-bold text-white uppercase tracking-tighter whitespace-nowrap">
                           {client.name}

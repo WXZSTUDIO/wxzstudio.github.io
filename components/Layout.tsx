@@ -15,10 +15,10 @@ export const Layout = ({ children }: { children?: React.ReactNode }) => {
       {/* Top Gradient Mask for Logo and Menu readability */}
       <div className="fixed top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/90 via-black/50 to-transparent z-[998] pointer-events-none"></div>
 
-      {/* Top Bar */}
-      <header className="fixed top-0 left-0 right-0 z-[999] py-6 px-6 md:px-12 flex justify-between items-start pointer-events-none">
+      {/* Top Bar - Z-Index 1001 to stay above the menu overlay (which is 1000) */}
+      <header className="fixed top-0 left-0 right-0 z-[1001] py-6 px-6 md:px-12 flex justify-between items-start pointer-events-none">
         {/* Logo */}
-        <NavLink to="/" className="text-2xl font-display font-bold tracking-widest text-white pointer-events-auto mix-blend-difference z-[999] mt-2">
+        <NavLink to="/" className="text-2xl font-display font-bold tracking-widest text-white pointer-events-auto mix-blend-difference z-[1001] mt-2">
           WXZ<span className="font-light">STUDIO</span>
         </NavLink>
 
@@ -27,7 +27,7 @@ export const Layout = ({ children }: { children?: React.ReactNode }) => {
         */}
         <button 
           onClick={toggleMenu}
-          className="pointer-events-auto z-[999] group relative w-14 h-14 bg-[#FBF9F3] text-black shadow-2xl transition-transform hover:scale-105 flex flex-col items-center justify-center gap-1.5"
+          className="pointer-events-auto z-[1001] group relative w-14 h-14 bg-[#FBF9F3] text-black shadow-2xl transition-transform hover:scale-105 flex flex-col items-center justify-center gap-1.5"
           style={{
             // CSS Mask to create the "Ticket" inverted radius effect at corners
             mask: `radial-gradient(circle 8px at 0 0, transparent 0, transparent 100%) 0 0,
@@ -57,9 +57,9 @@ export const Layout = ({ children }: { children?: React.ReactNode }) => {
         </button>
       </header>
 
-      {/* Ticket Menu Overlay */}
+      {/* Ticket Menu Overlay - Z-Index 1000 to cover everything else */}
       <div 
-        className={`fixed inset-0 z-[990] bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${
+        className={`fixed inset-0 z-[1000] bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${
           isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={toggleMenu}
