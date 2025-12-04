@@ -49,7 +49,7 @@ const Home = () => {
              {/* Image */}
              <img 
                src={item.mediaSrc} 
-               alt={item.title}
+               alt={item.title} 
                className="w-full h-full object-cover animate-[pulse_10s_ease-in-out_infinite]"
                style={{ animationDuration: '20s' }} // Slow zoom effect
              />
@@ -59,10 +59,10 @@ const Home = () => {
         {/* Content Overlay */}
         <div className="absolute inset-0 z-30 container mx-auto px-6 md:px-12 h-full flex flex-col justify-end pb-24 md:pb-20">
            
-           <div className="flex flex-col md:flex-row items-end justify-between w-full">
+           <div className="flex flex-col md:flex-row items-start md:items-end justify-between w-full">
              
              {/* Left: Title & Info */}
-             <div className="mb-8 md:mb-0 max-w-3xl">
+             <div className="mb-8 md:mb-0 max-w-3xl text-left">
                 <div key={`text-${currentSlide}`} className="animate-fade-in-up">
                   <div className="flex items-center gap-4 mb-4">
                      <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/70">
@@ -75,30 +75,30 @@ const Home = () => {
                   </div>
                   
                   {/* Adjusted Text Sizes for Mobile Proportion */}
-                  <h1 className="text-4xl sm:text-5xl md:text-8xl font-display font-black leading-[0.9] text-white uppercase tracking-tighter mb-4 md:mb-6 break-words">
+                  <h1 className="text-4xl sm:text-5xl md:text-8xl font-display font-black leading-[0.9] text-white uppercase tracking-tighter mb-4 md:mb-6 break-words text-left">
                      {currentItem.title}
                   </h1>
 
-                  <p className="text-white/60 text-sm md:text-base max-w-lg leading-relaxed font-light mb-8 line-clamp-2 md:line-clamp-none">
+                  <p className="text-white/60 text-sm md:text-base max-w-lg leading-relaxed font-light mb-8 line-clamp-2 md:line-clamp-none text-left">
                      {currentItem.stats?.quote || "An immersive visual experience crafted by WXZ Studio."}
                   </p>
                   
                   {/* Metadata Grid */}
-                  <div className="flex gap-12 border-t border-white/20 pt-4">
+                  <div className="flex gap-12 border-t border-white/20 pt-4 justify-start">
                      <div>
-                        <span className="block text-[9px] text-gray-400 uppercase tracking-widest mb-1">导演 / Director</span>
-                        <span className="block text-xs font-bold uppercase">{currentItem.clientName || 'Limor Pinhasov'}</span>
+                        <span className="block text-[9px] text-gray-400 uppercase tracking-widest mb-1 text-left">导演 / Director</span>
+                        <span className="block text-xs font-bold uppercase text-left">{currentItem.clientName || 'Limor Pinhasov'}</span>
                      </div>
                      <div>
-                        <span className="block text-[9px] text-gray-400 uppercase tracking-widest mb-1">类别 / Category</span>
-                        <span className="block text-xs font-bold uppercase">{currentItem.filterTags[0]}</span>
+                        <span className="block text-[9px] text-gray-400 uppercase tracking-widest mb-1 text-left">类别 / Category</span>
+                        <span className="block text-xs font-bold uppercase text-left">{currentItem.filterTags[0]}</span>
                      </div>
                   </div>
                 </div>
              </div>
 
              {/* Right: Stats & Ticket Button */}
-             <div className="flex flex-col items-end gap-8">
+             <div className="flex flex-col items-start md:items-end gap-8 w-full md:w-auto">
                 
                 {/* Stats (Likes/Views) - Replaces Critical Acclaim */}
                 <div className="hidden md:flex flex-col items-end gap-4 text-right mb-2">
@@ -121,33 +121,36 @@ const Home = () => {
 
                 <Link 
                    to="/video-portfolio"
-                   className="group relative block w-48 h-16 bg-transparent transition-transform hover:scale-105"
+                   className="group relative inline-block transition-transform hover:scale-105"
                 >
-                   {/* Ticket Body with 'Bites' */}
+                   {/* Custom CSS Ticket Shape Button - Optimized with Separate Masks */}
                    <div 
-                      className="absolute inset-0 bg-transparent border border-white flex items-center"
+                      className="relative flex items-center w-64 h-16 border border-white rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
                       style={{
-                         mask: `radial-gradient(circle 8px at 0 50%, transparent 8px, black 8.5px) 0 50%,
-                                radial-gradient(circle 8px at 100% 50%, transparent 8px, black 8.5px) 100% 50%`,
-                         maskRepeat: 'no-repeat',
-                         maskSize: '100% 100%',
-                         WebkitMask: `radial-gradient(circle 8px at 0 50%, transparent 8px, black 8.5px) 0 50%,
-                                      radial-gradient(circle 8px at 100% 50%, transparent 8px, black 8.5px) 100% 50%`,
-                         WebkitMaskRepeat: 'no-repeat',
-                         WebkitMaskSize: '100% 100%'
+                          // Standard non-composite mask approach: Top layer + Bottom layer
+                          mask: `
+                            radial-gradient(circle 8px at 70% 0, transparent 8px, black 8.5px) top / 100% 51% no-repeat,
+                            radial-gradient(circle 8px at 70% 100%, transparent 8px, black 8.5px) bottom / 100% 51% no-repeat
+                          `,
+                          WebkitMask: `
+                            radial-gradient(circle 8px at 70% 0, transparent 8px, black 8.5px) top / 100% 51% no-repeat,
+                            radial-gradient(circle 8px at 70% 100%, transparent 8px, black 8.5px) bottom / 100% 51% no-repeat
+                          `
                       }}
                    >
-                       {/* Visible Border Container */}
-                       <div className="w-full h-full border border-white flex items-center justify-between px-6 bg-black/30 backdrop-blur-sm group-hover:bg-white/10 transition-colors">
-                          <span className="text-sm font-bold tracking-[0.2em] text-white">探索更多</span>
-                          <div className="absolute left-[70%] top-0 bottom-0 w-[1px] border-l border-dashed border-white/50"></div>
-                          <ArrowRight size={20} className="text-white ml-auto" />
-                       </div>
+                        {/* Dashed Vertical Divider */}
+                        <div className="absolute top-3 bottom-3 left-[70%] border-l border-dashed border-white/50 -ml-[0.5px]"></div>
+                        
+                        {/* Left Side Text */}
+                        <div className="w-[70%] flex items-center justify-center pl-2">
+                           <span className="text-base font-bold tracking-[0.25em] text-white">EXPLORE</span>
+                        </div>
+                        
+                        {/* Right Side Icon */}
+                        <div className="w-[30%] flex items-center justify-center">
+                           <ArrowRight size={24} className="text-white group-hover:translate-x-1 transition-transform" />
+                        </div>
                    </div>
-
-                   {/* Corner Borders Pseudo-elements */}
-                   <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-r border-white bg-black z-20" style={{ clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)', left: '-8px' }}></div>
-                   <div className="absolute right-[-1px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-l border-white bg-black z-20" style={{ clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)', right: '-8px' }}></div>
                 </Link>
              </div>
            </div>
@@ -226,10 +229,14 @@ const Home = () => {
            <div className="flex animate-scroll whitespace-nowrap hover:[animation-play-state:paused] items-center">
               {/* Duplicate list multiple times to ensure seamless infinite scroll */}
               {[...CLIENTS, ...CLIENTS, ...CLIENTS].map((client, index) => (
-                 <div key={`${client.id}-${index}`} className="flex items-center justify-center mx-8 md:mx-16 w-48 md:w-64 opacity-50 hover:opacity-100 transition-opacity duration-300">
+                 <div key={`${client.id}-${index}`} className="flex items-center justify-center mx-8 md:mx-16 w-64 md:w-80 opacity-80 hover:opacity-100 transition-opacity duration-300">
                     {client.logoSrc ? (
-                       // Enlarged Client Logos (h-24 approx 6rem/96px)
-                       <img src={client.logoSrc} alt={client.name} className="max-w-full h-20 md:h-24 object-contain grayscale hover:grayscale-0 transition-all duration-500" />
+                       // Significantly Enlarged Client Logos (h-48 mobile, h-64 desktop) and Brighter
+                       <img 
+                          src={client.logoSrc} 
+                          alt={client.name} 
+                          className="max-w-full h-48 md:h-64 object-contain grayscale-0 brightness-200 hover:brightness-200 transition-all duration-500" 
+                       />
                     ) : (
                        <span className="text-2xl md:text-4xl font-display font-bold text-white uppercase tracking-tighter whitespace-nowrap">
                           {client.name}
@@ -247,10 +254,6 @@ const Home = () => {
         <div className="container mx-auto px-4 md:px-12">
             <div 
                 className="w-full max-w-6xl mx-auto rounded-t-[2.5rem] rounded-b-none bg-gradient-to-b from-[#111] to-black border-t border-x border-white/10 p-8 md:p-12 relative overflow-hidden group"
-                style={{
-                    maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
-                }}
             >
                 {/* Subtle Gradient Glow Background */}
                 <div className="absolute top-[-50%] left-[20%] w-[500px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none group-hover:bg-blue-900/20 transition-colors duration-1000"></div>
