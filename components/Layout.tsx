@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
-import { X, BookHeart } from 'lucide-react';
+import { X } from 'lucide-react';
 
 export const Layout = ({ children }: { children?: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -115,18 +115,18 @@ export const Layout = ({ children }: { children?: React.ReactNode }) => {
              </div>
 
              <div className="flex gap-4 mb-8 text-xs font-bold uppercase tracking-widest items-center">
-                {/* WeChat Icon */}
+                {/* WeChat Icon - Actual Logo Path */}
                 <button 
                   className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 hover:bg-[#07C160] hover:text-white transition-all duration-300"
                   onClick={() => navigator.clipboard.writeText('icf304').then(() => alert('WeChat ID: icf304 Copied!'))}
                   title="WeChat: icf304"
                 >
                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                       <path d="M8 12.6c0-3.4 3.6-6.1 8-6.1 4.4 0 8 2.7 8 6.1 0 1.9-1.1 3.6-2.9 4.7.1.6.4 1.3.8 1.9-1.2.2-3-.5-3.8-1.4-1 .5-2 .8-2.1.8-4.4 0-8-2.7-8-6zm-10.5 0c0-3.8 3.3-7 7.5-7 4.1 0 7.5 3.2 7.5 7 0 3.8-3.3 7-7.5 7-.9 0-1.7-.2-2.5-.5-.8.8-2.3 1.4-3.4 1.2.4-.6.6-1.2.5-1.8-1.6-1.1-2.6-2.6-2.6-4.4z"/>
+                       <path d="M8.69 14.3c-4.47 0-8.1 3.24-8.1 7.23 0 2.27 1.18 4.3 3.03 5.66-.3.94-.97 2.5-1.12 2.87-.15.4-.07.78.3.78.18 0 .5-.05 2.22-1.14 1.13.56 2.4.88 3.74.88 4.47 0 8.1-3.24 8.1-7.23 0-4-3.63-7.24-8.1-7.24zm14.28-7.7c-4.2 0-7.6 3.03-7.6 6.77 0 .28.02.55.06.82.7.1 1.43.16 2.18.16 5.42 0 9.82-3.56 9.82-7.94 0-4.38-4.4-7.93-9.82-7.93-5.4 0-9.8 3.55-9.8 7.93 0 .7.12 1.4.32 2.05 1.4-1.1 3.16-1.8 5.04-1.8 4.2 0 7.6 3.04 7.6 6.78 0 .1-.02.2-.03.3.06 0 .12-.02.18-.02 1.26 0 2.46.3 3.5.83 1.62 1.02 1.93 1.07 2.1 1.07.34 0 .42-.36.28-.73-.13-.35-.77-1.8-1.05-2.68 1.73-1.28 2.84-3.18 2.84-5.3 0-3.74-3.2-6.78-7.14-6.78z" transform="translate(0 -2) scale(0.9)"/>
                     </svg>
                 </button>
                 
-                {/* RED (XiaoHongShu) Icon - Represented by BookHeart (Little Red Book) */}
+                {/* XiaoHongShu Icon - Actual Logo Path */}
                 <a 
                    href="https://xhslink.com/m/4FrLqFlYhZj" 
                    target="_blank" 
@@ -134,7 +134,10 @@ export const Layout = ({ children }: { children?: React.ReactNode }) => {
                    className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 hover:bg-[#FF2442] hover:text-white transition-all duration-300"
                    title="XiaoHongShu"
                 >
-                    <BookHeart className="w-5 h-5" />
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                       <path d="M4.3 0h15.4C22.1 0 24 1.9 24 4.3v15.4c0 2.4-1.9 4.3-4.3 4.3H4.3C1.9 24 0 22.1 0 19.7V4.3C0 1.9 1.9 0 4.3 0z" fill="none"/>
+                       <path d="M20.5 7.6c-.6-1.6-1.7-2.9-3-3.9-1.3-1-2.9-1.5-4.6-1.5H11c-1.7 0-3.3.5-4.6 1.5-1.3 1-2.4 2.3-3 3.9-.1.3-.2.6-.2.9 0 .2.1.3.3.4.2.1.4.1.6 0 .3-.1.6-.2.8-.4 1.1-1.3 2.7-2.1 4.5-2.1h1.9c1.7 0 3.4.8 4.5 2.1.3.3.6.4.8.4.2 0 .4-.1.6-.2.2-.1.3-.2.3-.4-.1-.2-.2-.5-.3-.7zM12 21.8c-2.4 0-4.6-.9-6.3-2.4-.4-.3-.7-.8-.9-1.2-.2-.5-.3-1-.3-1.5 0-1.1.4-2.1 1.2-2.9.8-.8 1.8-1.2 2.9-1.2.5 0 1 .1 1.5.3.4.2.8.5 1.2.9.2.2.5.2.7 0 .2-.2.2-.5 0-.7-.6-.6-1.2-1-1.9-1.2-.5-.2-1.1-.3-1.6-.3-1.7 0-3.2.7-4.3 1.8-1.1 1.1-1.8 2.6-1.8 4.3 0 .9.2 1.7.5 2.5.4.8 1 1.5 1.7 2.1 1.6 1.4 3.7 2.2 5.9 2.2s4.3-.8 5.9-2.2c.7-.6 1.3-1.3 1.7-2.1.3-.8.5-1.6.5-2.5 0-1.7-.7-3.2-1.8-4.3-1.1-1.1-2.6-1.8-4.3-1.8-.5 0-1.1.1-1.6.3-.7.2-1.3.6-1.9 1.2-.2.2-.2.5 0 .7.2.2.5.2.7 0 .4-.4.8-.7 1.2-.9.5-.2 1-.3 1.5-.3 1.1 0 2.1.4 2.9 1.2.8.8 1.2 1.8 1.2 2.9 0 .5-.1 1-.3 1.5-.2.5-.5.9-.9 1.2-1.7 1.5-3.9 2.4-6.3 2.4z"/>
+                    </svg>
                 </a>
              </div>
 

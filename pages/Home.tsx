@@ -229,13 +229,14 @@ const Home = () => {
            <div className="flex animate-scroll whitespace-nowrap hover:[animation-play-state:paused] items-center">
               {/* Duplicate list multiple times to ensure seamless infinite scroll */}
               {[...CLIENTS, ...CLIENTS, ...CLIENTS].map((client, index) => (
-                 <div key={`${client.id}-${index}`} className="flex items-center justify-center mx-8 md:mx-16 w-64 md:w-80 opacity-80 hover:opacity-100 transition-opacity duration-300">
+                 <div key={`${client.id}-${index}`} className="flex items-center justify-center mx-8 md:mx-16 w-32 md:w-48 opacity-60 hover:opacity-100 transition-opacity duration-300">
                     {client.logoSrc ? (
-                       // Significantly Enlarged Client Logos (h-48 mobile, h-64 desktop) and Brighter
+                       // REDUCED SIZE: h-24 md:h-32 (was h-48 md:h-64)
+                       // COLOR: Grayscale by default, full color on hover. Opacity controlled by parent.
                        <img 
                           src={client.logoSrc} 
                           alt={client.name} 
-                          className="max-w-full h-48 md:h-64 object-contain grayscale-0 brightness-200 hover:brightness-200 transition-all duration-500" 
+                          className="max-w-full h-24 md:h-32 object-contain grayscale hover:grayscale-0 transition-all duration-500" 
                        />
                     ) : (
                        <span className="text-2xl md:text-4xl font-display font-bold text-white uppercase tracking-tighter whitespace-nowrap">
