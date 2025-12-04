@@ -60,28 +60,28 @@
                 <div class="clients-wall">
                     <div class="clients-scroll-container">
                         <div class="clients-list-inner">
-                            <div class="client-logo"><img src="images/client1.png" alt="Client 1"></div>
-                            <div class="client-logo"><img src="images/client2.png" alt="Client 2"></div>
-                            <div class="client-logo"><img src="images/client3.png" alt="Client 3"></div>
-                            <div class="client-logo"><img src="images/client4.png" alt="Client 4"></div>
-                            <div class="client-logo"><img src="images/client5.png" alt="Client 5"></div>
-                            <div class="client-logo"><img src="images/client6.png" alt="Client 6"></div>
-                            <div class="client-logo"><img src="images/client7.png" alt="Client 7"></div>
-                            <div class="client-logo"><img src="images/client8.png" alt="Client 8"></div>
-                            <div class="client-logo"><img src="images/client9.png" alt="Client 9"></div>
-                            <div class="client-logo"><img src="images/client10.png" alt="Client 10"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client1.png" alt="Client 1"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client2.png" alt="Client 2"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client3.png" alt="Client 3"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client4.png" alt="Client 4"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client5.png" alt="Client 5"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client6.png" alt="Client 6"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client7.png" alt="Client 7"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client8.png" alt="Client 8"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client9.png" alt="Client 9"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client10.png" alt="Client 10"></div>
                         </div>
                         <div class="clients-list-inner">
-                            <div class="client-logo"><img src="images/client1.png" alt="Client 1"></div>
-                            <div class="client-logo"><img src="images/client2.png" alt="Client 2"></div>
-                            <div class="client-logo"><img src="images/client3.png" alt="Client 3"></div>
-                            <div class="client-logo"><img src="images/client4.png" alt="Client 4"></div>
-                            <div class="client-logo"><img src="images/client5.png" alt="Client 5"></div>
-                            <div class="client-logo"><img src="images/client6.png" alt="Client 6"></div>
-                            <div class="client-logo"><img src="images/client7.png" alt="Client 7"></div>
-                            <div class="client-logo"><img src="images/client8.png" alt="Client 8"></div>
-                            <div class="client-logo"><img src="images/client9.png" alt="Client 9"></div>
-                            <div class="client-logo"><img src="images/client10.png" alt="Client 10"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client1.png" alt="Client 1"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client2.png" alt="Client 2"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client3.png" alt="Client 3"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client4.png" alt="Client 4"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client5.png" alt="Client 5"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client6.png" alt="Client 6"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client7.png" alt="Client 7"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client8.png" alt="Client 8"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client9.png" alt="Client 9"></div>
+                            <div class="client-logo"><img src="assets/images/clients/client10.png" alt="Client 10"></div>
                         </div>
                     </div>
                 </div>
@@ -164,13 +164,23 @@
                 
                 // Clients Wall (Mobile Show More)
                 const showMoreBtn = document.querySelector('.clients-section .show-more-button');
-                const hiddenLogos = document.querySelectorAll('.client-logo:nth-child(n+7)');
-                if (hiddenLogos.length > 0) {
-                    showMoreBtn.style.display = 'inline-block';
-                    showMoreBtn.addEventListener('click', () => {
-                        hiddenLogos.forEach(logo => logo.classList.add('is-visible'));
-                        showMoreBtn.style.display = 'none';
-                    });
+                const clientLogos = document.querySelectorAll('.clients-list-inner:first-child .client-logo');
+                
+                if (window.innerWidth <= 991) {
+                    // Mobile: Show only the first 9 logos and the 'Show More' button
+                    if (clientLogos.length > 9) {
+                        showMoreBtn.style.display = 'inline-block';
+                        clientLogos.forEach((logo, index) => {
+                            if (index >= 9) {
+                                logo.style.display = 'none';
+                            }
+                        });
+
+                        showMoreBtn.addEventListener('click', () => {
+                            clientLogos.forEach(logo => logo.style.display = 'block');
+                            showMoreBtn.style.display = 'none';
+                        });
+                    }
                 }
             }
             
