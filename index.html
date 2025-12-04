@@ -3,39 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title id="pageTitle" data-lang-zh="WXZ STUDIO - 首页" data-lang-en="WXZ STUDIO - Home" data-lang-kr="WXZ STUDIO - 홈" data-lang-tw="WXZ STUDIO - 首頁">WXZ STUDIO - 首页</title>
+    <title>WXZ STUDIO - 首页</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-current-lang="zh">
+<body>
     <header class="header">
         <div class="nav-content container">
             <div class="logo"><a href="index.html">WXZ STUDIO</a></div>
-
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="index.html" class="active" data-lang-key="nav_home">首页</a></li>
-                    <li><a href="video-portfolio.html" data-lang-key="nav_video">视频作品</a></li>
-                    <li><a href="graphic-portfolio.html" data-lang-key="nav_graphic">平面设计作品</a></li>
-                    <li><a href="contact.html" data-lang-key="nav_contact">联系方式</a></li>
+                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="video-portfolio.html">视频作品</a></li>
+                    <li><a href="graphic-portfolio.html">平面设计作品</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
                 </ul>
             </nav>
-
-            <div class="desktop-lang-switcher">
-                <span class="lang-option" data-lang="en">EN</span>
-                <span class="lang-option" data-lang="kr">KR</span>
-                <span class="lang-option" data-lang="zh">简</span>
-                <span class="lang-option" data-lang="tw">繁</span>
-            </div>
-
-            <div class="mobile-lang-container">
-                <button class="mobile-lang-btn" id="mobileLangBtn" data-current-display="简">简</button>
-                <div class="mobile-lang-dropdown" id="mobileLangDropdown">
-                    <button data-lang="en">English (EN)</button>
-                    <button data-lang="kr">한국어 (KR)</button>
-                    <button data-lang="zh">简体中文 (简)</button>
-                    <button data-lang="tw">繁體中文 (繁)</button>
-                </div>
-            </div>
         </div>
     </header>
 
@@ -49,30 +31,30 @@
         </section>
 
         <section class="services-section container">
-            <h2 data-lang-key="service_title">我们的服务</h2>
+            <h2>我们的服务</h2>
             <div class="services-grid">
                 <div class="service-item">
-                    <h3 data-lang-key="service_event_h">商业活动</h3>
-                    <p data-lang-key="service_event_p">会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作。</p>
+                    <h3>商业活动</h3>
+                    <p>会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作。</p>
                 </div>
                 <div class="service-item">
-                    <h3 data-lang-key="service_product_h">产品拍摄</h3>
-                    <p data-lang-key="service_product_p">为电商及广告客户提供高质量的产品视频和摄影，突出产品特性与美感。</p>
+                    <h3>产品拍摄</h3>
+                    <p>为电商及广告客户提供高质量的产品视频和摄影，突出产品特性与美感。</p>
                 </div>
                 <div class="service-item">
-                    <h3 data-lang-key="service_brand_h">品牌宣传</h3>
-                    <p data-lang-key="service_brand_p">制作企业宣传片、品牌故事片和形象 TVC，提升品牌知名度与市场影响力。</p>
+                    <h3>品牌宣传</h3>
+                    <p>制作企业宣传片、品牌故事片和形象 TVC，提升品牌知名度与市场影响力。</p>
                 </div>
                 <div class="service-item">
-                    <h3 data-lang-key="service_design_h">视觉设计</h3>
-                    <p data-lang-key="service_design_p">提供品牌 VI、海报、社交媒体图文等全方位的平面设计与视觉传达服务。</p>
+                    <h3>视觉设计</h3>
+                    <p>提供品牌 VI、海报、社交媒体图文等全方位的平面设计与视觉传达服务。</p>
                 </div>
             </div>
         </section>
         
         <section class="clients-section">
             <div class="container">
-                <h2 data-lang-key="client_title">合作客户</h2>
+                <h2>合作客户</h2>
                 <div class="clients-wall">
                     <div class="clients-scroll-container">
                          <div class="clients-list-inner" id="client-list">
@@ -101,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <button id="show-all-clients-btn" class="show-all-clients-btn" style="display:none;" data-lang-key="client_show_all">展示全部</button>
+                <button id="show-all-clients-btn" class="show-all-clients-btn" style="display:none;">展示全部</button>
             </div>
         </section>
     </main>
@@ -109,45 +91,38 @@
     <section class="notice-section">
         <div class="container">
             <div class="notice-block">
-                <h4 data-lang-key="terms_title">拍摄服务条款与条件 | 法律信息与通知</h4>
-                <p data-lang-key="terms_intro">本服务条款（“条款”）适用于您的摄影/摄像服务预约及相关事宜。确认预约即表示您同意本条款；如果您不同意，请勿进行预约。</p>
+                <h4>拍摄服务条款与条件 | 法律信息与通知</h4>
+                <p>本服务条款（“条款”）适用于您的摄影/摄像服务预约及相关事宜。确认预约即表示您同意本条款；如果您不同意，请勿进行预约。</p>
                 <ul>
                     <li>
-                        <h5 data-lang-key="terms_deposit_h">预约与定金</h5>
-                        <p data-lang-key="terms_deposit_p">对于首次预约本服务的客户，在确认拍摄排期时，需缴纳商议总金额的 50% 作为预约定金。若因非不可抗力原因在预定拍摄日期当天取消服务，该定金将不予退还。</p>
+                        <h5>预约与定金</h5>
+                        <p>对于首次预约本服务的客户，在确认拍摄排期时，需缴纳商议总金额的 50% 作为预约定金。若因非不可抗力原因在预定拍摄日期当天取消服务，该定金将不予退还。</p>
                     </li>
                     <li>
-                        <h5 data-lang-key="terms_creative_h">创意材料与沟通</h5>
-                        <p data-lang-key="terms_creative_p">我们强烈建议您提供详细的拍摄剧本。若无具体剧本，您有责任在拍摄前大致说明拍摄角度、构图意向或创意概念，以确保交付结果符合预期。</p>
+                        <h5>创意材料与沟通</h5>
+                        <p>我们强烈建议您提供详细的拍摄剧本。若无具体剧本，您有责任在拍摄前大致说明拍摄角度、构图意向或创意概念，以确保交付结果符合预期。</p>
                     </li>
                     <li>
-                        <h5 data-lang-key="terms_post_h">服务范围与后期处理</h5>
-                        <p data-lang-key="terms_post_p">我们的拍摄服务提供灵活的后期处理方案。后期剪辑工作（包括但不限于素材筛选、画面调色及特效制作）将独立于拍摄服务，另行单独计费，除非合约中已对整体打包费用作出明确约定。此举旨在保障您在后期制作流程中拥有充分的自主选择权，并确保所有服务成本的透明化。</p>
+                        <h5>服务范围与后期处理</h5>
+                        <p>我们的拍摄服务提供灵活的后期处理方案。后期剪辑工作（包括但不限于素材筛选、画面调色及特效制作）将独立于拍摄服务，另行单独计费，除非合约中已对整体打包费用作出明确约定。此举旨在保障您在后期制作流程中拥有充分的自主选择权，并确保所有服务成本的透明化。</p>
                     </li>
                     <li>
-                        <h5 data-lang-key="terms_payment_h">付款与超时费用</h5>
-                        <p data-lang-key="terms_payment_p">剩余款项应在拍摄结束后的 24 小时内结清。关于拍摄时长的计算，若实际拍摄时间超出原定计划 30 分钟，将按照拟定的单价标准，以 1 小时为单位加收超时费用。</p>
+                        <h5>付款与超时费用</h5>
+                        <p>剩余款项应在拍摄结束后的 24 小时内结清。关于拍摄时长的计算，若实际拍摄时间超出原定计划 30 分钟，将按照拟定的单价标准，以 1 小时为单位加收超时费用。</p>
                     </li>
                     <li>
-                        <h5 data-lang-key="terms_data_h">交付与数据保留</h5>
-                        <p data-lang-key="terms_data_p">拍摄素材上传至交付平台后，您有责任在 30 日内完成下载并自行归档保存。对于因逾期未下载而导致的数据丢失，服务方不承担责任。</p>
+                        <h5>交付与数据保留</h5>
+                        <p>拍摄素材上传至交付平台后，您有责任在 30 日内完成下载并自行归档保存。对于因逾期未下载而导致的数据丢失，服务方不承担责任。</p>
                     </li>
                     <li>
-                        <h5 data-lang-key="terms_ip_h">宣传与知识产权</h5>
-                        <p data-lang-key="terms_ip_p">除非您提前声明或签署特定的保密合约，否则即视为您默认同意服务方在拍摄结束一周后，将相关素材发布至社交媒体平台用于作品展示或宣传用途。</p>
+                        <h5>宣传与知识产权</h5>
+                        <p>除非您提前声明或签署特定的保密合约，否则即视为您默认同意服务方在拍摄结束一周后，将相关素材发布至社交媒体平台用于作品展示或宣传用途。</p>
                     </li>
                 </ul>
             </div>
         </div>
     </section>
-    
-    <footer class="footer footer-extra-padding">
-        <div class="footer-lang-switcher">
-            <span class="lang-option" data-lang="en">EN</span>
-            <span class="lang-option" data-lang="kr">KR</span>
-            <span class="lang-option" data-lang="zh">简</span>
-            <span class="lang-option" data-lang="tw">繁</span>
-        </div>
+    <footer class="footer">
         <div class="container">
             <p>&copy; 2026 WXZ STUDIO. All Rights Reserved. </p>
         </div>
@@ -158,279 +133,50 @@
             <a href="index.html" class="active">
                 <img src="assets/images/icons/home.png" class="icon-default" alt="首页">
                 <img src="assets/images/icons/home-active.png" class="icon-active" alt="首页 Active">
-                <span data-lang-key="nav_home">首页</span>
+                <span>首页</span>
             </a>
             <a href="video-portfolio.html">
                 <img src="assets/images/icons/video.png" class="icon-default" alt="视频作品">
                 <img src="assets/images/icons/video-active.png" class="icon-active" alt="视频作品 Active">
-                <span data-lang-key="nav_video">视频作品</span>
+                <span>视频作品</span>
             </a>
             <a href="graphic-portfolio.html">
                 <img src="assets/images/icons/graphic.png" class="icon-default" alt="平面设计">
                 <img src="assets/images/icons/graphic-active.png" class="icon-active" alt="平面设计 Active">
-                <span data-lang-key="nav_graphic">平面设计</span>
+                <span>平面设计</span>
             </a>
             <a href="contact.html">
                 <img src="assets/images/icons/contact.png" class="icon-default" alt="联系方式">
                 <img src="assets/images/icons/contact-active.png" class="icon-active" alt="联系方式 Active">
-                <span data-lang-key="nav_contact">联系方式</span>
+                <span>联系方式</span>
             </a>
         </div>
     </nav>
 
     <script>
-        // -------------------------
-        // 1. 语言切换字典
-        // -------------------------
-        const translations = {
-            // 简体中文
-            zh: {
-                // 页面标题
-                pageTitle: 'WXZ STUDIO - 首页',
-                // 导航
-                nav_home: '首页',
-                nav_video: '视频作品',
-                nav_graphic: '平面设计作品',
-                nav_contact: '联系方式',
-                // 服务
-                service_title: '我们的服务',
-                service_event_h: '商业活动',
-                service_event_p: '会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作。',
-                service_product_h: '产品拍摄',
-                service_product_p: '为电商及广告客户提供高质量的产品视频和摄影，突出产品特性与美感。',
-                service_brand_h: '品牌宣传',
-                service_brand_p: '制作企业宣传片、品牌故事片和形象 TVC，提升品牌知名度与市场影响力。',
-                service_design_h: '视觉设计',
-                service_design_p: '提供品牌 VI、海报、社交媒体图文等全方位的平面设计与视觉传达服务。',
-                // 客户
-                client_title: '合作客户',
-                client_show_all: '展示全部',
-                client_hide: '收起',
-                // 条款
-                terms_title: '拍摄服务条款与条件 | 法律信息与通知',
-                terms_intro: '本服务条款（“条款”）适用于您的摄影/摄像服务预约及相关事宜。确认预约即表示您同意本条款；如果您不同意，请勿进行预约。',
-                terms_deposit_h: '预约与定金',
-                terms_deposit_p: '对于首次预约本服务的客户，在确认拍摄排期时，需缴纳商议总金额的 50% 作为预约定金。若因非不可抗力原因在预定拍摄日期当天取消服务，该定金将不予退还。',
-                terms_creative_h: '创意材料与沟通',
-                terms_creative_p: '我们强烈建议您提供详细的拍摄剧本。若无具体剧本，您有责任在拍摄前大致说明拍摄角度、构图意向或创意概念，以确保交付结果符合预期。',
-                terms_post_h: '服务范围与后期处理',
-                terms_post_p: '我们的拍摄服务提供灵活的后期处理方案。后期剪辑工作（包括但不限于素材筛选、画面调色及特效制作）将独立于拍摄服务，另行单独计费，除非合约中已对整体打包费用作出明确约定。此举旨在保障您在后期制作流程中拥有充分的自主选择权，并确保所有服务成本的透明化。',
-                terms_payment_h: '付款与超时费用',
-                terms_payment_p: '剩余款项应在拍摄结束后的 24 小时内结清。关于拍摄时长的计算，若实际拍摄时间超出原定计划 30 分钟，将按照拟定的单价标准，以 1 小时为单位加收超时费用。',
-                terms_data_h: '交付与数据保留',
-                terms_data_p: '拍摄素材上传至交付平台后，您有责任在 30 日内完成下载并自行归档保存。对于因逾期未下载而导致的数据丢失，服务方不承担责任。',
-                terms_ip_h: '宣传与知识产权',
-                terms_ip_p: '除非您提前声明或签署特定的保密合约，否则即视为您默认同意服务方在拍摄结束一周后，将相关素材发布至社交媒体平台用于作品展示或宣传用途。',
-            },
-            // 英语
-            en: {
-                // 页面标题
-                pageTitle: 'WXZ STUDIO - Home',
-                // 导航
-                nav_home: 'Home',
-                nav_video: 'Video Portfolio',
-                nav_graphic: 'Graphic Design',
-                nav_contact: 'Contact',
-                // 服务
-                service_title: 'OUR SERVICES',
-                service_event_h: 'Commercial Events',
-                service_event_p: 'On-site shooting and post-production for conferences, product launches, exhibitions, and ceremonies.',
-                service_product_h: 'Product Filming',
-                service_product_p: 'Providing high-quality video and photography for e-commerce and advertising, highlighting product features and aesthetics.',
-                service_brand_h: 'Brand Promotion',
-                service_brand_p: 'Creating corporate videos, brand story films, and TVCs to enhance brand visibility and market influence.',
-                service_design_h: 'Visual Design',
-                service_design_p: 'Offering comprehensive graphic design and visual communication services, including VI, posters, and social media graphics.',
-                // 客户
-                client_title: 'OUR CLIENTS',
-                client_show_all: 'Show All',
-                client_hide: 'Collapse',
-                // 条款
-                terms_title: 'Service Terms & Conditions | Legal Information & Notices',
-                terms_intro: 'These Terms of Service ("Terms") govern your booking of photography/videography services. Confirmation of booking constitutes agreement to these Terms; if you do not agree, please do not proceed with the booking.',
-                terms_deposit_h: 'Booking & Deposit',
-                terms_deposit_p: 'For first-time clients, a 50% deposit of the total agreed amount is required upon scheduling confirmation. This deposit is non-refundable if the service is cancelled on the scheduled date for reasons other than force majeure.',
-                terms_creative_h: 'Creative Materials & Communication',
-                terms_creative_p: 'We strongly recommend providing a detailed script. If no specific script is provided, you are responsible for broadly outlining desired angles, compositions, or concepts beforehand to ensure the final delivery meets expectations.',
-                terms_post_h: 'Scope of Service & Post-Processing',
-                terms_post_p: 'Our shooting service offers flexible post-processing options. Post-editing work (including but not limited to footage selection, color grading, and effects) is billed separately from the shooting service, unless an overall package fee is explicitly agreed upon in the contract. This ensures transparency in costs and provides you with full autonomy in the post-production process.',
-                terms_payment_h: 'Payment & Overtime Fees',
-                terms_payment_p: 'The remaining balance is due within 24 hours after the shoot concludes. Regarding duration calculation, if the actual shooting time exceeds the original plan by 30 minutes, an overtime fee calculated at the agreed hourly rate will be charged in 1-hour increments.',
-                terms_data_h: 'Delivery & Data Retention',
-                terms_data_p: 'After the footage is uploaded to the delivery platform, you are responsible for downloading and archiving it within 30 days. The service provider is not liable for data loss due to late download.',
-                terms_ip_h: 'Promotion & Intellectual Property',
-                terms_ip_p: 'Unless you provide a prior declaration or sign a specific non-disclosure agreement, you are deemed to consent to the service provider using related footage for portfolio display or promotional purposes on social media platforms one week after the completion of the shoot.',
-            },
-            // 韩语 (KR) - 需要您自行填充
-            kr: {
-                pageTitle: 'WXZ STUDIO - 홈',
-                nav_home: '홈',
-                nav_video: '영상 포트폴리오',
-                nav_graphic: '그래픽 디자인',
-                nav_contact: '연락처',
-                service_title: '우리의 서비스',
-                service_event_h: '상업 행사',
-                service_event_p: '회의, 발표회, 전시, 시상식 등 각종 행사의 현장 촬영 및 후반 작업 기록 제작.',
-                service_product_h: '제품 촬영',
-                service_product_p: '이커머스 및 광고 고객에게 고품질 제품 영상과 사진을 제공하여 제품 특징과 미적 감각을 부각.',
-                service_brand_h: '브랜드 홍보',
-                service_brand_p: '기업 홍보 영상, 브랜드 스토리 영상 및 이미지 TVC를 제작하여 브랜드 인지도와 시장 영향력 향상.',
-                service_design_h: '시각 디자인',
-                service_design_p: '브랜드 VI, 포스터, 소셜 미디어 이미지 및 텍스트 등 전반적인 평면 디자인과 시각 전달 서비스 제공.',
-                client_title: '협력 고객',
-                client_show_all: '전체 보기',
-                client_hide: '접기',
-                terms_title: '서비스 약관 및 조건 | 법률 정보 및 공지',
-                terms_intro: '본 서비스 약관("약관")은 귀하의 사진/영상 서비스 예약 및 관련 사항에 적용됩니다. 예약을 확인하는 것은 본 약관에 동의함을 의미하며, 동의하지 않을 경우 예약을 진행하지 마십시오.',
-                terms_deposit_h: '예약 및 계약금',
-                terms_deposit_p: '첫 예약 고객의 경우, 촬영 일정 확정 시 협의된 총 금액의 50%를 예약금으로 납부해야 합니다. 불가항력적 사유 외의 이유로 예정된 촬영 당일 서비스를 취소할 경우, 이 예약금은 환불되지 않습니다.',
-                terms_creative_h: '창작 자료 및 소통',
-                terms_creative_p: '상세한 촬영 대본을 제공할 것을 강력히 권장합니다. 구체적인 대본이 없을 경우, 최종 결과물이 예상에 부합하도록 촬영 전 촬영 각도, 구도 의도 또는 창의적 개념을 대략적으로 설명할 책임이 있습니다.',
-                terms_post_h: '서비스 범위 및 후반 작업',
-                terms_post_p: '당사의 촬영 서비스는 유연한 후반 작업 솔루션을 제공합니다. 후반 편집 작업(소재 선별, 화면 색 보정 및 특수 효과 제작 등)은 촬영 서비스와 별도로 개별적으로 청구되며, 전체 패키지 비용이 계약서에 명시적으로 합의된 경우는 예외입니다. 이는 귀하가 후반 제작 과정에서 충분한 자율성을 확보하고 모든 서비스 비용의 투명성을 보장하기 위함입니다.',
-                terms_payment_h: '결제 및 초과 근무 수수료',
-                terms_payment_p: '잔액은 촬영 종료 후 24시간 이내에 정산되어야 합니다. 촬영 시간 계산에 관하여, 실제 촬영 시간이 원래 예정된 계획을 30분 초과할 경우, 협의된 단가 기준으로 1시간 단위로 초과 근무 수수료가 추가됩니다.',
-                terms_data_h: '전달 및 데이터 보존',
-                terms_data_p: '촬영 소재가 전달 플랫폼에 업로드된 후, 귀하는 30일 이내에 다운로드를 완료하고 자체적으로 보관할 책임이 있습니다. 기한 내 미다운로드로 인한 데이터 손실에 대해 서비스 제공자는 책임지지 않습니다.',
-                terms_ip_h: '홍보 및 지적 재산권',
-                terms_ip_p: '귀하가 사전에 선언하거나 특정 기밀 유지 계약을 체결하지 않는 한, 촬영 종료 일주일 후 서비스 제공자가 관련 소재를 소셜 미디어 플랫폼에 작품 전시 또는 홍보 목적으로 게시하는 것에 동의하는 것으로 간주됩니다.',
-            },
-            // 繁体中文 (TW) - 需要您自行填充
-            tw: {
-                pageTitle: 'WXZ STUDIO - 首頁',
-                nav_home: '首頁',
-                nav_video: '視頻作品',
-                nav_graphic: '平面設計作品',
-                nav_contact: '聯絡方式',
-                service_title: '我們的服務',
-                service_event_h: '商業活動',
-                service_event_p: '會議、發佈會、展覽、典禮等各類活動的現場拍攝與後期記錄製作。',
-                service_product_h: '產品拍攝',
-                service_product_p: '為電商及廣告客戶提供高品質的產品視頻和攝影，突出產品特性與美感。',
-                service_brand_h: '品牌宣傳',
-                service_brand_p: '製作企業宣傳片、品牌故事片和形象 TVC，提升品牌知名度與市場影響力。',
-                service_design_h: '視覺設計',
-                service_design_p: '提供品牌 VI、海報、社交媒體圖文等全方位的平面設計與視覺傳達服務。',
-                client_title: '合作客戶',
-                client_show_all: '展示全部',
-                client_hide: '收起',
-                terms_title: '拍攝服務條款與條件 | 法律資訊與通知',
-                terms_intro: '本服務條款（“條款”）適用於您的攝影/攝像服務預約及相關事宜。確認預約即表示您同意本條款；如果您不同意，請勿進行預約。',
-                terms_deposit_h: '預約與定金',
-                terms_deposit_p: '對於首次預約本服務的客戶，在確認拍攝排期時，需繳納商議總金額的 50% 作為預約定金。若因非不可抗力原因在預定拍攝日期當天取消服務，該定金將不予退還。',
-                terms_creative_h: '創意材料與溝通',
-                terms_creative_p: '我們強烈建議您提供詳細的拍攝劇本。若無具體劇本，您有責任在拍攝前大致說明拍攝角度、構圖意向或創意概念，以確保交付結果符合預期。',
-                terms_post_h: '服務範圍與後期處理',
-                terms_post_p: '我們的拍攝服務提供靈活的後期處理方案。後期剪輯工作（包括但不限於素材篩選、畫面調色及特效製作）將獨立於拍攝服務，另行單獨計費，除非合約中已對整體打包費用作出明確約定。此舉旨在保障您在後期製作流程中擁有充分的自主選擇權，並確保所有服務成本的透明化。',
-                terms_payment_h: '付款與超時費用',
-                terms_payment_p: '剩餘款項應在拍攝結束後的 24 小時內結清。關於拍攝時長的計算，若實際拍攝時間超出原定計畫 30 分鐘，將按照擬定的單價標準，以 1 小時為單位加收超時費用。',
-                terms_data_h: '交付與資料保留',
-                terms_data_p: '拍攝素材上傳至交付平台後，您有責任在 30 日內完成下載並自行歸檔保存。對於因逾期未下載而導致的數據丟失，服務方不承擔責任。',
-                terms_ip_h: '宣傳與知識產權',
-                terms_ip_p: '除非您提前聲明或簽署特定的保密合約，否則即視為您默認同意服務方在拍攝結束一周後，將相關素材發佈至社交媒體平台用於作品展示或宣傳用途。',
-            }
-        };
-
-        // -------------------------
-        // 2. 语言切换核心函数
-        // -------------------------
-        
-        // 映射语言代码到显示名称
-        const langDisplayNames = { 'en': 'EN', 'kr': 'KR', 'zh': '简', 'tw': '繁' };
-        
-        /**
-         * 获取用户系统偏好的语言，并映射到我们支持的语言。
-         * 优先 zh/tw，其次 en，不支持的默认为 zh。
-         * @returns {string} 支持的语言代码 (en, kr, zh, tw)
-         */
-        function getPreferredLang() {
-            const navLang = navigator.language || navigator.userLanguage;
-            if (navLang.startsWith('zh-TW') || navLang.startsWith('zh-HK') || navLang.startsWith('zh-MO')) return 'tw';
-            if (navLang.startsWith('zh')) return 'zh';
-            if (navLang.startsWith('ko')) return 'kr';
-            if (navLang.startsWith('en')) return 'en';
-            return 'zh'; // 默认语言
-        }
-
-        /**
-         * 切换网站内容语言。
-         * @param {string} langCode - 目标语言代码 (en, kr, zh, tw)
-         */
-        function switchLanguage(langCode) {
-            const targetLang = translations[langCode] || translations['zh'];
-            
-            // 1. 更新 body 上的当前语言标记
-            document.body.setAttribute('data-current-lang', langCode);
-
-            // 2. 更新页面标题
-            const pageTitleEl = document.getElementById('pageTitle');
-            if (pageTitleEl) {
-                 // 优先使用 data-lang 属性，如果不存在则使用 translations 字典
-                const customTitle = pageTitleEl.getAttribute(`data-lang-${langCode}`);
-                pageTitleEl.textContent = customTitle || targetLang.pageTitle;
-            }
-
-            // 3. 更新所有带有 data-lang-key 的元素
-            document.querySelectorAll('[data-lang-key]').forEach(el => {
-                const key = el.getAttribute('data-lang-key');
-                if (targetLang[key]) {
-                    el.textContent = targetLang[key];
-                }
-            });
-
-            // 4. 更新桌面和底部语言切换的选中状态
-            document.querySelectorAll('.lang-option, .mobile-lang-dropdown button').forEach(el => {
-                el.classList.remove('active-lang');
-                if (el.getAttribute('data-lang') === langCode) {
-                    el.classList.add('active-lang');
-                }
-            });
-
-            // 5. 更新移动端按钮的显示文本
-            const mobileBtn = document.getElementById('mobileLangBtn');
-            if (mobileBtn) {
-                mobileBtn.textContent = langDisplayNames[langCode];
-                mobileBtn.setAttribute('data-current-display', langDisplayNames[langCode]);
-                mobileBtn.classList.remove('show');
-            }
-        
-            // 6. 隐藏下拉菜单
-            document.getElementById('mobileLangDropdown').classList.remove('show');
-
-            // 7. 将当前语言保存到 localStorage，以便下次加载使用
-            localStorage.setItem('wxz_lang', langCode);
-        }
-
-        // -------------------------
-        // 3. DOMContentLoaded 事件
-        // -------------------------
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 确定初始语言：优先 LocalStorage，其次系统偏好
-            const storedLang = localStorage.getItem('wxz_lang');
-            const initialLang = storedLang || getPreferredLang();
-            switchLanguage(initialLang);
-
-            // ------------------
-            // 3.1 移动端客户展示逻辑 (3x3 网格)
-            // ------------------
             const clientList = document.getElementById('client-list');
             const showAllBtn = document.getElementById('show-all-clients-btn');
             const clientLogos = clientList ? clientList.querySelectorAll('.client-logo') : [];
 
+            // 移动端客户展示逻辑 (3x3 网格)
             if (clientList && showAllBtn && window.innerWidth <= 1024) {
-                const limit = 9; 
+                
+                const limit = 9; // 默认展示前 9 个 (3x3)
                 let isAllVisible = false;
 
-                // 默认隐藏第 10 个及之后的客户
+                // 默认隐藏第 10 个及之后的客户 (CSS 媒体查询中也做了处理，这里确保JS逻辑同步)
                 clientLogos.forEach((logo, index) => {
                     if (index >= limit) {
                         logo.style.display = 'none';
                     } else {
+                        // 确保前 9 个是 grid item 默认的 display
                         logo.style.display = ''; 
                     }
                 });
 
+                // 如果总数超过限制，则显示按钮
                 if (clientLogos.length > limit) {
                     showAllBtn.style.display = 'block';
                 } else {
@@ -438,75 +184,64 @@
                 }
 
                 showAllBtn.addEventListener('click', () => {
-                    const currentLang = document.body.getAttribute('data-current-lang');
-                    const langPack = translations[currentLang];
-
                     if (!isAllVisible) {
-                        clientLogos.forEach(logo => logo.style.display = ''); 
-                        showAllBtn.textContent = langPack.client_hide; // 翻译：收起
+                        // 显示所有客户
+                        clientLogos.forEach(logo => logo.style.display = ''); // 清除内联样式，恢复 CSS 默认的 grid item 显示
+                        showAllBtn.textContent = '收起'; 
                         isAllVisible = true;
                     } else {
+                        // 隐藏第 10 个及之后的客户
                         clientLogos.forEach((logo, index) => {
                             if (index >= limit) {
                                 logo.style.display = 'none';
                             }
                         });
-                        showAllBtn.textContent = langPack.client_show_all; // 翻译：展示全部
+                        showAllBtn.textContent = '展示全部'; 
                         isAllVisible = false;
+                        
+                        // 滚动回网格顶部
                         clientList.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 });
             } else {
+                // 桌面端或非移动端，移除原来的 JS 逻辑，并确保 “展示全部” 按钮隐藏
                 if (showAllBtn) {
                     showAllBtn.style.display = 'none';
                 }
             }
 
-
-            // ------------------
-            // 3.2 语言切换事件绑定
-            // ------------------
-
-            // 桌面端/底部语言切换点击事件
-            document.querySelectorAll('.lang-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const langCode = this.getAttribute('data-lang');
-                    switchLanguage(langCode);
-                });
-            });
-
-            // 移动端下拉菜单切换点击事件
-            document.querySelectorAll('#mobileLangDropdown button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const langCode = this.getAttribute('data-lang');
-                    switchLanguage(langCode);
-                });
-            });
-
-            // 移动端按钮点击显示/隐藏下拉菜单
-            const mobileLangBtn = document.getElementById('mobileLangBtn');
-            const mobileLangDropdown = document.getElementById('mobileLangDropdown');
-            if (mobileLangBtn) {
-                mobileLangBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    mobileLangDropdown.classList.toggle('show');
-                });
-            }
-
-            // 点击页面其他地方隐藏移动端下拉菜单
-            document.addEventListener('click', (e) => {
-                if (mobileLangDropdown && !mobileLangContainer.contains(e.target)) {
-                    mobileLangDropdown.classList.remove('show');
-                }
-            });
-
-
             /**
-             * 通用原生调用函数 (JS Bridge)。
-             * (保持不变)
+             * 通用原生调用函数 (JS Bridge)。 (此部分代码保持不变，仅用于兼容原生App)
              */
             function callNative(methodName, data = {}) {
-                // ... (保持不变)
+                // 1. iOS 环境检测 (webkit.messageHandlers)
+                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers[methodName]) {
+                    try {
+                        window.webkit.messageHandlers[methodName].postMessage(data);
+                        console.log(`[JS Bridge] iOS Call Success: ${methodName}`, data);
+                        return true;
+                    } catch (e) {
+                        console.error(`[JS Bridge] iOS Call Failed: ${methodName}`, e);
+                        return false;
+                    }
+                } 
+                // 2. Android 环境检测 (window.TsJSInterface)
+                else if (window.TsJSInterface && window.TsJSInterface[methodName]) {
+                    try {
+                        const jsonString = JSON.stringify(data);
+                        window.TsJSInterface[methodName](jsonString);
+                        console.log(`[JS Bridge] Android Call Success: ${methodName}`, jsonString);
+                        return true;
+                    } catch (e) {
+                        console.error(`[JS Bridge] Android Call Failed: ${methodName}`, e);
+                        return false;
+                    }
+                } 
+                // 3. 默认/桌面环境
+                else {
+                    console.warn(`[JS Bridge] Native call failed. Method '${methodName}' not found.`);
+                    return false;
+                }
             }
         });
     </script>
