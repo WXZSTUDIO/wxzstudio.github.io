@@ -27,14 +27,14 @@
                 <h2>视频作品集</h2>
                 <div class="tags-filter">
                     <span class="work-tag active" data-filter="all">全部</span>
-                    <span class="work-tag" data-filter="commercial">商业广告</span>
+                    <span class="work-tag" data-filter="event">商业活动</span>
+                    <span class="work-tag" data-filter="product">产品拍摄</span>
                     <span class="work-tag" data-filter="brand">品牌宣传</span>
-                    <span class="work-tag" data-filter="mv">音乐视频</span>
                 </div>
                 
                 <div class="portfolio-grid video-portfolio-grid">
                     
-                    <a href="video-detail-01.html" class="work-item" data-tags="commercial brand">
+                    <div class="work-item" data-tags="brand product" data-video-src="assets/videos/portfolio/video-01.mp4">
                         <div class="work-media">
                             <video muted loop preload="metadata" poster="assets/portfolio/video-cover-01.jpg">
                                 <source src="assets/videos/portfolio/video-01.mp4" type="video/mp4">
@@ -43,11 +43,11 @@
                         </div>
                         <div class="work-info">
                             <h3>2024年度混剪</h3>
-                            <div class="work-tags"><span class="work-tag">商业广告</span></div>
+                            <div class="work-tags"><span class="work-tag">品牌宣传</span></div>
                         </div>
-                    </a>
+                    </div>
 
-                    <a href="video-detail-02.html" class="work-item" data-tags="brand mv">
+                    <div class="work-item" data-tags="brand event" data-video-src="assets/videos/portfolio/video-02.mp4">
                         <div class="work-media">
                             <video muted loop preload="metadata" poster="assets/portfolio/video-cover-02.jpg">
                                 <source src="assets/videos/portfolio/video-02.mp4" type="video/mp4">
@@ -56,11 +56,11 @@
                         </div>
                         <div class="work-info">
                             <h3>首尔时装周</h3>
-                            <div class="work-tags"><span class="work-tag">品牌宣传</span></div>
+                            <div class="work-tags"><span class="work-tag">商业活动</span></div>
                         </div>
-                    </a>
+                    </div>
 
-                    <a href="video-detail-03.html" class="work-item" data-tags="commercial">
+                    <div class="work-item" data-tags="event" data-video-src="assets/videos/portfolio/video-03.mp4">
                         <div class="work-media">
                             <video muted loop preload="metadata" poster="assets/portfolio/video-cover-03.jpg">
                                 <source src="assets/videos/portfolio/video-03.mp4" type="video/mp4">
@@ -69,11 +69,11 @@
                         </div>
                         <div class="work-info">
                             <h3>高端晚宴</h3>
-                            <div class="work-tags"><span class="work-tag">商业广告</span></div>
+                            <div class="work-tags"><span class="work-tag">商业活动</span></div>
                         </div>
-                    </a>
+                    </div>
 
-                    <a href="video-detail-04.html" class="work-item" data-tags="brand">
+                    <div class="work-item" data-tags="brand product" data-video-src="assets/videos/portfolio/video-04.mp4">
                         <div class="work-media">
                             <video muted loop preload="metadata" poster="assets/portfolio/video-cover-04.jpg">
                                 <source src="assets/videos/portfolio/video-04.mp4" type="video/mp4">
@@ -82,9 +82,9 @@
                         </div>
                         <div class="work-info">
                             <h3>新世界免税店 x 首尔月</h3>
-                            <div class="work-tags"><span class="work-tag">抖音信息流</span></div>
+                            <div class="work-tags"><span class="work-tag">产品拍摄</span></div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -96,6 +96,13 @@
         </div>
     </footer>
 
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="videoPlayerContainer"></div>
+        </div>
+    </div>
+    
     <nav class="mobile-nav">
         <div class="mobile-menu-icons">
             <a href="index.html">
@@ -123,29 +130,73 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const videoContainers = document.querySelectorAll('.work-media');
+            const workItems = document.querySelectorAll('.work-item');
+            const modal = document.getElementById('videoModal');
+            const closeBtn = document.querySelector('.close-btn');
+            const playerContainer = document.getElementById('videoPlayerContainer');
 
-            videoContainers.forEach(container => {
-                const video = container.querySelector('video');
-                
-                // 鼠标悬停播放
-                container.addEventListener('mouseenter', () => {
-                    // 确保视频从头开始播放，模拟 snap
-                    video.currentTime = 0; 
-                    video.play().catch(error => {
-                        console.log('Video auto-play failed:', error);
-                        // 移动端通常需要用户交互才能播放
-                    });
-                });
+            // 1. 播放器逻辑
+            workItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const videoSrc = this.getAttribute('data-video-src');
+                    if (!videoSrc) return;
 
-                // 鼠标移开停止并重置
-                container.addEventListener('mouseleave', () => {
-                    video.pause();
-                    video.currentTime = 0; // 重置到封面帧
+                    // 创建新的 video 元素
+                    const videoElement = document.createElement('video');
+                    videoElement.src = videoSrc;
+                    videoElement.controls = true; // 显示播放控件
+                    videoElement.autoplay = true; // 自动播放
+                    videoElement.classList.add('modal-video-player');
+
+                    // 清空容器并添加新的视频
+                    playerContainer.innerHTML = '';
+                    playerContainer.appendChild(videoElement);
+
+                    // 手机端全屏播放逻辑 (通过 JS 调用 Fullscreen API)
+                    if (window.innerWidth <= 1024) { 
+                        // 在移动端，点击后尝试直接让视频元素全屏，效果取决于浏览器支持
+                        if (videoElement.requestFullscreen) {
+                            videoElement.requestFullscreen();
+                        } else if (videoElement.webkitEnterFullscreen) { /* iOS Safari 专有 */
+                             videoElement.webkitEnterFullscreen();
+                        } else if (videoElement.webkitRequestFullscreen) { /* Chrome/Safari */
+                            videoElement.webkitRequestFullscreen();
+                        } else if (videoElement.msRequestFullscreen) { /* IE11 */
+                            videoElement.msRequestFullscreen();
+                        }
+                    }
+
+                    // 显示弹窗 (桌面端和不支持全屏的移动端)
+                    modal.classList.add('show');
                 });
             });
-            
-            // 筛选功能（保持不变）
+
+            // 关闭弹窗
+            function closeModal() {
+                modal.classList.remove('show');
+                playerContainer.innerHTML = ''; // 停止播放并清空视频元素
+            }
+
+            // 点击关闭按钮
+            closeBtn.addEventListener('click', closeModal);
+
+            // 点击弹窗外部关闭
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // 键盘 ESC 键关闭
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('show')) {
+                    closeModal();
+                }
+            });
+
+
+            // 2. 筛选功能
             document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
                 tag.addEventListener('click', function() {
                     document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));
