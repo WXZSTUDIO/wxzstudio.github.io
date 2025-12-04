@@ -1,9 +1,8 @@
 /*
- * WXZ STUDIO Website CSS Styles - Kenya Hara Inspired Minimal Design (Updated)
- * Author: Gemini
+ * WXZ STUDIO Website CSS Styles - Kenya Hara Inspired Minimal Design (Restored & Fixed)
  */
 
-/* 1. 全局样式与变量: 高对比度，极简留白 */
+/* 1. 全局样式与变量: 强调高对比度与留白 */
 :root {
     --primary-color: #000000;      /* 纯黑 */
     --secondary-color: #ffffff;    /* 纯白 */
@@ -28,7 +27,7 @@ html, body {
 body {
     font-family: var(--font-family);
     color: var(--primary-color);
-    line-height: 1.6;
+    line-height: 1.8; /* 增加行高以优化阅读体验 */
     background-color: var(--secondary-color);
     overflow-x: hidden;
     display: flex;
@@ -38,33 +37,8 @@ body {
 main {
     flex: 1;
     width: 100%;
-    /* 桌面端避开 Header，移动端避开底部导航 */
-    margin-top: var(--nav-height); 
-    margin-bottom: var(--mobile-nav-height); 
-}
-
-/* 顶部 Header 样式保持不变 */
-.header {
-    width: 100%;
-    height: var(--nav-height);
-    background-color: var(--secondary-color);
-    border-bottom: 1px solid #eee;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-.nav-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 0 5%;
-}
-.logo a {
-    font-weight: 600;
-    font-size: 18px;
-    letter-spacing: 0.2em;
+    margin-top: var(--nav-height); /* 桌面端避开 Header */
+    margin-bottom: var(--mobile-nav-height); /* 移动端避开底部导航 */
 }
 
 /* 通用容器 */
@@ -72,49 +46,249 @@ main {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 0;
+    padding: 80px 0; /* 增加留白 */
 }
 
-/* ... (其他 section 样式略，保持不变) ... */
+h1, h2, h3 {
+    font-weight: 400; /* 极简设计常用细体 */
+    margin-bottom: 20px;
+    letter-spacing: 0.15em; /* 增大字距 */
+}
 
-/* 8. Contact Section (联系方式) - 图标放大保持 52px */
-.contact-section {
+h2 {
+    font-size: 32px;
     text-align: center;
+    margin-bottom: 70px; /* 增大留白 */
+    padding-top: 10px;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* 2. Header (桌面端) */
+.header {
+    width: 100%;
+    height: var(--nav-height);
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid #ddd; /* 极细分隔线 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 5%;
+}
+
+.logo a {
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+}
+
+.nav-menu ul {
+    display: flex;
+}
+
+.nav-menu li {
+    margin-left: 50px; /* 增大菜单间距 */
+}
+
+.nav-menu a {
+    font-size: 14px;
+    padding-bottom: 5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+
+.nav-menu a.active {
+    border-bottom: 2px solid var(--primary-color); /* 当前页高亮 */
+}
+
+
+/* 3. Hero Video Section */
+.hero-video-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    margin-top: calc(0px - var(--nav-height)); /* 补偿 Header 高度 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hero-video-section video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    min-width: 100%;
+    min-height: 100%;
+}
+.hero-overlay {
+    position: absolute;
+    color: var(--secondary-color);
+    text-align: center;
+    z-index: 10;
+}
+.hero-overlay h1 {
+    font-size: 50px;
+    font-weight: 200;
+    margin-bottom: 10px;
+    letter-spacing: 0.5em;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.hero-overlay p {
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* 4. Services Section */
+.services-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    text-align: center;
+}
+.service-item {
+    padding: 30px 20px;
+    border: 1px solid #eee;
+}
+.service-item h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+}
+
+/* 5. Clients Wall Section */
+.clients-section {
+    background-color: #f8f8f8;
+    padding: 80px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.clients-wall {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 30px 0;
+}
+.clients-scroll-container {
+    display: inline-flex;
+    animation: clients-scroll 40s linear infinite; 
+    animation-play-state: running; 
+}
+.clients-list-inner {
+    display: flex;
+    gap: 80px; /* 增大 Logo 间距 */
+    align-items: center;
+}
+.client-logo {
+    flex-shrink: 0;
+    width: 160px; /* 放大 */
+    height: 80px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.client-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    filter: grayscale(100%); 
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+@keyframes clients-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* 6. Contact Section (联系方式) */
+.contact-section {
+    text-align: center; 
     min-height: 50vh; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+.contact-lead {
+    color: var(--accent-color);
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding-top: 40px;
+    width: 100%;
+}
 .contact-icons {
     display: flex;
     justify-content: center;
-    gap: 80px; 
+    gap: 100px; /* 增大图标间距 */
     margin-bottom: 30px;
 }
+.social-icon-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
 .social-icon-link img {
-    width: 52px; /* 放大 30% (40px -> 52px) */
-    height: 52px; /* 放大 30% (40px -> 52px) */
+    width: 52px; /* 放大 */
+    height: 52px; 
     margin-bottom: 10px;
     transition: transform 0.2s;
 }
+.contact-note {
+    font-size: 14px;
+    color: var(--accent-color);
+    margin-top: 20px;
+}
 
-/* 9. Portfolio Grid (作品集) - 通用样式 */
+/* 7. Portfolio Grid (作品集) */
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 40px; /* 增大作品间距 */
 }
 .work-item {
     display: block;
     text-decoration: none;
-    cursor: pointer; /* 提示可点击 */
+    cursor: pointer;
 }
 .work-media {
     overflow: hidden;
     position: relative;
     padding-top: 56.25%; /* 16:9 比例 */
     background-color: #f0f0f0;
+    transition: box-shadow 0.3s;
+}
+.work-item:hover .work-media {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 .work-media video,
 .work-media img {
@@ -126,9 +300,44 @@ main {
     object-fit: cover;
     display: block;
 }
+.work-info {
+    padding: 15px 0 0;
+    text-align: left;
+}
+.work-info h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+.work-tags .work-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 2px 8px;
+    margin-right: 5px;
+    border-radius: 0; /* 保持锐利边角 */
+}
+.tags-filter {
+    text-align: center;
+    margin-bottom: 60px;
+}
+.tags-filter .work-tag {
+    cursor: pointer;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    transition: all 0.2s;
+    margin: 0 8px;
+}
+.tags-filter .work-tag:hover,
+.tags-filter .work-tag.active {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
 
-/* 10. Video Playback Modal Styles (新增/优化) */
-
+/* 8. Video Playback Modal Styles */
 .video-modal {
     display: none; 
     position: fixed;
@@ -137,30 +346,26 @@ main {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0,0,0,0.95); /* 更深的黑色半透明，保持高对比度 */
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* 隐藏滚动条 */
+    overflow: hidden; 
 }
-
 .video-modal.show {
     display: flex;
 }
-
 .modal-content {
     position: relative;
-    width: 80%; /* 桌面端占据页面不超过 80% */
+    width: 80%; /* 桌面端不超过 80% */
     max-width: 1200px;
     background-color: transparent;
-    padding: 20px;
+    padding: 0; /* 移除内边距，让视频贴合 */
 }
-
 #videoPlayerContainer {
     width: 100%;
     padding-top: 56.25%; /* 16:9 比例容器 */
     position: relative;
 }
-
 .modal-video-player {
     position: absolute;
     top: 0;
@@ -169,21 +374,31 @@ main {
     height: 100%;
     display: block;
 }
-
 .close-btn {
     position: absolute;
     top: -40px; 
     right: 0px; 
     color: #fff;
     font-size: 40px;
-    font-weight: bold;
+    font-weight: 200; /* 细字重 */
     cursor: pointer;
     z-index: 5001;
-    opacity: 0.8;
+    opacity: 0.9;
     transition: opacity 0.2s;
 }
 
-/* === 11. Mobile Navigation (Mobile First) === */
+/* 9. Footer */
+.footer {
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--accent-color);
+    background-color: var(--secondary-color);
+    border-top: 1px solid #eee;
+}
+
+/* 10. Mobile Navigation */
 .mobile-nav {
     display: none; 
     position: fixed;
@@ -195,14 +410,12 @@ main {
     border-top: 1px solid #ddd;
     z-index: 2000;
 }
-
 .mobile-menu-icons {
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: 100%;
 }
-
 .mobile-menu-icons a {
     display: flex;
     flex-direction: column;
@@ -210,27 +423,22 @@ main {
     font-size: 10px;
     color: var(--accent-color);
     padding-top: 5px;
-    flex: 1; /* 确保均匀分布 */
+    flex: 1;
 }
-
 .mobile-menu-icons img {
-    width: 24px; /* 图标尺寸 */
+    width: 24px;
     height: 24px;
     margin-bottom: 2px;
 }
-
 .mobile-menu-icons .icon-active {
     display: none;
 }
-
 .mobile-menu-icons a.active .icon-default {
     display: none;
 }
-
 .mobile-menu-icons a.active .icon-active {
     display: block;
 }
-
 .mobile-menu-icons a.active {
     color: var(--primary-color);
     font-weight: 600;
@@ -240,27 +448,48 @@ main {
 /* === Media Queries (移动端适配) === */
 @media (max-width: 1024px) {
     
-    /* 移动端主内容区域避免与顶部和底部导航重叠 */
+    /* 强制显示移动导航，隐藏桌面导航 */
     main {
         margin-top: 0;
-        padding-bottom: var(--mobile-nav-height); /* 确保内容在底部导航上方 */
+        padding-bottom: 0; 
     }
-    /* 强制显示移动导航 */
     .mobile-nav {
         display: block;
     }
-    /* 隐藏桌面导航 */
     .header {
         display: none;
     }
 
-    /* 移动端 Portfolio 2列 */
+    /* 恢复移动端排版留白 */
+    .container {
+        padding: 40px 0;
+    }
+    h2 {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
+
+    /* 移动端 Hero Section */
+    .hero-overlay h1 {
+        font-size: 36px;
+    }
+    .hero-overlay p {
+        font-size: 16px;
+    }
+
+    /* 移动端服务网格: 2列 */
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    /* 移动端作品集: 2列 */
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 
-    /* 移动端 Modal 样式：全屏覆盖（播放器将通过 JS 调用全屏） */
+    /* 移动端 Modal 样式 */
     .modal-content {
         width: 100%;
         height: 100%;
@@ -269,7 +498,6 @@ main {
     }
 
     .close-btn {
-        /* 在移动端隐藏关闭按钮，因为全屏播放器通常有自带的退出/关闭逻辑 */
         display: none; 
     }
 }

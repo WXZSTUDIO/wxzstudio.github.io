@@ -147,7 +147,8 @@
                     videoElement.src = videoSrc;
                     videoElement.controls = true; 
                     videoElement.autoplay = true; 
-                    videoElement.muted = true; // **FIX: 增加 muted 属性，确保自动播放成功**
+                    videoElement.muted = true; // **确保自动播放成功，用户可以通过控件取消静音**
+                    videoElement.playsInline = true; // 移动端内联播放
                     videoElement.classList.add('modal-video-player');
 
                     playerContainer.innerHTML = '';
@@ -155,7 +156,7 @@
 
                     // 手机端全屏播放逻辑 
                     if (window.innerWidth <= 1024) { 
-                        // 尝试在移动端直接调用全屏，增强体验
+                        // 尝试在移动端直接调用全屏
                         videoElement.addEventListener('loadedmetadata', function() {
                             if (videoElement.requestFullscreen) {
                                 videoElement.requestFullscreen();
@@ -165,7 +166,7 @@
                         }, { once: true });
                     }
 
-                    // 显示弹窗 (桌面端和不支持全屏的移动端)
+                    // 显示弹窗
                     modal.classList.add('show');
                 });
             });
@@ -190,7 +191,7 @@
             });
 
 
-            // 2. 筛选功能 (保持不变)
+            // 2. 筛选功能
             document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
                 tag.addEventListener('click', function() {
                     document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));
