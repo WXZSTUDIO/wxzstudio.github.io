@@ -1,314 +1,330 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { VIDEO_PORTFOLIO, SERVICES, CLIENTS } from '../constants';
-import { ArrowRight, Star, ChevronLeft, ChevronRight, ArrowUpRight, Heart, Eye } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { VIDEO_PORTFOLIO, VIDEO_CATEGORIES } from '../constants';
+import { Play, X } from 'lucide-react';
+import { PortfolioItem } from '../types';
 
-const Home = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  
-  // Auto-advance slides every 6 seconds
+const Videos = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [progress, setProgress] = useState(0); // 0 to 100
+  const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
+  const [filter, setFilter] = useState('all');
+  const [hasInitialScrolled, setHasInitialScrolled] = useState(false);
+
+  // Filter items
+  const filteredItems = useMemo(() => {
+    return filter === 'all' 
+      ? VIDEO_PORTFOLIO 
+      : VIDEO_PORTFOLIO.filter(item => item.filterTags.includes(filter as any));
+  }, [filter]);
+
+  // Initial Scroll Animation to Center
   useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [currentSlide]);
+    // Small timeout to ensure DOM is ready and layout is stable
+    const timer = setTimeout(() => {
+      if (scrollRef.current && filteredItems.length > 0) {
+        const { scrollWidth, clientWidth } = scrollRef.current;
+        // Calculate center position
+        // Total scrollable distance is scrollWidth - clientWidth
+        // We want to be at 50% of that
+        const centerPosition = (scrollWidth - clientWidth) / 2;
+        
+        // Smooth scroll to center
+        scrollRef.current.scrollTo({
+          left: centerPosition,
+          behavior: 'smooth'
+        });
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % VIDEO_PORTFOLIO.length);
+        // Trigger snap behavior after animation
+        setTimeout(() => {
+            setHasInitialScrolled(true);
+        }, 1000);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [filteredItems]); // Re-run if items change (e.g. filter)
+
+  // Drag to scroll logic
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+    scrollRef.current.style.scrollSnapType = 'none';
+    scrollRef.current.style.scrollBehavior = 'auto';
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + VIDEO_PORTFOLIO.length) % VIDEO_PORTFOLIO.length);
+  const handleMouseLeave = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (scrollRef.current) {
+        scrollRef.current.style.scrollSnapType = 'x mandatory';
+        scrollRef.current.style.scrollBehavior = 'smooth';
+    }
   };
 
-  const currentItem = VIDEO_PORTFOLIO[currentSlide];
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (scrollRef.current) {
+        scrollRef.current.style.scrollSnapType = 'x mandatory';
+        scrollRef.current.style.scrollBehavior = 'smooth';
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Handle Touch for Mobile
+  const handleTouchStart = () => {
+     if(scrollRef.current) scrollRef.current.style.scrollSnapType = 'none';
+  }
+  const handleTouchEnd = () => {
+     if(scrollRef.current) scrollRef.current.style.scrollSnapType = 'x mandatory';
+  }
+
+  // Update progress bar on scroll
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    const totalScroll = scrollWidth - clientWidth;
+    
+    // Avoid division by zero
+    if (totalScroll <= 0) {
+        setProgress(50); 
+        return;
+    }
+
+    const currentProgress = (scrollLeft / totalScroll) * 100;
+    
+    // CLAMP values between 0 and 100 to prevent rubber-banding (overscroll) from breaking the visual
+    const clampedProgress = Math.max(0, Math.min(100, currentProgress));
+    
+    setProgress(clampedProgress);
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) {
+      el.addEventListener('scroll', handleScroll);
+      // Initial calculation
+      handleScroll(); 
+      return () => el.removeEventListener('scroll', handleScroll);
+    }
+  }, [filteredItems]);
+
+  // Helper to check if media is video file
+  const isVideoFile = (src: string) => src.endsWith('.mp4') || src.endsWith('.mov') || src.endsWith('.webm');
 
   return (
-    <div className="flex flex-col w-full bg-background overflow-x-hidden">
+    <div className="h-screen w-full bg-[#050505] overflow-hidden flex flex-col justify-center relative">
       
-      {/* 
-        ========================================
-        HERO SLIDER SECTION (Cinematic Style) 
-        ========================================
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
+
+      {/* Header Area 
+          - Updated: top-16 (was 24) to pull it up
+          - Updated: mb-10 (was 6) to push content away
       */}
-      <section className="relative h-screen w-full overflow-hidden bg-black text-white">
-        
-        {/* Background Image/Video Layer */}
-        {VIDEO_PORTFOLIO.map((item, index) => (
-          <div
+      <div className="absolute top-16 md:top-24 left-0 right-0 z-30 flex flex-col items-center animate-fade-in">
+        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 border-b border-white/10 pb-1 mb-8 md:mb-6">
+          作品浏览 / FOOTAGE MODE
+        </span>
+
+        {/* Categories Filter */}
+        <div className="flex gap-4 md:gap-8 overflow-x-auto max-w-[90vw] no-scrollbar px-4 pb-2">
+          {VIDEO_CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => {
+                  setFilter(cat.id);
+                  setHasInitialScrolled(false);
+              }}
+              className={`text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap ${
+                filter === cat.id ? 'text-white' : 'text-white/30 hover:text-white/60'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 
+        Horizontal Scroll Container 
+        - Padding is set to 50vw - card_width/2 to ensure first and last items can be centered
+        - Card width is roughly 280px (mobile) / 360px (desktop)
+      */}
+      <div 
+        ref={scrollRef}
+        className="flex items-center gap-4 md:gap-16 px-[calc(50vw-140px)] md:px-[calc(50vw-180px)] overflow-x-auto no-scrollbar h-[60vh] w-full cursor-grab active:cursor-grabbing z-20 snap-x snap-mandatory"
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {filteredItems.map((item, index) => (
+          <div 
             key={item.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
+            className="flex-shrink-0 group relative flex flex-col items-center justify-center snap-center transition-opacity duration-500"
           >
-             {/* Vignette Overlays */}
-             <div className="absolute inset-x-0 top-0 h-[30vh] bg-gradient-to-b from-black via-black/60 to-transparent z-20 pointer-events-none" />
-             <div className="absolute inset-x-0 bottom-0 h-[40vh] bg-gradient-to-t from-black via-black/80 to-transparent z-20 pointer-events-none" />
-             
-             {/* Image */}
-             <img 
-               src={item.mediaSrc} 
-               alt={item.title} 
-               className="w-full h-full object-cover animate-[pulse_10s_ease-in-out_infinite]"
-               style={{ animationDuration: '20s' }} // Slow zoom effect
-             />
+            {/* The "Poster" Card */}
+            <div 
+              className="relative w-[280px] md:w-[360px] aspect-[2/3] overflow-hidden rounded-sm bg-[#111] border border-white/5 transition-all duration-500 group-hover:scale-105 group-hover:border-white/20 shadow-2xl"
+              onClick={() => !isDragging && setSelectedVideo(item)}
+            >
+              {/* Image or Video Thumbnail */}
+              {item.type === 'video' && isVideoFile(item.mediaSrc) ? (
+                  <video 
+                    src={item.mediaSrc}
+                    muted
+                    playsInline
+                    loop
+                    className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0 pointer-events-none"
+                    onMouseOver={e => e.currentTarget.play()}
+                    onMouseOut={e => e.currentTarget.pause()}
+                  />
+              ) : (
+                  <img 
+                    src={item.mediaSrc} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
+                  />
+              )}
+              
+              {/* Play Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                 <div className="w-16 h-16 rounded-full border border-white/30 flex items-center justify-center backdrop-blur-sm bg-black/20">
+                    <Play fill="white" size={24} className="ml-1" />
+                 </div>
+              </div>
+
+              {/* Top Film Holes Decoration */}
+              <div className="absolute top-0 left-0 right-0 h-4 bg-black/50 flex justify-between px-2 items-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                 {[...Array(6)].map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/20"></div>)}
+              </div>
+            </div>
+
+            {/* Metadata (Below Card) */}
+            <div className="mt-8 text-center w-full opacity-60 group-hover:opacity-100 transition-opacity duration-500 select-none">
+               <h3 className="text-xl md:text-2xl font-display font-bold text-white uppercase tracking-tighter mb-2">{item.title}</h3>
+               
+               <div className="flex items-center justify-center gap-4 text-[10px] font-mono text-white/40 uppercase tracking-widest border-t border-b border-white/10 py-1 w-full max-w-[200px] mx-auto">
+                 <span>年份 <b className="text-white">{item.year}</b></span>
+                 <span>地点 <b className="text-white">{item.location || 'N/A'}</b></span>
+               </div>
+            </div>
           </div>
         ))}
 
-        {/* Content Overlay */}
-        <div className="absolute inset-0 z-30 container mx-auto px-6 md:px-12 h-full flex flex-col justify-end pb-24 md:pb-20">
-           
-           <div className="flex flex-col md:flex-row items-start md:items-end justify-between w-full">
-             
-             {/* Left: Title & Info */}
-             <div className="mb-8 md:mb-0 max-w-3xl text-left">
-                <div key={`text-${currentSlide}`} className="animate-fade-in-up">
-                  <div className="flex items-center gap-4 mb-4">
-                     <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/70">
-                        {currentItem.year}
-                     </span>
-                     <div className="w-12 h-[1px] bg-white/30"></div>
-                     <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/70">
-                        {currentItem.category}
-                     </span>
-                  </div>
-                  
-                  {/* Adjusted Text Sizes for Mobile Proportion */}
-                  <h1 className="text-4xl sm:text-5xl md:text-8xl font-display font-black leading-[0.9] text-white uppercase tracking-tighter mb-4 md:mb-6 break-words text-left">
-                     {currentItem.title}
-                  </h1>
-
-                  <p className="text-white/60 text-sm md:text-base max-w-lg leading-relaxed font-light mb-8 line-clamp-2 md:line-clamp-none text-left">
-                     {currentItem.stats?.quote || "An immersive visual experience crafted by WXZ Studio."}
-                  </p>
-                  
-                  {/* Metadata Grid */}
-                  <div className="flex gap-12 border-t border-white/20 pt-4 justify-start">
-                     <div>
-                        <span className="block text-[9px] text-gray-400 uppercase tracking-widest mb-1 text-left">导演 / Director</span>
-                        <span className="block text-xs font-bold uppercase text-left">{currentItem.clientName || 'Limor Pinhasov'}</span>
-                     </div>
-                     <div>
-                        <span className="block text-[9px] text-gray-400 uppercase tracking-widest mb-1 text-left">类别 / Category</span>
-                        <span className="block text-xs font-bold uppercase text-left">{currentItem.filterTags[0]}</span>
-                     </div>
-                  </div>
-                </div>
-             </div>
-
-             {/* Right: Stats & Ticket Button */}
-             <div className="flex flex-col items-start md:items-end gap-8 w-full md:w-auto">
-                
-                {/* Stats (Likes/Views) - Replaces Critical Acclaim */}
-                <div className="hidden md:flex flex-col items-end gap-4 text-right mb-2">
-                     <div className="flex flex-col items-end animate-fade-in-right delay-100">
-                        <div className="flex items-center gap-2 text-white mb-1">
-                          <Eye size={18} className="text-white/70" />
-                          <span className="text-2xl font-display font-bold">{currentItem.stats?.views || '10K'}</span>
-                        </div>
-                        <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">浏览量 / VIEWS</p>
-                     </div>
-
-                     <div className="flex flex-col items-end animate-fade-in-right delay-200">
-                        <div className="flex items-center gap-2 text-white mb-1">
-                          <Heart size={18} className="text-red-500 fill-current" />
-                          <span className="text-2xl font-display font-bold">{currentItem.stats?.likes || '1.2K'}</span>
-                        </div>
-                         <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">点赞数 / LIKES</p>
-                     </div>
-                </div>
-
-                <Link 
-                   to="/video-portfolio"
-                   className="group relative inline-block transition-transform hover:scale-105"
-                >
-                   {/* Custom CSS Ticket Shape Button - Optimized with Separate Masks */}
-                   <div 
-                      className="relative flex items-center w-64 h-16 border border-white rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
-                      style={{
-                          // Standard non-composite mask approach: Top layer + Bottom layer
-                          mask: `
-                            radial-gradient(circle 8px at 70% 0, transparent 8px, black 8.5px) top / 100% 51% no-repeat,
-                            radial-gradient(circle 8px at 70% 100%, transparent 8px, black 8.5px) bottom / 100% 51% no-repeat
-                          `,
-                          WebkitMask: `
-                            radial-gradient(circle 8px at 70% 0, transparent 8px, black 8.5px) top / 100% 51% no-repeat,
-                            radial-gradient(circle 8px at 70% 100%, transparent 8px, black 8.5px) bottom / 100% 51% no-repeat
-                          `
-                      }}
-                   >
-                        {/* Dashed Vertical Divider */}
-                        <div className="absolute top-3 bottom-3 left-[70%] border-l border-dashed border-white/50 -ml-[0.5px]"></div>
-                        
-                        {/* Left Side Text */}
-                        <div className="w-[70%] flex items-center justify-center pl-2">
-                           <span className="text-base font-bold tracking-[0.25em] text-white">EXPLORE</span>
-                        </div>
-                        
-                        {/* Right Side Icon */}
-                        <div className="w-[30%] flex items-center justify-center">
-                           <ArrowRight size={24} className="text-white group-hover:translate-x-1 transition-transform" />
-                        </div>
-                   </div>
-                </Link>
-             </div>
+        {/* Empty State if no items */}
+        {filteredItems.length === 0 && (
+           <div className="w-full text-center text-white/30 font-mono text-sm">
+              该分类下暂无内容
            </div>
-        </div>
-      </section>
+        )}
+      </div>
 
       {/* 
-        ========================================
-        SERVICES SECTION (Column Process Style)
-        ========================================
+         Bottom Progress Bar 
+         - Updated width: w-[70vw] for mobile to be visually centered better
+         - Updated bottom: bottom-8 for better mobile clearance
       */}
-      <section className="py-24 bg-[#08090A]">
-        <div className="container mx-auto px-6 md:px-12">
-            <div className="text-center mb-16">
-                 <h2 className="text-3xl md:text-5xl font-display font-bold text-white uppercase tracking-tight mb-4">服务内容</h2>
-                 <div className="w-24 h-1 bg-white mx-auto"></div>
-            </div>
-
-            {/* Service Grid Container */}
-            <div className="grid grid-cols-1 md:grid-cols-4 border-t border-b border-white/20 min-h-[500px]">
-                {SERVICES.map((service, index) => (
+      <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 w-[70vw] md:w-80 h-12 flex flex-col items-center justify-center z-20 pointer-events-none animate-fade-in-up">
+         
+         {/* The Scale Container */}
+         <div className="relative w-full h-full flex items-center justify-between px-4">
+            
+            {/* Ticks Background */}
+            <div className="absolute inset-0 flex justify-between items-center px-4">
+               {[...Array(21)].map((_, i) => {
+                  const isMajor = i % 5 === 0;
+                  return (
                     <div 
-                        key={index} 
-                        className="group relative border-r border-white/20 last:border-r-0 flex flex-col justify-between p-6 md:p-8 hover:bg-[#111] transition-colors duration-500 overflow-hidden"
-                    >
-                        {/* Hover Image Background */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 z-0">
-                            <img src={service.image} className="w-full h-full object-cover grayscale" alt="" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                        </div>
-
-                        {/* Top Content */}
-                        <div className="relative z-10">
-                            {/* Number Badge */}
-                            <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center font-bold font-mono text-sm mb-8 group-hover:scale-110 transition-transform">
-                                {index + 1}
-                            </div>
-                            
-                            {/* Title */}
-                            <h3 className="text-3xl font-display font-bold text-white uppercase leading-none break-words hyphens-auto mb-4 group-hover:translate-x-2 transition-transform duration-300">
-                                {service.title}
-                            </h3>
-                        </div>
-
-                        {/* Bottom Content */}
-                        <div className="relative z-10 mt-12 md:mt-0">
-                            <div className="h-[1px] w-8 bg-white/50 mb-6 group-hover:w-16 transition-all duration-500"></div>
-                            <p className="text-secondary text-sm font-light leading-relaxed group-hover:text-white transition-colors">
-                                {service.description}
-                            </p>
-                        </div>
-                    </div>
-                ))}
+                      key={i} 
+                      className={`w-[1px] bg-white/30 ${isMajor ? 'h-4 bg-white/50' : 'h-2'}`}
+                    ></div>
+                  );
+               })}
             </div>
-        </div>
-      </section>
 
-      {/* 
-        ========================================
-        CLIENTS SECTION (Infinite Marquee)
-        ========================================
-      */}
-      <section className="pt-24 pb-0 bg-black border-t border-white/5 overflow-hidden">
-        {/* Updated Client Header to match Service Header Size */}
-        <div className="container mx-auto px-6 mb-16 text-center">
-             <h2 className="text-3xl md:text-5xl font-display font-bold text-white uppercase tracking-tight mb-4">服务客户</h2>
-             <div className="w-24 h-1 bg-white mx-auto"></div>
-        </div>
-
-        {/* Marquee Track */}
-        <div className="relative w-full flex overflow-hidden mask-linear-fade mb-24">
-           {/* Linear Gradient Mask for fade edges */}
-           <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-black to-transparent z-20"></div>
-           <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-black to-transparent z-20"></div>
-
-           <div className="flex animate-scroll whitespace-nowrap hover:[animation-play-state:paused] items-center">
-              {/* Duplicate list multiple times to ensure seamless infinite scroll */}
-              {[...CLIENTS, ...CLIENTS, ...CLIENTS].map((client, index) => (
-                 <div key={`${client.id}-${index}`} className="flex items-center justify-center mx-8 md:mx-16 w-32 md:w-48 opacity-60 hover:opacity-100 transition-opacity duration-300">
-                    {client.logoSrc ? (
-                       // REDUCED SIZE: h-24 md:h-32 (was h-48 md:h-64)
-                       // COLOR: White (brightness-0 invert).
-                       <img 
-                          src={client.logoSrc} 
-                          alt={client.name} 
-                          className="max-w-full h-24 md:h-32 object-contain brightness-0 invert transition-all duration-500" 
-                       />
-                    ) : (
-                       <span className="text-2xl md:text-4xl font-display font-bold text-white uppercase tracking-tighter whitespace-nowrap">
-                          {client.name}
-                       </span>
-                    )}
-                 </div>
-              ))}
-           </div>
-        </div>
-
-        {/* 
-            Footer Info / Service Terms Area
-            Updated to Chinese Service Terms, Right Angle Bottom, and Fade Transparency
-        */}
-        <div className="container mx-auto px-4 md:px-12">
+            {/* The Moving Indicator - Hollow Rounded Rectangle 
+                - Updated logic: left is % based, transform handles centering of the thumb itself
+            */}
             <div 
-                className="w-full max-w-6xl mx-auto rounded-t-[2.5rem] rounded-b-none bg-gradient-to-b from-[#111] to-black border-t border-x border-white/10 p-8 md:p-12 relative overflow-hidden group"
-            >
-                {/* Subtle Gradient Glow Background */}
-                <div className="absolute top-[-50%] left-[20%] w-[500px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none group-hover:bg-blue-900/20 transition-colors duration-1000"></div>
+               className="absolute top-1/2 -translate-y-1/2 w-8 h-5 border-2 border-white rounded-[4px] shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all duration-75 ease-out bg-black/50 backdrop-blur-[1px]"
+               style={{ 
+                   left: `${progress}%`,
+                   transform: 'translate(-50%, -50%)' // Center the thumb on the point
+               }} 
+            />
+         </div>
+      </div>
 
-                <div className="relative z-10 flex flex-col gap-8 pb-24">
-                    {/* Header */}
-                    <div className="border-b border-white/10 pb-6 mb-2">
-                        <h4 className="text-2xl font-bold text-white mb-2">服务条款</h4>
-                        <p className="text-secondary text-sm">Service Terms</p>
-                    </div>
-
-                    {/* Content - Two Column Grid for better readability */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 text-secondary text-xs md:text-sm font-light leading-relaxed">
-                        <div className="space-y-8">
-                             <div>
-                                <p className="mb-4 text-white/40 text-[10px]">
-                                    本服务条款（“条款”）适用于您的摄影/摄像服务预约及相关事宜。确认预约即表示您同意本条款；如果您不同意，请勿进行预约。
-                                </p>
-                             </div>
-                             <div>
-                                <h5 className="text-white font-bold mb-2">预约与定金</h5>
-                                <p>对于首次预约本服务的客户，在确认拍摄排期时，需缴纳商议总金额的 50% 作为预约定金。若因非不可抗力原因在预定拍摄日期当天取消服务，该定金将不予退还。</p>
+      {/* Video Modal - Cinematic Style */}
+      {selectedVideo && (
+        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center animate-fade-in p-4 md:p-12">
+          
+          <div className="w-full h-full max-w-[1400px] flex flex-col justify-center relative">
+             <div className="relative aspect-video w-full bg-black rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                {/* 
+                   Video Player Area
+                */}
+                <div className="w-full h-full flex items-center justify-center bg-[#111] relative">
+                    {selectedVideo.type === 'video' && isVideoFile(selectedVideo.mediaSrc) ? (
+                        <video 
+                            src={selectedVideo.mediaSrc}
+                            controls
+                            autoPlay
+                            className="w-full h-full object-contain"
+                        />
+                    ) : (
+                        <>
+                            <img src={selectedVideo.mediaSrc} className="absolute inset-0 w-full h-full object-cover opacity-30" />
+                            <div className="z-10 text-center">
+                                <Play size={48} fill="white" className="mx-auto mb-4 opacity-80" />
+                                <p className="text-white/50 font-mono text-sm">正在播放: {selectedVideo.title}</p>
                             </div>
-                            <div>
-                                <h5 className="text-white font-bold mb-2">创意材料与沟通</h5>
-                                <p>我们强烈建议您提供详细的拍摄剧本。若无具体剧本，您有责任在拍摄前大致说明拍摄角度、构图意向或创意概念，以确保交付结果符合预期。</p>
-                            </div>
-                            <div>
-                                <h5 className="text-white font-bold mb-2">服务范围与后期处理</h5>
-                                <p>我们的拍摄服务提供灵活的后期处理方案。后期剪辑工作（包括但不限于素材筛选、画面调色及特效制作）将独立于拍摄服务，另行单独计费，除非合约中已对整体打包费用作出明确约定。此举旨在保障您在后期制作流程中拥有充分的自主选择权，并确保所有服务成本的透明化。</p>
-                            </div>
-                        </div>
-                        
-                        <div className="space-y-8">
-                             <div>
-                                <h5 className="text-white font-bold mb-2">付款与超时费用</h5>
-                                <p>剩余款项应在拍摄结束后的 24 小时内结清。关于拍摄时长的计算，若实际拍摄时间超出原定计划 30 分钟，将按照拟定的单价标准，以 1 小时为单位加收超时费用。</p>
-                            </div>
-                            <div>
-                                <h5 className="text-white font-bold mb-2">交付与数据保留</h5>
-                                <p>拍摄素材上传至交付平台后，您有责任在 30 日内完成下载并自行归档保存。对于因逾期未下载而导致的数据丢失，服务方不承担责任。</p>
-                            </div>
-                             <div>
-                                <h5 className="text-white font-bold mb-2">宣传与知识产权</h5>
-                                <p>除非您提前声明或签署特定的保密合约，否则即视为您默认同意服务方在拍摄结束一周后，将相关素材发布至社交媒体平台用于作品展示或宣传用途。</p>
-                            </div>
-                        </div>
-                    </div>
+                        </>
+                    )}
                 </div>
-            </div>
+             </div>
+             
+             <div className="mt-6 flex justify-between items-end border-t border-white/10 pt-4">
+                <div>
+                   <h2 className="text-2xl md:text-4xl font-display font-bold text-white mb-2">{selectedVideo.title}</h2>
+                   <p className="text-white/50 text-sm font-mono">{selectedVideo.category} — {selectedVideo.year}</p>
+                </div>
+                
+                 {/* Close Button - Positioned tighter to content */}
+                <button 
+                  onClick={() => setSelectedVideo(null)}
+                  className="group"
+                >
+                   <div className="bg-[#FBF9F3] text-black px-6 py-2 rounded-full flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:scale-105 transition-transform">
+                      <span className="text-[10px] font-bold tracking-widest uppercase">关闭</span>
+                      <div className="bg-black text-white p-0.5 rounded-full">
+                         <X size={12} />
+                      </div>
+                   </div>
+                </button>
+             </div>
+          </div>
         </div>
-      </section>
+      )}
+
     </div>
   );
 };
 
-export default Home;
+export default Videos;
