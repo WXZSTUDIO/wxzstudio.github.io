@@ -187,7 +187,7 @@ a:hover {
 }
 .clients-wall {
     width: 100%;
-    overflow: hidden;
+    overflow: hidden; /* 桌面端隐藏溢出，启用动画滚动 */
     white-space: nowrap;
     position: relative;
     padding: 30px 0;
@@ -257,10 +257,11 @@ a:hover {
     font-size: 14px;
     font-weight: 600;
 }
+/* **已修改: 图标尺寸放大 1 倍 (3x 原尺寸 52px = 156px)** */
 .social-icon-link img {
-    width: 52px; /* 放大 */
-    height: 52px; 
-    margin-bottom: 10px;
+    width: 156px; 
+    height: 156px; 
+    margin-bottom: 20px; 
     transition: transform 0.2s;
 }
 .contact-note {
@@ -481,6 +482,32 @@ a:hover {
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
+    }
+    
+    /* **已修复: 移动端 Clients Wall 改为手动横向滚动** */
+    .clients-wall {
+        overflow-x: scroll; /* 允许手动横向滚动 */
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap; 
+        padding: 20px 0;
+    }
+    .clients-scroll-container {
+        animation: none; /* 禁用自动滚动 */
+        display: inline-flex;
+    }
+    .clients-list-inner {
+        gap: 30px; /* 减小间距 */
+    }
+    .client-logo {
+        width: 100px; 
+        height: 50px;
+    }
+    
+    /* **已修复: 移动端 Contact Icon 尺寸适配** */
+    .social-icon-link img {
+        width: 104px; /* 移动端设置为 2x 原尺寸 */
+        height: 104px;
+        margin-bottom: 10px;
     }
 
     /* 移动端作品集: 2列 */
