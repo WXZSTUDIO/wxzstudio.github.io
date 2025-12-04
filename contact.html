@@ -83,7 +83,6 @@
 
             if (wechatIcon) {
                 wechatIcon.addEventListener('click', () => {
-                    // 使用现代 Clipboard API
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(wechatID).then(() => {
                             alert('已成功复制微信号: ' + wechatID);
@@ -92,7 +91,6 @@
                             alert('复制失败，请手动添加 ' + wechatID);
                         });
                     } else {
-                        // 浏览器不支持 API 时的备用方案
                         const textArea = document.createElement("textarea");
                         textArea.value = wechatID;
                         document.body.appendChild(textArea);

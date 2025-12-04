@@ -145,26 +145,24 @@
                     // 创建新的 video 元素
                     const videoElement = document.createElement('video');
                     videoElement.src = videoSrc;
-                    videoElement.controls = true; // 显示播放控件
-                    videoElement.autoplay = true; // 自动播放
+                    videoElement.controls = true; 
+                    videoElement.autoplay = true; 
+                    videoElement.muted = true; // **FIX: 增加 muted 属性，确保自动播放成功**
                     videoElement.classList.add('modal-video-player');
 
-                    // 清空容器并添加新的视频
                     playerContainer.innerHTML = '';
                     playerContainer.appendChild(videoElement);
 
-                    // 手机端全屏播放逻辑 (通过 JS 调用 Fullscreen API)
+                    // 手机端全屏播放逻辑 
                     if (window.innerWidth <= 1024) { 
-                        // 在移动端，点击后尝试直接让视频元素全屏，效果取决于浏览器支持
-                        if (videoElement.requestFullscreen) {
-                            videoElement.requestFullscreen();
-                        } else if (videoElement.webkitEnterFullscreen) { /* iOS Safari 专有 */
-                             videoElement.webkitEnterFullscreen();
-                        } else if (videoElement.webkitRequestFullscreen) { /* Chrome/Safari */
-                            videoElement.webkitRequestFullscreen();
-                        } else if (videoElement.msRequestFullscreen) { /* IE11 */
-                            videoElement.msRequestFullscreen();
-                        }
+                        // 尝试在移动端直接调用全屏，增强体验
+                        videoElement.addEventListener('loadedmetadata', function() {
+                            if (videoElement.requestFullscreen) {
+                                videoElement.requestFullscreen();
+                            } else if (videoElement.webkitEnterFullscreen) { 
+                                videoElement.webkitEnterFullscreen();
+                            }
+                        }, { once: true });
                     }
 
                     // 显示弹窗 (桌面端和不支持全屏的移动端)
@@ -178,17 +176,13 @@
                 playerContainer.innerHTML = ''; // 停止播放并清空视频元素
             }
 
-            // 点击关闭按钮
+            // 绑定关闭事件
             closeBtn.addEventListener('click', closeModal);
-
-            // 点击弹窗外部关闭
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     closeModal();
                 }
             });
-
-            // 键盘 ESC 键关闭
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && modal.classList.contains('show')) {
                     closeModal();
@@ -196,7 +190,7 @@
             });
 
 
-            // 2. 筛选功能
+            // 2. 筛选功能 (保持不变)
             document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
                 tag.addEventListener('click', function() {
                     document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));
