@@ -3,48 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WXZ STUDIO - 联系方式</title>
+    <title id="pageTitle" data-lang-zh="WXZ STUDIO - 联系方式" data-lang-en="WXZ STUDIO - Contact" data-lang-kr="WXZ STUDIO - 연락처" data-lang-tw="WXZ STUDIO - 聯絡方式">WXZ STUDIO - 联系方式</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-current-lang="zh">
     <header class="header">
         <div class="nav-content container">
             <div class="logo"><a href="index.html">WXZ STUDIO</a></div>
+
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="index.html">首页</a></li>
-                    <li><a href="video-portfolio.html">视频作品</a></li>
-                    <li><a href="graphic-portfolio.html">平面设计作品</a></li>
-                    <li><a href="contact.html" class="active">联系方式</a></li>
+                    <li><a href="index.html" data-lang-key="nav_home">首页</a></li>
+                    <li><a href="video-portfolio.html" data-lang-key="nav_video">视频作品</a></li>
+                    <li><a href="graphic-portfolio.html" data-lang-key="nav_graphic">平面设计作品</a></li>
+                    <li><a href="contact.html" class="active" data-lang-key="nav_contact">联系方式</a></li>
                 </ul>
             </nav>
+
+            <div class="desktop-lang-switcher">
+                <span class="lang-option" data-lang="en">EN</span>
+                <span class="lang-option" data-lang="kr">KR</span>
+                <span class="lang-option" data-lang="zh">简</span>
+                <span class="lang-option" data-lang="tw">繁</span>
+            </div>
+
+            <div class="mobile-lang-container">
+                <button class="mobile-lang-btn" id="mobileLangBtn" data-current-display="简">简</button>
+                <div class="mobile-lang-dropdown" id="mobileLangDropdown">
+                    <button data-lang="en">English (EN)</button>
+                    <button data-lang="kr">한국어 (KR)</button>
+                    <button data-lang="zh">简体中文 (简)</button>
+                    <button data-lang="tw">繁體中文 (繁)</button>
+                </div>
+            </div>
         </div>
     </header>
 
     <main class="main-content">
         <section class="contact-section container">
-            <h2>联系我们</h2>
-            <p class="contact-lead">期待与您合作，请通过以下社交媒体方式联系我们。</p>
+            <h2 data-lang-key="contact_title">联系我们</h2>
+            <p class="contact-lead" data-lang-key="contact_intro">期待与您合作，请通过以下社交媒体方式联系我们。</p>
 
             <div class="contact-info">
                 <div class="contact-icons">
                     <div class="social-icon-link" id="wechatIcon" data-clipboard-text="icf304">
                         <img src="assets/images/wechat_icon.png" alt="微信">
-                        <span>点击复制微信号</span>
+                        <span data-lang-key="contact_wechat_tip">点击复制微信号</span>
                     </div>
 
-                    <a href="https://xhslink.com/m/4FrLqFlYhZj" target="_blank" class="social-icon-link">
+                    <a href="https://xhslink.com/xH5V2l" class="social-icon-link" target="_blank">
                         <img src="assets/images/xiaohongshu_icon.png" alt="小红书">
-                        <span>小红书账号</span>
+                        <span data-lang-key="contact_xiaohongshu">小红书</span>
                     </a>
                 </div>
-                
-                <p class="contact-note">微信搜索icf304即可添加好友</p>
+                <div class="contact-icons">
+                    <a href="https://space.bilibili.com/264356475" class="social-icon-link" target="_blank">
+                        <img src="assets/images/bilibili_icon.png" alt="Bilibili">
+                        <span data-lang-key="contact_bilibili">Bilibili</span>
+                    </a>
+                    <a href="mailto:info@wxzstudio.com" class="social-icon-link">
+                        <img src="assets/images/email_icon.png" alt="邮箱">
+                        <span data-lang-key="contact_email">邮箱</span>
+                    </a>
+                </div>
+                <p class="contact-note" data-lang-key="contact_note">若您有紧急需求，请优先通过微信或邮箱联系。</p>
             </div>
         </section>
     </main>
     
-    <footer class="footer">
+    <footer class="footer footer-extra-padding">
+        <div class="footer-lang-switcher">
+            <span class="lang-option" data-lang="en">EN</span>
+            <span class="lang-option" data-lang="kr">KR</span>
+            <span class="lang-option" data-lang="zh">简</span>
+            <span class="lang-option" data-lang="tw">繁</span>
+        </div>
         <div class="container">
             <p>&copy; 2026 WXZ STUDIO. All Rights Reserved. </p>
         </div>
@@ -55,40 +88,190 @@
             <a href="index.html">
                 <img src="assets/images/icons/home.png" class="icon-default" alt="首页">
                 <img src="assets/images/icons/home-active.png" class="icon-active" alt="首页 Active">
-                <span>首页</span>
+                <span data-lang-key="nav_home">首页</span>
             </a>
             <a href="video-portfolio.html">
                 <img src="assets/images/icons/video.png" class="icon-default" alt="视频作品">
                 <img src="assets/images/icons/video-active.png" class="icon-active" alt="视频作品 Active">
-                <span>视频作品</span>
+                <span data-lang-key="nav_video">视频作品</span>
             </a>
             <a href="graphic-portfolio.html">
                 <img src="assets/images/icons/graphic.png" class="icon-default" alt="平面设计">
                 <img src="assets/images/icons/graphic-active.png" class="icon-active" alt="平面设计 Active">
-                <span>平面设计</span>
+                <span data-lang-key="nav_graphic">平面设计</span>
             </a>
             <a href="contact.html" class="active">
                 <img src="assets/images/icons/contact.png" class="icon-default" alt="联系方式">
                 <img src="assets/images/icons/contact-active.png" class="icon-active" alt="联系方式 Active">
-                <span>联系方式</span>
+                <span data-lang-key="nav_contact">联系方式</span>
             </a>
         </div>
     </nav>
 
     <script>
-        // JS: 复制微信号到剪贴板
+        // -------------------------
+        // 1. 语言切换字典
+        // -------------------------
+        const translations = {
+            zh: {
+                pageTitle: 'WXZ STUDIO - 联系方式',
+                nav_home: '首页', nav_video: '视频作品', nav_graphic: '平面设计作品', nav_contact: '联系方式',
+                contact_title: '联系我们',
+                contact_intro: '期待与您合作，请通过以下社交媒体方式联系我们。',
+                contact_wechat_tip: '点击复制微信号',
+                contact_xiaohongshu: '小红书',
+                contact_bilibili: 'Bilibili',
+                contact_email: '邮箱',
+                contact_note: '若您有紧急需求，请优先通过微信或邮箱联系。',
+                copy_success: '已成功复制微信号: ',
+                copy_fail: '复制失败，请手动添加 '
+            },
+            en: {
+                pageTitle: 'WXZ STUDIO - Contact',
+                nav_home: 'Home', nav_video: 'Video Portfolio', nav_graphic: 'Graphic Design', nav_contact: 'Contact',
+                contact_title: 'CONTACT US',
+                contact_intro: 'We look forward to collaborating with you. Please reach out via the following social media channels.',
+                contact_wechat_tip: 'Click to copy WeChat ID',
+                contact_xiaohongshu: 'Xiaohongshu',
+                contact_bilibili: 'Bilibili',
+                contact_email: 'Email',
+                contact_note: 'For urgent inquiries, please prioritize contacting us via WeChat or Email.',
+                copy_success: 'Successfully copied WeChat ID: ',
+                copy_fail: 'Copy failed, please add manually '
+            },
+            kr: {
+                pageTitle: 'WXZ STUDIO - 연락처',
+                nav_home: '홈', nav_video: '영상 포트폴리오', nav_graphic: '그래픽 디자인', nav_contact: '연락처',
+                contact_title: '연락하기',
+                contact_intro: '귀하와의 협력을 기대합니다. 아래 소셜 미디어를 통해 문의해 주세요.',
+                contact_wechat_tip: '위챗 ID 복사',
+                contact_xiaohongshu: '샤오홍슈',
+                contact_bilibili: '빌리빌리',
+                contact_email: '이메일',
+                contact_note: '긴급한 요청은 위챗이나 이메일을 통해 우선 연락해 주세요.',
+                copy_success: '위챗 ID 복사 성공: ',
+                copy_fail: '복사 실패, 수동으로 추가해 주세요 '
+            },
+            tw: {
+                pageTitle: 'WXZ STUDIO - 聯絡方式',
+                nav_home: '首頁', nav_video: '視頻作品', nav_graphic: '平面設計作品', nav_contact: '聯絡方式',
+                contact_title: '聯絡我們',
+                contact_intro: '期待與您合作，請透過以下社交媒體方式聯絡我們。',
+                contact_wechat_tip: '點擊複製微訊號',
+                contact_xiaohongshu: '小紅書',
+                contact_bilibili: 'Bilibili',
+                contact_email: '郵箱',
+                contact_note: '若您有緊急需求，請優先透過微信或郵箱聯絡。',
+                copy_success: '已成功複製微訊號: ',
+                copy_fail: '複製失敗，請手動添加 '
+            }
+        };
+
+        // -------------------------
+        // 2. 语言切换核心函数 (通用)
+        // -------------------------
+        
+        const langDisplayNames = { 'en': 'EN', 'kr': 'KR', 'zh': '简', 'tw': '繁' };
+        
+        function getPreferredLang() {
+            const navLang = navigator.language || navigator.userLanguage;
+            if (navLang.startsWith('zh-TW') || navLang.startsWith('zh-HK') || navLang.startsWith('zh-MO')) return 'tw';
+            if (navLang.startsWith('zh')) return 'zh';
+            if (navLang.startsWith('ko')) return 'kr';
+            if (navLang.startsWith('en')) return 'en';
+            return 'zh';
+        }
+
+        function switchLanguage(langCode) {
+            const targetLang = translations[langCode] || translations['zh'];
+            
+            document.body.setAttribute('data-current-lang', langCode);
+
+            const pageTitleEl = document.getElementById('pageTitle');
+            if (pageTitleEl) {
+                const customTitle = pageTitleEl.getAttribute(`data-lang-${langCode}`);
+                pageTitleEl.textContent = customTitle || targetLang.pageTitle;
+            }
+
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (targetLang[key]) {
+                    el.textContent = targetLang[key];
+                }
+            });
+
+            document.querySelectorAll('.lang-option, .mobile-lang-dropdown button').forEach(el => {
+                el.classList.remove('active-lang');
+                if (el.getAttribute('data-lang') === langCode) {
+                    el.classList.add('active-lang');
+                }
+            });
+
+            const mobileBtn = document.getElementById('mobileLangBtn');
+            if (mobileBtn) {
+                mobileBtn.textContent = langDisplayNames[langCode];
+                mobileBtn.setAttribute('data-current-display', langDisplayNames[langCode]);
+            }
+        
+            document.getElementById('mobileLangDropdown').classList.remove('show');
+            localStorage.setItem('wxz_lang', langCode);
+        }
+        
+        // -------------------------
+        // 3. DOMContentLoaded 事件
+        // -------------------------
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // 确定初始语言
+            const storedLang = localStorage.getItem('wxz_lang');
+            const initialLang = storedLang || getPreferredLang();
+            switchLanguage(initialLang);
+
+            // 语言切换事件绑定 (与首页相同)
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    switchLanguage(this.getAttribute('data-lang'));
+                });
+            });
+
+            document.querySelectorAll('#mobileLangDropdown button').forEach(button => {
+                button.addEventListener('click', function() {
+                    switchLanguage(this.getAttribute('data-lang'));
+                });
+            });
+
+            const mobileLangBtn = document.getElementById('mobileLangBtn');
+            const mobileLangDropdown = document.getElementById('mobileLangDropdown');
+            const mobileLangContainer = document.querySelector('.mobile-lang-container');
+
+            if (mobileLangBtn) {
+                mobileLangBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    mobileLangDropdown.classList.toggle('show');
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (mobileLangDropdown && !mobileLangContainer.contains(e.target)) {
+                    mobileLangDropdown.classList.remove('show');
+                }
+            });
+
+            // JS: 复制微信号到剪贴板
             const wechatIcon = document.getElementById('wechatIcon');
             const wechatID = 'icf304';
 
             if (wechatIcon) {
                 wechatIcon.addEventListener('click', () => {
+                    const currentLang = document.body.getAttribute('data-current-lang');
+                    const langPack = translations[currentLang];
+                    
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(wechatID).then(() => {
-                            alert('已成功复制微信号: ' + wechatID);
+                            alert(langPack.copy_success + wechatID);
                         }).catch(err => {
                             console.error('无法复制文本: ', err);
-                            alert('复制失败，请手动添加 ' + wechatID);
+                            alert(langPack.copy_fail + wechatID);
                         });
                     } else {
                         const textArea = document.createElement("textarea");
@@ -98,9 +281,9 @@
                         textArea.select();
                         try {
                             document.execCommand('copy');
-                            alert('已成功复制微信号: ' + wechatID);
+                            alert(langPack.copy_success + wechatID);
                         } catch (err) {
-                            alert('复制失败，请手动添加 ' + wechatID);
+                            alert(langPack.copy_fail + wechatID);
                         }
                         document.body.removeChild(textArea);
                     }
