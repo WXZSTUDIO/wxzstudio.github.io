@@ -16,11 +16,11 @@ const Contact = () => {
     <div className="min-h-screen pt-32 pb-12 bg-background flex flex-col items-center">
       <div className="container mx-auto px-6 max-w-2xl text-center">
         <div className="inline-block mb-6 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
-           <span className="text-xs uppercase tracking-[0.2em] text-white/70">Get in Touch</span>
+           <span className="text-xs uppercase tracking-[0.2em] text-white/70">联系我们</span>
         </div>
-        <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">Let's Create Together</h2>
+        <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">共创未来 / Let's Create</h2>
         <p className="text-secondary mb-16 text-lg">
-          We are always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+          我们要随时准备讨论新的项目、创意想法，或成为您愿景的一部分。
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
@@ -40,12 +40,12 @@ const Contact = () => {
             </div>
             
             <div className="z-10">
-              <p className="text-sm text-secondary uppercase tracking-widest mb-2">WeChat</p>
+              <p className="text-sm text-secondary uppercase tracking-widest mb-2">微信 WeChat</p>
               <p className="text-2xl font-bold text-white tracking-wide">{WECHAT_ID}</p>
             </div>
 
             <button className="flex items-center gap-2 text-xs font-medium text-white/50 group-hover:text-white transition-colors z-10 px-4 py-2 rounded-full border border-white/5 group-hover:border-white/20 bg-white/5">
-              {copied ? <><Check size={14} /> Copied</> : <><Copy size={14} /> Click to Copy</>}
+              {copied ? <><Check size={14} /> 已复制</> : <><Copy size={14} /> 点击复制</>}
             </button>
           </div>
 
@@ -63,12 +63,12 @@ const Contact = () => {
              </div>
 
              <div className="z-10">
-              <p className="text-sm text-secondary uppercase tracking-widest mb-2">Social Media</p>
-              <p className="text-2xl font-bold text-white tracking-wide">RED Note</p>
+              <p className="text-sm text-secondary uppercase tracking-widest mb-2">社交媒体</p>
+              <p className="text-2xl font-bold text-white tracking-wide">小红书</p>
             </div>
 
             <div className="flex items-center gap-2 text-xs font-medium text-white/50 group-hover:text-white transition-colors z-10 px-4 py-2 rounded-full border border-white/5 group-hover:border-white/20 bg-white/5">
-               <span>Visit Profile</span> <ArrowUpRight size={14} />
+               <span>访问主页</span> <ArrowUpRight size={14} />
             </div>
           </a>
         </div>

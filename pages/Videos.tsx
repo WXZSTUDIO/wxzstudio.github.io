@@ -124,7 +124,7 @@ const Videos = () => {
       {/* Header Area */}
       <div className="absolute top-24 left-0 right-0 z-30 flex flex-col items-center animate-fade-in">
         <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 border-b border-white/10 pb-1 mb-6">
-          Footage Mode
+          作品浏览 / FOOTAGE MODE
         </span>
 
         {/* Categories Filter */}
@@ -197,8 +197,8 @@ const Videos = () => {
                <h3 className="text-xl md:text-2xl font-display font-bold text-white uppercase tracking-tighter mb-2">{item.title}</h3>
                
                <div className="flex items-center justify-center gap-4 text-[10px] font-mono text-white/40 uppercase tracking-widest border-t border-b border-white/10 py-1 w-full max-w-[200px] mx-auto">
-                 <span>Year <b className="text-white">{item.year}</b></span>
-                 <span>Loc <b className="text-white">{item.location || 'N/A'}</b></span>
+                 <span>年份 <b className="text-white">{item.year}</b></span>
+                 <span>地点 <b className="text-white">{item.location || 'N/A'}</b></span>
                </div>
             </div>
           </div>
@@ -207,7 +207,7 @@ const Videos = () => {
         {/* Empty State if no items */}
         {filteredItems.length === 0 && (
            <div className="w-full text-center text-white/30 font-mono text-sm">
-              NO FOOTAGE FOUND IN THIS CATEGORY
+              该分类下暂无内容
            </div>
         )}
       </div>
@@ -262,7 +262,7 @@ const Videos = () => {
                     <img src={selectedVideo.mediaSrc} className="absolute inset-0 w-full h-full object-cover opacity-30" />
                     <div className="z-10 text-center">
                         <Play size={48} fill="white" className="mx-auto mb-4 opacity-80" />
-                        <p className="text-white/50 font-mono text-sm">Playing: {selectedVideo.title}</p>
+                        <p className="text-white/50 font-mono text-sm">正在播放: {selectedVideo.title}</p>
                     </div>
                 </div>
              </div>
@@ -279,7 +279,7 @@ const Videos = () => {
                   className="group"
                 >
                    <div className="bg-[#FBF9F3] text-black px-6 py-2 rounded-full flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:scale-105 transition-transform">
-                      <span className="text-[10px] font-bold tracking-widest uppercase">Close</span>
+                      <span className="text-[10px] font-bold tracking-widest uppercase">关闭</span>
                       <div className="bg-black text-white p-0.5 rounded-full">
                          <X size={12} />
                       </div>

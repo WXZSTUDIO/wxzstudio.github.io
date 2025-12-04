@@ -11,7 +11,7 @@ import { PortfolioItem, Client, Service } from './types';
 
 export const NAV_LINKS = [
   { path: '/', label: 'HOME', icon: <Home size={18} /> },
-  { path: '/videos', label: 'VIDEOS', icon: <Film size={18} /> },
+  { path: '/videos', label: 'FILMS', icon: <Film size={18} /> },
   { path: '/graphic-portfolio', label: 'GRAPHIC', icon: <ImageIcon size={18} /> },
   { path: '/contact', label: 'CONTACT', icon: <Mail size={18} /> },
 ];
@@ -22,168 +22,176 @@ export const SERVICES: Service[] = [
     description: '会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作。捕捉关键时刻，留存品牌记忆。',
     icon: <Mic className="text-white" size={32} />,
     colorTheme: 'bg-gradient-to-br from-[#FF512F] to-[#DD2476]', // Pink/Red
-    image: 'https://picsum.photos/seed/service1/800/600'
+    image: 'https://image.pollinations.ai/prompt/conference%20event%20photography%20professional%20camera%20dark%20cinematic?width=800&height=600&nologo=true'
   },
   {
     title: '产品拍摄',
     description: '为电商及广告客户提供高质量的产品视频和摄影。通过光影艺术，突出产品特性与美感，提升转化率。',
     icon: <Camera className="text-white" size={32} />,
     colorTheme: 'bg-gradient-to-br from-[#4facfe] to-[#00f2fe]', // Blue/Cyan
-    image: 'https://picsum.photos/seed/service2/800/600'
+    image: 'https://image.pollinations.ai/prompt/luxury%20product%20photography%20studio%20lighting%20cosmetics?width=800&height=600&nologo=true'
   },
   {
     title: '品牌宣传',
     description: '制作企业宣传片、品牌故事片和形象 TVC。以电影级的叙事手法，提升品牌知名度与市场影响力。',
     icon: <Video className="text-white" size={32} />,
     colorTheme: 'bg-gradient-to-br from-[#434343] to-[#000000]', // Dark/Mono
-    image: 'https://picsum.photos/seed/service3/800/600'
+    image: 'https://image.pollinations.ai/prompt/film%20set%20cinema%20camera%20crew%20behind%20the%20scenes?width=800&height=600&nologo=true'
   },
   {
     title: '视觉设计',
     description: '提供品牌 VI、海报、社交媒体图文等全方位的平面设计与视觉传达服务。构建统一且独特的品牌视觉识别系统。',
     icon: <Palette className="text-white" size={32} />,
     colorTheme: 'bg-gradient-to-br from-[#8EC5FC] to-[#E0C3FC]', // Purple/Soft
-    image: 'https://picsum.photos/seed/service4/800/600'
+    image: 'https://image.pollinations.ai/prompt/graphic%20design%20workspace%20minimalist%20creative%20studio?width=800&height=600&nologo=true'
   },
 ];
 
 export const CLIENTS: Client[] = [
-  { id: 1, name: 'Google', logoInitial: 'G' },
-  { id: 2, name: 'Samsung', logoInitial: 'S' },
-  { id: 3, name: 'Nike', logoInitial: 'N' },
-  { id: 4, name: 'Vogue', logoInitial: 'V' },
-  { id: 5, name: 'Tesla', logoInitial: 'T' },
-  { id: 6, name: 'Sony', logoInitial: 'S' },
-  { id: 7, name: 'Adobe', logoInitial: 'A' },
-  { id: 8, name: 'Dior', logoInitial: 'D' },
+  { id: 1, name: 'AEKYUNG', logoInitial: 'A', logoSrc: '/assets/clients/AEKYUNG.png' },
+  { id: 2, name: 'AMOREPACIFIC', logoInitial: 'A', logoSrc: '/assets/clients/AMOREPACIFIC.png' },
+  { id: 3, name: 'COSRX', logoInitial: 'C', logoSrc: '/assets/clients/COSRX.png' },
+  { id: 4, name: 'HERA', logoInitial: 'H', logoSrc: '/assets/clients/HERA.png' },
+  { id: 5, name: 'high&gogo', logoInitial: 'h', logoSrc: '/assets/clients/high&gogo.png' },
+  { id: 6, name: '(G)I-DLE', logoInitial: 'I', logoSrc: '/assets/clients/i-dle.png' },
+  { id: 7, name: 'IOPE', logoInitial: 'I', logoSrc: '/assets/clients/IOPE.png' },
+  { id: 8, name: 'LEADERS', logoInitial: 'L', logoSrc: '/assets/clients/LEADERS.png' },
+  { id: 9, name: 'VITALBEAUTIE', logoInitial: 'V', logoSrc: '/assets/clients/VITALBEAUTIE.png' },
+  { id: 10, name: 'SHINSEGAE', logoInitial: 'S', logoSrc: '/assets/clients/SHINSEGAE.png' },
+  { id: 11, name: 'Q.one', logoInitial: 'Q', logoSrc: '/assets/clients/Q.one.png' },
+  { id: 12, name: 'ZB1', logoInitial: 'Z', logoSrc: '/assets/clients/ZB1.png' },
 ];
 
 export const VIDEO_CATEGORIES = [
-  { id: 'all', label: 'ALL' },
-  { id: 'brand', label: 'BRAND FILM' },
-  { id: 'event', label: 'EVENT' },
-  { id: 'documentary', label: 'DOCUMENTARY' },
-  { id: 'product', label: 'COMMERCIAL' },
+  { id: 'all', label: '全部' },
+  { id: 'brand', label: '品牌影片' },
+  { id: 'event', label: '活动记录' },
+  { id: 'documentary', label: '纪录片' },
+  { id: 'product', label: '商业广告' },
 ];
+
+// Helper to generate consistent diverse images
+const getCinematicImage = (prompt: string) => 
+  `https://image.pollinations.ai/prompt/cinematic%20shot%20of%20${encodeURIComponent(prompt)}%20high%20quality%204k?width=1920&height=1080&nologo=true&seed=${Math.floor(Math.random()*1000)}`;
 
 export const VIDEO_PORTFOLIO: PortfolioItem[] = [
   {
     id: 'v1',
-    title: '2024 SHOWREEL',
-    category: 'Brand Film',
+    title: '2024 年度混剪',
+    category: '品牌形象',
     clientName: 'WXZ STUDIO',
-    location: 'GLOBAL',
+    location: '全球',
     year: '2024',
     filterTags: ['brand'],
-    mediaSrc: 'https://picsum.photos/seed/video1/1920/1080', 
+    mediaSrc: 'https://image.pollinations.ai/prompt/cinematic%20showreel%20montage%20diverse%20scenes%20camera%20lens%20flare%20dark%20moody?width=1920&height=1080&nologo=true', 
     type: 'video',
     stats: {
       views: '12.5K',
-      likes: '3.2K',
+      likes: '3,240',
       rating: 5,
-      quote: "A VISUAL MASTERPIECE"
+      quote: "视觉盛宴，震撼人心"
     }
   },
   {
     id: 'v2',
-    title: 'SEOUL FASHION WEEK',
-    category: 'Event Recap',
-    clientName: 'SFW ORGANIZER',
-    location: 'SEOUL',
+    title: '首尔时装周',
+    category: '活动回顾',
+    clientName: 'SFW 主办方',
+    location: '首尔',
     year: '2023',
     filterTags: ['event', 'brand'],
-    mediaSrc: 'https://picsum.photos/seed/video2/1920/1080',
+    mediaSrc: 'https://image.pollinations.ai/prompt/seoul%20fashion%20week%20runway%20models%20futuristic%20clothing%20neon%20lights?width=1920&height=1080&nologo=true',
     type: 'video',
     stats: {
       views: '45.2K',
-      likes: '8.9K',
+      likes: '8,900',
       rating: 5,
-      quote: "CAPTURED THE VIBE PERFECTLY"
+      quote: "完美捕捉现场氛围"
     }
   },
   {
     id: 'v3',
-    title: 'VOGUE GALA DINNER',
-    category: 'Event Highlight',
+    title: 'VOGUE 晚宴',
+    category: '活动集锦',
     clientName: 'VOGUE KOREA',
-    location: 'BUSAN',
+    location: '釜山',
     year: '2023',
     filterTags: ['event'],
-    mediaSrc: 'https://picsum.photos/seed/video3/1920/1080',
+    mediaSrc: 'https://image.pollinations.ai/prompt/elegant%20gala%20dinner%20luxury%20champagne%20glass%20bokeh%20evening%20gown?width=1920&height=1080&nologo=true',
     type: 'video',
     stats: {
       views: '8.1K',
-      likes: '1.5K',
+      likes: '1,520',
       rating: 5,
-      quote: "ELEGANT AND TIMELESS"
+      quote: "优雅而永恒的记录"
     }
   },
   {
     id: 'v4',
-    title: 'DUTY FREE CAMPAIGN',
-    category: 'Commercial',
-    clientName: 'SHINSEGAE',
-    location: 'INCHEON',
+    title: '免税店宣传片',
+    category: '商业广告',
+    clientName: '新世界百货',
+    location: '仁川',
     year: '2024',
     filterTags: ['product', 'brand'],
-    mediaSrc: 'https://picsum.photos/seed/video4/1920/1080',
+    mediaSrc: 'https://image.pollinations.ai/prompt/luxury%20shopping%20mall%20duty%20free%20cosmetics%20perfume%20bright%20clean?width=1920&height=1080&nologo=true',
     type: 'video',
     stats: {
       views: '102K',
-      likes: '15K',
+      likes: '15,000',
       rating: 5,
-      quote: "HIGH CONVERSION VISUALS"
+      quote: "高转化率的视觉呈现"
     }
   },
    {
     id: 'v5',
-    title: 'URBAN EXPLORER',
-    category: 'Documentary',
-    clientName: 'NAT GEO',
-    location: 'TOKYO',
+    title: '城市探索者',
+    category: '纪录片',
+    clientName: '国家地理',
+    location: '东京',
     year: '2023',
     filterTags: ['brand', 'documentary'],
-    mediaSrc: 'https://picsum.photos/seed/video5/1920/1080',
+    mediaSrc: 'https://image.pollinations.ai/prompt/tokyo%20street%20photography%20rain%20neon%20cyberpunk%20vibe%20umbrella?width=1920&height=1080&nologo=true',
     type: 'video',
     stats: {
       views: '33K',
-      likes: '4K',
+      likes: '4,100',
       rating: 5,
-      quote: "RAW AND REAL"
+      quote: "真实而充满力量"
     }
   },
   {
     id: 'v6',
-    title: 'COFFEE CULTURE',
-    category: 'Documentary',
+    title: '咖啡文化',
+    category: '人文纪录',
     clientName: 'BLUE BOTTLE',
-    location: 'KYOTO',
+    location: '京都',
     year: '2023',
     filterTags: ['brand', 'documentary'],
-    mediaSrc: 'https://picsum.photos/seed/video6/1920/1080',
+    mediaSrc: 'https://image.pollinations.ai/prompt/japanese%20coffee%20shop%20barista%20pouring%20coffee%20warm%20light%20wood%20texture?width=1920&height=1080&nologo=true',
     type: 'video',
     stats: {
       views: '19K',
-      likes: '2K',
+      likes: '2,300',
       rating: 5,
-      quote: "AROMATIC VISUALS"
+      quote: "充满香气的视觉体验"
     }
   },
    {
     id: 'v7',
-    title: 'NEON NIGHTS',
-    category: 'Experimental',
-    clientName: 'PERSONAL',
-    location: 'HONG KONG',
+    title: '霓虹之夜',
+    category: '实验短片',
+    clientName: '个人项目',
+    location: '香港',
     year: '2022',
     filterTags: ['brand'],
-    mediaSrc: 'https://picsum.photos/seed/video7/1920/1080',
+    mediaSrc: 'https://image.pollinations.ai/prompt/hong%20kong%20neon%20signs%20reflection%20puddle%20wong%20kar%20wai%20style?width=1920&height=1080&nologo=true',
     type: 'video',
     stats: {
       views: '11K',
-      likes: '2.5K',
+      likes: '2,550',
       rating: 5,
-      quote: "CYBERPUNK AESTHETIC"
+      quote: "赛博朋克美学"
     }
   },
 ];
@@ -191,42 +199,42 @@ export const VIDEO_PORTFOLIO: PortfolioItem[] = [
 export const GRAPHIC_PORTFOLIO: PortfolioItem[] = [
   {
     id: 'g1',
-    title: 'Pure Skin Identity',
-    category: 'Branding',
+    title: 'Pure Skin 品牌识别',
+    category: '品牌设计',
     clientName: 'PURE SKIN',
     year: '2024',
     filterTags: ['branding'],
-    mediaSrc: 'https://picsum.photos/seed/graphic1/1200/1200',
+    mediaSrc: 'https://image.pollinations.ai/prompt/minimalist%20skincare%20brand%20identity%20mockup%20pastel%20colors?width=1200&height=1200&nologo=true',
     type: 'image',
   },
   {
     id: 'g2',
-    title: 'IOPE Launch KV',
-    category: 'Social Media',
+    title: 'IOPE 发布会主视觉',
+    category: '社媒视觉',
     clientName: 'IOPE',
     year: '2024',
     filterTags: ['social'],
-    mediaSrc: 'https://picsum.photos/seed/graphic2/1200/1600',
+    mediaSrc: 'https://image.pollinations.ai/prompt/cosmetic%20product%20launch%20key%20visual%20science%20blue%20future?width=1200&height=1600&nologo=true',
     type: 'image',
   },
   {
     id: 'g3',
-    title: 'Fan Meeting Poster',
-    category: 'Poster Design',
+    title: '粉丝见面会海报',
+    category: '海报设计',
     clientName: 'ENT. AGENCY',
     year: '2023',
     filterTags: ['poster'],
-    mediaSrc: 'https://picsum.photos/seed/graphic3/1200/1600',
+    mediaSrc: 'https://image.pollinations.ai/prompt/kpop%20concert%20poster%20design%20dynamic%20typography%20colorful?width=1200&height=1600&nologo=true',
     type: 'image',
   },
    {
     id: 'g4',
-    title: 'Waterbomb Festival',
-    category: 'Key Visual',
+    title: 'Waterbomb 音乐节',
+    category: '主视觉设计',
     clientName: 'WATERBOMB',
     year: '2023',
     filterTags: ['poster'],
-    mediaSrc: 'https://picsum.photos/seed/graphic4/1200/1600',
+    mediaSrc: 'https://image.pollinations.ai/prompt/music%20festival%20poster%20water%20splash%20summer%20energy?width=1200&height=1600&nologo=true',
     type: 'image',
   },
 ];

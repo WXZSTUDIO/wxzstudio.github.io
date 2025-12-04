@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
-import { X, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { X, BookHeart } from 'lucide-react';
 
 export const Layout = ({ children }: { children?: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,13 +9,12 @@ export const Layout = ({ children }: { children?: React.ReactNode }) => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Custom "scalloped" corner style using radial gradients in CSS mask would be ideal, 
-  // but for stability we will use a clip-path approach or standard radius with a very specific design.
-  // The reference is a "Cream" colored paper look.
-
   return (
     <div className="min-h-screen flex flex-col bg-background font-sans text-primary selection:bg-white/20">
       
+      {/* Top Gradient Mask for Logo and Menu readability */}
+      <div className="fixed top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/90 via-black/50 to-transparent z-[998] pointer-events-none"></div>
+
       {/* Top Bar */}
       <header className="fixed top-0 left-0 right-0 z-[999] py-6 px-6 md:px-12 flex justify-between items-start pointer-events-none">
         {/* Logo */}
@@ -25,7 +24,6 @@ export const Layout = ({ children }: { children?: React.ReactNode }) => {
 
         {/* 
             Ticket Menu Button 
-            Design: White square, scalloped corners (simulated), Hamburger lines
         */}
         <button 
           onClick={toggleMenu}
@@ -116,10 +114,28 @@ export const Layout = ({ children }: { children?: React.ReactNode }) => {
                 <span className="cursor-pointer hover:text-black transition-colors">Privacy</span>
              </div>
 
-             <div className="flex gap-6 mb-8">
-                <a href="#" className="text-black hover:scale-110 transition-transform"><Instagram size={20} /></a>
-                <a href="#" className="text-black hover:scale-110 transition-transform"><Twitter size={20} /></a>
-                <a href="#" className="text-black hover:scale-110 transition-transform"><Linkedin size={20} /></a>
+             <div className="flex gap-4 mb-8 text-xs font-bold uppercase tracking-widest items-center">
+                {/* WeChat Icon */}
+                <button 
+                  className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 hover:bg-[#07C160] hover:text-white transition-all duration-300"
+                  onClick={() => navigator.clipboard.writeText('icf304').then(() => alert('WeChat ID: icf304 Copied!'))}
+                  title="WeChat: icf304"
+                >
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                       <path d="M8 12.6c0-3.4 3.6-6.1 8-6.1 4.4 0 8 2.7 8 6.1 0 1.9-1.1 3.6-2.9 4.7.1.6.4 1.3.8 1.9-1.2.2-3-.5-3.8-1.4-1 .5-2 .8-2.1.8-4.4 0-8-2.7-8-6zm-10.5 0c0-3.8 3.3-7 7.5-7 4.1 0 7.5 3.2 7.5 7 0 3.8-3.3 7-7.5 7-.9 0-1.7-.2-2.5-.5-.8.8-2.3 1.4-3.4 1.2.4-.6.6-1.2.5-1.8-1.6-1.1-2.6-2.6-2.6-4.4z"/>
+                    </svg>
+                </button>
+                
+                {/* RED (XiaoHongShu) Icon - Represented by BookHeart (Little Red Book) */}
+                <a 
+                   href="https://xhslink.com/m/4FrLqFlYhZj" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 hover:bg-[#FF2442] hover:text-white transition-all duration-300"
+                   title="XiaoHongShu"
+                >
+                    <BookHeart className="w-5 h-5" />
+                </a>
              </div>
 
              <div className="text-[9px] text-gray-400 uppercase tracking-widest">
