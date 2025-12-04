@@ -92,7 +92,7 @@
     
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 WXZ STUDIO. All Rights Reserved. </p>
+            <p>&copy; 2026 WXZ STUDIO. All Rights Reserved. </p>
         </div>
     </footer>
 
@@ -136,47 +136,34 @@
             const playerContainer = document.getElementById('videoPlayerContainer');
 
             // --- 关键新功能：随机视频帧生成封面 ---
-            /**
-             * 异步函数：加载视频并生成一个随机帧的 Data URL 作为封面。
-             * @param {HTMLVideoElement} videoElement - 视频DOM元素。
-             * @returns {Promise<string|null>} - 返回 Data URL 字符串或 null。
-             */
             function generateRandomPoster(videoElement) {
                 return new Promise((resolve) => {
                     const videoSrc = videoElement.querySelector('source').src;
                     const tempVideo = document.createElement('video');
                     tempVideo.src = videoSrc;
-                    tempVideo.preload = 'metadata'; // 仅加载元数据
-                    tempVideo.muted = true; // 确保加载
+                    tempVideo.preload = 'metadata'; 
+                    tempVideo.muted = true; 
 
                     tempVideo.onloadedmetadata = function() {
-                        // 1. 获取视频总时长
                         const duration = tempVideo.duration;
-                        
-                        // 2. 随机选择一个时间点（避开开头和结尾的 1 秒，以防黑屏）
                         const randomTime = Math.random() * (duration - 2) + 1;
                         tempVideo.currentTime = randomTime;
 
-                        // 3. 监听 seeked 事件（确保视频播放头已到达随机时间点）
                         tempVideo.onseeked = function() {
                             const canvas = document.createElement('canvas');
                             canvas.width = tempVideo.videoWidth;
                             canvas.height = tempVideo.videoHeight;
                             const ctx = canvas.getContext('2d');
                             
-                            // 绘制当前帧到 Canvas
                             ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
                             
-                            // 导出为 Data URL
                             const dataURL = canvas.toDataURL('image/jpeg', 0.8);
                             resolve(dataURL);
                             
-                            // 清理临时元素
                             tempVideo.remove();
                             canvas.remove();
                         };
 
-                        // 处理加载失败或 seek 失败的情况
                         tempVideo.onerror = () => {
                             console.error('视频加载失败或无法 seek:', videoSrc);
                             resolve(null);
@@ -184,11 +171,7 @@
                         };
                     };
                     
-                    // 如果元数据加载失败，也需要处理
                     tempVideo.onerror = () => resolve(null);
-                    
-                    // 确保 tempVideo 被加载到 DOM 中才能进行 canvas 操作，但为了性能，我们先尝试不加入
-                    // 如果出现 cross-origin 错误，则需要确保视频和页面在同一源。
                 });
             }
 
@@ -196,19 +179,18 @@
             document.querySelectorAll('.portfolio-grid .work-item').forEach(item => {
                 const videoEl = item.querySelector('video');
                 
-                // 仅当视频元素存在且没有 poster 时执行
                 if (videoEl && !videoEl.getAttribute('poster')) {
                     generateRandomPoster(videoEl).then(posterURL => {
                         if (posterURL) {
                             videoEl.setAttribute('poster', posterURL);
                         } else {
-                            // 如果生成失败，使用一个默认的占位符（例如：纯色背景）
+                            // 失败使用默认占位符
                             videoEl.setAttribute('poster', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
                         }
                     });
                 }
 
-                // 鼠标悬停事件（保持不变）
+                // 鼠标悬停事件
                 const container = item.querySelector('.work-media');
                 if (container) {
                     container.addEventListener('mouseenter', () => {
@@ -225,26 +207,24 @@
             });
             // --- 随机封面功能结束 ---
 
-            // 1. 播放器逻辑 (保持不变)
+            // 1. 播放器逻辑 
             workItems.forEach(item => {
                 item.addEventListener('click', function(e) {
                     e.preventDefault();
                     const videoSrc = this.getAttribute('data-video-src');
                     if (!videoSrc) return;
 
-                    // 创建新的 video 元素
                     const videoElement = document.createElement('video');
                     videoElement.src = videoSrc;
                     videoElement.controls = true; 
                     videoElement.autoplay = true; 
-                    videoElement.muted = false; // 弹窗内允许声音
+                    videoElement.muted = false; 
                     videoElement.playsInline = true; 
                     videoElement.classList.add('modal-video-player');
 
                     playerContainer.innerHTML = '';
                     playerContainer.appendChild(videoElement);
 
-                    // 手机端全屏播放逻辑 
                     if (window.innerWidth <= 1024) { 
                         videoElement.addEventListener('loadedmetadata', function() {
                             if (videoElement.requestFullscreen) {
@@ -255,12 +235,11 @@
                         }, { once: true });
                     }
 
-                    // 显示弹窗
                     modal.classList.add('show');
                 });
             });
 
-            // 关闭弹窗 (保持不变)
+            // 关闭弹窗 
             function closeModal() {
                 modal.classList.remove('show');
                 playerContainer.innerHTML = ''; 
@@ -279,7 +258,7 @@
             });
 
 
-            // 2. 筛选功能 (保持不变)
+            // 2. 筛选功能 
             document.querySelectorAll('.tags-filter .work-tag').forEach(tag => {
                 tag.addEventListener('click', function() {
                     document.querySelectorAll('.tags-filter .work-tag').forEach(t => t.classList.remove('active'));
