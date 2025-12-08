@@ -39,7 +39,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           setServicesInView(true);
         }
       },
-      { threshold: 0.2 } // Trigger when 20% visible
+      { threshold: 0.1 } 
     );
 
     if (servicesRef.current) {
@@ -188,7 +188,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     <div className="animate-fade-in">
       {/* Hero Section */}
       <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden border-b border-border">
-        {/* Main Hero Video - Seoul Fashion Week / Showreel Style */}
+        {/* Main Hero Video - Using local path in public/videos folder */}
         <video 
           ref={videoRef}
           autoPlay 
@@ -197,28 +197,24 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           playsInline 
           className="absolute inset-0 w-full h-full object-cover"
         >
-            {/* 
-              注意：请将您提供的视频文件重命名为 'hero-showreel.mp4' 并放入项目的 public 文件夹中。
-              然后取消下面一行的注释，并删除在线视频源。
-            */}
-            {/* <source src="/hero-showreel.mp4" type="video/mp4" /> */}
+            {/* Fallback to remote if local doesn't exist yet, but prioritizing local structure as requested */}
+            <source src="/videos/hero-showreel.mp4" type="video/mp4" />
             <source src="https://videos.pexels.com/video-files/5665444/5665444-hd_1920_1080_24fps.mp4" type="video/mp4" />
         </video>
         
-        {/* Subtle overlay for text readability without killing the video vibe */}
         <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent flex items-end pb-12 md:pb-24 px-6 md:px-12 pointer-events-none">
            <div className="max-w-3xl pointer-events-auto">
-              <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-4 md:mb-6">
+              <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-4 md:mb-6 leading-[1.1]">
                 Capturing <br/> The Moment.
               </h1>
-              <p className="text-white/90 text-lg md:text-xl max-w-xl mb-8 font-light drop-shadow-md">
+              <p className="text-white/90 text-lg md:text-xl max-w-xl mb-8 font-light drop-shadow-md font-sans">
                 WXZ STUDIO 专注于高端视觉影像制作，为品牌讲述动人故事。
               </p>
               <button 
                 onClick={() => onNavigate('contact')}
-                className="group flex items-center space-x-2 bg-accent text-black px-6 py-3 rounded-full font-medium hover:bg-white transition-colors duration-300"
+                className="group flex items-center space-x-2 bg-accent text-black px-6 py-3 rounded-full font-bold hover:bg-white transition-colors duration-300"
               >
                 <span>开始合作</span>
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -227,11 +223,11 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Services Section with Visual Animation Effects */}
-      <section ref={servicesRef} className="relative bg-black text-white overflow-hidden py-16 md:py-24 border-b border-border">
+      {/* Services Section - Studio Herrstrom Style Redesign */}
+      <section ref={servicesRef} className="relative bg-black text-white overflow-hidden py-0 border-b border-border">
         
-        {/* Animated Grid Lines Background - Desktop Only */}
-        <div className="absolute inset-0 pointer-events-none hidden md:flex items-center justify-center z-20">
+        {/* Animated Crosshair Lines Background - Absolute Positioned */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-20">
             {/* Vertical Center Line */}
             <div 
                 className="w-px bg-white/20 transition-all duration-[1.5s] ease-in-out"
@@ -244,62 +240,76 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="mb-12 md:mb-20 flex flex-col md:flex-row items-baseline justify-between opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tighter">Our Services</h2>
-            <p className="text-secondary mt-2 md:mt-0 md:text-lg">Visual solutions for modern brands.</p>
-          </div>
+        {/* Header - Positioned absolutely to top left in some designs, but here keeping flow */}
+        <div className="absolute top-6 left-6 md:top-12 md:left-12 z-20 pointer-events-none">
+             <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-white/50">Our Services</h2>
+        </div>
 
-          {/* 2x2 Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2">
+        {/* 2x2 Full Width Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full h-auto md:h-screen">
             {services.map((service, idx) => {
-              const Icon = service.icon;
+              // Calculate borders for grid items to match the crosshair effect
+              // Top-Left: border-r, border-b (mobile)
+              // Top-Right: border-b (mobile)
+              // Bottom-Left: border-r (desktop), border-t?
+              // Actually, rely on the absolute lines for the 'cross', just handle outer spacing if needed.
+              // To ensure text doesn't overlap lines, add padding.
+              
               return (
                 <div 
                   key={idx} 
-                  className="group relative h-[300px] md:h-[400px] border-b border-white/10 md:border-b-0 overflow-hidden"
+                  className="group relative h-[50vh] md:h-[50vh] overflow-hidden flex flex-col justify-center items-center text-center p-8"
                 >
                     {/* Hover Background Image */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out z-0">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out z-0">
                         <img 
                             src={service.image} 
                             alt={service.title} 
-                            className="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-[2s] ease-out filter brightness-75"
+                            className="w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-[1.5s] ease-out filter brightness-[0.6]"
                         />
-                        <div className="absolute inset-0 bg-black/40" /> {/* Dark overlay for text readability */}
                     </div>
+
+                    {/* Default Background (Black) */}
+                    <div className="absolute inset-0 bg-black z-[-1]" />
 
                     {/* Content Container */}
-                    <div className="relative z-10 h-full p-8 md:p-12 flex flex-col justify-between transition-colors duration-300">
-                        <div className="flex justify-between items-start">
-                             <div className="p-3 rounded-full bg-white/5 border border-white/10 group-hover:bg-accent group-hover:text-black group-hover:border-accent transition-all duration-300">
-                                <Icon size={24} strokeWidth={1.5} />
-                             </div>
-                             <ArrowUpRight className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-white" />
-                        </div>
+                    <div className="relative z-10 flex flex-col items-center justify-center transition-all duration-300">
+                        {/* English Title - Large Display */}
+                        <h3 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tighter group-hover:text-white transition-colors duration-300 text-white">
+                            {service.enTitle}
+                        </h3>
+                        
+                        {/* Chinese Title - Subtitle Style */}
+                        <span className="text-lg md:text-xl font-light text-secondary mb-6 block group-hover:text-accent transition-colors duration-300">
+                            {service.title}
+                        </span>
 
-                        <div>
-                            <span className="text-xs font-bold tracking-widest uppercase text-secondary mb-2 block group-hover:text-white/80 transition-colors">{service.enTitle}</span>
-                            <h3 className="text-2xl md:text-4xl font-display font-bold mb-4 group-hover:translate-x-2 transition-transform duration-300">{service.title}</h3>
-                            <p className="text-sm md:text-base text-secondary max-w-sm leading-relaxed opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                                {service.description}
-                            </p>
+                        {/* Description - Fades in up on hover */}
+                        <p className="text-sm md:text-base text-white/80 max-w-sm leading-relaxed opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 hidden md:block">
+                            {service.description}
+                        </p>
+                        
+                        {/* Mobile: Description always visible but dimmer */}
+                        <p className="text-xs text-white/60 max-w-xs md:hidden mt-2">
+                            {service.description}
+                        </p>
+
+                        <div className="mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-75 group-hover:scale-100">
+                            <div className="p-3 rounded-full border border-white/30 text-white hover:bg-white hover:text-black transition-colors cursor-pointer">
+                                <ArrowUpRight size={24} />
+                            </div>
                         </div>
                     </div>
-
-                    {/* Mobile Divider lines (since abstract lines are desktop only) */}
-                    <div className="md:hidden absolute bottom-0 left-6 right-6 h-px bg-white/10" />
                 </div>
               );
             })}
-          </div>
         </div>
       </section>
 
       {/* Clients Wall */}
       <section className="border-b border-border py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <h2 className="text-2xl font-semibold tracking-tight mb-8 md:mb-12">合作客户</h2>
+          <h2 className="text-2xl font-bold tracking-tight mb-8 md:mb-12 uppercase">Selected Clients</h2>
           
           <div className="grid grid-cols-3 md:grid-cols-5 gap-px bg-border border border-border">
             {visibleClients.map((client) => (

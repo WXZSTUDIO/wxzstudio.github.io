@@ -65,12 +65,13 @@ const VideoCard: React.FC<{
       <div className="absolute inset-0 w-full h-full">
         <video
           ref={videoRef}
-          src={item.src}
           muted
           loop
           playsInline
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-        />
+        >
+            <source src={item.src} type="video/mp4" />
+        </video>
       </div>
 
       {/* Vignette & Overlay */}
@@ -84,7 +85,7 @@ const VideoCard: React.FC<{
         </div>
       </div>
 
-      {/* Content Layer - Dark Glassmorphism Effect for text area implied by background gradient and blur if needed */}
+      {/* Content Layer */}
       <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 z-20 flex flex-col justify-end items-start transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
         
         {item.featured && (
@@ -105,7 +106,7 @@ const VideoCard: React.FC<{
         </div>
       </div>
 
-      {/* Hover Lift Effect handled by scale on parent or inner image, using simple border highlight here */}
+      {/* Hover Lift Effect */}
       <div className="absolute inset-0 border border-white/0 group-hover:border-white/10 transition-colors duration-300 pointer-events-none rounded-sm" />
     </div>
   );
@@ -115,6 +116,7 @@ const VideoPortfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
 
+  // UPDATED VIDEO PATHS to use local folder /videos/
   const portfolioItems: PortfolioItem[] = [
     {
       id: '1',
@@ -122,7 +124,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Brand Film',
       description: 'Annual highlight reel featuring our best commercial work.',
       tags: ['brand', 'highlight'],
-      src: 'https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4',
+      src: '/videos/portfolio-2024-showreel.mp4',
       type: 'video',
       featured: true, // Hero
       span: '2x2'
@@ -133,7 +135,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Event',
       description: 'Runway coverage and backstage moments.',
       tags: ['event', 'brand'],
-      src: 'https://videos.pexels.com/video-files/5665444/5665444-hd_1920_1080_24fps.mp4',
+      src: '/videos/portfolio-seoul-fashion.mp4',
       type: 'video',
       span: '2x1' // Wide
     },
@@ -143,7 +145,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Event',
       description: 'Luxury dinner event documentation.',
       tags: ['event'],
-      src: 'https://videos.pexels.com/video-files/3191572/3191572-hd_1920_1080_25fps.mp4',
+      src: '/videos/portfolio-gala-night.mp4',
       type: 'video',
       span: '1x1'
     },
@@ -153,7 +155,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Product',
       description: 'Duty free shop promotional campaign.',
       tags: ['product', 'brand'],
-      src: 'https://videos.pexels.com/video-files/6981418/6981418-hd_1920_1080_30fps.mp4',
+      src: '/videos/portfolio-shinsegae.mp4',
       type: 'video',
       span: '1x1'
     },
@@ -163,7 +165,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Creative',
       description: 'Experimental visual art project.',
       tags: ['creative'],
-      src: 'https://videos.pexels.com/video-files/4761426/4761426-hd_1920_1080_30fps.mp4',
+      src: '/videos/portfolio-urban-rhythm.mp4',
       type: 'video',
       span: '1x2' // Tall
     },
@@ -173,7 +175,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Commercial',
       description: 'Product reveal for new tech gadget.',
       tags: ['product'],
-      src: 'https://videos.pexels.com/video-files/853870/853870-hd_1920_1080_25fps.mp4',
+      src: '/videos/portfolio-tech-launch.mp4',
       type: 'video',
       span: '1x1'
     }
