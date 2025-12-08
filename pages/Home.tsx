@@ -1,53 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ServiceItem, PageType } from '../types';
-import { ArrowRight, ChevronDown, ChevronUp, Camera, ShoppingBag, Clapperboard, Palette, LucideIcon, Plus, Minus, Copy, Check, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, Camera, Plus, Minus, Copy, Check, ArrowUpRight, Star } from 'lucide-react';
 
 interface HomeProps {
   onNavigate: (page: PageType) => void;
 }
 
 interface ServiceItemExtended extends ServiceItem {
-  icon: LucideIcon;
   enTitle: string;
   image: string;
 }
 
+interface HeroSlide {
+  id: string;
+  title: React.ReactNode; // Allow JSX for line breaks
+  subtitle: string;
+  category: string;
+  director: string;
+  year: string;
+  videoSrc: string;
+  review?: {
+    stars: number;
+    quote: string;
+    source: string;
+  };
+}
+
 const Home: React.FC<HomeProps> = ({ onNavigate }) => {
-  const [showAllClients, setShowAllClients] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
-  const [servicesInView, setServicesInView] = useState(false);
   
   // Footer Accordion State
   const [openSection, setOpenSection] = useState<string | null>('terms');
   const [copied, setCopied] = useState(false);
   const wechatID = 'icf304';
-
-  // Ensure video autoplay and loop
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 1.0;
-      videoRef.current.play().catch(e => console.error("Autoplay failed", e));
-    }
-  }, []);
-
-  // Intersection Observer for Services Animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setServicesInView(true);
-        }
-      },
-      { threshold: 0.1 } 
-    );
-
-    if (servicesRef.current) {
-      observer.observe(servicesRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const toggleSection = (id: string) => {
     setOpenSection(openSection === id ? null : id);
@@ -63,42 +48,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     });
   };
 
-  const services: ServiceItemExtended[] = [
-    { 
-      title: '商业活动', 
-      enTitle: 'Commercial Events',
-      description: '会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作。',
-      icon: Camera,
-      image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop'
-    },
-    { 
-      title: '产品拍摄', 
-      enTitle: 'Product Photography',
-      description: '为电商及广告客户提供高质量的产品视频和摄影，突出产品特性与美感。',
-      icon: ShoppingBag,
-      image: 'https://images.unsplash.com/photo-1550614000-4b9519e02d48?q=80&w=2070&auto=format&fit=crop'
-    },
-    { 
-      title: '品牌宣传', 
-      enTitle: 'Brand Campaign',
-      description: '制作企业宣传片、品牌故事片和形象 TVC，提升品牌知名度与市场影响力。',
-      icon: Clapperboard,
-      image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2070&auto=format&fit=crop'
-    },
-    { 
-      title: '视觉设计', 
-      enTitle: 'Visual Design',
-      description: '提供品牌 VI、海报、社交媒体图文等全方位的平面设计与视觉传达服务。',
-      icon: Palette,
-      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop'
-    },
-  ];
-
-  // Placeholder client list
-  const clients = Array.from({ length: 18 }, (_, i) => ({ id: i + 1, name: `Client ${i + 1}` }));
-  const visibleClients = showAllClients ? clients : clients.slice(0, 9);
-
-  // Footer Accordion Items
   const footerItems = [
     {
       id: 'terms',
@@ -184,150 +133,245 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     }
   ];
 
+  // 1. Hero Slides Data (Filtered as requested)
+  const heroSlides: HeroSlide[] = [
+    {
+      id: '01',
+      title: <>SEOUL <br/> FASHION WEEK</>,
+      subtitle: '捕捉时尚前沿的每一个精彩瞬间与T台光影。',
+      category: 'Event Documentation',
+      director: 'Lead Creative',
+      year: '2025',
+      videoSrc: 'https://wxzstudio.github.io/videos/portfolio-seoul-fashion.mp4',
+      review: {
+        stars: 5,
+        quote: "VIBRANT AND ELECTRIFYING",
+        source: "FASHION DAILY"
+      }
+    }
+  ];
+
+  // Services Data - Images are no longer used in render but kept in data structure
+  const services: ServiceItemExtended[] = [
+    { 
+      title: '商业活动', 
+      enTitle: 'Events',
+      description: '会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作',
+      image: '', 
+    },
+    { 
+      title: '产品拍摄', 
+      enTitle: 'Product',
+      description: '为电商及广告客户提供高质量的产品视频和摄影，突出产品特性',
+      image: '', 
+    },
+    { 
+      title: '品牌宣传', 
+      enTitle: 'Campaign',
+      description: '制作企业宣传片、品牌故事片和形象 TVC，提升品牌知名度',
+      image: '', 
+    },
+    { 
+      title: '视觉设计', 
+      enTitle: 'Design',
+      description: '提供品牌 VI、海报、社交媒体图文等全方位的平面设计服务',
+      image: '', 
+    },
+  ];
+
+  // Client List
+  const clients = [
+    { id: 1, name: 'Aekyung', logo: 'https://file.302.ai/gpt/imgs/20250221/339a1f107f924df5b128540c797435f3.png' },
+    { id: 2, name: 'Amore Pacific', logo: 'https://file.302.ai/gpt/imgs/20250221/c900662d53bb4449ad626786c55cb858.png' },
+    { id: 3, name: 'COSRX', logo: 'https://file.302.ai/gpt/imgs/20250221/87814b60058e4d359b34337d165f1a58.png' },
+    { id: 4, name: 'HERA', logo: 'https://file.302.ai/gpt/imgs/20250221/93d0773b185b4b1a8d167f40d6c13867.png' },
+    { id: 5, name: 'high & gogo', logo: 'https://file.302.ai/gpt/imgs/20250221/5895782782974411ac9e249a0d8442be.png' },
+    { id: 6, name: 'i-dle', logo: 'https://file.302.ai/gpt/imgs/20250221/b92e742e47e84245973952d7c50a0f67.png' },
+    { id: 7, name: 'IOPE', logo: 'https://file.302.ai/gpt/imgs/20250221/41e4695376fa4286bc7d661413158c97.png' },
+    { id: 8, name: 'Leaders', logo: 'https://file.302.ai/gpt/imgs/20250221/2e38202d645e41849a620d473489e242.png' },
+    { id: 9, name: 'Vital Beautie', logo: 'https://file.302.ai/gpt/imgs/20250221/32d84d7a8d5f4797be238713f0a40232.png' },
+    { id: 10, name: 'Shinsegae', logo: 'https://file.302.ai/gpt/imgs/20250221/8991262d01194689b8849646b1425e4c.png' },
+    { id: 11, name: 'Q.one', logo: 'https://file.302.ai/gpt/imgs/20250221/c7689d04523d47d48039c32148419688.png' },
+    { id: 12, name: 'ZB1', logo: 'https://file.302.ai/gpt/imgs/20250221/72aa392817294248888b5064c51480f7.png' },
+  ];
+
   return (
     <div className="animate-fade-in">
-      {/* Hero Section */}
-      <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden border-b border-border">
-        {/* Main Hero Video - Using hosted path */}
-        <video 
-          ref={videoRef}
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-            <source src="https://wxzstudio.github.io/videos/hero-showreel.mp4" type="video/mp4" />
-        </video>
-        
-        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-        
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent flex items-end pb-12 md:pb-24 px-6 md:px-12 pointer-events-none">
-           <div className="max-w-3xl pointer-events-auto">
-              <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-4 md:mb-6 leading-[1.1]">
-                Capturing <br/> The Moment.
-              </h1>
-              <p className="text-white/90 text-lg md:text-xl max-w-xl mb-8 font-light drop-shadow-md font-sans">
-                WXZ STUDIO 专注于高端视觉影像制作，为品牌讲述动人故事。
-              </p>
-              <button 
-                onClick={() => onNavigate('contact')}
-                className="group flex items-center space-x-2 bg-accent text-black px-6 py-3 rounded-full font-bold hover:bg-white transition-colors duration-300"
-              >
-                <span>开始合作</span>
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-           </div>
-        </div>
-      </section>
+      
+      {/* 
+        FILM STRIP HERO SECTION 
+      */}
+      <div className="relative bg-background">
+        {heroSlides.map((slide, index) => (
+          <section 
+            key={slide.id} 
+            className="sticky top-0 h-screen w-full flex items-center justify-center p-4 md:p-6 overflow-hidden bg-background"
+            style={{ zIndex: index + 1 }}
+          >
+            {/* The "Film Frame" - Rounded Container */}
+            <div className="relative w-full h-full md:h-[95%] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl bg-black group">
+              
+              {/* Video Background */}
+              <div className="absolute inset-0">
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-700"
+                >
+                  <source src={slide.videoSrc} type="video/mp4" />
+                </video>
+                {/* Cinematic Grain/Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/40 pointer-events-none" />
+              </div>
 
-      {/* Services Section - Studio Herrstrom Style Redesign */}
-      <section ref={servicesRef} className="relative bg-black text-white overflow-hidden py-0 border-b border-border">
-        
-        {/* Animated Crosshair Lines Background - Absolute Positioned */}
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-20">
-            {/* Vertical Center Line */}
-            <div 
-                className="w-px bg-white/20 transition-all duration-[1.5s] ease-in-out"
-                style={{ height: servicesInView ? '100%' : '0%' }}
-            />
-            {/* Horizontal Center Line */}
-            <div 
-                className="absolute h-px bg-white/20 transition-all duration-[1.5s] ease-in-out"
-                style={{ width: servicesInView ? '100%' : '0%' }}
-            />
-        </div>
+              {/* UI Overlay - Top Row */}
+              <div className="absolute top-0 left-0 right-0 p-6 md:p-10 flex justify-between items-start pointer-events-none z-10">
+                {/* Year/ID */}
+                <div className="flex flex-col">
+                  <span className="text-xs font-bold tracking-[0.2em] text-accent mb-1">{slide.year}</span>
+                  <span className="text-[10px] text-white/50 uppercase tracking-widest">Project {slide.id}</span>
+                </div>
 
-        {/* Header - Positioned absolutely to top left in some designs, but here keeping flow */}
-        <div className="absolute top-6 left-6 md:top-12 md:left-12 z-20 pointer-events-none">
-             <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-white/50">Our Services</h2>
-        </div>
+                {/* Review / Award */}
+                {slide.review && (
+                  <div className="text-right hidden md:block">
+                     <div className="flex space-x-1 justify-end mb-2 text-accent">
+                        {[...Array(slide.review.stars)].map((_, i) => (
+                          <Star key={i} size={12} fill="currentColor" />
+                        ))}
+                     </div>
+                     <p className="text-lg font-display font-bold leading-tight max-w-[200px] text-white">
+                       "{slide.review.quote}"
+                     </p>
+                     <p className="text-[10px] text-white/50 uppercase mt-1 tracking-wider">
+                       {slide.review.source}
+                     </p>
+                  </div>
+                )}
+              </div>
 
-        {/* 2x2 Full Width Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full h-auto md:h-screen">
-            {services.map((service, idx) => {
-              return (
+              {/* UI Overlay - Bottom Area */}
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 z-20">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                  
+                  {/* Left: Title & Info Grid */}
+                  <div className="max-w-4xl w-full">
+                     {/* Horizontal Lines for "Siena" look */}
+                     <div className="w-12 h-[1px] bg-accent mb-6" />
+                     
+                     <h2 className="text-5xl md:text-8xl font-bold tracking-tighter text-white mb-8 leading-[0.9] uppercase font-display">
+                       {slide.title}
+                     </h2>
+
+                     <div className="grid grid-cols-2 md:grid-cols-[auto_1fr] gap-x-8 gap-y-2 text-xs md:text-sm border-t border-white/20 pt-4 max-w-lg">
+                        <div className="text-white/40 uppercase tracking-widest py-1">Director</div>
+                        <div className="text-white font-medium py-1 uppercase">{slide.director}</div>
+                        
+                        <div className="text-white/40 uppercase tracking-widest border-t border-white/10 md:border-0 py-1">Category</div>
+                        <div className="text-white font-medium border-t border-white/10 md:border-0 py-1 uppercase">{slide.category}</div>
+
+                        <div className="col-span-2 mt-4 text-white/70 font-light leading-relaxed">
+                          {slide.subtitle}
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Right: Action Button */}
+                  <div className="flex-shrink-0">
+                    <button 
+                      onClick={() => onNavigate('contact')}
+                      className="group/btn relative overflow-hidden rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-8 py-4 transition-all hover:bg-white hover:text-black"
+                    >
+                      <span className="flex items-center space-x-2 text-sm font-bold uppercase tracking-wider">
+                        <span>Explore</span>
+                        <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
+                      </span>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </section>
+        ))}
+      </div>
+
+      {/* Services Section - Redesigned: No Image, Vertical Dividers, Reduced Height */}
+      <section ref={servicesRef} className="bg-black border-b border-white/10 relative z-50">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
+            <h2 className="text-sm font-bold tracking-[0.2em] text-white/40 uppercase mb-12">Services</h2>
+            
+            {/* Grid container with top border and vertical dividers via item borders */}
+            <div className="grid grid-cols-1 md:grid-cols-4 border-t border-white/10">
+              {services.map((service, idx) => (
                 <div 
                   key={idx} 
-                  className="group relative h-[50vh] md:h-[50vh] overflow-hidden flex flex-col justify-center items-center text-center p-8"
+                  className="group relative h-[260px] flex flex-col justify-between p-8 border-b md:border-b-0 border-white/10 md:border-r last:border-r-0 hover:bg-white/5 transition-colors duration-500"
                 >
-                    {/* Hover Background Image */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out z-0">
-                        <img 
-                            src={service.image} 
-                            alt={service.title} 
-                            className="w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-[1.5s] ease-out filter brightness-[0.6]"
-                        />
-                    </div>
-
-                    {/* Default Background (Black) */}
-                    <div className="absolute inset-0 bg-black z-[-1]" />
-
-                    {/* Content Container */}
-                    <div className="relative z-10 flex flex-col items-center justify-center transition-all duration-300">
-                        {/* English Title - Large Display */}
-                        <h3 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tighter group-hover:text-white transition-colors duration-300 text-white">
-                            {service.enTitle}
+                    {/* Top Content */}
+                    <div>
+                        <h3 className="text-xl font-bold text-white mb-4 uppercase tracking-wide group-hover:text-accent transition-colors duration-300">
+                        {service.title}
                         </h3>
-                        
-                        {/* Chinese Title - Subtitle Style */}
-                        <span className="text-lg md:text-xl font-light text-secondary mb-6 block group-hover:text-accent transition-colors duration-300">
-                            {service.title}
+                        <p className="text-sm text-neutral-400 font-light leading-relaxed max-w-xs">
+                        {service.description}
+                        </p>
+                    </div>
+                    
+                    {/* Bottom Content / Decoration */}
+                    <div>
+                        <span className="text-[10px] font-bold tracking-widest text-neutral-600 group-hover:text-white uppercase block border-t border-white/5 group-hover:border-accent/50 pt-4 w-12 transition-all duration-300">
+                        {service.enTitle}
                         </span>
-
-                        {/* Description - Fades in up on hover */}
-                        <p className="text-sm md:text-base text-white/80 max-w-sm leading-relaxed opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 hidden md:block">
-                            {service.description}
-                        </p>
-                        
-                        {/* Mobile: Description always visible but dimmer */}
-                        <p className="text-xs text-white/60 max-w-xs md:hidden mt-2">
-                            {service.description}
-                        </p>
-
-                        <div className="mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-75 group-hover:scale-100">
-                            <div className="p-3 rounded-full border border-white/30 text-white hover:bg-white hover:text-black transition-colors cursor-pointer">
-                                <ArrowUpRight size={24} />
-                            </div>
-                        </div>
                     </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
         </div>
       </section>
 
-      {/* Clients Wall */}
-      <section className="border-b border-border py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <h2 className="text-2xl font-bold tracking-tight mb-8 md:mb-12 uppercase">Selected Clients</h2>
-          
-          <div className="grid grid-cols-3 md:grid-cols-5 gap-px bg-border border border-border">
-            {visibleClients.map((client) => (
-              <div key={client.id} className="bg-background aspect-square flex items-center justify-center p-4 group">
-                <div className="w-full h-full flex flex-col items-center justify-center space-y-2 opacity-50 group-hover:opacity-100 transition-opacity">
-                    <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center group-hover:border-accent transition-colors">
-                        <span className="text-xs md:text-sm font-bold text-neutral-600 group-hover:text-accent transition-colors">C{client.id}</span>
-                    </div>
-                </div>
+      {/* 
+        Clients Wall - Updated: Dark Theme + Infinite Marquee 
+      */}
+      <section className="bg-black text-white py-16 md:py-24 relative z-50 border-b border-white/10 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8 md:mb-12">
+          <h2 className="text-2xl font-bold tracking-tight uppercase">Selected Clients</h2>
+        </div>
+        
+        {/* Infinite Scrolling Container */}
+        <div className="relative w-full flex overflow-hidden">
+          {/* First set of logos */}
+          <div className="flex animate-scroll whitespace-nowrap">
+            {clients.map((client) => (
+              <div key={`set1-${client.id}`} className="w-[200px] h-[100px] md:w-[250px] md:h-[120px] flex-shrink-0 flex items-center justify-center px-8 border-r border-white/5 grayscale brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300">
+                 <img 
+                    src={client.logo} 
+                    alt={client.name} 
+                    className="max-w-full max-h-full object-contain"
+                 />
               </div>
             ))}
           </div>
-
-          <div className="md:hidden mt-8 text-center">
-            <button 
-              onClick={() => setShowAllClients(!showAllClients)}
-              className="inline-flex items-center space-x-2 text-sm text-secondary border border-border px-6 py-2 rounded-full hover:bg-accent hover:text-black hover:border-accent transition-all duration-300"
-            >
-              <span>{showAllClients ? '收起' : '展示全部'}</span>
-              {showAllClients ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-            </button>
+          {/* Duplicate set for seamless looping */}
+          <div className="flex animate-scroll whitespace-nowrap" aria-hidden="true">
+            {clients.map((client) => (
+               <div key={`set2-${client.id}`} className="w-[200px] h-[100px] md:w-[250px] md:h-[120px] flex-shrink-0 flex items-center justify-center px-8 border-r border-white/5 grayscale brightness-0 invert opacity-50 hover:opacity-100 transition-opacity duration-300">
+                  <img 
+                     src={client.logo} 
+                     alt={client.name} 
+                     className="max-w-full max-h-full object-contain"
+                  />
+               </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* New Split Footer Section (Replacing Notice Section) */}
-      <section className="flex flex-col md:flex-row bg-black border-t border-border">
+      {/* Footer Section */}
+      <section className="flex flex-col md:flex-row bg-black border-t border-border relative z-50">
         {/* Left Column: Camera Image */}
         <div className="w-full md:w-1/2 relative min-h-[400px] md:min-h-[600px] overflow-hidden border-b md:border-b-0 md:border-r border-border">
            <div className="absolute inset-0 bg-black/20 pointer-events-none z-10" />
