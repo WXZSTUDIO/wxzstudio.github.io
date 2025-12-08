@@ -133,7 +133,7 @@ const VideoPortfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
 
-  // UPDATED VIDEO PATHS: "2024 SHOWREEL" removed from portfolio as requested.
+  // UPDATED VIDEO PATHS & ITEMS
   const portfolioItems: PortfolioItem[] = [
     {
       id: '2',
@@ -151,7 +151,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Event',
       description: 'Luxury dinner event documentation.',
       tags: ['event'],
-      src: 'https://youtu.be/YV0Q947sb8k',
+      src: 'https://wxzstudio.github.io/videos/portfolio-night.mp4',
       type: 'video',
       span: '1x1'
     },
@@ -167,21 +167,21 @@ const VideoPortfolio: React.FC = () => {
     },
      {
       id: '5',
-      title: 'URBAN RHYTHM',
-      category: 'Creative',
-      description: 'Experimental visual art project.',
-      tags: ['creative'],
-      src: 'https://wxzstudio.github.io/videos/portfolio-urban-rhythm.mp4',
+      title: 'ZB1 SIDE SHOT',
+      category: 'Celebrity Side Shot',
+      description: 'Exclusive idol focus cam.',
+      tags: ['celebrity'],
+      src: 'https://wxzstudio.github.io/videos/240114_zb1.mp4',
       type: 'video',
-      span: '1x2' // Tall
+      span: '1x2' // Vertical span
     },
     {
       id: '6',
-      title: 'TECH LAUNCH',
-      category: 'Commercial',
-      description: 'Product reveal for new tech gadget.',
-      tags: ['product'],
-      src: 'https://wxzstudio.github.io/videos/portfolio-tech-launch.mp4',
+      title: 'GRADUATION 2024',
+      category: 'Graduation Exhibition',
+      description: 'Artistic graduation showcase.',
+      tags: ['graduation'],
+      src: 'https://wxzstudio.github.io/videos/240313-CHENLU.mp4',
       type: 'video',
       span: '1x1'
     }
@@ -191,28 +191,40 @@ const VideoPortfolio: React.FC = () => {
     ? portfolioItems 
     : portfolioItems.filter(item => item.tags.includes(filter));
 
+  const handleClose = () => {
+    setSelectedVideo(null);
+  };
+
   const renderLightboxContent = () => {
     if (!selectedVideo) return null;
     const youtubeId = getYouTubeId(selectedVideo.src);
 
     if (youtubeId) {
+      // YouTube Iframe - maintain 16:9 aspect ratio
       return (
-        <iframe 
-          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
-          title={selectedVideo.title}
-          className="w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
+        <div className="w-full max-w-6xl aspect-video bg-black rounded-sm overflow-hidden shadow-2xl border border-white/10">
+           <iframe 
+            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
+            title={selectedVideo.title}
+            className="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
       );
     }
+    
+    // Native Video - Dynamic sizing (Vertical/Horizontal)
     return (
-      <video 
-        src={selectedVideo.src} 
-        controls 
-        autoPlay 
-        className="w-full h-full"
-      />
+      <div className="relative max-w-[95vw] max-h-[85vh] flex items-center justify-center">
+        <video 
+          src={selectedVideo.src} 
+          controls 
+          autoPlay 
+          playsInline
+          className="max-w-full max-h-[85vh] w-auto h-auto rounded-sm shadow-2xl border border-white/10 outline-none"
+        />
+      </div>
     );
   };
 
@@ -232,7 +244,8 @@ const VideoPortfolio: React.FC = () => {
           { key: 'all', label: 'All' },
           { key: 'brand', label: 'Brand' },
           { key: 'event', label: 'Event' },
-          { key: 'product', label: 'Product' },
+          { key: 'celebrity', label: 'Celebrity' },
+          { key: 'graduation', label: 'Graduation' },
         ]}
       />
 
@@ -252,19 +265,23 @@ const VideoPortfolio: React.FC = () => {
 
       {/* Lightbox Modal */}
       {selectedVideo && (
-        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 animate-fade-in">
+        <div 
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 animate-fade-in"
+          onClick={handleClose} // Clicking backdrop closes modal
+        >
           <button 
-            onClick={() => setSelectedVideo(null)}
+            onClick={(e) => { e.stopPropagation(); handleClose(); }}
             className="absolute top-6 right-6 p-2 text-white/50 hover:text-accent transition-colors z-20"
           >
             <X size={32} />
           </button>
           
-          <div className="w-full max-w-6xl aspect-video relative bg-black shadow-2xl border border-white/10 rounded-sm overflow-hidden">
+          {/* Prevent clicking video from closing modal */}
+          <div onClick={(e) => e.stopPropagation()}>
             {renderLightboxContent()}
           </div>
           
-          <div className="absolute bottom-10 left-0 right-0 text-center pointer-events-none">
+          <div className="absolute bottom-10 left-0 right-0 text-center pointer-events-none px-4">
             <h3 className="text-2xl font-display font-bold text-white mb-2">{selectedVideo.title}</h3>
             <p className="text-secondary">{selectedVideo.description}</p>
           </div>

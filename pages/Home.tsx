@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ServiceItem, PageType } from '../types';
-import { ArrowRight, Camera, Plus, Minus, Copy, Check, ArrowUpRight, Star } from 'lucide-react';
+import { ArrowRight, Plus, Minus, Copy, Check, ArrowUpRight, Star } from 'lucide-react';
 
 interface HomeProps {
   onNavigate: (page: PageType) => void;
@@ -28,11 +28,36 @@ interface HeroSlide {
 
 const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const servicesRef = useRef<HTMLElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
+  const footerTextRef = useRef<HTMLDivElement>(null);
   
   // Footer Accordion State
   const [openSection, setOpenSection] = useState<string | null>('terms');
   const [copied, setCopied] = useState(false);
   const wechatID = 'icf304';
+
+  // Parallax Effect for Footer Text
+  useEffect(() => {
+    const handleScroll = () => {
+        if (footerRef.current && footerTextRef.current) {
+            const rect = footerRef.current.getBoundingClientRect();
+            const viewHeight = window.innerHeight;
+            
+            // If footer is in view
+            if (rect.top < viewHeight && rect.bottom > 0) {
+                // Calculate relative progress (0 when top of section hits bottom of viewport)
+                const distance = viewHeight - rect.top;
+                // Parallax translation
+                const parallaxValue = distance * 0.1; 
+                footerTextRef.current.style.transform = `translateY(${parallaxValue}px)`;
+            }
+        }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleSection = (id: string) => {
     setOpenSection(openSection === id ? null : id);
@@ -179,20 +204,40 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     },
   ];
 
-  // Client List
+  // Helper to generate text-based SVG logos
+  const textToSvg = (text: string, fontSize: number = 40) => {
+    // Escape XML special characters to prevent broken SVGs (e.g. "high & gogo")
+    const safeText = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // Simple SVG with centered text, black fill (will be inverted by CSS)
+    const svgString = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150">
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" 
+        font-family="'Inter', sans-serif" font-weight="900" font-size="${fontSize}" fill="black" letter-spacing="2">
+          ${safeText}
+        </text>
+      </svg>
+    `.trim();
+    return `data:image/svg+xml;base64,${btoa(svgString)}`;
+  };
+
+  // Client List with Generated SVGs
   const clients = [
-    { id: 1, name: 'Aekyung', logo: 'https://file.302.ai/gpt/imgs/20250221/339a1f107f924df5b128540c797435f3.png' },
-    { id: 2, name: 'Amore Pacific', logo: 'https://file.302.ai/gpt/imgs/20250221/c900662d53bb4449ad626786c55cb858.png' },
-    { id: 3, name: 'COSRX', logo: 'https://file.302.ai/gpt/imgs/20250221/87814b60058e4d359b34337d165f1a58.png' },
-    { id: 4, name: 'HERA', logo: 'https://file.302.ai/gpt/imgs/20250221/93d0773b185b4b1a8d167f40d6c13867.png' },
-    { id: 5, name: 'high & gogo', logo: 'https://file.302.ai/gpt/imgs/20250221/5895782782974411ac9e249a0d8442be.png' },
-    { id: 6, name: 'i-dle', logo: 'https://file.302.ai/gpt/imgs/20250221/b92e742e47e84245973952d7c50a0f67.png' },
-    { id: 7, name: 'IOPE', logo: 'https://file.302.ai/gpt/imgs/20250221/41e4695376fa4286bc7d661413158c97.png' },
-    { id: 8, name: 'Leaders', logo: 'https://file.302.ai/gpt/imgs/20250221/2e38202d645e41849a620d473489e242.png' },
-    { id: 9, name: 'Vital Beautie', logo: 'https://file.302.ai/gpt/imgs/20250221/32d84d7a8d5f4797be238713f0a40232.png' },
-    { id: 10, name: 'Shinsegae', logo: 'https://file.302.ai/gpt/imgs/20250221/8991262d01194689b8849646b1425e4c.png' },
-    { id: 11, name: 'Q.one', logo: 'https://file.302.ai/gpt/imgs/20250221/c7689d04523d47d48039c32148419688.png' },
-    { id: 12, name: 'ZB1', logo: 'https://file.302.ai/gpt/imgs/20250221/72aa392817294248888b5064c51480f7.png' },
+    { id: 1, name: 'Aekyung', logo: textToSvg('AEKYUNG') },
+    { id: 2, name: 'Amore Pacific', logo: textToSvg('AMORE PACIFIC', 32) },
+    { id: 3, name: 'COSRX', logo: textToSvg('COSRX') },
+    { id: 4, name: 'HERA', logo: textToSvg('HERA') },
+    { id: 5, name: 'high & gogo', logo: textToSvg('high & gogo', 36) },
+    { id: 6, name: 'i-dle', logo: textToSvg('(G)I-DLE') },
+    { id: 7, name: 'IOPE', logo: textToSvg('IOPE') },
+    { id: 8, name: 'Leaders', logo: textToSvg('LEADERS') },
+    { id: 9, name: 'Vital Beautie', logo: textToSvg('VITAL BEAUTIE', 32) },
+    { id: 10, name: 'Shinsegae', logo: textToSvg('SHINSEGAE', 36) },
+    { id: 11, name: 'Q.one', logo: textToSvg('Q.one') },
+    { id: 12, name: 'ZB1', logo: textToSvg('ZEROBASEONE', 28) },
   ];
 
   return (
@@ -278,18 +323,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                      </div>
                   </div>
 
-                  {/* Right: Action Button */}
-                  <div className="flex-shrink-0">
-                    <button 
-                      onClick={() => onNavigate('contact')}
-                      className="group/btn relative overflow-hidden rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-8 py-4 transition-all hover:bg-white hover:text-black"
-                    >
-                      <span className="flex items-center space-x-2 text-sm font-bold uppercase tracking-wider">
-                        <span>Explore</span>
-                        <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
-                      </span>
-                    </button>
-                  </div>
+                  {/* Button Removed Here */}
 
                 </div>
               </div>
@@ -379,28 +413,33 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </section>
 
       {/* Footer Section - Updated Title */}
-      <section className="flex flex-col md:flex-row bg-black border-t border-border relative z-50">
-        {/* Left Column: Camera Image */}
-        <div className="w-full md:w-1/2 relative min-h-[400px] md:min-h-[600px] overflow-hidden border-b md:border-b-0 md:border-r border-border">
-           <div className="absolute inset-0 bg-black/20 pointer-events-none z-10" />
-           <img 
-             src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1000&auto=format&fit=crop" 
-             alt="Professional Camera Gear Top Down" 
-             className="w-full h-full object-cover object-center opacity-80 grayscale hover:grayscale-0 transition-all duration-1000"
-           />
-           <div className="absolute bottom-8 left-8 z-20">
-              <Camera className="text-accent mb-4" size={32} strokeWidth={1.5} />
-              <p className="text-white/60 text-xs tracking-widest uppercase">Professional Equipment</p>
-           </div>
+      <section ref={footerRef} className="flex flex-col md:flex-row bg-black border-t border-border relative z-50">
+        {/* Left Column: Typography with Parallax & Metallic Gradient */}
+        <div className="w-full md:w-1/2 relative min-h-[400px] md:min-h-[600px] overflow-hidden border-b md:border-b-0 md:border-r border-border bg-black flex items-center justify-center">
+             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent opacity-30 pointer-events-none" />
+
+             <div ref={footerTextRef} className="relative z-10 text-center select-none will-change-transform px-4">
+                <h2 className="text-6xl md:text-8xl lg:text-9xl font-display font-black tracking-tighter leading-[0.9] 
+                  bg-[linear-gradient(135deg,#fff_0%,#888_25%,#fff_50%,#888_75%,#fff_100%)] bg-[length:200%_auto] animate-shine bg-clip-text text-transparent">
+                  WXZ<br/>
+                  STUDIO
+                </h2>
+                <div className="mt-6 flex justify-center space-x-4">
+                    <div className="h-[1px] w-12 bg-white/20"></div>
+                    <span className="text-xs font-mono text-white/40 tracking-widest">EST. 2026</span>
+                    <div className="h-[1px] w-12 bg-white/20"></div>
+                </div>
+             </div>
         </div>
 
         {/* Right Column: Accordion */}
         <div className="w-full md:w-1/2 p-6 md:p-12 lg:p-24 bg-background flex flex-col justify-center">
            <div className="max-w-md w-full mx-auto md:mx-0">
-              <h2 className="text-3xl font-bold tracking-tight mb-6 text-white">
+              {/* Updated Header Style to match Trusted By/Services */}
+              <h2 className="text-sm font-bold tracking-[0.2em] text-white/40 uppercase mb-8 md:mb-12">
                 Get in Touch
               </h2>
-              <div className="space-y-0 border-t border-border mt-12">
+              <div className="space-y-0 border-t border-border mt-8">
                 {footerItems.map((item) => {
                   const isOpen = openSection === item.id;
                   return (

@@ -28,6 +28,7 @@
               'expand-width': 'expandWidth 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
               'expand-height': 'expandHeight 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
               'scroll': 'scroll 30s linear infinite',
+              'shine': 'shine 8s linear infinite',
             },
             keyframes: {
               fadeInUp: {
@@ -45,6 +46,10 @@
               scroll: {
                 '0%': { transform: 'translateX(0)' },
                 '100%': { transform: 'translateX(-100%)' },
+              },
+              shine: {
+                '0%': { backgroundPosition: '200% center' },
+                '100%': { backgroundPosition: '-200% center' },
               }
             }
           }

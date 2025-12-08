@@ -15,6 +15,11 @@ const MobileNav: React.FC<MobileNavProps> = ({ currentPage, onNavigate }) => {
     { id: 'contact' as PageType, label: '联系', icon: Mail },
   ];
 
+  const handleNavClick = (page: PageType) => {
+    onNavigate(page);
+    window.scrollTo(0, 0);
+  };
+
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background/90 backdrop-blur-lg border-t border-border z-50 pb-safe">
       <div className="flex justify-around items-center h-16">
@@ -23,7 +28,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ currentPage, onNavigate }) => {
           return (
             <button
               key={item.id}
-              onClick={() => onNavigate(item.id)}
+              onClick={() => handleNavClick(item.id)}
               className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${
                 isActive ? 'text-accent' : 'text-secondary hover:text-primary'
               }`}

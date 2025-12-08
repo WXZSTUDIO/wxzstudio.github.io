@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageType } from '../types';
-import { Menu, X, Instagram, Twitter, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, MessageCircle, BookHeart, Check, Copy } from 'lucide-react';
 
 interface NavigationProps {
   currentPage: PageType;
@@ -10,6 +10,8 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate, isScrolled }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const wechatID = 'icf304';
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -24,7 +26,31 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate, isScro
   const handleNavigate = (page: PageType) => {
     setIsOpen(false);
     onNavigate(page);
+    window.scrollTo(0, 0);
   };
+
+  const handleCopyWeChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(wechatID).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  };
+
+  // Reusable Nav Item Component
+  const NavItem = ({ label, page }: { label: string; page: PageType }) => (
+    <button 
+        onClick={() => handleNavigate(page)} 
+        className="group flex items-center justify-between w-full text-left"
+    >
+        <span className={`text-3xl md:text-4xl font-display font-bold transition-colors duration-300 ${currentPage === page ? 'text-accent' : 'text-white group-hover:text-accent'}`}>
+          {label}
+        </span>
+        <ArrowRight size={24} className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-accent" />
+    </button>
+  );
 
   return (
     <>
@@ -101,52 +127,48 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate, isScro
              <div className="space-y-2">
                 <span className="text-[10px] font-bold text-white/40 tracking-widest uppercase mb-6 block">Navigation</span>
                 
-                <div className="space-y-6">
-                    <button 
-                        onClick={() => handleNavigate('home')} 
-                        className="group flex items-center justify-between w-full text-left"
-                    >
-                        <span className="text-3xl md:text-4xl font-display font-bold text-white group-hover:text-accent transition-colors">HOME</span>
-                        <ArrowRight size={20} className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-accent" />
-                    </button>
-
-                    <div className="space-y-3 pt-2">
-                        <span className="text-xs font-bold text-white/40 tracking-widest uppercase block mb-1">Portfolio</span>
-                        <button 
-                            onClick={() => handleNavigate('video')} 
-                            className="block text-xl text-white/70 hover:text-white transition-colors"
-                        >
-                            Video Production
-                        </button>
-                        <button 
-                            onClick={() => handleNavigate('graphic')} 
-                            className="block text-xl text-white/70 hover:text-white transition-colors"
-                        >
-                            Graphic Design
-                        </button>
-                    </div>
-
-                    <button 
-                        onClick={() => handleNavigate('contact')} 
-                        className="group flex items-center justify-between w-full text-left pt-2"
-                    >
-                        <span className="text-3xl md:text-4xl font-display font-bold text-white group-hover:text-accent transition-colors">CONTACT</span>
-                        <ArrowRight size={20} className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-accent" />
-                    </button>
+                <div className="space-y-4 flex flex-col justify-center h-full">
+                    <NavItem label="HOME" page="home" />
+                    <NavItem label="VIDEO" page="video" />
+                    <NavItem label="GRAPHIC" page="graphic" />
+                    <NavItem label="CONTACT" page="contact" />
                 </div>
              </div>
 
              {/* Right Col: Info */}
              <div className="flex flex-col justify-end space-y-8 border-t md:border-t-0 border-white/10 pt-8 md:pt-0">
                 <div>
-                   <span className="text-[10px] font-bold text-white/40 tracking-widest uppercase mb-2 block">Connect</span>
+                   <span className="text-[10px] font-bold text-white/40 tracking-widest uppercase mb-4 block">Connect</span>
                    <div className="flex space-x-4">
-                      <a href="#" className="p-3 bg-white/5 rounded-full hover:bg-white hover:text-black transition-colors">
-                        <Twitter size={18} />
+                      {/* WeChat Button */}
+                      <button 
+                        onClick={handleCopyWeChat}
+                        className="group relative p-3 bg-white/5 rounded-full hover:bg-[#07C160] hover:text-white transition-all duration-300"
+                        title="Copy WeChat ID"
+                      >
+                        {copied ? <Check size={20} /> : <MessageCircle size={20} />}
+                        
+                        {/* Tooltip for feedback */}
+                        {copied && (
+                          <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-[10px] bg-white text-black px-2 py-1 rounded font-bold whitespace-nowrap animate-fade-in-up">
+                            ID Copied
+                          </span>
+                        )}
+                      </button>
+
+                      {/* XiaoHongShu Button */}
+                      <a 
+                        href="https://xhslink.com/m/4FrLqFlYhZj" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="p-3 bg-white/5 rounded-full hover:bg-[#FF2442] hover:text-white transition-all duration-300"
+                        title="Xiaohongshu"
+                      >
+                        <BookHeart size={20} />
                       </a>
-                      <a href="#" className="p-3 bg-white/5 rounded-full hover:bg-white hover:text-black transition-colors">
-                        <Instagram size={18} />
-                      </a>
+                   </div>
+                   <div className="mt-4 text-xs text-white/40 font-mono">
+                      WeChat: {wechatID}
                    </div>
                 </div>
 
