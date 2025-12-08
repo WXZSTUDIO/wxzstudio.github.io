@@ -133,16 +133,16 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     }
   ];
 
-  // 1. Hero Slides Data (Filtered as requested)
+  // 1. Hero Slides Data (Updated to Showreel)
   const heroSlides: HeroSlide[] = [
     {
       id: '01',
-      title: <>SEOUL <br/> FASHION WEEK</>,
-      subtitle: '捕捉时尚前沿的每一个精彩瞬间与T台光影。',
-      category: 'Event Documentation',
-      director: 'Lead Creative',
-      year: '2025',
-      videoSrc: 'https://wxzstudio.github.io/videos/portfolio-seoul-fashion.mp4',
+      title: <>2024 <br/> SHOWREEL</>,
+      subtitle: '精选年度最佳影像作品与创意瞬间。',
+      category: 'Showreel',
+      director: 'WXZ STUDIO',
+      year: '2024',
+      videoSrc: 'https://wxzstudio.github.io/videos/portfolio-2024-showreel.mp4',
       review: {
         stars: 5,
         quote: "VIBRANT AND ELECTRIFYING",
@@ -334,15 +334,23 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </section>
 
       {/* 
-        Clients Wall - Updated: Dark Theme + Infinite Marquee 
+        Clients Wall - Updated: Dark Theme + Infinite Marquee + Services Style Header + Gradients
       */}
       <section className="bg-black text-white py-16 md:py-24 relative z-50 border-b border-white/10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8 md:mb-12">
-          <h2 className="text-2xl font-bold tracking-tight uppercase">Selected Clients</h2>
+           {/* Updated Header Style to match Services */}
+          <h2 className="text-sm font-bold tracking-[0.2em] text-white/40 uppercase">Trusted by</h2>
         </div>
         
         {/* Infinite Scrolling Container */}
         <div className="relative w-full flex overflow-hidden">
+          
+          {/* Left Fade Gradient */}
+          <div className="absolute inset-y-0 left-0 w-24 md:w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          
+          {/* Right Fade Gradient */}
+          <div className="absolute inset-y-0 right-0 w-24 md:w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+
           {/* First set of logos */}
           <div className="flex animate-scroll whitespace-nowrap">
             {clients.map((client) => (
@@ -370,7 +378,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Footer Section */}
+      {/* Footer Section - Updated Title */}
       <section className="flex flex-col md:flex-row bg-black border-t border-border relative z-50">
         {/* Left Column: Camera Image */}
         <div className="w-full md:w-1/2 relative min-h-[400px] md:min-h-[600px] overflow-hidden border-b md:border-b-0 md:border-r border-border">
@@ -390,8 +398,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         <div className="w-full md:w-1/2 p-6 md:p-12 lg:p-24 bg-background flex flex-col justify-center">
            <div className="max-w-md w-full mx-auto md:mx-0">
               <h2 className="text-3xl font-bold tracking-tight mb-6 text-white">
-                Ready to start <br/>
-                <span className="text-secondary">your next project?</span>
+                Get in Touch
               </h2>
               <div className="space-y-0 border-t border-border mt-12">
                 {footerItems.map((item) => {
