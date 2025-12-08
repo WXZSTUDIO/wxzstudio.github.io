@@ -1,252 +1,173 @@
-import { Video, Camera, Mic, Palette, PlayCircle, Image as ImageIcon, Home, Mail, Film } from 'lucide-react';
-import { PortfolioItem, Client, Service } from './types';
+import React, { useState } from 'react';
+import { Plus, Minus, Copy, Check, ArrowUpRight, Camera } from 'lucide-react';
 
-// ==========================================
-// 📁 视频上传与命名指南 / VIDEO UPLOAD GUIDE
-// ==========================================
-// 1. 存放位置 / Location:
-//    请将您的 .mp4 视频文件放入: public/assets/videos/
-//    Please put your .mp4 files in: public/assets/videos/
-//
-// 2. 命名规则 / Naming Rules:
-//    ❌ 不要使用中文或空格 (Don't use Chinese or spaces)
-//    ✅ 请使用英文、数字、下划线 (Use English, numbers, underscores)
-//       例如 (Example): seoul_fashion_week_2024.mp4
-//
-// 3. 代码引用 / Code Reference:
-//    在下方 VIDEO_PORTFOLIO 中修改 mediaSrc 字段:
-//    Change the 'mediaSrc' field below to:
-//    mediaSrc: '/assets/videos/your_filename.mp4'
-// ==========================================
+type AccordionItem = {
+  id: string;
+  label: string;
+  content: React.ReactNode;
+};
 
-export const NAV_LINKS = [
-  { path: '/', label: 'HOME', icon: <Home size={18} /> },
-  { path: '/videos', label: 'FILMS', icon: <Film size={18} /> },
-  { path: '/graphic-portfolio', label: 'GRAPHIC', icon: <ImageIcon size={18} /> },
-  { path: '/contact', label: 'CONTACT', icon: <Mail size={18} /> },
-];
+const Contact: React.FC = () => {
+  const [openSection, setOpenSection] = useState<string | null>('connect');
+  const [copied, setCopied] = useState(false);
+  const wechatID = 'icf304';
 
-export const SERVICES: Service[] = [
-  {
-    title: '商业活动',
-    description: '会议、发布会、展览、典礼等各类活动的现场拍摄与后期记录制作。捕捉关键时刻，留存品牌记忆。',
-    icon: <Mic className="text-white" size={32} />,
-    colorTheme: 'bg-gradient-to-br from-[#FF512F] to-[#DD2476]', // Pink/Red
-    image: 'https://image.pollinations.ai/prompt/conference%20event%20photography%20professional%20camera%20dark%20cinematic?width=800&height=600&nologo=true'
-  },
-  {
-    title: '产品拍摄',
-    description: '为电商及广告客户提供高质量的产品视频和摄影。通过光影艺术，突出产品特性与美感，提升转化率。',
-    icon: <Camera className="text-white" size={32} />,
-    colorTheme: 'bg-gradient-to-br from-[#4facfe] to-[#00f2fe]', // Blue/Cyan
-    image: 'https://image.pollinations.ai/prompt/luxury%20product%20photography%20studio%20lighting%20cosmetics?width=800&height=600&nologo=true'
-  },
-  {
-    title: '品牌宣传',
-    description: '制作企业宣传片、品牌故事片和形象 TVC。以电影级的叙事手法，提升品牌知名度与市场影响力。',
-    icon: <Video className="text-white" size={32} />,
-    colorTheme: 'bg-gradient-to-br from-[#434343] to-[#000000]', // Dark/Mono
-    image: 'https://image.pollinations.ai/prompt/film%20set%20cinema%20camera%20crew%20behind%20the%20scenes?width=800&height=600&nologo=true'
-  },
-  {
-    title: '视觉设计',
-    description: '提供品牌 VI、海报、社交媒体图文等全方位的平面设计与视觉传达服务。构建统一且独特的品牌视觉识别系统。',
-    icon: <Palette className="text-white" size={32} />,
-    colorTheme: 'bg-gradient-to-br from-[#8EC5FC] to-[#E0C3FC]', // Purple/Soft
-    image: 'https://image.pollinations.ai/prompt/graphic%20design%20workspace%20minimalist%20creative%20studio?width=800&height=600&nologo=true'
-  },
-];
+  const toggleSection = (id: string) => {
+    setOpenSection(openSection === id ? null : id);
+  };
 
-export const CLIENTS: Client[] = [
-  // Updated Name from 'AK' to 'AEKYUNG'
-  { id: 1, name: "AEKYUNG", logoInitial: 'A', logoSrc: '/assets/clients/AEKYUNG.png' },
-  { id: 2, name: 'AMOREPACIFIC', logoInitial: 'A', logoSrc: '/assets/clients/AMOREPACIFIC.png' },
-  { id: 3, name: 'COSRX', logoInitial: 'C', logoSrc: '/assets/clients/COSRX.png' },
-  { id: 4, name: 'HERA', logoInitial: 'H', logoSrc: '/assets/clients/HERA.png' },
-  { id: 5, name: 'high&gogo', logoInitial: 'h', logoSrc: '/assets/clients/high&gogo.png' },
-  { id: 6, name: 'I-DLE', logoInitial: 'I', logoSrc: '/assets/clients/i-dle.png' },
-  { id: 7, name: 'IOPE', logoInitial: 'I', logoSrc: '/assets/clients/IOPE.png' },
-  { id: 8, name: 'LEADERS', logoInitial: 'L', logoSrc: '/assets/clients/LEADERS.png' },
-  { id: 9, name: 'VITALBEAUTIE', logoInitial: 'V', logoSrc: '/assets/clients/VITALBEAUTIE.png' },
-  { id: 10, name: 'SHINSEGAE', logoInitial: 'S', logoSrc: '/assets/clients/SHINSEGAE.png' },
-  { id: 11, name: 'Q.one', logoInitial: 'Q', logoSrc: '/assets/clients/Q.one.png' },
-  { id: 12, name: 'ZB1', logoInitial: 'Z', logoSrc: '/assets/clients/ZB1.png' },
-];
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(wechatID).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  };
 
-export const VIDEO_CATEGORIES = [
-  { id: 'all', label: '全部' },
-  { id: 'brand', label: '品牌影片' },
-  { id: 'event', label: '活动记录' },
-  { id: 'documentary', label: '纪录片' },
-  { id: 'product', label: '商业广告' },
-];
+  const items: AccordionItem[] = [
+    {
+      id: 'terms',
+      label: '服务条款 (Service Terms)',
+      content: (
+        <div className="text-secondary space-y-4 text-sm leading-relaxed py-2">
+           <p>
+            <span className="text-white font-medium block mb-1">预约与定金</span>
+            对于首次预约本服务的客户，在确认拍摄排期时，需缴纳商议总金额的 50% 作为预约定金。若因非不可抗力原因在预定拍摄日期当天取消服务，该定金将不予退还。
+          </p>
+          <p>
+            <span className="text-white font-medium block mb-1">创意材料</span>
+            我们强烈建议您提供详细的拍摄剧本。若无具体剧本，您有责任在拍摄前大致说明拍摄角度、构图意向或创意概念。
+          </p>
+          <p>
+            <span className="text-white font-medium block mb-1">后期制作</span>
+            后期剪辑工作（包括但不限于素材筛选、画面调色及特效制作）将独立于拍摄服务，另行单独计费，除非合约中已明确约定。
+          </p>
+          <p>
+            <span className="text-white font-medium block mb-1">知识产权</span>
+            除非提前声明或签署保密合约，否则视为您默认同意服务方在拍摄结束一周后，将相关素材用于作品展示或宣传。
+          </p>
+        </div>
+      )
+    },
+    {
+      id: 'connect',
+      label: '联系方式 (Connect)',
+      content: (
+        <div className="space-y-6 py-2">
+          {/* WeChat */}
+          <div className="group">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-white font-medium">微信 WeChat</span>
+              <button 
+                onClick={handleCopy}
+                className="text-xs text-secondary hover:text-accent transition-colors flex items-center space-x-1"
+              >
+                {copied ? (
+                  <>
+                    <Check size={12} />
+                    <span>已复制</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy size={12} />
+                    <span>复制 ID</span>
+                  </>
+                )}
+              </button>
+            </div>
+            <div className="text-secondary text-sm font-mono">{wechatID}</div>
+          </div>
 
-// Helper to generate consistent diverse images
-const getCinematicImage = (prompt: string) => 
-  `https://image.pollinations.ai/prompt/cinematic%20shot%20of%20${encodeURIComponent(prompt)}%20high%20quality%204k?width=1920&height=1080&nologo=true&seed=${Math.floor(Math.random()*1000)}`;
-
-export const VIDEO_PORTFOLIO: PortfolioItem[] = [
-  {
-    id: 'v1',
-    title: '2024 年度混剪',
-    category: '品牌形象',
-    clientName: 'WXZ STUDIO',
-    location: '全球',
-    year: '2024',
-    filterTags: ['brand'],
-    // 示例：如果您上传了视频，请改为 '/assets/videos/reel_2024.mp4'
-    mediaSrc: '/assets/videos/reel_2024.mp4', 
-    type: 'video',
-    stats: {
-      views: '12.5K',
-      likes: '3,240',
-      rating: 5,
-      quote: "视觉盛宴，震撼人心"
+          {/* XiaoHongShu */}
+          <div className="group">
+             <div className="flex items-center justify-between mb-1">
+              <span className="text-white font-medium">小红书 Red</span>
+              <a 
+                href="https://xhslink.com/m/4FrLqFlYhZj" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-xs text-secondary hover:text-accent transition-colors flex items-center space-x-1"
+              >
+                <ArrowUpRight size={12} />
+                <span>访问主页</span>
+              </a>
+            </div>
+            <div className="text-secondary text-sm">分享更多拍摄花絮与作品动态</div>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'copyright',
+      label: '版权信息 (Copyright)',
+      content: (
+        <div className="text-secondary text-sm py-2 space-y-2">
+          <p>© 2026 WXZ STUDIO.</p>
+          <p>All visual content is protected by copyright. Unauthorized use is prohibited.</p>
+        </div>
+      )
     }
-  },
-  {
-    id: 'v2',
-    title: '首尔时装周',
-    category: '活动回顾',
-    clientName: 'TouchinSoul',
-    location: '首尔',
-    year: '2024',
-    filterTags: ['event', 'brand'],
-    mediaSrc: '/assets/videos/video-2.mp4',
-    type: 'video',
-    stats: {
-      views: '45.2K',
-      likes: '8,900',
-      rating: 5,
-      quote: "完美捕捉现场氛围"
-    }
-  },
-  {
-    id: 'v3',
-    title: '高端晚宴',
-    category: '活动集锦',
-    clientName: 'TouchinSoul',
-    location: '首尔',
-    year: '2024',
-    filterTags: ['event'],
-    mediaSrc: '/assets/videos/video-3.mp4',
-    type: 'video',
-    stats: {
-      views: '8.1K',
-      likes: '1,520',
-      rating: 5,
-      quote: "优雅而永恒的记录"
-    }
-  },
-  {
-    id: 'v4',
-    title: '新世界免税店x首尔月',
-    category: '商业广告',
-    clientName: '新世界百货',
-    location: '首尔',
-    year: '2024',
-    filterTags: ['product', 'brand'],
-    mediaSrc: '/assets/videos/video-4.mp4',
-    type: 'video',
-    stats: {
-      views: '102K',
-      likes: '15,000',
-      rating: 5,
-      quote: "高转化率的视觉呈现"
-    }
-  },
-   {
-    id: 'v5',
-    title: '城市探索者',
-    category: '纪录片',
-    clientName: '国家地理',
-    location: '东京',
-    year: '2023',
-    filterTags: ['brand', 'documentary'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/tokyo%20street%20photography%20rain%20neon%20cyberpunk%20vibe%20umbrella?width=1920&height=1080&nologo=true',
-    type: 'video',
-    stats: {
-      views: '33K',
-      likes: '4,100',
-      rating: 5,
-      quote: "真实而充满力量"
-    }
-  },
-  {
-    id: 'v6',
-    title: '咖啡文化',
-    category: '人文纪录',
-    clientName: 'BLUE BOTTLE',
-    location: '京都',
-    year: '2023',
-    filterTags: ['brand', 'documentary'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/japanese%20coffee%20shop%20barista%20pouring%20coffee%20warm%20light%20wood%20texture?width=1920&height=1080&nologo=true',
-    type: 'video',
-    stats: {
-      views: '19K',
-      likes: '2,300',
-      rating: 5,
-      quote: "充满香气的视觉体验"
-    }
-  },
-   {
-    id: 'v7',
-    title: '霓虹之夜',
-    category: '实验短片',
-    clientName: '个人项目',
-    location: '香港',
-    year: '2022',
-    filterTags: ['brand'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/hong%20kong%20neon%20signs%20reflection%20puddle%20wong%20kar%20wai%20style?width=1920&height=1080&nologo=true',
-    type: 'video',
-    stats: {
-      views: '11K',
-      likes: '2,550',
-      rating: 5,
-      quote: "赛博朋克美学"
-    }
-  },
-];
+  ];
 
-export const GRAPHIC_PORTFOLIO: PortfolioItem[] = [
-  {
-    id: 'g1',
-    title: 'Pure Skin 品牌识别',
-    category: '品牌设计',
-    clientName: 'PURE SKIN',
-    year: '2024',
-    filterTags: ['branding'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/minimalist%20skincare%20brand%20identity%20mockup%20pastel%20colors?width=1200&height=1200&nologo=true',
-    type: 'image',
-  },
-  {
-    id: 'g2',
-    title: 'IOPE 发布会主视觉',
-    category: '社媒视觉',
-    clientName: 'IOPE',
-    year: '2024',
-    filterTags: ['social'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/cosmetic%20product%20launch%20key%20visual%20science%20blue%20future?width=1200&height=1600&nologo=true',
-    type: 'image',
-  },
-  {
-    id: 'g3',
-    title: '粉丝见面会海报',
-    category: '海报设计',
-    clientName: 'ENT. AGENCY',
-    year: '2023',
-    filterTags: ['poster'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/kpop%20concert%20poster%20design%20dynamic%20typography%20colorful?width=1200&height=1600&nologo=true',
-    type: 'image',
-  },
-   {
-    id: 'g4',
-    title: 'Waterbomb 音乐节',
-    category: '主视觉设计',
-    clientName: 'WATERBOMB',
-    year: '2023',
-    filterTags: ['poster'],
-    mediaSrc: 'https://image.pollinations.ai/prompt/music%20festival%20poster%20water%20splash%20summer%20energy?width=1200&height=1600&nologo=true',
-    type: 'image',
-  },
-];
+  return (
+    <div className="min-h-screen bg-black flex flex-col md:flex-row">
+      {/* Left Column: Camera Image */}
+      <div className="w-full md:w-1/2 h-[50vh] md:h-auto relative bg-[#0a0a0a] border-b md:border-b-0 md:border-r border-border overflow-hidden">
+        {/* Dark overlay for mood */}
+        <div className="absolute inset-0 bg-black/20 pointer-events-none z-10" />
+        <img 
+          src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1000&auto=format&fit=crop" 
+          alt="Professional Camera Gear Top Down" 
+          className="w-full h-full object-cover object-center opacity-80 grayscale hover:grayscale-0 transition-all duration-1000"
+        />
+        <div className="absolute bottom-8 left-8 z-20">
+           <Camera className="text-accent mb-4" size={32} strokeWidth={1.5} />
+           <p className="text-white/60 text-xs tracking-widest uppercase">Professional Equipment</p>
+        </div>
+      </div>
+
+      {/* Right Column: Content & Accordion */}
+      <div className="w-full md:w-1/2 flex flex-col justify-center px-6 py-12 md:p-24 bg-background">
+        <div className="max-w-md w-full mx-auto md:mx-0">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-white">
+            Let's create <br/>
+            <span className="text-secondary">something iconic.</span>
+          </h2>
+          <p className="text-secondary text-lg mb-12 leading-relaxed">
+            Everything you need to get your visual project up and running. Professional grade production for brands and individuals.
+          </p>
+
+          <div className="space-y-0 border-t border-border">
+            {items.map((item) => {
+              const isOpen = openSection === item.id;
+              return (
+                <div key={item.id} className="border-b border-border">
+                  <button
+                    onClick={() => toggleSection(item.id)}
+                    className="w-full py-6 flex items-center justify-between text-left group transition-colors"
+                  >
+                    <span className={`text-base font-medium transition-colors duration-300 ${isOpen ? 'text-white' : 'text-neutral-400 group-hover:text-white'}`}>
+                      {item.label}
+                    </span>
+                    <span className={`transition-transform duration-300 text-secondary group-hover:text-accent ${isOpen ? 'rotate-180 text-white' : ''}`}>
+                      {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+                    </span>
+                  </button>
+                  <div 
+                    className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100 mb-6' : 'max-h-0 opacity-0'}`}
+                  >
+                    {item.content}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Contact;

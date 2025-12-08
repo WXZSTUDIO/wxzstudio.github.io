@@ -1,38 +1,24 @@
-import React from 'react';
-
-export type Category = 'all' | 'branding' | 'social' | 'poster' | 'event' | 'product' | 'brand' | 'documentary';
-
-export interface PortfolioStats {
-  views: string;
-  likes: string;
-  rating: number; // 1-5
-  quote: string;
-}
+export type PageType = 'home' | 'video' | 'graphic' | 'contact';
 
 export interface PortfolioItem {
   id: string;
   title: string;
-  category: string; // Display name
-  clientName?: string; // e.g. "VOGUE"
-  location?: string; // e.g. "SEOUL"
-  year: string;
-  filterTags: Category[]; // Logic tags
-  mediaSrc: string; // Image URL or Video URL
-  type: 'image' | 'video';
-  stats?: PortfolioStats;
+  category: string;
+  description?: string; // Short description for overlay
+  tags: string[]; // for filtering
+  src: string; // video url or image url
+  type: 'video' | 'image';
+  featured?: boolean; // Determines if it's a Hero item
+  span?: '1x1' | '2x1' | '1x2' | '2x2'; // Layout hint
 }
 
-export interface Client {
-  id: number;
-  name: string;
-  logoInitial: string; // Fallback text
-  logoSrc?: string; // Path to logo image
-}
-
-export interface Service {
+export interface ServiceItem {
   title: string;
   description: string;
-  icon: React.ReactNode;
-  colorTheme: string; // Tailwind gradient classes
-  image?: string; // Optional background image for the card
+}
+
+export interface ClientItem {
+  id: number;
+  name: string;
+  logo?: string; // Optional URL for logo
 }
