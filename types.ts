@@ -1,27 +1,24 @@
-export interface ServiceItem {
-  id: string;
-  title: string;
-  description: string;
-  image?: string;
-}
+export type PageType = 'home' | 'video' | 'graphic' | 'contact';
 
 export interface PortfolioItem {
   id: string;
   title: string;
   category: string;
+  description?: string; // Short description for overlay
+  tags: string[]; // for filtering
+  src: string; // video url or image url
   type: 'video' | 'image';
-  src: string;
-  tags: string[];
+  featured?: boolean; // Determines if it's a Hero item
+  span?: '1x1' | '2x1' | '1x2' | '2x2'; // Layout hint
 }
 
-export interface Client {
-  id: string;
+export interface ServiceItem {
+  title: string;
+  description: string;
+}
+
+export interface ClientItem {
+  id: number;
   name: string;
-  logo: string;
-}
-
-export interface NavItem {
-  label: string;
-  path: string;
-  icon: React.ReactNode;
+  logo?: string; // Optional URL for logo
 }
