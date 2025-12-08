@@ -2,6 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { PortfolioItem } from '../types';
 import { Play, X, Star } from 'lucide-react';
 
+// Helper to extract YouTube ID
+const getYouTubeId = (url: string) => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+};
+
 // Shared Filter Component
 const Filter: React.FC<{ 
   filters: { key: string; label: string }[]; 
@@ -33,9 +40,11 @@ const VideoCard: React.FC<{
 }> = ({ item, onClick, index }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const youtubeId = getYouTubeId(item.src);
 
-  // Play preview on hover
+  // Play preview on hover (only for local videos)
   useEffect(() => {
+    if (youtubeId) return; // Skip auto-play for YouTube
     if (!videoRef.current) return;
     if (isHovered) {
       videoRef.current.play().catch(() => {});
@@ -43,7 +52,7 @@ const VideoCard: React.FC<{
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
     }
-  }, [isHovered]);
+  }, [isHovered, youtubeId]);
 
   // Determine grid classes based on featured status or manual span
   const getGridClasses = () => {
@@ -63,15 +72,23 @@ const VideoCard: React.FC<{
     >
       {/* Media Layer */}
       <div className="absolute inset-0 w-full h-full">
-        <video
-          ref={videoRef}
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-        >
-            <source src={item.src} type="video/mp4" />
-        </video>
+        {youtubeId ? (
+          <img 
+            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+            alt={item.title}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          >
+              <source src={item.src} type="video/mp4" />
+          </video>
+        )}
       </div>
 
       {/* Vignette & Overlay */}
@@ -116,19 +133,8 @@ const VideoPortfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
 
-  // UPDATED VIDEO PATHS to use remote wxzstudio.github.io paths
+  // UPDATED VIDEO PATHS: "2024 SHOWREEL" removed from portfolio as requested.
   const portfolioItems: PortfolioItem[] = [
-    {
-      id: '1',
-      title: '2024 SHOWREEL',
-      category: 'Brand Film',
-      description: 'Annual highlight reel featuring our best commercial work.',
-      tags: ['brand', 'highlight'],
-      src: 'https://wxzstudio.github.io/videos/portfolio-2024-showreel.mp4',
-      type: 'video',
-      featured: true, // Hero
-      span: '2x2'
-    },
     {
       id: '2',
       title: 'SEOUL FASHION WEEK',
@@ -145,7 +151,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Event',
       description: 'Luxury dinner event documentation.',
       tags: ['event'],
-      src: 'https://wxzstudio.github.io/videos/portfolio-gala-night.mp4',
+      src: 'https://youtu.be/YV0Q947sb8k',
       type: 'video',
       span: '1x1'
     },
@@ -184,6 +190,31 @@ const VideoPortfolio: React.FC = () => {
   const filteredItems = filter === 'all' 
     ? portfolioItems 
     : portfolioItems.filter(item => item.tags.includes(filter));
+
+  const renderLightboxContent = () => {
+    if (!selectedVideo) return null;
+    const youtubeId = getYouTubeId(selectedVideo.src);
+
+    if (youtubeId) {
+      return (
+        <iframe 
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
+          title={selectedVideo.title}
+          className="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      );
+    }
+    return (
+      <video 
+        src={selectedVideo.src} 
+        controls 
+        autoPlay 
+        className="w-full h-full"
+      />
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -230,12 +261,7 @@ const VideoPortfolio: React.FC = () => {
           </button>
           
           <div className="w-full max-w-6xl aspect-video relative bg-black shadow-2xl border border-white/10 rounded-sm overflow-hidden">
-            <video 
-              src={selectedVideo.src} 
-              controls 
-              autoPlay 
-              className="w-full h-full"
-            />
+            {renderLightboxContent()}
           </div>
           
           <div className="absolute bottom-10 left-0 right-0 text-center pointer-events-none">

@@ -25,9 +25,19 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
   // Ensure video autoplay and loop
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 1.0;
-      videoRef.current.play().catch(e => console.error("Autoplay failed", e));
+    const video = videoRef.current;
+    if (video) {
+      video.playbackRate = 1.0;
+      // Handle the play promise to avoid "interrupted" errors in console
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          // Ignore AbortError (interrupted by unmount) or NotAllowedError (autoplay policy)
+          if (error.name !== 'AbortError' && error.name !== 'NotAllowedError') {
+             console.error("Autoplay failed", error);
+          }
+        });
+      }
     }
   }, []);
 
