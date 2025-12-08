@@ -188,7 +188,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     <div className="animate-fade-in">
       {/* Hero Section */}
       <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden border-b border-border">
-        {/* Main Hero Video - Using local path in public/videos folder */}
+        {/* Main Hero Video - Using hosted path */}
         <video 
           ref={videoRef}
           autoPlay 
@@ -197,9 +197,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           playsInline 
           className="absolute inset-0 w-full h-full object-cover"
         >
-            {/* Fallback to remote if local doesn't exist yet, but prioritizing local structure as requested */}
-            <source src="/videos/hero-showreel.mp4" type="video/mp4" />
-            <source src="https://videos.pexels.com/video-files/5665444/5665444-hd_1920_1080_24fps.mp4" type="video/mp4" />
+            <source src="https://wxzstudio.github.io/videos/hero-showreel.mp4" type="video/mp4" />
         </video>
         
         <div className="absolute inset-0 bg-black/20 pointer-events-none" />
@@ -248,13 +246,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         {/* 2x2 Full Width Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 w-full h-auto md:h-screen">
             {services.map((service, idx) => {
-              // Calculate borders for grid items to match the crosshair effect
-              // Top-Left: border-r, border-b (mobile)
-              // Top-Right: border-b (mobile)
-              // Bottom-Left: border-r (desktop), border-t?
-              // Actually, rely on the absolute lines for the 'cross', just handle outer spacing if needed.
-              // To ensure text doesn't overlap lines, add padding.
-              
               return (
                 <div 
                   key={idx} 

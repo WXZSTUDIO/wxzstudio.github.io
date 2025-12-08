@@ -116,7 +116,7 @@ const VideoPortfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
 
-  // UPDATED VIDEO PATHS to use local folder /videos/
+  // UPDATED VIDEO PATHS to use remote wxzstudio.github.io paths
   const portfolioItems: PortfolioItem[] = [
     {
       id: '1',
@@ -124,7 +124,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Brand Film',
       description: 'Annual highlight reel featuring our best commercial work.',
       tags: ['brand', 'highlight'],
-      src: '/videos/portfolio-2024-showreel.mp4',
+      src: 'https://wxzstudio.github.io/videos/portfolio-2024-showreel.mp4',
       type: 'video',
       featured: true, // Hero
       span: '2x2'
@@ -135,7 +135,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Event',
       description: 'Runway coverage and backstage moments.',
       tags: ['event', 'brand'],
-      src: '/videos/portfolio-seoul-fashion.mp4',
+      src: 'https://wxzstudio.github.io/videos/portfolio-seoul-fashion.mp4',
       type: 'video',
       span: '2x1' // Wide
     },
@@ -145,7 +145,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Event',
       description: 'Luxury dinner event documentation.',
       tags: ['event'],
-      src: '/videos/portfolio-gala-night.mp4',
+      src: 'https://wxzstudio.github.io/videos/portfolio-gala-night.mp4',
       type: 'video',
       span: '1x1'
     },
@@ -155,7 +155,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Product',
       description: 'Duty free shop promotional campaign.',
       tags: ['product', 'brand'],
-      src: '/videos/portfolio-shinsegae.mp4',
+      src: 'https://wxzstudio.github.io/videos/portfolio-shinsegae.mp4',
       type: 'video',
       span: '1x1'
     },
@@ -165,7 +165,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Creative',
       description: 'Experimental visual art project.',
       tags: ['creative'],
-      src: '/videos/portfolio-urban-rhythm.mp4',
+      src: 'https://wxzstudio.github.io/videos/portfolio-urban-rhythm.mp4',
       type: 'video',
       span: '1x2' // Tall
     },
@@ -175,7 +175,7 @@ const VideoPortfolio: React.FC = () => {
       category: 'Commercial',
       description: 'Product reveal for new tech gadget.',
       tags: ['product'],
-      src: '/videos/portfolio-tech-launch.mp4',
+      src: 'https://wxzstudio.github.io/videos/portfolio-tech-launch.mp4',
       type: 'video',
       span: '1x1'
     }
