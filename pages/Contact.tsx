@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Minus, Copy, Check, ArrowUpRight, Camera } from 'lucide-react';
+import { Plus, Minus, Copy, Check, ArrowUpRight } from 'lucide-react';
 
 type AccordionItem = {
   id: string;
@@ -113,18 +113,22 @@ const Contact: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col md:flex-row">
-      {/* Left Column: Camera Image */}
-      <div className="w-full md:w-1/2 h-[50vh] md:h-auto relative bg-[#0a0a0a] border-b md:border-b-0 md:border-r border-border overflow-hidden">
-        {/* Dark overlay for mood */}
-        <div className="absolute inset-0 bg-black/20 pointer-events-none z-10" />
-        <img 
-          src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1000&auto=format&fit=crop" 
-          alt="Professional Camera Gear Top Down" 
-          className="w-full h-full object-cover object-center opacity-80 grayscale hover:grayscale-0 transition-all duration-1000"
-        />
-        <div className="absolute bottom-8 left-8 z-20">
-           <Camera className="text-accent mb-4" size={32} strokeWidth={1.5} />
-           <p className="text-white/60 text-xs tracking-widest uppercase">Professional Equipment</p>
+      {/* Left Column: Metallic Typography (Matching Home Footer) */}
+      <div className="w-full md:w-1/2 h-[50vh] md:h-auto relative bg-[#050505] border-b md:border-b-0 md:border-r border-border overflow-hidden flex items-center justify-center">
+        {/* Subtle radial glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent opacity-30 pointer-events-none" />
+
+        <div className="text-center px-4">
+             <h2 className="text-6xl md:text-8xl lg:text-9xl font-display font-black tracking-tighter leading-[0.9] 
+                bg-[linear-gradient(135deg,#fff_0%,#888_25%,#fff_50%,#888_75%,#fff_100%)] bg-[length:200%_auto] animate-shine bg-clip-text text-transparent">
+                WXZ<br/>
+                STUDIO
+             </h2>
+             <div className="mt-6 flex justify-center space-x-4">
+                  <div className="h-[1px] w-12 bg-white/20"></div>
+                  <span className="text-xs font-mono text-white/40 tracking-widest">EST. 2026</span>
+                  <div className="h-[1px] w-12 bg-white/20"></div>
+             </div>
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-export type PageType = 'home' | 'video' | 'graphic' | 'contact';
+export type PageType = 'home' | 'video' | 'graphic' | 'contact' | 'admin';
 
 export interface PortfolioItem {
   id: string;

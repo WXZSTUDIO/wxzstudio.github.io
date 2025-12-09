@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PortfolioItem } from '../types';
+import { getPortfolioData } from '../data';
 import { Star, ZoomIn } from 'lucide-react';
 
 // Immersive Graphic Card
@@ -71,80 +72,21 @@ const GraphicCard: React.FC<{
 
 const GraphicPortfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
+  const [items, setItems] = useState<PortfolioItem[]>([]);
 
-  const items: PortfolioItem[] = [
-    { 
-        id: '1', 
-        title: 'SKINCARE BRAND VI', 
-        category: 'Branding', 
-        description: 'Complete visual identity system for organic skincare.',
-        tags: ['branding'], 
-        src: 'https://picsum.photos/id/20/1200/1200', 
-        type: 'image',
-        featured: true,
-        span: '2x2'
-    },
-    { 
-        id: '2', 
-        title: 'IOPE CAMPAIGN', 
-        category: 'Social', 
-        description: 'Social media visual direction.',
-        tags: ['social'], 
-        src: 'https://picsum.photos/id/26/800/600', 
-        type: 'image',
-        span: '2x1' 
-    },
-    { 
-        id: '3', 
-        title: 'FAN MEET POSTER', 
-        category: 'Poster', 
-        description: 'Key visual for celebrity event.',
-        tags: ['poster'], 
-        src: 'https://picsum.photos/id/28/600/900', 
-        type: 'image',
-        span: '1x2' 
-    },
-    { 
-        id: '4', 
-        title: 'SUMMER DRINKS', 
-        category: 'Packaging', 
-        description: 'Label design series.',
-        tags: ['branding', 'poster'], 
-        src: 'https://picsum.photos/id/36/800/800', 
-        type: 'image',
-        span: '1x1' 
-    },
-    { 
-        id: '5', 
-        title: 'TECH SUMMIT 2024', 
-        category: 'Key Visual', 
-        description: 'Main conference branding.',
-        tags: ['poster'], 
-        src: 'https://picsum.photos/id/42/800/600', 
-        type: 'image',
-        span: '1x1'
-    },
-    { 
-        id: '6', 
-        title: 'HOLIDAY SPECIAL', 
-        category: 'Social', 
-        description: 'Festive marketing assets.',
-        tags: ['social'], 
-        src: 'https://picsum.photos/id/48/800/800', 
-        type: 'image',
-        span: '1x1'
-    },
-  ];
+  useEffect(() => {
+    setItems(getPortfolioData('graphic'));
+  }, []);
 
   const filteredItems = filter === 'all' 
     ? items 
     : items.filter(item => item.tags.includes(filter));
 
   const filters = [
-    { key: 'all', label: 'All' },
-    { key: 'branding', label: 'Branding' },
-    { key: 'social', label: 'Social' },
-    { key: 'poster', label: 'Poster' },
+    { key: 'all', label: '全部 (All)' },
+    { key: 'branding', label: '品牌 (Branding)' },
+    { key: 'social', label: '社媒 (Social)' },
+    { key: 'poster', label: '海报 (Poster)' },
   ];
 
   return (
@@ -161,7 +103,7 @@ const GraphicPortfolio: React.FC = () => {
           <button
             key={f.key}
             onClick={() => setFilter(f.key)}
-            className={`px-6 py-2 rounded-full text-sm font-display tracking-wide transition-all duration-300 ${
+            className={`px-6 py-2 rounded-full text-sm font-display tracking-wide transition-all duration-300 whitespace-nowrap ${
               filter === f.key
                 ? 'bg-accent text-black font-bold'
                 : 'bg-white/5 text-secondary border border-white/10 hover:border-white hover:text-white backdrop-blur-sm'
