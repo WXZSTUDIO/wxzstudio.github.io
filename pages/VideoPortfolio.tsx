@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { PortfolioItem } from '../types';
-import { getPortfolioData } from '../data';
 import { Play, X, Star } from 'lucide-react';
 
 // Helper to extract YouTube ID
@@ -21,7 +20,7 @@ const Filter: React.FC<{
       <button
         key={filter.key}
         onClick={() => onFilterChange(filter.key)}
-        className={`px-6 py-2 rounded-full text-sm font-display tracking-wide transition-all duration-300 whitespace-nowrap ${
+        className={`px-6 py-2 rounded-full text-sm font-display tracking-wide transition-all duration-300 ${
           activeFilter === filter.key
             ? 'bg-accent text-black font-bold'
             : 'bg-white/5 text-secondary border border-white/10 hover:border-white hover:text-white backdrop-blur-sm'
@@ -133,11 +132,60 @@ const VideoCard: React.FC<{
 const VideoPortfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
-  const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
 
-  useEffect(() => {
-    setPortfolioItems(getPortfolioData('video'));
-  }, []);
+  // UPDATED VIDEO PATHS & ITEMS
+  const portfolioItems: PortfolioItem[] = [
+    {
+      id: '2',
+      title: 'SEOUL FASHION WEEK',
+      category: 'Event',
+      description: 'Runway coverage and backstage moments.',
+      tags: ['event', 'brand'],
+      src: 'https://wxzstudio.github.io/videos/portfolio-seoul-fashion.mp4',
+      type: 'video',
+      span: '2x1' // Wide
+    },
+    {
+      id: '3',
+      title: 'GALA NIGHT',
+      category: 'Event',
+      description: 'Luxury dinner event documentation.',
+      tags: ['event'],
+      src: 'https://wxzstudio.github.io/videos/portfolio-night.mp4',
+      type: 'video',
+      span: '1x1'
+    },
+    {
+      id: '4',
+      title: 'SHINSEGAE x SEOUL',
+      category: 'Product',
+      description: 'Duty free shop promotional campaign.',
+      tags: ['product', 'brand'],
+      src: 'https://wxzstudio.github.io/videos/portfolio-shinsegae.mp4',
+      type: 'video',
+      span: '1x1'
+    },
+     {
+      id: '5',
+      title: 'ZB1 SIDE SHOT',
+      category: 'Celebrity Side Shot',
+      description: 'Exclusive idol focus cam.',
+      tags: ['celebrity'],
+      src: 'https://wxzstudio.github.io/videos/240114_zb1.mp4',
+      type: 'video',
+      span: '1x2' // Vertical span
+    },
+    {
+      id: '6',
+      title: 'GRADUATION 2024',
+      category: 'Graduation Exhibition',
+      description: 'Artistic graduation showcase.',
+      tags: ['graduation'],
+      src: 'https://wxzstudio.github.io/videos/240313-CHENLU.mp4',
+      type: 'video',
+      span: '1x1'
+    }
+  ];
 
   const filteredItems = filter === 'all' 
     ? portfolioItems 
@@ -193,11 +241,11 @@ const VideoPortfolio: React.FC = () => {
         activeFilter={filter}
         onFilterChange={setFilter}
         filters={[
-          { key: 'all', label: '全部 (All)' },
-          { key: 'brand', label: '品牌 (Brand)' },
-          { key: 'event', label: '活动 (Event)' },
-          { key: 'celebrity', label: '明星 (Celeb)' },
-          { key: 'graduation', label: '毕设 (Grad)' },
+          { key: 'all', label: 'All' },
+          { key: 'brand', label: 'Brand' },
+          { key: 'event', label: 'Event' },
+          { key: 'celebrity', label: 'Celebrity' },
+          { key: 'graduation', label: 'Graduation' },
         ]}
       />
 
