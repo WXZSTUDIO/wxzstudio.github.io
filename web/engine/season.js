@@ -1,0 +1,159 @@
+// cangame v3.2 · 赛季（赛程 / 分联赛积分榜 / 升降级 / 新赛季）
+function idNum(id) { return parseInt(id.slice(1), 10); }
+
+// 单循环轮转（m-1 轮）；双循环 = 跑两遍（主客对调）
+function buildSchedule(teamIds, rounds, rng) {
+  const arr = teamIds.slice();
+  const m = arr.length;
+  if (m % 2) arr.push(null); // 轮空
+  const half = arr.length / 2;
+  const sched = [];
+  for (let r = 0; r < m - 1 && sched.length < rounds; r++) {
+    const games = [];
+    for (let i = 0; i < half; i++) {
+      const a = arr[i], b = arr[arr.length - 1 - i];
+      if (a == null || b == null) continue;
+      const home = (r % 2 === 0) ? a : b;
+      const away = home === a ? b : a;
+      games.push([home, away]);
+    }
+    sched.push(games);
+    arr.splice(1, 0, arr.pop());
+  }
+  // 第二循环：主客对调
+  const first = sched.slice(0, Math.min(sched.length, rounds - sched.length));
+  first.forEach(function (games) {
+    sched.push(games.map(function (g) { return [g[1], g[0]]; }));
+  });
+  return sched.slice(0, rounds);
+}
+
+// 为全部联赛生成赛程：state.schedule = { L1: [...], L2a: [...], L2b: [...] }
+function buildAllSchedules(state, rng) {
+  const sched = {};
+  LEAGUE_DEFS.forEach(function (ld) {
+    sched[ld.id] = buildSchedule(state.leagues[ld.id].teamIds, CONFIG.LEAGUE.REGULAR_ROUNDS, rng);
+  });
+  return sched;
+}
+
+// 某联赛积分榜（XBA 排名规则：先胜场（胜率）后净胜分）
+function seasonStandings(state, leagueId) {
+  const teams = state.leagues[leagueId].teamIds
+    .map(function (id) { return teamById(state, id); })
+    .sort(function (x, y) {
+      if (y.wins !== x.wins) return y.wins - x.wins;
+      return (y.pf - y.pa) - (x.pf - x.pa);
+    });
+  return teams.map(function (t, i) { return { rank: i + 1, team: t }; });
+}
+
+// 赛季结束：冠军 + 升降级 + 重排联赛 + 新赛程；返回摘要
+function seasonRoll(state, rng) {
+  const LG = CONFIG.LEAGUE;
+  const summary = { champion: null, promoted: [], relegated: [], humanRank: null };
+
+  const l1Stand = seasonStandings(state, 'L1');
+  summary.champion = l1Stand[0].team.id;
+  l1Stand[0].team.titles++;
+  l1Stand.forEach(function (row) {
+    if (row.team.id === state.humanTeamId) summary.humanRank = row.rank;
+  });
+
+  // 升：每个 2级联赛前 2；降：1级联赛后 4
+  const promoted = [], relegated = [];
+  ['L2a', 'L2b'].forEach(function (lid) {
+    const st = seasonStandings(state, lid);
+    for (let i = 0; i < LG.PROMOTE_PER_LEAGUE; i++) promoted.push(st[i].team);
+  });
+  for (let i = 0; i < LG.RELEGATE_PER_LEAGUE; i++) relegated.push(l1Stand[l1Stand.length - 1 - i].team);
+  summary.promoted = promoted.map(function (t) { return t.name; });
+  summary.relegated = relegated.map(function (t) { return t.name; });
+  promoted.forEach(function (t) { t.level = 1; });
+  relegated.forEach(function (t) { t.level = 2; });
+
+  // 重排：1级 = 原1级(去掉降级) + 升级队（按战绩排序）；2级两队 = 剩余 28 队蛇形分组
+  const stayL1 = l1Stand.map(function (r) { return r.team; }).filter(function (t) { return t.level === 1; });
+  const newL1 = stayL1.concat(promoted).slice(0, LG.TEAMS_PER_LEAGUE);
+  const stayL2 = [];
+  ['L2a', 'L2b'].forEach(function (lid) {
+    seasonStandings(state, lid).forEach(function (r) { if (r.team.level === 2) stayL2.push(r.team); });
+  });
+  const pool = stayL2.concat(relegated).filter(function (t) { return newL1.indexOf(t) < 0; });
+  // 按上赛季战绩排序后蛇形分到 A/B 组
+  pool.sort(function (x, y) {
+    if (y.wins !== x.wins) return y.wins - x.wins;
+    return (y.pf - y.pa) - (x.pf - x.pa);
+  });
+  const newL2a = [], newL2b = [];
+  pool.forEach(function (t, i) {
+    const rowN = Math.floor(i / 2);
+    (rowN % 2 === 0 ? (i % 2 === 0 ? newL2a : newL2b) : (i % 2 === 0 ? newL2b : newL2a)).push(t);
+  });
+
+  function assign(leagueId, teams) {
+    state.leagues[leagueId].teamIds = teams.map(function (t) { return t.id; });
+    teams.forEach(function (t) { t.leagueId = leagueId; });
+  }
+  assign('L1', newL1);
+  assign('L2a', newL2a);
+  assign('L2b', newL2b);
+  const restCount = newL1.length + newL2a.length + newL2b.length;
+  if (restCount !== 42) { /* 防御：永远不应发生 */ }
+  // 备用球队池填充：保证每个联赛恰好 14 队（升降级空缺由真实地名备用队补齐）
+  seasonFillFromReserve(state);
+
+  // —— v4 赛季结束结算：赛季目标 / 季后赛 / 全明星周末 / 奢侈税 / 赛季奖项 ——
+  if (typeof goals_seasonEnd === 'function') goals_seasonEnd(state);
+  if (typeof playoff_runAll === 'function') playoff_runAll(state, rng);
+  if (typeof allstar_runWeekend === 'function') allstar_runWeekend(state, rng);
+  if (typeof salary_tick === 'function') salary_tick(state);
+  if (typeof leaders_awardSeason === 'function') leaders_awardSeason(state);
+
+  // 跨赛季重置：战绩清零、赛程重排、年龄+1、合同-1
+  state.teams.forEach(function (t) {
+    t.wins = 0; t.losses = 0; t.pf = 0; t.pa = 0;
+    t.players.forEach(function (p) {
+      p.age++;
+      p.stamina = 100; p.injury = 0;
+    });
+  });
+  // v4 合同递减（覆盖全部联赛所有在册球员，替换原内联递减）
+  if (typeof salary_decayContracts === 'function') salary_decayContracts(state);
+  state.season++;
+  state.round = 0;
+  state.phase = 'REGULAR';
+  state.schedule = buildAllSchedules(state, rng);
+  state.cups = buildCupInstances(state);
+  state.championship = null;   // 新赛季重置冠军杯（重新开放报名）
+  state.allianceCup = null;    // 联盟杯赛每赛季一次
+  state.supremeInvite = false; // 至尊杯邀请函重新评定
+  state.supremeCup = null;
+  state.bets = [];             // 竞猜每赛季清空
+
+  // —— v4 新赛季初始化：选秀 / 赛季目标 / 每日任务 / 排行榜 ——
+  if (typeof draft_start === 'function') draft_start(state, rng);
+  if (typeof goals_newSeason === 'function') goals_newSeason(state, rng);
+  if (typeof goals_dailyRefresh === 'function') goals_dailyRefresh(state, rng);
+  if (typeof leaders_update === 'function') leaders_update(state);
+
+  return summary;
+}
+
+// 从备用球队池补齐，使每个联赛恰好 TEAMS_PER_LEAGUE 队
+function seasonFillFromReserve(state) {
+  const need = CONFIG.LEAGUE.TEAMS_PER_LEAGUE;
+  ['L1', 'L2a', 'L2b'].forEach(function (lid) {
+    const lg = state.leagues[lid];
+    while (lg.teamIds.length < need && (state.reservePool || []).length) {
+      const t = state.reservePool.shift();
+      t.leagueId = lid; t.level = (lid === 'L1' ? 1 : 2);
+      lg.teamIds.push(t.id);
+      if (state.teams.indexOf(t) < 0) state.teams.push(t);
+    }
+  });
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = { buildSchedule, buildAllSchedules, seasonStandings, seasonRoll, seasonFillFromReserve, idNum };
+}
