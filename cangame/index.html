@@ -1,169 +1,46 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>战术板 · 篮球经理</title>
-<link rel="stylesheet" href="assets/style.css?v=3.6.0" />
-</head>
-<body>
-<div class="app">
-  <!-- 选队 -->
-  <section id="screen-pick" class="screen">
-    <h1 class="title">战术板 <span class="accent">·</span> 篮球经理</h1>
-    <p class="sub">42 队金字塔联赛（1级×1 + 2级×2）· 前2升后4降 · 街球杯赛 · 胜者为王。<br>选择你要执教的球队，从 2级杀进 1级，捧起奖杯。</p>
-    <div id="team-grid" class="team-grid"></div>
-  </section>
+<!doctype html>
+<html lang="zh-CN" class="dark">
+  <head>
+    <script defer src="/cangame/engine/config.js"></script>
+    <script defer src="/cangame/engine/rng.js"></script>
+    <script defer src="/cangame/engine/players.js"></script>
+    <script defer src="/cangame/engine/transfer.js"></script>
+    <script defer src="/cangame/engine/league.js"></script>
+    <script defer src="/cangame/engine/tactics.js"></script>
+    <script defer src="/cangame/engine/match.js"></script>
+    <script defer src="/cangame/engine/season.js"></script>
+    <script defer src="/cangame/engine/training.js"></script>
+    <script defer src="/cangame/engine/cup.js"></script>
+    <script defer src="/cangame/engine/bet.js"></script>
+    <script defer src="/cangame/engine/championship.js"></script>
+    <script defer src="/cangame/engine/alliance.js"></script>
+    <script defer src="/cangame/engine/ad.js"></script>
+    <script defer src="/cangame/engine/cba-data.js"></script>
+    <script defer src="/cangame/engine/salary.js"></script>
+    <script defer src="/cangame/engine/media.js"></script>
+    <script defer src="/cangame/engine/goals.js"></script>
+    <script defer src="/cangame/engine/leaders.js"></script>
+    <script defer src="/cangame/engine/draft.js"></script>
+    <script defer src="/cangame/engine/allstar.js"></script>
+    <script defer src="/cangame/engine/playoff.js"></script>
+    <script defer src="/cangame/engine/aitrade.js"></script>
+    <script defer src="/cangame/engine/live.js"></script>
+    <script defer src="/cangame/engine/engine.js"></script>
 
-  <!-- 主界面（XBA 布局：顶栏 + 左导航 + 主区 Tab + 右侧球员面板）-->
-  <section id="screen-game" class="screen hidden">
-    <header id="hdr" class="topbar"></header>
-
-    <div class="shell">
-      <!-- 左侧导航（XBA 树状分组）-->
-      <nav id="nav" class="nav">
-        <div class="nav-h">球队管理</div>
-        <button class="nav-btn" data-view="tactics">战术板</button>
-        <button class="nav-btn" data-view="training">球员训练</button>
-        <button class="nav-btn" data-view="roster">名册</button>
-        <div class="nav-h">联赛</div>
-        <button class="nav-btn" data-view="report">联赛比赛</button>
-        <button class="nav-btn" data-view="rounds">上轮·本轮</button>
-        <button class="nav-btn" data-view="standings">积分榜</button>
-        <button class="nav-btn" data-view="stats">技术统计</button>
-        <button class="nav-btn" data-view="logs">联赛日志</button>
-        <div class="nav-h">杯赛</div>
-        <button class="nav-btn" data-view="cups">街球杯赛</button>
-        <button class="nav-btn" data-view="championship">冠军杯赛</button>
-        <button class="nav-btn" data-view="kings">胜者为王</button>
-        <div class="nav-h">转会·市场</div>
-        <button class="nav-btn" data-view="transfer">转会市场</button>
-        <div class="nav-h">竞猜·玩法</div>
-        <button class="nav-btn" data-view="bet">有奖竞猜</button>
-        <div class="nav-h">俱乐部</div>
-        <button class="nav-btn" data-view="finance">财务·经营</button>
-        <button class="nav-btn" data-view="honors">荣誉室</button>
-        <button class="nav-btn" data-view="manager">经理名片</button>
-        <button class="nav-btn" data-view="record">我的战绩</button>
-        <button class="nav-btn" data-view="history">历史积分排行</button>
-        <div class="nav-h">联盟</div>
-        <button class="nav-btn" data-view="alliance">联盟首页</button>
-        <button class="nav-btn" data-view="supreme">至尊杯</button>
-        <div class="nav-team" id="nav-team"></div>
-      </nav>
-
-      <!-- 主区：Tab 行（对齐 XBA：联赛排名|上轮·本轮|技术统计|联赛日志）+ 视图 -->
-      <main class="main">
-        <div class="tabs" id="tabs">
-          <button class="tab-btn" data-view="standings">联赛排名</button>
-          <button class="tab-btn" data-view="rounds">上轮·本轮</button>
-          <button class="tab-btn" data-view="stats">技术统计</button>
-          <button class="tab-btn" data-view="logs">联赛日志</button>
-        </div>
-
-        <div id="view-tactics" class="view hidden">
-          <div class="card">
-            <h2 class="card-h">战术板</h2>
-            <div id="board"></div>
-            <div id="tactic-controls" class="tactic-controls"></div>
-            <div id="lineup-controls" class="lineup-controls"></div>
-          </div>
-        </div>
-        <div id="view-report" class="view hidden">
-          <div class="card">
-            <h2 class="card-h">最新战报</h2>
-            <div id="report"></div>
-          </div>
-        </div>
-        <div id="view-rounds" class="view hidden">
-          <div class="card"><h2 class="card-h">上轮赛果</h2><div id="round-prev"></div></div>
-          <div class="card"><h2 class="card-h">本轮对阵</h2><div id="round-next"></div></div>
-        </div>
-        <div id="view-standings" class="view hidden">
-          <div class="card"><h2 class="card-h" id="standings-title">联赛积分榜</h2><div id="standings"></div></div>
-        </div>
-        <div id="view-stats" class="view hidden">
-          <div class="card"><h2 class="card-h">我队技术统计（上一场）</h2><div id="stats"></div></div>
-        </div>
-        <div id="view-logs" class="view hidden">
-          <div class="card"><h2 class="card-h">联赛日志</h2><div id="logs"></div></div>
-        </div>
-        <div id="view-cups" class="view hidden">
-          <div class="card"><h2 class="card-h">街球杯赛</h2><div id="cups"></div></div>
-        </div>
-        <div id="view-kings" class="view hidden">
-          <div class="card"><h2 class="card-h">胜者为王</h2><div id="kings"></div></div>
-        </div>
-        <div id="view-training" class="view hidden">
-          <div class="card"><h2 class="card-h">球员训练 / 球星训练营</h2><div id="train-info" class="sub"></div><div id="training"></div></div>
-        </div>
-        <div id="view-finance" class="view hidden">
-          <div class="card"><h2 class="card-h">财务</h2><div id="finance"></div></div>
-        </div>
-        <div id="view-honors" class="view hidden">
-          <div class="card"><h2 class="card-h">荣誉室</h2><div id="honors"></div></div>
-        </div>
-        <div id="view-roster" class="view hidden">
-          <div class="card"><h2 class="card-h">球队名册</h2><div id="roster"></div></div>
-        </div>
-        <div id="view-championship" class="view hidden">
-          <div class="card"><h2 class="card-h">冠军杯赛</h2><div id="championship"></div></div>
-        </div>
-        <div id="view-transfer" class="view hidden">
-          <div class="card"><h2 class="card-h">转会市场</h2><div id="train-info-tf" class="sub"></div><div id="transfer"></div></div>
-        </div>
-        <div id="view-manager" class="view hidden">
-          <div class="card"><h2 class="card-h">经理名片</h2><div id="manager"></div></div>
-        </div>
-        <div id="view-record" class="view hidden">
-          <div class="card"><h2 class="card-h">我的战绩</h2><div id="record"></div></div>
-        </div>
-        <div id="view-history" class="view hidden">
-          <div class="card"><h2 class="card-h">历史积分排行</h2><div id="history"></div></div>
-        </div>
-        <div id="view-alliance" class="view hidden">
-          <div class="card"><h2 class="card-h">联盟首页</h2><div id="alliance"></div></div>
-        </div>
-        <div id="view-supreme" class="view hidden">
-          <div class="card"><h2 class="card-h">至尊杯</h2><div id="supreme"></div></div>
-        </div>
-        <div id="view-bet" class="view hidden">
-          <div class="card"><h2 class="card-h">有奖竞猜</h2><div id="bet"></div></div>
-        </div>
-        <div id="season-end" class="champion hidden"></div>
-      </main>
-
-      <!-- 右侧球员面板（XBA：首发/替补两个页签）-->
-      <aside class="side">
-        <div class="card">
-          <h2 class="card-h">球员名单</h2>
-          <div class="side-tabs">
-            <button class="side-tab active" data-st="starters">首发</button>
-            <button class="side-tab" data-st="bench">替补</button>
-          </div>
-          <div id="side-roster"></div>
-        </div>
-      </aside>
-    </div>
-  </section>
-</div>
-
-<script defer src="assets/config.js?v=3.6.0"></script>
-<script defer src="assets/rng.js?v=3.6.0"></script>
-<script defer src="assets/players.js?v=3.6.0"></script>
-<script defer src="assets/transfer.js?v=3.6.0"></script>
-<script defer src="assets/league.js?v=3.6.0"></script>
-<script defer src="assets/tactics.js?v=3.6.0"></script>
-<script defer src="assets/match.js?v=3.6.0"></script>
-<script defer src="assets/season.js?v=3.6.0"></script>
-<script defer src="assets/training.js?v=3.6.0"></script>
-<script defer src="assets/cup.js?v=3.6.0"></script>
-<script defer src="assets/bet.js?v=3.6.0"></script>
-<script defer src="assets/championship.js?v=3.6.0"></script>
-<script defer src="assets/alliance.js?v=3.6.0"></script>
-<script defer src="assets/ad.js?v=3.6.0"></script>
-<script defer src="assets/cba-data.js?v=3.6.0"></script>
-<script defer src="assets/engine.js?v=3.6.0"></script>
-<script defer src="assets/ui.js?v=3.6.0"></script>
-</body>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>战术板 · 篮球经理</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- 逻辑引擎脚本由 vite 插件按 base 注入（先于 React 模块执行） -->
+    <script type="module" crossorigin src="/cangame/assets/index-CPO1Z5pU.js"></script>
+    <link rel="stylesheet" crossorigin href="/cangame/assets/index-BZ85wEiL.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
