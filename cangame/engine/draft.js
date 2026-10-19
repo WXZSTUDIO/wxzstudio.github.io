@@ -245,9 +245,16 @@ function draft_pick(state, teamId, pid) {
   return p;
 }
 
-// 玩家选择
+// 玩家选择；选完立即让 AI 连续选到再次轮到玩家（否则选秀永不推进）
 function draft_humanPick(state, pid) {
-  return draft_pick(state, state.humanTeamId, pid);
+  const r = draft_pick(state, state.humanTeamId, pid);
+  if (r && r.id) {
+    const d = state.draft;
+    if (d && !d.done) {
+      draft_autoAIPicks(state, makeRNG(deriveSeed(state.seed || 1, state.season * 13 + (d.pickIndex || 0) + 71)));
+    }
+  }
+  return r;
 }
 
 // AI 选人评分：潜力为主 + 位置缺口 + 即战力；同分靠 rng 打破（确定性）
@@ -328,6 +335,19 @@ function draft_tradePick(state, fromTeamId, toTeamId, round) {
   return { ok: true, trade: rec };
 }
 
+// ——— 赛季中球探开放：预生成「下一届」新秀供考察（不开启选秀，state.draft 保持 null）———
+// draft_start 仅在赛季末 seasonRoll 调用；若不预生成，整个赛季球探/试训无目标
+function draft_openScouting(state) {
+  draft_ensure(state);
+  const D = CONFIG.DRAFT;
+  if (!D.ENABLED) return null;
+  const hasClass = (state.draftClass || []).length > 0;
+  const hasActiveDraft = !!state.draft && !state.draft.done;
+  if (hasClass || hasActiveDraft) return state.draftClass;
+  const rng = makeRNG(deriveSeed(state.seed || 1, (state.season || 1) * 977 + 5));
+  return draft_genClass(state, rng, draft_seasonYear(state) + 1);
+}
+
 // ——— 赛季末开启选秀：生成新秀 + 定顺序 + 重置轮次 ———
 function draft_start(state, rng) {
   draft_ensure(state);
@@ -367,6 +387,6 @@ if (typeof module !== 'undefined') {
     draft_genClass, draft_scoutReport, draft_workout, draft_order, draft_pick,
     draft_humanPick, draft_autoAIPicks, draft_advance, draft_tradePick, draft_start,
     draft_available, draft_prospect, draft_current, draft_aiChoose, draft_topThree, draft_makeRoom,
-    draft_ensure, draft_fitOverall, draft_pickOwner, draft_seasonYear
+    draft_ensure, draft_fitOverall, draft_pickOwner, draft_seasonYear, draft_openScouting
   };
 }

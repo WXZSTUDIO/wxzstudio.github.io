@@ -10,6 +10,8 @@ function transfer_ensure(state) {
   if (!state.listings) state.listings = [];            // 挂牌列表
   if (!state.scoutReports) state.scoutReports = {};    // 球探报告缓存（按 pid）
   if (!state.buyoutMarket) state.buyoutMarket = [];    // 买断市场快照
+  if (!state.faPool) state.faPool = [];                // 自由球员池
+  if (!state.faSeq) state.faSeq = 0;
   if (!state.log) state.log = [];
   if (!state.finance) state.finance = { cash: 0, income: 0, expense: 0 };
   if (state.transferSeq == null) state.transferSeq = 0;
@@ -442,6 +444,62 @@ function transfer_jersey(state, playerId) {
   return { ok: true, jersey: p.jersey, sale: sale };
 }
 
+// ==================== v4.1 · 自由球员市场 ====================
+// 池上限；低于目标时每轮按概率补充新自由球员（确定性 rng 由 engine 传入）
+function transfer_FA_TARGET() { return (CONFIG.FREE_AGENT && CONFIG.FREE_AGENT.POOL_TARGET) || 6; }
+
+function transfer_faTick(state, rng) {
+  transfer_ensure(state);
+  const F = CONFIG.FREE_AGENT;
+  if (!F || !F.ENABLED) return null;
+  if ((state.faPool.length >= transfer_FA_TARGET()) || typeof rng !== 'function') return null;
+  if (rng() >= (F.CHANCE_PER_ROUND != null ? F.CHANCE_PER_ROUND : 0.4)) return null;
+  const P = CONFIG.PLAYER;
+  const year = state.season || 1;
+  const p = genPlayer(rng, {
+    id: 'fa' + year + '_' + (state.faSeq++),
+    pos: P.POSITIONS[Math.floor(rng() * P.POSITIONS.length)],
+    age: F.AGE[0] + Math.floor(rng() * (F.AGE[1] - F.AGE[0] + 1)),
+    tier: F.TIER[0] + Math.floor(rng() * (F.TIER[1] - F.TIER[0] + 1)),
+    baseYear: year,
+    isFA: true
+  });
+  p.salary = players_salary(p);
+  p.contractYears = 0;
+  state.faPool.push(p);
+  state.log.push('🆓 ' + p.name + '（' + p.pos + '，综合 ' + p.overall + '）进入自由市场');
+  return p;
+}
+
+function transfer_faList(state) {
+  transfer_ensure(state);
+  return state.faPool || [];
+}
+
+// 签约自由球员：需名册未满 + 工资帽空间；签约后默认 2 年合同
+function transfer_signFA(state, pid) {
+  transfer_ensure(state);
+  const F = CONFIG.FREE_AGENT;
+  const idx = (state.faPool || []).findIndex(function (p) { return p.id === pid; });
+  if (idx < 0) return { ok: false, reason: 'no-player' };
+  const p = state.faPool[idx];
+  const team = teamById(state, state.humanTeamId);
+  if (!team) return { ok: false, reason: 'no-team' };
+  if (team.players.length >= CONFIG.PLAYER.ROSTER_SIZE) return { ok: false, reason: 'roster-full' };
+  if (typeof salary_canSign === 'function') {
+    const chk = salary_canSign(state, team.id, p.salary || 0);
+    if (!chk.ok) return { ok: false, reason: 'over-cap', cap: chk.cap, room: chk.room };
+  }
+  state.faPool.splice(idx, 1);
+  p.isFA = false;
+  p.isRookie = false;
+  p.contractYears = (F && F.CONTRACT_YEARS) || 2;
+  team.players.push(p);
+  if (team.lineup.length < CONFIG.PLAYER.STARTING && team.lineup.indexOf(p.id) < 0) team.lineup.push(p.id);
+  state.log.push('✍️ 签下自由球员 ' + p.name + '（' + p.pos + '，综合 ' + p.overall + '，年薪 ¥' + (p.salary || 0).toLocaleString() + '）');
+  return { ok: true, pid: p.id, name: p.name, salary: p.salary };
+}
+
 if (typeof module !== 'undefined') {
   module.exports = {
     transfer_genPool, transfer_buy, transfer_jersey,
@@ -451,6 +509,7 @@ if (typeof module !== 'undefined') {
     transfer_scout, transfer_displayOverall, transfer_buyoutMarket, transfer_beforeDeadline,
     transfer_ensure, transfer_hashId, transfer_listingIndex,
     transfer_findRoster, transfer_findPoolOrRoster, transfer_ownerTeamOf,
-    transfer_release, transfer_raiseCash
+    transfer_release, transfer_raiseCash,
+    transfer_faTick, transfer_faList, transfer_signFA
   };
 }

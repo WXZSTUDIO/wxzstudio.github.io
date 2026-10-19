@@ -3,7 +3,7 @@
 // v4 新增：联赛直播 / 赛季目标·成就·每日任务 / 选秀·全明星·季后赛 / 媒体球迷·随机事件 / 排行榜 / 转播收入
 //         / 工资帽·奢侈税 / 动态转会定价 / AI 交易
 var CONFIG = {
-  VERSION: '4.0.0',
+  VERSION: '4.1.0',
   SEED_DEFAULT: 20261014,
 
   // —— 职业联赛（XBA 金字塔）：1级联赛×1 + 2级联赛×2，每个联赛 14 队 ——
@@ -118,7 +118,7 @@ var CONFIG = {
   JERSEY: { perWin: 1.4, starBonus: 0.10, extremeBonus: 0.20 },
 
   // —— 球场（广告位数量 = 球场等级 + 球迷/4000）——
-  STADIUM: { DEFAULT_LEVEL: 1, LEVEL_CAP: 3, UPGRADE_COST: [0, 120000, 400000] },
+  STADIUM: { DEFAULT_LEVEL: 1, LEVEL_CAP: 5, UPGRADE_COST: [0, 120000, 400000, 900000, 2000000], CAPACITY_PER_LEVEL: 0.6 },
 
   // —— 赞助商合同制广告（替换原“胜负赔钱”简单模型）——
   SPONSOR: {
@@ -253,8 +253,18 @@ var CONFIG = {
     BUYOUT_MIN_AGE: 30,     // 买断市场准入年龄（老将为主）
     BUYOUT_DISCOUNT: 0.7,   // 买断市场折扣
     AI_TRADE_ENABLED: true,
-    AI_TRADE_GAP: 3,        // AI 每 N 轮做一次交易决策
-    AI_TRADE_CHANCE: 0.35   // 每次决策实际出手概率
+    AI_TRADE_GAP: 2,        // AI 每 N 轮做一次交易决策（v4.1 由 3 提频，保证挂牌市场有货）
+    AI_TRADE_CHANCE: 0.55   // 每次决策实际出手概率（v4.1 由 0.35 提频）
+  },
+
+  // —— v4.1 自由球员市场 ——
+  FREE_AGENT: {
+    ENABLED: true,
+    POOL_TARGET: 6,          // 池目标人数（低于则每轮按概率补充）
+    CHANCE_PER_ROUND: 0.4,   // 每轮补充一名的概率
+    AGE: [24, 33],           // 自由球员年龄带
+    TIER: [-6, 8],           // 综合档位偏移（相对均值）
+    CONTRACT_YEARS: 2        // 签约默认合同年数
   },
 
   // —— v4 工资帽 / 奢侈税 / 合同 ——

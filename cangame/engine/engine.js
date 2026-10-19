@@ -74,7 +74,9 @@ function engine_newGame(seed, humanTeamId) {
   if (typeof goals_newSeason === 'function') goals_newSeason(state, rng);
   if (typeof goals_dailyRefresh === 'function') goals_dailyRefresh(state, rng);
   if (typeof leaders_update === 'function') leaders_update(state);
-  if (typeof aitrade_ensure === 'function') aitrade_ensure(state);
+  if (typeof aiTrade_ensure === 'function') aiTrade_ensure(state);
+  // 赛季中球探：预生成下一届新秀（draft_start 只在赛季末调用）
+  if (typeof draft_openScouting === 'function') draft_openScouting(state);
 
   return state;
 }
@@ -101,6 +103,28 @@ function engine_applyPostGame(state, roundIdx) {
       if (rng() < chance) p.injury = randInt(rng, 1, IN.MAX_DNP);
     });
   });
+}
+
+// —— 球馆容量：随等级扩容（每级 +CAPACITY_PER_LEVEL）——
+function stadium_capacity(state) {
+  const S = CONFIG.STADIUM;
+  const lv = (state.stadiumLevel || S.DEFAULT_LEVEL) - S.DEFAULT_LEVEL;
+  const base = CONFIG.FINANCE.STADIUM_CAP;
+  return Math.round(base * (1 + (S.CAPACITY_PER_LEVEL || 0.6) * lv));
+}
+
+// —— 球馆升级：扣 UPGRADE_COST[当前等级]，等级上限 LEVEL_CAP ——
+function stadium_upgrade(state) {
+  const S = CONFIG.STADIUM;
+  const lv = state.stadiumLevel || S.DEFAULT_LEVEL;
+  if (lv >= S.LEVEL_CAP) return { ok: false, reason: 'max-level' };
+  const cost = S.UPGRADE_COST[lv] != null ? S.UPGRADE_COST[lv] : 0;
+  if ((state.finance.cash || 0) < cost) return { ok: false, reason: 'no-cash', need: cost, cash: state.finance.cash };
+  state.finance.cash -= cost;
+  state.finance.expense += cost;
+  state.stadiumLevel = lv + 1;
+  state.log.push('🏟 球馆升级到 ' + state.stadiumLevel + ' 级（容量 ' + stadium_capacity(state).toLocaleString() + '，花费 ¥' + cost.toLocaleString() + '）');
+  return { ok: true, level: state.stadiumLevel, cost: cost, capacity: stadium_capacity(state) };
 }
 
 function engine_advanceRound(state) {
@@ -163,9 +187,10 @@ function engine_advanceRound(state) {
   alliance_supremeCheck(state, state.round + 1);
   supreme_tick(state, state.round + 1);
 
-  // —— v4 每轮：媒体球迷事件 / AI 球队交易续约 / 排行榜刷新 ——
+  // —— v4 每轮：媒体球迷事件 / AI 球队交易续约 / 自由球员补给 / 排行榜刷新 ——
   if (typeof media_tick === 'function') media_tick(state, rng);
-  if (typeof aitrade_tick === 'function') aitrade_tick(state, rng);
+  if (typeof aiTrade_tick === 'function') aiTrade_tick(state, rng);
+  if (typeof transfer_faTick === 'function') transfer_faTick(state, rng);
   if (typeof leaders_update === 'function') leaders_update(state);
 
   // 财务：经营细化（票价×上座率 / 广告位 / 球衣销售） + 工资摊销
@@ -190,7 +215,7 @@ function engine_advanceRound(state) {
   if (humanHome) {
     // 上座率：基准受票价档影响，威望/球迷小幅加成；高票价拉低上座率
     const att = clamp(priceOpt.att * (1 + (state.prestige || 0) / 600 + (state.fans || 0) / 200000), 0.6, 0.95);
-    gateInc = Math.round(priceOpt.price * F.STADIUM_CAP * att);
+    gateInc = Math.round(priceOpt.price * stadium_capacity(state) * att);
     rev.gate += gateInc;
   }
   // 广告：赞助商合同制结算（替换原“球迷/4000 × 单价”固定发钱）

@@ -133,6 +133,8 @@ function seasonRoll(state, rng) {
 
   // —— v4 新赛季初始化：选秀 / 赛季目标 / 每日任务 / 排行榜 ——
   if (typeof draft_start === 'function') draft_start(state, rng);
+  // 选秀开启后 AI 连续选到轮到玩家（否则选秀永不推进）
+  if (typeof draft_autoAIPicks === 'function') draft_autoAIPicks(state, rng);
   if (typeof goals_newSeason === 'function') goals_newSeason(state, rng);
   if (typeof goals_dailyRefresh === 'function') goals_dailyRefresh(state, rng);
   if (typeof leaders_update === 'function') leaders_update(state);
