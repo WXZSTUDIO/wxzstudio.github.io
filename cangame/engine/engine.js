@@ -127,6 +127,42 @@ function stadium_upgrade(state) {
   return { ok: true, level: state.stadiumLevel, cost: cost, capacity: stadium_capacity(state) };
 }
 
+// ——— 近期战绩 / 连胜（基于 state.formHistory 滚动档案） ———
+// 返回最近 n 场结果（旧 → 新）：{ res:'W'|'L', pts, opp }
+function engine_recentForm(state, teamId, n) {
+  const want = Math.max(1, Number(n) || 5);
+  const hist = state.formHistory || [];
+  const out = [];
+  for (let i = hist.length - 1; i >= 0 && out.length < want; i--) {
+    for (let k = 0; k < hist[i].length; k++) {
+      const g = hist[i][k];
+      if (g.h !== teamId && g.a !== teamId) continue;
+      const home = g.h === teamId;
+      out.push({ res: g.w === teamId ? 'W' : 'L', pts: home ? g.hs : g.as, opp: home ? g.as : g.hs, home: home });
+      break;
+    }
+  }
+  return out.reverse();
+}
+
+// 当前连胜（正数）/ 连败（负数）：>=0 时表示连续获胜场数，<0 表示连续失利场数
+function engine_streak(state, teamId) {
+  const hist = state.formHistory || [];
+  let streak = 0;
+  for (let i = hist.length - 1; i >= 0; i--) {
+    let g = null;
+    for (let k = 0; k < hist[i].length; k++) {
+      if (hist[i][k].h === teamId || hist[i][k].a === teamId) { g = hist[i][k]; break; }
+    }
+    if (!g) continue;
+    const won = g.w === teamId;
+    if (streak === 0) streak = won ? 1 : -1;
+    else if ((streak > 0) === won) streak += won ? 1 : -1;
+    else break;
+  }
+  return streak;
+}
+
 function engine_advanceRound(state) {
   if (state.phase === 'SEASON_END') {
     state.phase = 'REGULAR';
@@ -174,6 +210,13 @@ function engine_advanceRound(state) {
       }
     });
   });
+  // —— v4.2 战绩档案：滚动保留最近 ARCHIVE_ROUNDS 轮赛果，供近期战绩 / 连胜查询 ——
+  const ARCHIVE_ROUNDS = 30;
+  if (!Array.isArray(state.formHistory)) state.formHistory = [];
+  state.formHistory.push(results.map(function (r) {
+    return { h: r.homeId, a: r.awayId, w: r.winner, hs: r.hScore, as: r.aScore };
+  }));
+  if (state.formHistory.length > ARCHIVE_ROUNDS) state.formHistory.splice(0, state.formHistory.length - ARCHIVE_ROUNDS);
   state.lastResults = results;
   results.forEach(function (r) { assertBoxConsistent(r, state); }); // 比分 = 统计一致性校验
   // 竞猜结算（本轮回合内已押注比赛）

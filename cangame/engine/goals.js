@@ -21,6 +21,9 @@ var GOALS_SEMANTIC = {
 function goals_r2(v) { return Math.round((Number(v) || 0) * 100) / 100; }
 function goals_r1(v) { return Math.round((Number(v) || 0) * 10) / 10; }
 
+// 每日任务是否走「待领取」模式（true = 进度达标只置 claimable，奖励需 UI 调 goals_claim 领取）
+function goals_claimMode() { return (CONFIG.DAILY || {}).CLAIM_MODE === true; }
+
 // 从 config 文本里提取第一个数字，用于「名称即阈值」的派生
 //   例：'胜率达到 60%' → 60、'单场 50 分' → 50、'选中潜力 ≥ 85 的新秀' → 85、'取得 3 连胜' → 3
 // 设计取舍：策划改动 config 文案里的数字，代码自动跟随；配置未标数字时回退到传入的 fallback。
@@ -294,6 +297,7 @@ function goals_progress(state, key, amount) {
 // 幂等：已 paid 的条目不会二次到账
 function goals_check(state) {
   const res = { goalsDone: [], tasksDone: [], rewards: { cash: 0, kings: 0 } };
+  res.tasksClaimable = [];
   const G = CONFIG.GOALS || {};
   const D = CONFIG.DAILY || {};
 
@@ -323,7 +327,10 @@ function goals_check(state) {
       if (Number(t.progress) >= Number(t.target)) {
         t.done = true;
         res.tasksDone.push(t.id);
-        if (!t.paid) {
+        if (goals_claimMode()) {
+          // 待领取模式：只标记，不自动发奖
+          if (!t.paid) { t.claimable = true; res.tasksClaimable.push(t.id); }
+        } else if (!t.paid) {
           const p = goals_pay(state, t.reward);
           res.rewards.cash += p.cash;
           res.rewards.kings += p.kings;
@@ -520,6 +527,17 @@ function goals_dailyRefresh(state, rng) {
     picked.push(pool.splice(j, 1)[0]);
   }
 
+  // 待领取模式下，刷新会把未领的已达标任务冲掉 → 先自动补发，避免奖励凭空丢失
+  if (goals_claimMode()) {
+    (state.dailyTasks || []).forEach(function (t) {
+      if (!t.done || t.paid) return;
+      const p = goals_pay(state, t.reward);
+      t.paid = true;
+      t.claimable = false;
+      goals_log(state, '🎁 自动结算未领取奖励「' + t.name + '」+¥' + p.cash + ' +' + p.kings + ' 王者积分');
+    });
+  }
+
   state.dailyTasks = picked.map(function (d) {
     return {
       id: d.id, name: d.name, desc: d.desc,
@@ -527,7 +545,8 @@ function goals_dailyRefresh(state, rng) {
       progress: 0,
       target: goals_targetOf(d),
       done: false,
-      paid: false
+      paid: false,
+      claimable: false
     };
   });
   state.dailyRound = Number(state.round) || 0;
@@ -546,14 +565,16 @@ function goals_dailyShouldRefresh(state) {
 // 推进每日任务进度并结算（未完成的继续累积，达标的立刻发奖 + done）
 // 返回 { progress, tasksDone, rewards }
 function goals_dailyTick(state, key, amount) {
-  const res = { progress: null, tasksDone: [], rewards: { cash: 0, kings: 0 } };
+  const res = { progress: null, tasksDone: [], tasksClaimable: [], rewards: { cash: 0, kings: 0 } };
   if (!key) return res;
   res.progress = goals_progress(state, key, amount);
   (state.dailyTasks || []).forEach(function (t) {
     if (t.done || Number(t.progress) < Number(t.target)) return;
     t.done = true;
     res.tasksDone.push(t.id);
-    if (!t.paid) {
+    if (goals_claimMode()) {
+      if (!t.paid) { t.claimable = true; res.tasksClaimable.push(t.id); }
+    } else if (!t.paid) {
       const p = goals_pay(state, t.reward);
       res.rewards.cash += p.cash;
       res.rewards.kings += p.kings;
@@ -562,6 +583,30 @@ function goals_dailyTick(state, key, amount) {
     }
   });
   return res;
+}
+
+// 领取奖励：kind = 'daily' | 'goal'
+// 幂等：已领取（paid）再领会被拒；未达标也会被拒
+function goals_claim(state, kind, id) {
+  if (!kind || !id) return { ok: false, reason: 'bad-args' };
+  const list = kind === 'daily' ? (state.dailyTasks || []) : (state.goals || []);
+  let item = null;
+  for (let i = 0; i < list.length; i++) if (list[i].id === id) { item = list[i]; break; }
+  if (!item) return { ok: false, reason: 'not-found' };
+  if (item.paid) return { ok: false, reason: 'already-paid' };
+
+  // 未达标但进度已满（例如未跑过 goals_check）→ 视为可领
+  if (!item.done && Number(item.progress) < Number(item.target)) {
+    const ev = goals_env(state);
+    const cur = (kind === 'daily') ? Number(item.progress) : goals_evalGoal(state, ev, item);
+    if (Number(cur) < Number(item.target)) return { ok: false, reason: 'not-done' };
+  }
+  item.done = true;
+  item.claimable = false;
+  const p = goals_pay(state, item.reward);
+  item.paid = true;
+  goals_log(state, (kind === 'daily' ? '🎁 领取每日任务奖励「' : '🎁 领取赛季目标奖励「') + item.name + '」+¥' + p.cash + ' +' + p.kings + ' 王者积分');
+  return { ok: true, kind: kind, id: item.id, name: item.name, cash: p.cash, kings: p.kings };
 }
 
 // 一次性面板数据（UI 直接取用，避免各处重复容错）
@@ -581,7 +626,7 @@ if (typeof module !== 'undefined') {
   module.exports = {
     goals_newSeason, goals_progress, goals_check, goals_seasonEnd, goals_trust, goals_setTrust,
     goals_achievementList, goals_unlock, goals_checkAchievements,
-    goals_dailyRefresh, goals_dailyTick, goals_dailyShouldRefresh, goals_panel,
+    goals_dailyRefresh, goals_dailyTick, goals_dailyShouldRefresh, goals_panel, goals_claim, goals_claimMode,
     goals_numIn, goals_targetOf, goals_keyMatches, goals_pay, goals_env, goals_evalGoal,
     goals_attendAvg, goals_rookieGrowth, goals_snapshotRookies, goals_defById, goals_dailyDef, GOALS_SEMANTIC
   };
