@@ -70,6 +70,7 @@ function engine_newGame(seed, humanTeamId) {
   // —— v4 初始化：转会 / 工资帽 / 媒体 / 赛季目标 / 每日任务 / 排行榜 / AI 交易 ——
   if (typeof transfer_ensure === 'function') transfer_ensure(state);
   if (typeof salary_ensure === 'function') salary_ensure(state);
+  if (typeof randomEvents_ensure === 'function') randomEvents_ensure(state);
   if (typeof media_init === 'function') media_init(state);
   if (typeof goals_newSeason === 'function') goals_newSeason(state, rng);
   if (typeof goals_dailyRefresh === 'function') goals_dailyRefresh(state, rng);
@@ -173,6 +174,8 @@ function engine_advanceRound(state) {
   if (state.simQuiet) { /* 批量模拟仍走同一逻辑 */ }
 
   const rng = makeRNG(deriveSeed(state.seed, state.season * 4099 + state.round));
+  // v4.4 每日登录突发事件（每轮推进 = 一次"每日登录"检查）
+  if (typeof randomEvents_maybeTrigger === 'function') randomEvents_maybeTrigger(state, rng);
   const results = [];
   // 三个联赛各自打本轮
   LEAGUE_DEFS.forEach(function (ld) {
@@ -202,9 +205,10 @@ function engine_advanceRound(state) {
         if (!res.force20) {
           const box = (g[0] === state.humanTeamId) ? res.hBox : res.aBox;
           Object.keys(box.players).forEach(function (pid) {
-            const s = state.seasonStats[pid] || (state.seasonStats[pid] = { pts: 0, reb: 0, ast: 0, stl: 0, blk: 0, gp: 0 });
+            const s = state.seasonStats[pid] || (state.seasonStats[pid] = { pts: 0, reb: 0, ast: 0, stl: 0, blk: 0, gp: 0, min: 0 });
             const row = box.players[pid];
             s.pts += row.pts; s.reb += row.reb; s.ast += row.ast; s.stl += row.stl; s.blk += row.blk; s.gp++;
+            s.min = (s.min || 0) + (row.min || 0);   // v4.4 累计上场分钟（成长结算用）
           });
         }
       }
@@ -258,7 +262,7 @@ function engine_advanceRound(state) {
   if (humanHome) {
     // 上座率：基准受票价档影响，威望/球迷小幅加成；高票价拉低上座率
     const att = clamp(priceOpt.att * (1 + (state.prestige || 0) / 600 + (state.fans || 0) / 200000), 0.6, 0.95);
-    gateInc = Math.round(priceOpt.price * stadium_capacity(state) * att);
+    gateInc = Math.round(priceOpt.price * stadium_capacity(state) * att * (state.ticketMod || 1));
     rev.gate += gateInc;
   }
   // 广告：赞助商合同制结算（替换原“球迷/4000 × 单价”固定发钱）
@@ -281,6 +285,13 @@ function engine_advanceRound(state) {
   state.finance.cash += roundInc - amort;
 
   engine_applyPostGame(state, state.round);
+  // v4.4 周期性成长结算（每 PERIODIC_EVERY 轮）
+  if (CONFIG.GROWTH.PERIODIC_EVERY && (state.round % CONFIG.GROWTH.PERIODIC_EVERY === 0) && typeof growth_periodicTick === 'function') {
+    growth_periodicTick(state, rng);
+  }
+  // 上座率系数（突发事件"门票"影响）逐轮回归 1
+  if (state.ticketMod == null) state.ticketMod = 1;
+  state.ticketMod = clamp(1 + (state.ticketMod - 1) * 0.6, 0.5, 1.6);
   state.round++;
   if (state.round >= state.totalRounds) {
     // 赛季结束：冠军 + 升降级 + 新赛程（state 已滚动到新赛季，摘要暂存展示）

@@ -379,6 +379,8 @@ function live_buildFromResult(state, res, opts) {
     homeName: homeName, awayName: awayName,
     hScore: res.hScore | 0, aScore: res.aScore | 0,
     winner: res.winner || (res.hScore >= res.aScore ? homeId : awayId),
+    origH: res.hScore | 0, origA: res.aScore | 0,   // 原始终分（微操改写前，用于回写战绩）
+    microDone: false, microOption: null, microNonce: 0, _microFrom: 0, _oppRun: 0,
     quarter: first.q, clock: first.clock,
     events: events,
     commentary: [],
@@ -886,6 +888,125 @@ function live_start(state, res, opts) {
   return live;
 }
 
+// ——————————————————————————— v4.4 微操打断 ———————————————————————————
+// 直播回放推进时（每次 live_next 之后）调用：检测是否命中微操触发条件。
+// 命中则返回一个 trigger 描述（前端据此暂停自动播放并弹出 3 个选项）。
+// 两个条件：①对手连续得分达到 OPP_RUN（如 8:0 高潮）②最后 2 分钟分差 < LAST2MIN_DIFF。
+function live_detectMicro(live, state) {
+  const M = CONFIG.MICRO;
+  if (!M || !M.ENABLED || !live) return null;
+  if (live.microDone) return null;                 // 每场至多一次
+  const humanId = state ? state.humanTeamId : null;
+  if (!humanId) return null;
+  const evs = live.events || [];
+  let from = Math.max(0, live._microFrom | 0);
+  let to = live.idx | 0;
+  if (to >= evs.length) to = evs.length - 1;
+  let oppRun = live._oppRun || 0;
+  let trigger = null;
+  for (let i = from; i <= to; i++) {
+    const ev = evs[i];
+    const nt = live_normType(ev.type);
+    if (live_isScoreType(nt)) {
+      if (ev.teamId === humanId) oppRun = 0;
+      else oppRun += (ev.pts || 0);
+      if (oppRun >= M.OPP_RUN) { trigger = { type: 'OPP_RUN', run: oppRun, idx: i }; break; }
+    }
+    if (!trigger) {
+      const sec = live_clockSec(ev.clock);
+      if (sec <= CONFIG.LIVE.CLUTCH_WINDOW) {
+        const diff = Math.abs((ev.hs | 0) - (ev.as | 0));
+        if (diff < M.LAST2MIN_DIFF) trigger = { type: 'LAST2MIN', diff: diff, idx: i };
+      }
+    }
+  }
+  live._oppRun = oppRun;
+  live._microFrom = to + 1;
+  return trigger;
+}
+
+// 玩家选择微操选项后调用：把 Buff 应用到"剩余模拟"（重新加权尾部事件），
+// 重算比分并回写战绩（state.lastResult / 双方胜负值 / 净胜分）。
+function live_applyMicroBuff(state, live, optId) {
+  const M = CONFIG.MICRO;
+  if (!M || !M.ENABLED || !live) return { ok: false, reason: 'no-micro' };
+  if (live.microDone) return { ok: false, reason: 'already' };
+  let opt = null;
+  for (let k = 0; k < M.OPTIONS.length; k++) if (M.OPTIONS[k].id === optId) { opt = M.OPTIONS[k]; break; }
+  if (!opt) return { ok: false, reason: 'no-option' };
+  const humanId = state ? state.humanTeamId : null;
+  const homeId = live.homeId;
+  const buff = opt.buff || {};
+  const myBonus = Number(buff.myShootBonus) || 0;
+  const oppPen = Number(buff.oppShootPenalty) || 0;
+  const evs = live.events || [];
+  const idx = live.idx | 0;
+  // 确定性子种子（每次微操独立，避免同局同结果）
+  live.microNonce = (live.microNonce || 0) + 1;
+  const rng = makeRNG(deriveSeed(live.seed | 0, 555001 + live.microNonce * 7 + idx));
+  // 重新加权尾部得分事件：我方 MISS→SCORE2；对手 SCORE→MISS
+  for (let i = idx + 1; i < evs.length; i++) {
+    const ev = evs[i];
+    const nt = live_normType(ev.type);
+    if (!live_isScoreType(nt)) continue;
+    if (ev.teamId === humanId) {
+      if (nt === 'MISS' && rng() < Math.min(0.6, myBonus * 1.6)) { ev.type = 'SCORE2'; ev.pts = 2; }
+    } else {
+      if ((nt === 'SCORE2' || nt === 'SCORE3') && rng() < Math.min(0.6, oppPen * 1.6)) { ev.type = 'MISS'; ev.pts = 0; }
+    }
+  }
+  // 全量重算比分（O(n)，n≤400）
+  let hs = 0, as = 0;
+  for (let j = 0; j < evs.length; j++) {
+    const e = evs[j];
+    const n2 = live_normType(e.type);
+    if (live_isScoreType(n2)) { if (e.teamId === homeId) hs += e.pts || 0; else as += e.pts || 0; }
+    e.hs = hs; e.as = as;
+  }
+  live.hScore = hs; live.aScore = as;
+  live.winner = (hs >= as) ? live.homeId : live.awayId;
+  live.microDone = true;
+  live.microOption = optId;
+  live_reconcileResult(state, live);
+  return { ok: true, option: optId, hScore: hs, aScore: as, winner: live.winner };
+}
+
+// 把微操改写后的比分回写到战绩（修正胜负、净胜分、lastResult、formHistory 末条）
+function live_reconcileResult(state, live) {
+  if (!state) return;
+  const humanId = state.humanTeamId;
+  const oppId = (humanId === live.homeId) ? live.awayId : live.homeId;
+  const human = teamById(state, humanId), opp = teamById(state, oppId);
+  if (!human || !opp) return;
+  const oH = live.origH | 0, oA = live.origA | 0;
+  const nH = live.hScore | 0, nA = live.aScore | 0;
+  const oWin = oH >= oA ? live.homeId : live.awayId;
+  const nWin = nH >= nA ? live.homeId : live.awayId;
+  if (oWin !== nWin) {
+    const ow = teamById(state, oWin), ol = teamById(state, (oWin === live.homeId ? live.awayId : live.homeId));
+    if (ow) ow.wins = Math.max(0, ow.wins - 1);
+    if (ol) ol.losses = Math.max(0, ol.losses - 1);
+    const nw = teamById(state, nWin), nl = teamById(state, (nWin === live.homeId ? live.awayId : live.homeId));
+    if (nw) nw.wins++; if (nl) nl.losses++;
+  }
+  human.pf += (nH - oH); human.pa += (nA - oA);
+  opp.pf += (nA - oA); opp.pa += (nH - oH);
+  if (state.lastResult) {
+    state.lastResult.hScore = nH; state.lastResult.aScore = nA;
+    state.lastResult.winner = nWin;
+    if (state.lastResult.hBox) state.lastResult.hBox.pts = nH;
+    if (state.lastResult.aBox) state.lastResult.aBox.pts = nA;
+  }
+  if (Array.isArray(state.formHistory) && state.formHistory.length) {
+    const fh = state.formHistory[state.formHistory.length - 1];
+    for (let i = 0; i < fh.length; i++) {
+      if ((fh[i].h === live.homeId && fh[i].a === live.awayId) || (fh[i].h === live.awayId && fh[i].a === live.homeId)) {
+        fh[i].hs = nH; fh[i].as = nA; fh[i].w = nWin;
+      }
+    }
+  }
+}
+
 if (typeof module !== 'undefined') {
   module.exports = {
     live_normType, live_isScoreType, live_typePts, live_hashStr,
@@ -897,6 +1018,6 @@ if (typeof module !== 'undefined') {
     live_boxAt, live_starters, live_highlights, live_highlightWeight,
     live_snapshot, live_saveReplay, live_replayById, live_replayList,
     live_genReport, live_teamRank, live_fansOf, live_starPower, live_broadcastType, live_broadcastIncome,
-    live_start
+    live_start, live_detectMicro, live_applyMicroBuff, live_reconcileResult
   };
 }

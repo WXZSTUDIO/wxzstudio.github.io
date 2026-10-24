@@ -179,9 +179,57 @@ function processPlayerGrowth(p) {
 // 简单属性端点
 function attrEnd(p, k) { return p.a[k]; }
 
+// —— v4.4 周期性（周/月）成长结算 ——
+// 涨幅 = (潜力 - 当前能力) × 出场时间权重 - 年龄惩罚；生成"球队报告"通知。
+// 与赛季末 processPlayerGrowth 互补：本函数做细水长流式小步成长，并在界面产出月度报告。
+function growth_periodicTick(state, rng) {
+  const G = CONFIG.GROWTH, P = CONFIG.PLAYER;
+  if (!G || !G.REPORT) return null;
+  const human = teamById(state, state.humanTeamId);
+  if (!human || !human.players) return null;
+  const totalRounds = state.totalRounds || (CONFIG.LEAGUE.REGULAR_ROUNDS || 26);
+  const rows = [];
+  human.players.forEach(function (p) {
+    if (!p.a) return;
+    const st = (state.seasonStats && state.seasonStats[p.id]) || null;
+    const gp = st ? (st.gp | 0) : 0;
+    const mins = st ? (st.min | 0) : 0;
+    // 出场时间权重：优先用累计上场分钟，无则退回出场次数
+    let playW;
+    if (mins > 0) playW = clamp(mins / (totalRounds * 30), 0.1, 1);
+    else playW = clamp(gp / totalRounds, 0.1, 1);
+    const gap = Math.max(0, (p.potential != null ? p.potential : p.overall) - p.overall);
+    const agePen = Math.max(0, p.age - G.PEAK_AGE) * G.AGE_PENALTY_PER;
+    let gain = Math.round(gap * G.PLAYTIME_WEIGHT * playW - agePen);
+    if (gain > 0) {
+      if (gain < G.PERIODIC_FLOOR && p.age <= G.YOUNG_BONUS_AGE && gap > 0) gain = G.PERIODIC_FLOOR;
+    } else if (gain < 0) {
+      gain = Math.max(gain, -2); // 老将下滑封底 -2
+    }
+    if (gain === 0) return;
+    const before = p.overall;
+    P.ATTRS.forEach(function (k) { p.a[k] = clamp(p.a[k] + gain, P.ATTR_MIN, P.ATTR_MAX); });
+    p.overall = players_overall(p);
+    rows.push({ id: p.id, name: p.name, pos: p.pos, before: before, after: p.overall, delta: p.overall - before });
+  });
+  const up = rows.filter(function (r) { return r.delta > 0; }).length;
+  const down = rows.filter(function (r) { return r.delta < 0; }).length;
+  const report = {
+    round: state.round || 0, season: state.season || 1,
+    rows: rows, up: up, down: down,
+    summary: '本月球队训练结算：' + up + ' 人能力提升，' + down + ' 人状态下滑。'
+  };
+  if (!state.teamReports) state.teamReports = [];
+  state.teamReports.push(report);
+  if (state.teamReports.length > 12) state.teamReports.splice(0, state.teamReports.length - 12);
+  state.log.push('📊 ' + report.summary);
+  return report;
+}
+
 if (typeof module !== 'undefined') {
   module.exports = {
     genPlayer, players_overall, players_salary, genName, processPlayerGrowth,
-    players_pickBand, players_sampleBase, players_isStarterSlot, players_regress, players_pullOverall
+    players_pickBand, players_sampleBase, players_isStarterSlot, players_regress, players_pullOverall,
+    growth_periodicTick
   };
 }

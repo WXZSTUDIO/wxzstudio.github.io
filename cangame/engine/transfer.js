@@ -376,6 +376,24 @@ function transfer_displayOverall(state, p) {
   return clamp(p.overall + randInt(r, -T.HIDDEN_NOISE, T.HIDDEN_NOISE), P.ATTR_MIN, P.ATTR_MAX);
 }
 
+// v4.4 球探：年轻球员默认隐藏具体数值，只暴露范围 [round(综合)±RANGE_BAND]；
+// 已球探（scoutReports 命中）则揭示真实综合与潜力。供 UI 直接调用，无需关心隐藏逻辑细节。
+function transfer_scoutInfo(state, p) {
+  const P = CONFIG.PLAYER, S = CONFIG.SCOUTING;
+  const rep = state && state.scoutReports ? state.scoutReports[p.id] : null;
+  const young = p.isRookie || ((p.age || 99) <= S.ROOKIE_MAX_AGE);
+  if (rep) {
+    return { scouted: true, young: young, hidden: false, overall: players_overall({ pos: rep.pos, a: rep.attrs }), potential: rep.potential, range: null, rangeText: null };
+  }
+  if (!S.ENABLED || !young) {
+    return { scouted: false, young: young, hidden: false, overall: p.overall, potential: p.potential, range: null, rangeText: null };
+  }
+  const base = Math.round(p.overall);
+  const lo = clamp(base - S.RANGE_BAND, P.ATTR_MIN, P.ATTR_MAX);
+  const hi = clamp(base + S.RANGE_BAND, P.ATTR_MIN, P.ATTR_MAX);
+  return { scouted: false, young: young, hidden: true, overall: null, potential: null, range: [lo, hi], rangeText: lo + '~' + hi };
+}
+
 // ==================== v4 · 买断市场 ====================
 // 只含年龄 ≥ BUYOUT_MIN_AGE 的老将，价格 = 动态身价 × BUYOUT_DISCOUNT
 function transfer_buyoutMarket(state, rng) {
@@ -521,7 +539,7 @@ if (typeof module !== 'undefined') {
     transfer_price, transfer_basePrice, transfer_ageFactor, transfer_potentialFactor,
     transfer_scarcityFactor, transfer_supplyFactor,
     transfer_list, transfer_bid, transfer_closeListing, transfer_cancelListing,
-    transfer_scout, transfer_displayOverall, transfer_buyoutMarket, transfer_beforeDeadline,
+    transfer_scout, transfer_displayOverall, transfer_scoutInfo, transfer_buyoutMarket, transfer_beforeDeadline,
     transfer_ensure, transfer_hashId, transfer_listingIndex,
     transfer_findRoster, transfer_findPoolOrRoster, transfer_ownerTeamOf,
     transfer_release, transfer_raiseCash,

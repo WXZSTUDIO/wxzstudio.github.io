@@ -149,6 +149,24 @@ function draft_workout(state, pid) {
   return { ok: true, report: rep, charged: cost };
 }
 
+// v4.4 球探：新秀默认隐藏具体数值，只暴露范围 [round(综合)±RANGE_BAND]；
+// 已球探（scoutReports 命中，含试训）则揭示整体与潜力。供 UI 直接调用。
+function draft_scoutInfo(state, p) {
+  const P = CONFIG.PLAYER, S = CONFIG.SCOUTING;
+  const rep = state && state.scoutReports ? state.scoutReports[p.id] : null;
+  const young = p.isRookie || ((p.age || 99) <= S.ROOKIE_MAX_AGE);
+  if (rep) {
+    return { scouted: true, young: young, hidden: false, overall: rep.overallShown != null ? rep.overallShown : p.overall, potential: rep.potentialShown != null ? rep.potentialShown : p.potential, range: null, rangeText: null };
+  }
+  if (!S.ENABLED || !young) {
+    return { scouted: false, young: young, hidden: false, overall: p.overall, potential: p.potential, range: null, rangeText: null };
+  }
+  const base = Math.round(p.overall);
+  const lo = clamp(base - S.RANGE_BAND, P.ATTR_MIN, P.ATTR_MAX);
+  const hi = clamp(base + S.RANGE_BAND, P.ATTR_MIN, P.ATTR_MAX);
+  return { scouted: false, young: young, hidden: true, overall: null, potential: null, range: [lo, hi], rangeText: lo + '~' + hi };
+}
+
 // ——— 选秀权交易映射：某轮某队签位归属 ———
 function draft_pickOwner(state, round, teamId) {
   draft_ensure(state);
@@ -384,7 +402,7 @@ function draft_topThree(state) {
 
 if (typeof module !== 'undefined') {
   module.exports = {
-    draft_genClass, draft_scoutReport, draft_workout, draft_order, draft_pick,
+    draft_genClass, draft_scoutReport, draft_workout, draft_scoutInfo, draft_order, draft_pick,
     draft_humanPick, draft_autoAIPicks, draft_advance, draft_tradePick, draft_start,
     draft_available, draft_prospect, draft_current, draft_aiChoose, draft_topThree, draft_makeRoom,
     draft_ensure, draft_fitOverall, draft_pickOwner, draft_seasonYear, draft_openScouting

@@ -3,7 +3,7 @@
 // v4 新增：联赛直播 / 赛季目标·成就·每日任务 / 选秀·全明星·季后赛 / 媒体球迷·随机事件 / 排行榜 / 转播收入
 //         / 工资帽·奢侈税 / 动态转会定价 / AI 交易
 var CONFIG = {
-  VERSION: '4.2.1',
+  VERSION: '4.4.0',
   SEED_DEFAULT: 20261014,
 
   // —— 职业联赛（XBA 金字塔）：1级联赛×1 + 2级联赛×2，每个联赛 14 队 ——
@@ -63,7 +63,13 @@ var CONFIG = {
     GAP_COEF: 0.16,        // 潜力缺口转化系数
     ROOKIE_FLOOR: 0.6,     // 年轻球员保底成长量（属性点）
     DECLINE_PER_AGE: 0.7,  // 32+ 每岁自然下滑量（属性点）
-    VET_CAP: 31            // ≥此年龄不再正向成长（仅维持/下滑）
+    VET_CAP: 31,           // ≥此年龄不再正向成长（仅维持/下滑）
+    // —— v4.4 周期性（周/月）成长结算 ——
+    PERIODIC_EVERY: 4,     // 每 N 轮执行一次周期性成长（≈"一个月"）
+    PLAYTIME_WEIGHT: 0.6,  // 出场时间权重：gp 越高成长越多（0~1 映射）
+    AGE_PENALTY_PER: 0.25, // 超过 PEAK_AGE 后每岁额外惩罚（属性点）
+    PERIODIC_FLOOR: 1,      // 周期性最小成长量（年轻球员保底，属性点）
+    REPORT: true           // 结算后生成"球队报告"通知
   },
 
   MATCH: {
@@ -86,6 +92,33 @@ var CONFIG = {
     FOUL_RATE: 0.10,                    // 每回合出现犯规的概率
     MIN_ROTATION: 8,                    // 每场至少登场人数
     ROT_MIN: { 保守: { starter: 42, bench: 14 }, 均衡: { starter: 34, bench: 20 }, 频繁: { starter: 28, bench: 24 } }
+  },
+
+  // —— v4.4 微操打断（直播中玩家介入）——
+  // 直播回放过程中，命中以下任一条件则暂停自动播放，向前端请求微操。
+  MICRO: {
+    ENABLED: true,
+    OPP_RUN: 8,                  // 对手连续得分达到此值（如 8:0 高潮）触发
+    LAST2MIN_DIFF: 5,            // 最后 2 分钟（CLUTCH_WINDOW 内）分差 < 此值触发
+    ONCE_PER_MATCH: true,        // 每场最多触发一次（避免反复打断）
+    // 三个微操选项：选后把 Buff 应用到剩余模拟（重新加权剩余事件）
+    OPTIONS: [
+      { id: 'press',   name: '全场紧逼', tone: 'defense', desc: '提升防守强度，压制对手进攻',
+        buff: { oppShootPenalty: 0.06, myShootBonus: 0.02 } },
+      { id: 'uptempo', name: '提速强攻', tone: 'offense', desc: '加快节奏，提升我方命中并施压',
+        buff: { myShootBonus: 0.06, oppShootPenalty: 0.02 } },
+      { id: 'timeout', name: '请求暂停', tone: 'balance', desc: '稳住军心，攻防小幅提升',
+        buff: { myShootBonus: 0.03, oppShootPenalty: 0.03 } }
+    ]
+  },
+
+  // —— v4.4 球探：年轻球员隐藏数值，只显示范围 ——
+  SCOUTING: {
+    ENABLED: true,
+    ROOKIE_MAX_AGE: 22,          // ≤此年龄（或 isRookie）的球员隐藏具体数值
+    RANGE_BAND: 8,               // 显示范围 = round(综合) ± band（如 57±8 → 49~65）
+    COST: 2000,                  // 球探考察解锁真实数值的费用
+    ACCURACY: 0.9                // 解锁后属性揭示准确度
   },
 
   // —— 战术系统（XBA 逆向：6 进攻 × 6 防守 + 相克矩阵）——
@@ -136,6 +169,7 @@ var CONFIG = {
   // —— 赞助商合同制广告（替换原“胜负赔钱”简单模型）——
   SPONSOR: {
     COUNT: 14,                          // 生成的赞助商数量
+    SEASON_OFFER: 5,                    // 每赛季初展示 N 个供玩家签约（玩家可签 3-5 个）
     industries: ['运动品牌', '饮料', '汽车', '金融', '电子', '餐饮', '地产', '航空', '互联网', '护肤'],
     namePrefix: ['锐', '腾', '恒', '昇', '星', '云', '海', '极', '光', '川', '宇', '晟'],
     nameSuffix: ['动', '驰', '达', '耀', '联', '峰', '润', '锐', '源', '创', '盛', '通'],
@@ -149,7 +183,17 @@ var CONFIG = {
     DYNAMIC_DOWN: 0.92,                 // 签得多 → 单价下降
     DYNAMIC_UP: 1.04,                   // 没人签 → 单价回升
     BREACH_PENALTY: 0.5,                // 提前解约扣已得收入比例
-    bonuses: { champion: 50000, playoff: 20000, streak3: 5000, rankTop4: 15000 }  // 奖金条款
+    // —— v4.4 合同附加条件（签约时按球队/轮次确定性派生）——
+    // 条件满足 → 解锁对应追加奖金；违约（如中途解约）→ 按 BREACH_PENALTY 罚没已得收入
+    COND: {
+      WINRATE_TARGET: 0.55,             // 胜率门槛（达标发奖金）
+      STREAK_TARGET: 3,                 // 连胜门槛
+      ROOKIE_MIN_MIN: 30,               // 新秀累计出场时间门槛（分钟）
+      WINRATE_BONUS: 8000,             // 胜率达标追加奖金
+      STREAK_BONUS: 5000,              // 连胜达标追加奖金
+      ROOKIE_BONUS: 6000               // 新秀出场达标追加奖金
+    },
+    bonuses: { champion: 50000, playoff: 20000, streak3: 5000, rankTop4: 15000 }  // 赛季奖项奖金条款
   },
 
   // —— CBA 真实队名导入（阶段3）——
@@ -475,6 +519,74 @@ var CONFIG = {
     EVENT_CHANCE: 0.35,        // 每轮触发随机事件的概率
     RATING_AFFECTS_FANS: 0.3   // 媒体评分对球迷情绪的影响系数
   },
+
+  // ==================== v4 · 每日登录突发事件 ====================
+  // 每次"每日登录"（每轮推进 / 应用启动）按 RANDOM_EVENTS_CHANCE 概率触发一条。
+  // 每条含 2-3 个选项；每个选项的 eff 影响：cash(资金) / morale(更衣室+老板+球迷) /
+  // ability(随机球员能力±) / tickets(上座率/门票)。选择后更新数据并记入新闻日志。
+  RANDOM_EVENTS_CHANCE: 0.45,         // 每日登录触发概率
+  RANDOM_EVENTS: [
+    { id: 'fitness_boom', title: '体能训练营名额', desc: '赞助商提供免费体能训练营名额，球员状态大涨，但需占用一周合练。',
+      w: 0.10, options: [
+        { id: 'accept', label: '全员参加', eff: { morale: 6, ability: 2 } },
+        { id: 'star_only', label: '仅核心参加', eff: { ability: 3 } },
+        { id: 'decline', label: '婉拒', eff: { cash: 5000 } }
+      ] },
+    { id: 'endorse', title: '商业代言邀约', desc: '某品牌找你拍广告，报酬丰厚但会分散训练精力。',
+      w: 0.12, options: [
+        { id: 'accept', label: '接下代言', eff: { cash: 30000, morale: -3 } },
+        { id: 'negotiate', label: '谈条件只拍一支', eff: { cash: 15000 } },
+        { id: 'decline', label: '专注比赛', eff: { morale: 4 } }
+      ] },
+    { id: 'injury_crisis', title: '主力伤停警报', desc: '队医报告一名轮换球员有伤病隐患，是否提前轮休？',
+      w: 0.11, options: [
+        { id: 'rest', label: '立即轮休', eff: { morale: -2, ability: 1 } },
+        { id: 'play', label: '坚持出战', eff: { morale: 3, cash: -4000 } },
+        { id: 'treatment', label: '高价理疗', eff: { cash: -12000, morale: 2 } }
+      ] },
+    { id: 'fan_fest', title: '球迷嘉年华', desc: '球迷会想在主场办嘉年华，可提升人气但需让利门票。',
+      w: 0.10, options: [
+        { id: 'host', label: '办一场', eff: { morale: 5, tickets: -0.03, fans: 0 } },
+        { id: 'small', label: '小规模办', eff: { morale: 2 } },
+        { id: 'skip', label: '不办', eff: { cash: 3000 } }
+      ] },
+    { id: 'scout_tip', title: '球探密报', desc: '球探发现一名被低估的年轻球员，是否砸钱买断？',
+      w: 0.09, options: [
+        { id: 'buy', label: '立即买断', eff: { cash: -25000, ability: 2 } },
+        { id: 'watch', label: '先观察', eff: { morale: 1 } },
+        { id: 'ignore', label: '无视', eff: {} }
+      ] },
+    { id: 'media_storm', title: '媒体风暴', desc: '一篇质疑你执教能力的报道发酵，如何回应？',
+      w: 0.10, options: [
+        { id: 'press', label: '开发布会反击', eff: { morale: 4, cash: -5000 } },
+        { id: 'silent', label: '冷处理', eff: { morale: -3 } },
+        { id: 'blame', label: '甩锅球员', eff: { morale: -6, cash: 2000 } }
+      ] },
+    { id: 'local_gov', title: '地方政府合作', desc: '市体育局希望球队参与公益，提供补贴。',
+      w: 0.09, options: [
+        { id: 'join', label: '积极参与', eff: { cash: 18000, morale: 3 } },
+        { id: 'symbolic', label: '象征性参与', eff: { cash: 6000, morale: 1 } },
+        { id: 'refuse', label: '拒绝', eff: { morale: -2 } }
+      ] },
+    { id: 'old_star', title: '老将请战', desc: '一名老将渴望更多出场时间，如何安排？',
+      w: 0.09, options: [
+        { id: 'more_min', label: '增加出场', eff: { morale: 3, ability: 1 } },
+        { id: 'keep', label: '维持现状', eff: {} },
+        { id: 'bench', label: '按实力排', eff: { morale: -4 } }
+      ] },
+    { id: 'rival_feud', title: '同城德比预热', desc: '德比战临近，对手放话挑衅，全城关注。',
+      w: 0.10, options: [
+        { id: 'hype', label: '高调应战', eff: { tickets: 0.05, morale: 3 } },
+        { id: 'calm', label: '低调备战', eff: { morale: 1 } },
+        { id: 'ignore', label: '不理会', eff: { morale: -2 } }
+      ] },
+    { id: 'charity', title: '青训捐赠', desc: '青训营希望得到俱乐部捐赠，长期有利。',
+      w: 0.10, options: [
+        { id: 'donate', label: '大额捐赠', eff: { cash: -20000, morale: 5 } },
+        { id: 'small', label: '小额捐赠', eff: { cash: -6000, morale: 2 } },
+        { id: 'skip', label: '暂不捐', eff: {} }
+      ] }
+  ],
 
   // ==================== v4 · 排行榜 ====================
   LEADERS: {

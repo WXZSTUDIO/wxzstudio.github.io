@@ -48,10 +48,23 @@ function ad_sign(state, sponsorId, rounds) {
   if ((state.adContracts || []).some(function (c) { return c.roundsLeft > 0 && c.sponsorId === sponsorId; })) {
     return { ok: false, msg: '该赞助商已签约' };
   }
+  // 合同附加条件（确定性派生自 CONFIG.SPONSOR.COND）：胜率 / 连胜 / 新秀出场时间门槛
+  // 条件满足 → 解锁对应追加奖金；违约（提前解约）→ 按 BREACH_PENALTY 罚没已得收入。
+  const cond = {
+    winRateTarget: S.COND.WINRATE_TARGET,
+    streakTarget: S.COND.STREAK_TARGET,
+    rookieMinMin: S.COND.ROOKIE_MIN_MIN,
+    winRateBonus: S.COND.WINRATE_BONUS,
+    streakBonus: S.COND.STREAK_BONUS,
+    rookieBonus: S.COND.ROOKIE_BONUS,
+    paid: {}   // 已发放奖金的 key（防重复发放）
+  };
+  // 确定性 id：避免 Date.now()，改用 seed + 序列号，保证存档可复现
+  state._adSeq = (state._adSeq || 0) + 1;
   const c = {
-    id: 'ac' + Date.now() + '_' + Math.floor((state.seed || 0) % 1000) + '_' + (state.adContracts.length),
+    id: 'ac' + state.season + '_' + state._adSeq,
     sponsorId: sponsorId, roundsLeft: rounds, totalRounds: rounds,
-    signedRound: state.round, paid: 0, bonusPaid: 0
+    signedRound: state.round, paid: 0, bonusPaid: 0, cond: cond
   };
   state.adContracts.push(c);
   return { ok: true, contract: c };
@@ -67,6 +80,43 @@ function ad_terminate(state, contractId) {
   c.roundsLeft = 0; // 强制结束
   state.log.push('⚠ 提前解约赞助商，扣款 ¥' + penalty);
   return { ok: true, penalty: penalty };
+}
+
+// 计算本队当前赛季最长连胜（从 formHistory 推导，避免引入额外全局字段）
+function ad_maxStreak(state) {
+  const hist = state.formHistory || [];
+  let maxS = 0, cur = 0;
+  for (let i = 0; i < hist.length; i++) {
+    let g = null;
+    for (let k = 0; k < hist[i].length; k++) {
+      if (hist[i][k].h === state.humanTeamId || hist[i][k].a === state.humanTeamId) { g = hist[i][k]; break; }
+    }
+    if (!g) continue;
+    if (g.w === state.humanTeamId) { cur++; if (cur > maxS) maxS = cur; } else cur = 0;
+  }
+  return maxS;
+}
+
+// 评估赞助合同附加条件：返回已满足且尚未发奖的奖金项 {key, amount, label}
+function ad_evalConditions(state, c, human) {
+  const out = [];
+  const cond = c.cond; if (!cond) return out;
+  const gp = Math.max(1, human.wins + human.losses);
+  const winRate = human.wins / gp;
+  const maxStreak = ad_maxStreak(state);
+  // 新秀累计出场时间（age ≤ ROOKIE_MAX_AGE 或 isRookie）
+  let rookieMin = 0;
+  const stats = state.seasonStats || {};
+  human.players.forEach(function (p) {
+    const young = p.isRookie || ((p.age || 99) <= CONFIG.SCOUTING.ROOKIE_MAX_AGE);
+    if (!young) return;
+    const s = stats[p.id];
+    if (s) rookieMin += (s.min || 0);
+  });
+  if (winRate >= cond.winRateTarget) out.push({ key: 'winRate', amount: cond.winRateBonus, label: '胜率达标' });
+  if (maxStreak >= cond.streakTarget) out.push({ key: 'streak', amount: cond.streakBonus, label: '连胜达标' });
+  if (rookieMin >= cond.rookieMinMin) out.push({ key: 'rookie', amount: cond.rookieBonus, label: '新秀培养' });
+  return out;
 }
 
 // 每轮结算：收入 = 单价 × 球迷系数 × 上座率系数 × 战绩系数 × 比赛重要性 × 品牌契合度
@@ -95,12 +145,23 @@ function ad_settle(state, importance) {
     state.adRevenueLogs.push({ round: state.round, sponsorId: sp.id, sponsorName: sp.name, amount: amount, importance: importance });
     c.roundsLeft--;
     if (c.roundsLeft <= 0) {
-      // 奖金条款：连胜≥3 发放
-      if ((state.winStreak || 0) >= 3) {
-        const b = S.bonuses.streak3; c.bonusPaid += b; total += b;
-        state.adRevenueLogs.push({ round: state.round, sponsorId: sp.id, sponsorName: sp.name, amount: b, bonus: 'streak3' });
+      // 合同到期：评估附加条件 → 解锁追加奖金（v4.4）
+      if (c.cond && c.cond.paid) {
+        ad_evalConditions(state, c, human).forEach(function (b) {
+          if (c.cond.paid[b.key]) return;
+          c.cond.paid[b.key] = true;
+          c.bonusPaid += b.amount; total += b.amount;
+          state.adRevenueLogs.push({ round: state.round, sponsorId: sp.id, sponsorName: sp.name, amount: b.amount, bonus: b.key });
+          state.log.push('🎯 赞助条件达成（' + b.label + '）：' + sp.name + ' 追加 ¥' + b.amount);
+        });
+      } else {
+        // 旧档兼容：无 cond 字段的合同沿用连胜≥3 奖金
+        if ((state.winStreak || 0) >= 3) {
+          const b = S.bonuses.streak3; c.bonusPaid += b; total += b;
+          state.adRevenueLogs.push({ round: state.round, sponsorId: sp.id, sponsorName: sp.name, amount: b, bonus: 'streak3' });
+        }
       }
-      state.log.push('🤝 赞助合同到期：' + sp.name + '（累计 ¥' + c.paid + '）');
+      state.log.push('🤝 赞助合同到期：' + sp.name + '（基础 ¥' + c.paid + '，奖金 ¥' + c.bonusPaid + '）');
     }
   });
   // 动态价格：签得多降价，没人签回升（每轮微调）
@@ -116,5 +177,5 @@ function ad_settle(state, importance) {
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { ad_genSponsors, ad_slotCount, ad_available, ad_sign, ad_terminate, ad_settle };
+  module.exports = { ad_genSponsors, ad_slotCount, ad_available, ad_sign, ad_terminate, ad_settle, ad_evalConditions, ad_maxStreak };
 }
