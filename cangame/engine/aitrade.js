@@ -169,13 +169,15 @@ function aiTrade_trySell(state, teamId, rng) {
   if (!team) return { ok: false, reason: 'no-team' };
   const T = CONFIG.TRANSFER, P = CONFIG.PLAYER;
   const counts = aiTrade_posCounts(team);
-  const even = Math.ceil(P.ROSTER_SIZE / P.POSITIONS.length);   // 每位置均衡人数上限
+  // v4.3：每位置 ≥3 即视为有冗余（原为 ceil(12/5)=3 → 必须 >3 才出手，过于保守）
+  const even = Math.ceil(P.ROSTER_SIZE / P.POSITIONS.length) - 1;
+  const VET_AGE = 28;   // 老将门槛由 30 降至 28，增加挂牌流动
   let top = null, topScore = -Infinity;
   (team.players || []).forEach(function (p) {
     if (p.isListed) return;
     if ((counts[p.pos] || 0) <= 1) return;                      // 该位置不能清空
     const surplus = Math.max(0, (counts[p.pos] || 0) - even);
-    const veteran = p.age >= T.BUYOUT_MIN_AGE ? (p.age - T.BUYOUT_MIN_AGE + 1) : 0;
+    const veteran = p.age >= VET_AGE ? (p.age - VET_AGE + 1) : 0;
     if (surplus <= 0 && veteran <= 0) return;
     // 优先出清"冗余位置的最弱者"，其次老将（都乘 CONFIG.POS_SPREAD，避免魔数）
     const sc = (surplus + veteran) * P.POS_SPREAD - p.overall;
@@ -205,6 +207,50 @@ function aiTrade_tryRenew(state, teamId, rng) {
   };
 }
 
+// —— 尝试签下自由球员：优先补最缺位置，工资帽允许才签（AI 无资金账，仅过帽校验）——
+function aiTrade_trySignFA(state, teamId, rng) {
+  aiTrade_ensure(state);
+  if (aiTrade_isHuman(state, teamId)) return { ok: false, reason: 'human-team' };
+  const team = teamById(state, teamId);
+  if (!team) return { ok: false, reason: 'no-team' };
+  const need = aiTrade_evaluateNeeds(state, team);
+  const pool = (state.faPool || []).filter(function (p) { return p.pos === need || p.overall >= 62; });
+  if (!pool.length) return { ok: false, reason: 'no-fa' };
+  pool.sort(function (a, b) { return b.overall - a.overall; });
+  const cand = pool[0];
+  // 名册满则先释放最弱球员腾名额（仅 AI；人类走 transfer_signFA 的 roster-full 报错）
+  if ((team.players || []).length >= CONFIG.PLAYER.ROSTER_SIZE) {
+    const weak = team.players.slice().sort(function (a, b) { return a.overall - b.overall; })[0];
+    if (!weak || cand.overall <= weak.overall) return { ok: false, reason: 'no-upgrade' };
+    if (typeof transfer_release === 'function') transfer_release(state, team, weak);
+  }
+  if (typeof salary_canSign === 'function') {
+    const chk = salary_canSign(state, teamId, cand.salary || 0);
+    if (!chk.ok) return { ok: false, reason: 'over-cap' };
+  }
+  const r = transfer_signFATo(state, teamId, cand.id);
+  return { ok: !!(r && r.ok), pid: cand.id, name: cand.name, pos: cand.pos, overall: cand.overall };
+}
+
+// —— 尝试从系统转会池买人（补最缺位置），制造可见的球员流动 ——
+function aiTrade_tryBuyPool(state, teamId, rng) {
+  aiTrade_ensure(state);
+  if (aiTrade_isHuman(state, teamId)) return { ok: false, reason: 'human-team' };
+  const team = teamById(state, teamId);
+  if (!team) return { ok: false, reason: 'no-team' };
+  const need = aiTrade_evaluateNeeds(state, team);
+  const pool = (state.transferPool || []).filter(function (p) { return p.pos === need; });
+  if (!pool.length) return { ok: false, reason: 'no-target' };
+  const curBest = aiTrade_lineupStrength(state, team)[need] || 0;
+  const cand = pool.filter(function (p) {
+    if (typeof salary_canSign === 'function' && !salary_canSign(state, teamId, p.salary || 0).ok) return false;
+    return p.overall > curBest - 4;   // 略强于现有即值得补
+  }).sort(function (a, b) { return b.overall - a.overall; })[0];
+  if (!cand) return { ok: false, reason: 'no-upgrade' };
+  const r = transfer_buyFor(state, teamId, cand.id);
+  return { ok: !!(r && r.ok), pid: cand.id, name: cand.name, pos: cand.pos, overall: cand.overall };
+}
+
 // —— 每轮决策：每 AI_TRADE_GAP 轮触发一次窗口，窗口内按 AI_TRADE_CHANCE 概率出手 ——
 function aiTrade_tick(state, rng) {
   aiTrade_ensure(state);
@@ -219,6 +265,8 @@ function aiTrade_tick(state, rng) {
       teamId: t.id, skipped: false,
       renew: aiTrade_tryRenew(state, t.id, r),
       buy: aiTrade_tryBuy(state, t.id, r),
+      buyPool: aiTrade_tryBuyPool(state, t.id, r),
+      signFA: aiTrade_trySignFA(state, t.id, r),
       sell: aiTrade_trySell(state, t.id, r)
     });
   });
@@ -241,6 +289,10 @@ function aiTrade_runOffseason(state, rng) {
     if (sl && sl.ok) res.sold++;
     const by = aiTrade_tryBuy(state, t.id, r);
     if (by && by.ok) res.bought++;
+    const bp = aiTrade_tryBuyPool(state, t.id, r);
+    if (bp && bp.ok) res.bought++;
+    const fa = aiTrade_trySignFA(state, t.id, r);
+    if (fa && fa.ok) res.bought++;
   });
   return res;
 }
@@ -250,6 +302,7 @@ if (typeof module !== 'undefined') {
     aiTrade_ensure, aiTrade_isHuman, aiTrade_teams, aiTrade_findPlayer, aiTrade_lineupStrength,
     aiTrade_evaluateNeeds, aiTrade_posCounts, aiTrade_buyScore, aiTrade_maxBid, aiTrade_canAfford,
     aiTrade_tryBuy, aiTrade_trySell, aiTrade_tryRenew, aiTrade_tick, aiTrade_runOffseason,
+    aiTrade_trySignFA, aiTrade_tryBuyPool,
     aiTrade_subRng, aiTrade_hashId
   };
 }

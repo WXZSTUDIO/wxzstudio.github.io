@@ -152,12 +152,36 @@ function players_salary(p) {
   return Math.round(s / 10) * 10; // 取整到十
 }
 
+// —— v4.3 赛季末成长系统：让球员随赛季真实成长（修复"打满一赛季数值不变"）——
+// 成长量 = (潜力 - 当前综合) × GAP_COEF × 年龄因子；年轻保底、老将自然下滑。
+// 成长量同时加到 10 项属性 → 综合同步上涨（overall 为属性加权平均，等幅加成属性即等幅涨综合）。
+function processPlayerGrowth(p) {
+  if (!p || !p.a) return p;
+  const P = CONFIG.PLAYER, G = CONFIG.GROWTH;
+  const gap = Math.max(0, (p.potential != null ? p.potential : p.overall) - p.overall);
+  let factor;
+  if (p.age <= G.PEAK_AGE) factor = 1.0;
+  else if (p.age <= G.DECLINE_AGE) factor = 0.4;
+  else factor = 0.05;
+  let gain = gap * G.GAP_COEF * factor;
+  // 老将自然下滑（潜力已兑现时综合缓慢回落）
+  let decline = 0;
+  if (p.age >= G.DECLINE_AGE) decline = (p.age - G.DECLINE_AGE + 1) * G.DECLINE_PER_AGE;
+  // 年轻保底：仍有潜力空间则保证最低成长，杜绝"数值不动"
+  if (p.age <= G.YOUNG_BONUS_AGE && gap > 0 && gain < G.ROOKIE_FLOOR) gain = G.ROOKIE_FLOOR;
+  gain = Math.round(gain - decline);
+  if (gain === 0) return p;
+  P.ATTRS.forEach(function (k) { p.a[k] = clamp(p.a[k] + gain, P.ATTR_MIN, P.ATTR_MAX); });
+  p.overall = players_overall(p);
+  return p;
+}
+
 // 简单属性端点
 function attrEnd(p, k) { return p.a[k]; }
 
 if (typeof module !== 'undefined') {
   module.exports = {
-    genPlayer, players_overall, players_salary, genName,
+    genPlayer, players_overall, players_salary, genName, processPlayerGrowth,
     players_pickBand, players_sampleBase, players_isStarterSlot, players_regress, players_pullOverall
   };
 }

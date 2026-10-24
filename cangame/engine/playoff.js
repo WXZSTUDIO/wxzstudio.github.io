@@ -196,8 +196,10 @@ function playoff_advance(state, rng) {
 }
 
 // 一口气跑完整个季后赛，返回冠军队 id
+// 跨赛季重建（v4.3 修复）：po.season 记录建队时的赛季号；state.season 已推进到新赛季
+// 而旧 playoff 仍停留在上一赛季时，必须按新赛季最终排名重新建树（升降级/换联赛后种子会变）
 function playoff_runAll(state, rng) {
-  if (!state.playoff) {
+  if (!state.playoff || state.playoff.season !== state.season) {
     const ht = state.humanTeamId ? teamById(state, state.humanTeamId) : null;
     playoff_build(state, (ht && ht.leagueId) || 'L1', rng);
   }

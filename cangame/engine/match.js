@@ -1,5 +1,8 @@
 // cangame v3.5 · 比赛引擎（回合模拟 + play-by-play）
 // 修复：①篮板按位置/属性/身高/力量分配 ②赛中轮换（体力/犯规换人，≥8人） ③比分=统计一致
+// v4.3 地基加固：所有属性/身高读取加非有限值兜底（防止残缺数据导致篮板/出手全灌末位球员）
+function num(v, d) { return (typeof v === 'number' && isFinite(v)) ? v : d; }
+
 function getLineup(team, tac) {
   const onCourt = team.lineup
     .map(function (id) { return team.players.find(function (p) { return p.id === id; }); })
@@ -21,12 +24,12 @@ function avgAttr(line, key) {
 }
 function bestBy(line, key) {
   let best = line[0];
-  for (let i = 1; i < line.length; i++) if (line[i].player.a[key] > best.player.a[key]) best = line[i];
+  for (let i = 1; i < line.length; i++) if (num(line[i].player.a[key], 0) > num(best.player.a[key], 0)) best = line[i];
   return best;
 }
 function pickShooter(rng, line) {
   const w = line.map(function (x) {
-    const off = (x.player.a.SHO + x.player.a.TRE + x.player.a.DRV) / 3;
+    const off = (num(x.player.a.SHO, 60) + num(x.player.a.TRE, 60) + num(x.player.a.DRV, 60)) / 3;
     const usage = CONFIG.PLAYER.TRAIT_USAGE[x.player.trait] || 1.0;
     return Math.max(1, off * usage - x.acc * 0.15); // 出手越多越疲劳，权重略降
   });
@@ -44,9 +47,9 @@ function pickOnCourt(rng, line, exclude) {
 function rebWeight(p, isOff) {
   const P = CONFIG.PLAYER;
   const posW = P.POS_REB_WEIGHT[p.pos] || 1;
-  const rebN = p.a.REB / 100;
-  const hgt = clamp((p.height - 178) / 42, 0.4, 1.5);
-  const strN = (p.a.STR != null ? p.a.STR : 60) / 100;
+  const rebN = num(p.a.REB, 60) / 100;
+  const hgt = clamp((num(p.height, 195) - 178) / 42, 0.4, 1.5);
+  const strN = num(p.a.STR, 60) / 100;
   const staN = clamp(p.stamina != null ? p.stamina / 100 : 1, 0.5, 1);
   let w = posW * (0.64 * rebN + 0.36 * hgt + 0.26 * strN) * staN;
   if (isOff) w *= CONFIG.MATCH.OREB_FACTOR;
@@ -54,7 +57,9 @@ function rebWeight(p, isOff) {
 }
 function pickRebounder(line, isOff, rng) {
   const w = line.map(function (x) { return rebWeight(x.player, isOff); });
-  let sum = w.reduce(function (a, b) { return a + b; }, 0), r = rng() * sum;
+  let sum = w.reduce(function (a, b) { return a + b; }, 0);
+  if (!isFinite(sum) || sum <= 0) return line[Math.floor(rng() * line.length)]; // 兜底：残缺数据随机分配
+  let r = rng() * sum;
   for (let i = 0; i < line.length; i++) { r -= w[i]; if (r <= 0) return line[i]; }
   return line[line.length - 1];
 }
@@ -83,7 +88,7 @@ function buildCourt(team) {
   // all 必须与 onCourt/bench 共享引用，否则赛中累加的 min/fouls 无法写回 box
   const onCourt = starters.map(mk);
   const benchList = bench.map(mk);
-  return { onCourt: onCourt, bench: benchList, all: onCourt.concat(benchList) };
+  return { onCourt: onCourt, bench: benchList, all: onCourt.concat(benchList), rotation: (team.tactics && team.tactics.rotation) || '均衡' };
 }
 function bestSub(bench, pos) {
   const avail = bench.filter(function (b) { return b.player.fouls < CONFIG.MATCH.FOUL_OUT; });
@@ -96,12 +101,19 @@ function bestSub(bench, pos) {
 }
 function trySubs(court, rng, possDone, totalPoss) {
   const M = CONFIG.MATCH;
-  // 1) 体力 / 犯规换人（下场休息）
+  const rot = (M.ROT_MIN && M.ROT_MIN[court.rotation]) || M.ROT_MIN['均衡'];
+  // ROT_MIN 为篮球分钟语义（48 分钟制）；本引擎 min 为回合数（全队约 1000 回合-分钟/场），
+  // 统一换算 ×4 以贴近真实上场时间分布（首发 34′≈136、替补 14′≈56 的回合当量）。
+  const sCap = Math.round(rot.starter * 4);
+  const bFloor = Math.round(rot.bench * 3);
+  const MO = CONFIG.MOOD;
+  // 1) 体力 / 犯规 / 状态低迷 换人（下场休息）
   for (let i = 0; i < court.onCourt.length; i++) {
     const x = court.onCourt[i];
     const tired = x.player.stamina != null && x.player.stamina <= M.SUB_STAMINA;
     const foulRisk = x.fouls >= M.FOUL_SUB;
-    if ((tired || foulRisk) && x.fouls < M.FOUL_OUT) {
+    const moodLow = x.player.mood != null && MO && x.player.mood < MO.LOW; // v4.3：状态低迷自动换人
+    if ((tired || foulRisk || moodLow) && x.fouls < M.FOUL_OUT) {
       const sub = bestSub(court.bench, x.player.pos);
       if (sub) {
         const bi = court.bench.indexOf(sub); court.bench.splice(bi, 1);
@@ -109,11 +121,26 @@ function trySubs(court, rng, possDone, totalPoss) {
       }
     }
   }
-  // 2) 首发回归：休息充分（体力>70）的首发，同位置换下打最久的纯替补（双向轮换，保证首发核心上场时间）
-  //    注意：min 计的是回合数（每队约 100 回合），不能拿 STARTER_MIN(篮球分钟) 当回合阈值，否则首发打 1/3 场就被永久流放
+  // 2) 分钟管理：首发达到目标上限即换下，让板凳获得真实上场时间（保证轮换深度）
+  //    仅当板凳存在"仍未达下限"的同位置球员时才换，避免无意义抖动
+  const played2 = court.all.filter(function (o) { return o.min > 0; }).length;
+  if (played2 < CONFIG.PLAYER.ROSTER_SIZE && possDone > totalPoss * 0.18) {
+    for (let i = 0; i < court.onCourt.length; i++) {
+      const x = court.onCourt[i];
+      if (x.min >= sCap && x.fouls < M.FOUL_OUT) {
+        const sub = bestSub(court.bench, x.player.pos);
+        if (sub && sub.min < bFloor) {
+          const bi = court.bench.indexOf(sub); court.bench.splice(bi, 1);
+          court.onCourt[i] = sub; court.bench.push(x);
+        }
+      }
+    }
+  }
+  // 3) 首发回归：休息充分（体力>70 且已让板凳打了足够时间）的同位置换下纯替补（双向轮换）
+  //    注意：min 计的是回合数（每队约 100 回合），不能拿 STARTER_MIN 当回合阈值，否则首发打 1/3 场就被永久流放
   if (possDone > totalPoss * 0.2) {
     court.bench.slice().forEach(function (bs) {
-      if (bs.isStarter && bs.player.stamina > 70) {
+      if (bs.isStarter && bs.player.stamina > 70 && bs.min >= Math.round(sCap * 0.6)) { // 板凳需先打满相当份额才换回，防止反复抖动
         let target = -1, bestMin = -1;
         court.onCourt.forEach(function (o, idx) {
           if (!o.isStarter && o.player.pos === bs.player.pos && o.min > bestMin) { bestMin = o.min; target = idx; }
@@ -125,13 +152,14 @@ function trySubs(court, rng, possDone, totalPoss) {
       }
     });
   }
-  // 3) 保证每场 ≥ MIN_ROTATION 人登场（过半场后强制轮换板凳）
-  const played = court.all.filter(function (o) { return o.min > 0; }).length;
-  if (possDone > totalPoss * 0.5 && played < M.MIN_ROTATION) {
-    for (let i = 0; i < court.onCourt.length && court.all.filter(function (o) { return o.min > 0; }).length < M.MIN_ROTATION; i++) {
+  // 4) 保证每场 ≥ MIN_ROTATION 人登场（过 25% 后强制轮换板凳，耗尽板凳前必达 8 人）
+  const playedNow = function () { return court.all.filter(function (o) { return o.min > 0; }).length; };
+  if (possDone > totalPoss * 0.25 && playedNow() < M.MIN_ROTATION) {
+    for (let i = 0; i < court.onCourt.length && playedNow() < M.MIN_ROTATION; i++) {
       const x = court.onCourt[i];
       if (x.min > 0) {
-        const sub = bestSub(court.bench, x.player.pos);
+        let sub = bestSub(court.bench, x.player.pos);
+        if (!sub) sub = court.bench.filter(function (b) { return b.player.fouls < M.FOUL_OUT; })[0]; // 末位兜底：任意位置替补也上，保证≥8人
         if (sub) {
           const bi = court.bench.indexOf(sub); court.bench.splice(bi, 1);
           court.onCourt[i] = sub; court.bench.push(x);

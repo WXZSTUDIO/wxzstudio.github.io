@@ -60,6 +60,17 @@ function seasonRoll(state, rng) {
     if (row.team.id === state.humanTeamId) summary.humanRank = row.rank;
   });
 
+  // —— v4 赛季结束结算：赛季目标 / 季后赛 / 全明星周末 / 奢侈税 / 赛季奖项 ——
+  // 必须在联赛重排之前执行（v4.3 修复）：重排后 human.leagueId 已变成新联赛、
+  // 战绩榜混杂升降级球队，季后赛种子与赛季目标必须按「本赛季最终排名」结算
+  // 调用顺序：goals_seasonEnd → playoff_runAll → playoff_prize → allstar_runWeekend → salary_tick → leaders_awardSeason
+  if (typeof goals_seasonEnd === 'function') goals_seasonEnd(state);
+  if (typeof playoff_runAll === 'function') playoff_runAll(state, rng);
+  if (typeof playoff_prize === 'function') playoff_prize(state);
+  if (typeof allstar_runWeekend === 'function') allstar_runWeekend(state, rng);
+  if (typeof salary_tick === 'function') salary_tick(state);
+  if (typeof leaders_awardSeason === 'function') leaders_awardSeason(state);
+
   // 升：每个 2级联赛前 2；降：1级联赛后 4
   const promoted = [], relegated = [];
   ['L2a', 'L2b'].forEach(function (lid) {
@@ -103,21 +114,17 @@ function seasonRoll(state, rng) {
   // 备用球队池填充：保证每个联赛恰好 14 队（升降级空缺由真实地名备用队补齐）
   seasonFillFromReserve(state);
 
-  // —— v4 赛季结束结算：赛季目标 / 季后赛 / 全明星周末 / 奢侈税 / 赛季奖项 ——
-  if (typeof goals_seasonEnd === 'function') goals_seasonEnd(state);
-  if (typeof playoff_runAll === 'function') playoff_runAll(state, rng);
-  if (typeof allstar_runWeekend === 'function') allstar_runWeekend(state, rng);
-  if (typeof salary_tick === 'function') salary_tick(state);
-  if (typeof leaders_awardSeason === 'function') leaders_awardSeason(state);
-
-  // 跨赛季重置：战绩清零、赛程重排、年龄+1、合同-1
+  // 跨赛季重置：战绩清零、赛程重排、年龄+1、合同-1、赛季末成长
   state.teams.forEach(function (t) {
     t.wins = 0; t.losses = 0; t.pf = 0; t.pa = 0;
     t.players.forEach(function (p) {
       p.age++;
+      if (typeof processPlayerGrowth === 'function') processPlayerGrowth(p); // v4.3 成长系统
       p.stamina = 100; p.injury = 0;
     });
   });
+  // 本赛季技术统计归档后清空（下赛季重新累积）
+  state.seasonStats = {};
   // v4 合同递减（覆盖全部联赛所有在册球员，替换原内联递减）
   if (typeof salary_decayContracts === 'function') salary_decayContracts(state);
   state.season++;
