@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f7f3ec">
+<title>开心消消乐 · 给妈妈的健脑游戏</title>
+<style>
+  :root{
+    --bg:#f7f3ec; --card:#ffffff; --ink:#332e28; --sub:#857b6e;
+    --line:#eae3d8; --accent:#e8894a; --accent2:#d96f34; --mint:#5aa87f;
+    --shadow:0 8px 28px rgba(90,70,45,.10),0 2px 8px rgba(90,70,45,.06);
+    --cell:#fbf8f3;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);
+    display:flex;justify-content:center;align-items:flex-start;
+    user-select:none;-webkit-user-select:none;
+  }
+  #app{width:100%;max-width:520px;min-height:100vh;padding:16px 16px calc(28px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
+
+  .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand .logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#f2a668,#e07f3f);display:grid;place-items:center;font-size:24px;box-shadow:var(--shadow)}
+  .brand h1{font-size:20px;margin:0;letter-spacing:.5px}
+  .brand p{margin:2px 0 0;font-size:12px;color:var(--sub)}
+  .iconbtn{border:none;background:var(--card);box-shadow:var(--shadow);width:44px;height:44px;border-radius:14px;font-size:20px;cursor:pointer;color:var(--ink);display:grid;place-items:center}
+  .iconbtn:active{transform:scale(.94)}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+  .hud{padding:14px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center}
+  .hud .box{background:var(--cell);border-radius:14px;padding:8px 4px}
+  .hud .lbl{font-size:12px;color:var(--sub);margin-bottom:2px}
+  .hud .val{font-size:22px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+  .hud .val.small{font-size:17px}
+
+  .goalbar{padding:12px 16px 14px;display:flex;align-items:center;gap:12px}
+  .goalicon{font-size:34px;line-height:1;width:46px;text-align:center;flex:none}
+  .goaltxt{flex:1;min-width:0}
+  .goalttl{font-size:17px;font-weight:800;margin-bottom:6px}
+  .track{height:14px;background:#efe9df;border-radius:99px;overflow:hidden}
+  .fill{height:100%;width:0;background:linear-gradient(90deg,#7cc79a,#4e9e73);border-radius:99px;transition:width .45s cubic-bezier(.2,.8,.2,1)}
+  .goalnum{font-size:14px;color:var(--sub);font-variant-numeric:tabular-nums;flex:none}
+
+  .boardwrap{position:relative;padding:10px;border-radius:24px}
+  #board{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;aspect-ratio:1/1;width:100%}
+  .cell{position:relative;background:var(--cell);border-radius:12px;display:grid;place-items:center;font-size:clamp(24px,7vw,38px);cursor:pointer;transition:transform .12s,background .12s;overflow:hidden}
+  .cell:active{transform:scale(.92)}
+  .cell.sel{background:#ffe6cf;box-shadow:inset 0 0 0 3px var(--accent)}
+  .cell.hint{animation:hintPulse 1s ease-in-out infinite}
+  .cell .gem{filter:drop-shadow(0 2px 1px rgba(0,0,0,.12));line-height:1;transition:transform .12s}
+  .cell.pop .gem{animation:pop .3s cubic-bezier(.2,1.6,.4,1)}
+  .cell.fall .gem{animation:fall .28s ease-out}
+  .cell .ice{position:absolute;inset:2px;border-radius:10px;background:rgba(190,224,255,.55);border:2px solid rgba(255,255,255,.85);display:grid;place-items:center;font-size:clamp(16px,4vw,22px);pointer-events:none}
+  .cell.shake{animation:shake .3s}
+  @keyframes pop{0%{transform:scale(.2)}55%{transform:scale(1.25)}100%{transform:scale(1)}}
+  @keyframes fall{0%{transform:translateY(-40%);opacity:.2}100%{transform:translateY(0);opacity:1}}
+  @keyframes hintPulse{0%,100%{box-shadow:inset 0 0 0 0 rgba(232,137,74,0)}50%{box-shadow:inset 0 0 0 4px rgba(232,137,74,.85)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+  .fly{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-weight:900;font-size:30px;color:var(--accent2);pointer-events:none;animation:fly 1s ease-out forwards;text-shadow:0 2px 6px #fff}
+  .fly.combo{top:30%;color:var(--mint);font-size:24px}
+  @keyframes fly{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}25%{opacity:1;transform:translate(-50%,-60%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-130%) scale(1)}}
+
+  .tools{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .tool{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:10px 4px 8px;box-shadow:var(--shadow);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink)}
+  .tool:active{transform:scale(.95)}
+  .tool .tE{font-size:22px;line-height:1}
+  .tool .tL{font-size:13px;font-weight:700}
+  .tool:disabled{opacity:.45;cursor:default}
+
+  .tip{text-align:center;font-size:14px;color:var(--sub);padding:2px 8px;line-height:1.6;min-height:22px}
+
+  .mask{position:fixed;inset:0;background:rgba(40,32,24,.45);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .mask.on{display:flex}
+  .modal{background:var(--card);border-radius:28px;box-shadow:0 20px 60px rgba(0,0,0,.22);width:100%;max-width:400px;padding:26px 22px;text-align:center;animation:rise .3s cubic-bezier(.2,1.2,.3,1)}
+  @keyframes rise{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+  .modal .big{font-size:56px;line-height:1;margin-bottom:8px}
+  .modal h2{font-size:26px;margin:6px 0}
+  .modal p{color:var(--sub);font-size:16px;line-height:1.6;margin:8px 0 18px}
+  .stars{font-size:34px;letter-spacing:6px;margin:6px 0}
+  .btn{border:none;border-radius:16px;padding:14px 20px;font-size:18px;font-weight:800;cursor:pointer;min-height:54px;font-family:inherit}
+  .btn:active{transform:scale(.97)}
+  .btn.main{background:linear-gradient(145deg,#efa469,#e07f3f);color:#fff;box-shadow:0 6px 16px rgba(224,127,63,.3);width:100%}
+  .btn.ghost{background:var(--cell);color:var(--ink);border:1px solid var(--line);width:100%;margin-top:10px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .row2 .btn{margin-top:0}
+
+  .lvgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;max-height:52vh;overflow:auto;padding:4px;margin-top:6px}
+  .lv{border:none;border-radius:12px;height:46px;font-size:16px;font-weight:800;cursor:pointer;background:var(--cell);color:var(--ink);border:1px solid var(--line)}
+  .lv.ok{background:#e7f4ec;color:#2f7d54;border-color:#bfe2cd}
+  .lv.cur{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .lv:disabled{opacity:.4;cursor:default}
+  .help{text-align:left;font-size:16px;line-height:1.9;color:var(--ink)}
+  .help b{color:var(--accent2)}
+  .foot{text-align:center;font-size:12px;color:#b3aa9d;padding-top:4px}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:rgba(51,46,40,.92);color:#fff;padding:10px 18px;border-radius:99px;font-size:15px;z-index:60;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+  .toast.on{opacity:1}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="top">
+    <div class="brand">
+      <div class="logo">🍊</div>
+      <div><h1>开心消消乐</h1><p>每天动动脑 · 越玩越精神</p></div>
+    </div>
+    <button class="iconbtn" id="btnSound" title="声音开关" aria-label="声音开关">🔊</button>
+  </div>
+
+  <div class="panel hud">
+    <div class="box"><div class="lbl">第几关</div><div class="val" id="hLevel">1</div></div>
+    <div class="box"><div class="lbl">得分</div><div class="val" id="hScore">0</div></div>
+    <div class="box"><div class="lbl">还能走</div><div class="val" id="hMoves">30 步</div></div>
+  </div>
+
+  <div class="panel goalbar">
+    <div class="goalicon" id="gIcon">🎯</div>
+    <div class="goaltxt">
+      <div class="goalttl" id="gTitle">得到 500 分</div>
+      <div class="track"><div class="fill" id="gFill"></div></div>
+    </div>
+    <div class="goalnum" id="gNum">0/500</div>
+  </div>
+
+  <div class="panel boardwrap" id="boardwrap">
+    <div id="board"></div>
+  </div>
+
+  <div class="tools">
+    <button class="tool" id="btnHint"><span class="tE">💡</span><span class="tL">提示</span></button>
+    <button class="tool" id="btnShuffle"><span class="tE">🔀</span><span class="tL">洗牌</span></button>
+    <button class="tool" id="btnRestart"><span class="tE">↻</span><span class="tL">重来</span></button>
+    <button class="tool" id="btnLevels"><span class="tE">📖</span><span class="tL">选关</span></button>
+  </div>
+
+  <div class="tip" id="tip">点一个水果，再点旁边的水果，三个连成一线就能消掉啦。</div>
+  <div class="foot">开心消消乐 v1.0 · 无生命限制，随时都能玩</div>
+</div>
+
+<!-- 过关 -->
+<div class="mask" id="mWin"><div class="modal">
+  <div class="big">🎉</div><h2>太棒了，过关啦！</h2>
+  <div class="stars" id="winStars">⭐⭐⭐</div>
+  <p id="winMsg">妈妈真厉害，脑子越来越灵活啦！</p>
+  <button class="btn main" id="btnNext">下一关 →</button>
+  <button class="btn ghost" id="btnReplay">再玩一次这关</button>
+</div></div>
+
+<!-- 没步数了 -->
+<div class="mask" id="mLose"><div class="modal">
+  <div class="big">🌷</div><h2>差一点点就成功啦</h2>
+  <p>没关系，咱们不加任何限制，继续走几步就能过关。</p>
+  <div class="row2">
+    <button class="btn main" id="btnExtra">再来 10 步</button>
+    <button class="btn ghost" id="btnAgain" style="margin-top:0">重新开始</button>
+  </div>
+</div></div>
+
+<!-- 选关 -->
+<div class="mask" id="mLevels"><div class="modal">
+  <h2>选择关卡</h2>
+  <p>一共 520 关，绿色是已经通过的，橙色是当前关。</p>
+  <div class="lvgrid" id="lvGrid"></div>
+  <button class="btn ghost" id="btnCloseLv">返回游戏</button>
+</div></div>
+
+<!-- 帮助 -->
+<div class="mask" id="mHelp"><div class="modal">
+  <h2>怎么玩</h2>
+  <div class="help" id="helpBody"></div>
+  <button class="btn main" id="btnCloseHelp" style="margin-top:16px">知道啦</button>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ==================== CORE START (纯逻辑，可被 Node 提取校验) ==================== */
+var SIZE=8;
+var COLORS=['🍎','🍊','🍋','🍉','🫐','🍇'];
+function mulberry32(seed){ var a=seed>>>0; return function(){ a=(a+0x6D2B79F5)|0; var t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
+function idx(r,c){return r*SIZE+c;}
+
+// 关卡配置：难度缓慢上升，520 关
+function levelConfig(n){
+  var rnd=mulberry32(9000+n*131);
+  var colors = n<=30?5 : (n<=90?5:6);
+  var moves  = Math.min(46, 30+Math.floor((n-1)/40)*2);      // 30 → 46，很宽松
+  var kind, amount, targetColor=0;
+  if(n<=15) kind='score';
+  else if(n<=70) kind = (n%4===0)?'collect':'score';
+  else kind=['score','collect','jelly'][n%3];
+  if(kind==='score'){
+    amount = Math.round(450 + (n-1)*4);
+  }else if(kind==='collect'){
+    amount = Math.min(22, 12+Math.floor((n-1)/32));
+    targetColor = Math.floor(rnd()*colors);
+  }else{
+    amount = Math.min(7, 5+Math.floor((n-1)/100));
+  }
+  return {n:n,seed:(777+n*7919)>>>0,colors:colors,moves:moves,kind:kind,amount:amount,targetColor:targetColor};
+}
+
+function findMatches(g){
+  var found=new Set(),r,c;
+  for(r=0;r<SIZE;r++){var start=0;for(c=1;c<=SIZE;c++){var cur=c<SIZE?g[idx(r,c)]:-99,prev=g[idx(r,c-1)];if(cur===prev&&cur!==-1)continue;if(c-start>=3&&prev!==-1)for(var k=start;k<c;k++)found.add(idx(r,k));start=c;}}
+  for(c=0;c<SIZE;c++){var st=0;for(r=1;r<=SIZE;r++){var cu=r<SIZE?g[idx(r,c)]:-99,pv=g[idx(r-1,c)];if(cu===pv&&cu!==-1)continue;if(r-st>=3&&pv!==-1)for(var j=st;j<r;j++)found.add(idx(j,c));st=r;}}
+  return found;
+}
+function swap(g,a,b){var t=g[a];g[a]=g[b];g[b]=t;}
+function anyMove(g){
+  for(var r=0;r<SIZE;r++)for(var c=0;c<SIZE;c++){
+    var a=idx(r,c);
+    if(c+1<SIZE){var b=idx(r,c+1);swap(g,a,b);var ok=findMatches(g).size>0;swap(g,a,b);if(ok)return {a:a,b:b};}
+    if(r+1<SIZE){var d=idx(r+1,c);swap(g,a,d);var ok2=findMatches(g).size>0;swap(g,a,d);if(ok2)return {a:a,b:d};}
+  }
+  return null;
+}
+function generateBoard(cfg,rnd){
+  var g,tries=0;
+  do{
+    g=new Array(SIZE*SIZE).fill(-1);
+    for(var r=0;r<SIZE;r++)for(var c=0;c<SIZE;c++){
+      var ban={};
+      if(c>=2&&g[idx(r,c-1)]===g[idx(r,c-2)])ban[g[idx(r,c-1)]]=1;
+      if(r>=2&&g[idx(r-1,c)]===g[idx(r-2,c)])ban[g[idx(r-1,c)]]=1;
+      var v,guard=0;
+      do{v=Math.floor(rnd()*cfg.colors);guard++;}while(ban[v]&&guard<60);
+      g[idx(r,c)]=v;
+    }
+    tries++;
+  }while(!anyMove(g)&&tries<300);
+  return g;
+}
+function placeIce(cfg,rnd){
+  var ice=new Array(SIZE*SIZE).fill(false);
+  if(cfg.kind!=='jelly')return ice;
+  // 冰块集中在中心 6x6 区域：这些格子参与消除的概率高，老人不会被角落冰块卡住
+  var cells=[];
+  for(var r=1;r<=6;r++)for(var c=1;c<=6;c++)cells.push(r*SIZE+c);
+  for(var j=cells.length-1;j>0;j--){var k=Math.floor(rnd()*(j+1));var t=cells[j];cells[j]=cells[k];cells[k]=t;}
+  for(var m=0;m<cfg.amount;m++)ice[cells[m]]=true;
+  return ice;
+}
+function createState(n){
+  var cfg=levelConfig(n),rnd=mulberry32(cfg.seed);
+  var grid=generateBoard(cfg,rnd),ice=placeIce(cfg,rnd,grid);
+  return {cfg:cfg,rnd:rnd,grid:grid,ice:ice,moves:cfg.moves,score:0,collected:{},iceCleared:0};
+}
+function collapse(g,cfg,rnd){
+  for(var c=0;c<SIZE;c++){
+    var w=SIZE-1;
+    for(var r=SIZE-1;r>=0;r--){var v=g[idx(r,c)];if(v!==-1){g[idx(w,c)]=v;if(w!==r)g[idx(r,c)]=-1;w--;}}
+    for(var rr=w;rr>=0;rr--)g[idx(rr,c)]=Math.floor(rnd()*cfg.colors);
+  }
+}
+function applyMove(st,a,b){
+  var g=st.grid,ice=st.ice,cfg=st.cfg;
+  swap(g,a,b);
+  var m=findMatches(g);
+  if(m.size===0){swap(g,a,b);return null;}
+  var cleared=[],cascade=0,gain=0;
+  while(m.size>0){
+    cascade++;
+    m.forEach(function(i){
+      var col=g[i];
+      st.collected[col]=(st.collected[col]||0)+1;
+      gain+=10*cascade;
+      // 消除时把本格及上下左右相邻的冰块一起化开，避免刁钻格卡关
+      var rr=Math.floor(i/8),cc=i%8, nb=[i];
+      if(rr>0)nb.push(i-8);
+      if(rr<7)nb.push(i+8);
+      if(cc>0)nb.push(i-1);
+      if(cc<7)nb.push(i+1);
+      nb.forEach(function(j){ if(ice[j]){ice[j]=false;st.iceCleared++;} });
+      g[i]=-1;cleared.push(i);
+    });
+    collapse(g,cfg,st.rnd);
+    m=findMatches(g);
+  }
+  st.score+=gain;st.moves--;
+  return {cleared:cleared,cascade:cascade,gain:gain};
+}
+function isWin(st){
+  var c=st.cfg;
+  if(c.kind==='score')return st.score>=c.amount;
+  if(c.kind==='collect')return (st.collected[c.targetColor]||0)>=c.amount;
+  return st.iceCleared>=c.amount;
+}
+function progressOf(st){
+  var c=st.cfg;
+  if(c.kind==='score')return st.score;
+  if(c.kind==='collect')return st.collected[c.targetColor]||0;
+  return st.iceCleared;
+}
+/* ==================== CORE END ==================== */
+
+var SAVE_KEY='kaixin-match3-save-v1';
+var state=null, selected=null, hintPair=null, busy=false, modal=false, soundOn=true, idleTimer=null, ac=null;
+
+function $(id){return document.getElementById(id);}
+function loadSave(){try{return JSON.parse(localStorage.getItem(SAVE_KEY))||{};}catch(e){return {};}}
+function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({level:save.level,unlocked:save.unlocked,best:save.best,sound:soundOn,streak:save.streak,lastDay:save.lastDay}));}catch(e){}}
+var save=loadSave();
+if(!save.level)save.level=1;
+if(!save.unlocked)save.unlocked=1;
+if(!save.best)save.best={};
+if(save.sound===false)soundOn=false;
+
+// 连续打卡
+(function(){var d=new Date().toISOString().slice(0,10);if(save.lastDay!==d){var y=new Date(Date.now()-86400000).toISOString().slice(0,10);save.streak=(save.lastDay===y)?(save.streak||0)+1:1;save.lastDay=d;persist();}})();
+
+function beep(n){
+  if(!soundOn)return;
+  try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);
+    o.frequency.value=420+Math.min(n,6)*90;o.type='sine';
+    g.gain.setValueAtTime(.0001,ac.currentTime);g.gain.exponentialRampToValueAtTime(.12,ac.currentTime+.02);
+    g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.22);o.start();o.stop(ac.currentTime+.24);
+  }catch(e){}
+}
+function toast(msg){var t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('on');},1800);}
+function adjacent(a,b){var ra=Math.floor(a/8),ca=a%8,rb=Math.floor(b/8),cb=b%8;return Math.abs(ra-rb)+Math.abs(ca-cb)===1;}
+
+function startLevel(n){
+  n=Math.max(1,Math.min(520,n));
+  save.level=n;persist();
+  state=createState(n);
+  selected=null;hintPair=null;modal=false;
+  ['mWin','mLose','mLevels','mHelp'].forEach(function(id){$(id).classList.remove('on');});
+  render(true);updateHUD();
+  $('tip').textContent=n===1?'点一个水果，再点旁边的水果，三个连成一线就能消掉啦。':(state.cfg.kind==='jelly'?'这一关要把带 ❄️ 的冰块全部清掉哦。':(state.cfg.kind==='collect'?'这一关要收集目标水果，慢慢来，步数用完了还能继续。':'慢慢来，步数用完了还能免费继续，没有限制的。'));
+  resetIdle();
+}
+
+function render(fresh){
+  var b=$('board');
+  if(fresh){b.innerHTML='';for(var i=0;i<64;i++){var d=document.createElement('div');d.className='cell';d.dataset.i=i;b.appendChild(d);}}
+  var cells=b.children;
+  for(var k=0;k<64;k++){
+    var el=cells[k],v=state.grid[k],cls='cell';
+    if(selected===k)cls+=' sel';
+    if(hintPair&&(hintPair.a===k||hintPair.b===k))cls+=' hint';
+    if(state.ice[k])cls+=' ice';
+    if(el.className!==cls)el.className=cls;
+    var want=COLORS[v]+(state.ice[k]?'<span class="ice">❄️</span>':'');
+    if(el.dataset.v!==String(v)||el.dataset.ice!==(state.ice[k]?'1':'0')){
+      el.innerHTML='<span class="gem">'+COLORS[v]+'</span>'+(state.ice[k]?'<span class="ice">❄️</span>':'');
+      el.dataset.v=v;el.dataset.ice=state.ice[k]?'1':'0';
+      if(!fresh){el.classList.add('fall');setTimeout(function(x){return function(){x.classList.remove('fall');};}(el),300);}
+    }
+  }
+}
+function updateHUD(){
+  var s=state,c=s.cfg;
+  $('hLevel').textContent=c.n;
+  $('hScore').textContent=s.score;
+  $('hMoves').textContent=s.moves+' 步';
+  var p=progressOf(s),pct=Math.min(100,p/c.amount*100);
+  $('gFill').style.width=pct+'%';
+  if(c.kind==='score'){$('gIcon').textContent='🎯';$('gTitle').textContent='得到 '+c.amount+' 分';$('gNum').textContent=p+'/'+c.amount;}
+  else if(c.kind==='collect'){$('gIcon').textContent=COLORS[c.targetColor];$('gTitle').textContent='收集 '+c.amount+' 个';$('gNum').textContent=p+'/'+c.amount;}
+  else{$('gIcon').textContent='❄️';$('gTitle').textContent='清空全部冰块';$('gNum').textContent=p+'/'+c.amount;}
+}
+function fly(txt,combo){
+  var w=$('boardwrap'),d=document.createElement('div');d.className='fly'+(combo?' combo':'');d.textContent=txt;w.appendChild(d);setTimeout(function(){d.remove();},1000);
+}
+function clickCell(i){
+  if(busy||modal)return;resetIdle();clearHint();
+  if(selected===null){selected=i;render();return;}
+  if(selected===i){selected=null;render();return;}
+  if(adjacent(selected,i)){doMove(selected,i);selected=null;}
+  else{selected=i;render();}
+}
+function doMove(a,b){
+  var prev=state.grid.slice();
+  var res=applyMove(state,a,b);
+  if(!res){var el=$('board').children[a];el.classList.add('shake');setTimeout(function(){el.classList.remove('shake');},320);return;}
+  busy=true;render();updateHUD();beep(res.cascade);
+  if(res.gain>0)fly('+'+res.gain);
+  if(res.cascade>=2)fly('连消 x'+res.cascade+'！',true);
+  var cur=save.best[state.cfg.n]||0;if(state.score>cur){save.best[state.cfg.n]=state.score;}
+  persist();
+  setTimeout(function(){
+    if(isWin(state)){win();busy=false;return;}
+    if(state.moves<=0){lose();busy=false;return;}
+    if(!anyMove(state.grid)){state.grid=generateBoard(state.cfg,state.rnd);render();toast('没有能消的啦，已经帮你重新摆好啦');}
+    busy=false;
+  },330);
+}
+function clearHint(){if(hintPair){hintPair=null;render();}}
+function showHint(){
+  if(busy||modal)return;resetIdle();
+  var mv=anyMove(state.grid);
+  if(mv){hintPair=mv;render();setTimeout(clearHint,2600);}
+}
+function shuffleBoard(){
+  if(busy||modal)return;resetIdle();
+  state.grid=generateBoard(state.cfg,state.rnd);selected=null;clearHint();render();toast('重新洗好牌啦');
+}
+function resetIdle(){clearTimeout(idleTimer);idleTimer=setTimeout(showHint,9000);}
+
+function win(){
+  modal=true;
+  var left=state.moves,cfg=state.cfg;
+  var stars=left>=cfg.moves*0.45?3:(left>0?2:1);
+  $('winStars').textContent='⭐'.repeat(stars)+'☆'.repeat(3-stars);
+  var msgs=['妈妈太厉害啦，大脑越来越年轻！','又过一关，坚持动脑真棒！','真棒！每天进步一点点。','继续保持，脑子越用越灵光！'];
+  $('winMsg').textContent=msgs[(cfg.n-1)%msgs.length]+'（已连续动脑 '+(save.streak||1)+' 天）';
+  if(cfg.n+1>save.unlocked)save.unlocked=Math.min(520,cfg.n+1);
+  persist();
+  $('btnNext').textContent=cfg.n>=520?'已经通关全部 520 关 🎊':'下一关 →';
+  $('mWin').classList.add('on');beep(6);
+}
+function lose(){modal=true;$('mLose').classList.add('on');}
+function closeModals(){modal=false;['mWin','mLose','mLevels','mHelp'].forEach(function(id){$(id).classList.remove('on');});}
+
+$('btnHint').onclick=showHint;
+$('btnShuffle').onclick=shuffleBoard;
+$('btnRestart').onclick=function(){if(busy)return;startLevel(state.cfg.n);};
+$('btnLevels').onclick=function(){if(busy)return;resetIdle();buildLevels();$('mLevels').classList.add('on');modal=true;};
+$('btnCloseLv').onclick=closeModals;
+$('btnNext').onclick=function(){if(state.cfg.n>=520){closeModals();return;}startLevel(state.cfg.n+1);};
+$('btnReplay').onclick=function(){startLevel(state.cfg.n);};
+$('btnExtra').onclick=function(){state.moves+=10;closeModals();updateHUD();toast('又加了 10 步，接着玩！');resetIdle();};
+$('btnAgain').onclick=function(){startLevel(state.cfg.n);};
+$('btnSound').onclick=function(){soundOn=!soundOn;persist();$('btnSound').textContent=soundOn?'🔊':'🔇';if(soundOn)beep(2);};
+$('btnCloseHelp').onclick=closeModals;
+$('board').addEventListener('click',function(e){var c=e.target.closest('.cell');if(c)clickCell(+c.dataset.i);});
+
+function buildLevels(){
+  var g=$('lvGrid');g.innerHTML='';
+  for(var n=1;n<=520;n++){
+    (function(k){var b=document.createElement('button');b.className='lv'+(k<save.unlocked?' ok':'')+(k===save.level?' cur':'');b.textContent=k;b.disabled=k>save.unlocked;b.onclick=function(){startLevel(k);};g.appendChild(b);})(n);
+  }
+}
+function showHelpOnce(){if(!save.helped){save.helped=true;persist();$('helpBody').innerHTML='🖐️ <b>操作方法</b>：点一个水果，再点它旁边的水果，两个会交换位置。<br>🍎 <b>消除</b>：三个或更多相同的水果连成一行或一列，就会消失得分。<br>🎯 <b>过关</b>：完成上方写着的目標就可以进入下一关。<br>♾️ <b>没有生命限制</b>：步数用完了点「再来 10 步」就能继续，永远不会卡住。<br>💡 <b>提示</b>：不知道怎么走时，按「提示」会闪给你看。<br>📖 <b>选关</b>：可以随时回到以前的关卡重玩。';$('mHelp').classList.add('on');modal=true;}}
+
+$('btnSound').textContent=soundOn?'🔊':'🔇';
+startLevel(save.level);
+setTimeout(showHelpOnce,600);
+</script>
+</body>
+</html>
