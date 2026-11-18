@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#080c12">
+<title>SEOUL METRO · 首尔地铁规划</title>
+<style>
+  :root{
+    --bg:#080c12; --panel:rgba(20,26,36,.72); --panel2:rgba(28,35,47,.62);
+    --line:rgba(255,255,255,.09); --text:#eef3f8; --muted:#98a7ba;
+    --accent:#5ee0c0; --warn:#ffb454; --danger:#ff6b6b;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Noto Sans KR","Malgun Gothic",Inter,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:radial-gradient(1200px 700px at 15% -10%,#15233a 0%,transparent 60%),
+               radial-gradient(900px 600px at 100% 110%,#1a1a33 0%,transparent 55%),var(--bg);
+    color:var(--text);font-family:var(--font);overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  button{font-family:inherit;color:inherit;cursor:pointer}
+  .app{height:100vh;display:flex;flex-direction:column;padding:16px;gap:12px}
+
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .logo{
+    width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+    background:linear-gradient(145deg,#5ee0c0,#2b8fa8);color:#06110f;font-weight:900;font-size:19px;
+    box-shadow:0 8px 26px rgba(94,224,192,.22);letter-spacing:-1px;flex:none
+  }
+  .brand h1{font-size:17px;letter-spacing:.14em;margin:0;font-weight:750;white-space:nowrap}
+  .brand p{margin:3px 0 0;font-size:11px;color:var(--muted);letter-spacing:.08em;white-space:nowrap}
+  .head-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+
+  .btn{
+    border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:10px;
+    padding:8px 12px;font-size:12px;font-weight:600;transition:.18s;backdrop-filter:blur(14px)
+  }
+  .btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+  .btn.active{background:linear-gradient(135deg,rgba(94,224,192,.22),rgba(94,224,192,.08));border-color:rgba(94,224,192,.5);color:#bff9e9}
+  .btn.icon{padding:8px 10px}
+  .btn.small{padding:5px 9px;font-size:11px;border-radius:8px}
+  .btn.danger:hover{border-color:rgba(255,107,107,.5);color:#ffb3b3}
+
+  .stats{
+    display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;
+  }
+  .stat{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 13px;
+    backdrop-filter:blur(18px);min-width:0
+  }
+  .stat label{display:block;font-size:10px;color:var(--muted);letter-spacing:.1em;margin-bottom:5px;text-transform:uppercase}
+  .stat b{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .stat em{font-style:normal;font-size:11px;color:var(--muted);margin-left:4px;font-weight:500}
+  .stat.good b{color:#8ff0d6}.stat.warn b{color:var(--warn)}.stat.bad b{color:var(--danger)}
+
+  main{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 326px;gap:12px;min-height:0}
+  .map-wrap{
+    position:relative;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+    background:linear-gradient(160deg,rgba(16,23,34,.9),rgba(8,12,18,.95));box-shadow:inset 0 1px 0 rgba(255,255,255,.04)
+  }
+  #map{display:block;width:100%;height:100%;cursor:crosshair}
+  .map-title{
+    position:absolute;left:18px;top:16px;pointer-events:none
+  }
+  .map-title h2{margin:0;font-size:13px;letter-spacing:.16em;font-weight:700;color:rgba(255,255,255,.86)}
+  .map-title p{margin:5px 0 0;font-size:11px;color:rgba(255,255,255,.38)}
+  .map-badge{
+    position:absolute;right:16px;top:15px;display:flex;gap:6px;pointer-events:none
+  }
+  .chip{
+    background:rgba(8,13,20,.6);border:1px solid var(--line);border-radius:999px;
+    padding:5px 10px;font-size:10px;color:var(--muted);backdrop-filter:blur(10px)
+  }
+  .map-hint{
+    position:absolute;left:16px;bottom:14px;right:16px;display:flex;gap:8px;align-items:center;
+    font-size:11px;color:rgba(255,255,255,.45);pointer-events:none;flex-wrap:wrap
+  }
+  kbd{
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-bottom-width:2px;
+    border-radius:5px;padding:1px 5px;font-size:10px;font-family:inherit;color:rgba(255,255,255,.7)
+  }
+
+  aside{
+    background:var(--panel);border:1px solid var(--line);border-radius:20px;backdrop-filter:blur(20px);
+    display:flex;flex-direction:column;min-height:0;overflow:hidden
+  }
+  .panel-scroll{overflow:auto;padding:14px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.16) transparent}
+  .panel-scroll::-webkit-scrollbar{width:6px}.panel-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:9px}
+  .sec-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .sec-title h3{margin:0;font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;font-weight:700}
+  .sec-title span{font-size:10px;color:rgba(255,255,255,.28)}
+  .tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .tool-grid .btn{text-align:left;padding:9px 10px}
+  .speed-row{display:flex;gap:6px}
+  .speed-row .btn{flex:1;text-align:center;padding:7px 4px}
+  .draft-box{
+    border:1px dashed rgba(94,224,192,.28);background:rgba(94,224,192,.045);border-radius:12px;padding:10px 11px;
+    font-size:11px;line-height:1.6;color:rgba(255,255,255,.66);min-height:58px
+  }
+  .draft-box b{color:#bff9e9;font-size:13px}
+  .line-item{
+    display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:10px;
+    background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.055);margin-bottom:6px
+  }
+  .dot{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 10px currentColor}
+  .line-item .meta{flex:1;min-width:0}
+  .line-item .meta b{display:block;font-size:11px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .line-item .meta small{color:var(--muted);font-size:10px}
+  .goal{
+    border-left:2px solid rgba(255,255,255,.13);padding:6px 0 6px 10px;margin-bottom:10px
+  }
+  .goal.done{border-left-color:var(--accent);opacity:.62}
+  .goal b{font-size:11px;display:block}
+  .goal small{display:block;color:var(--muted);font-size:10px;margin-top:3px;line-height:1.5}
+  .goal .tag{display:inline-block;margin-top:5px;font-size:9px;color:#0a1412;background:var(--accent);border-radius:5px;padding:2px 6px;font-weight:700}
+  .log{font-size:10px;line-height:1.65;color:var(--muted)}
+  .log div{padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .log time{color:rgba(255,255,255,.3);margin-right:6px;font-variant-numeric:tabular-nums}
+  footer{font-size:10px;color:rgba(255,255,255,.28);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  footer a{color:rgba(255,255,255,.42);text-decoration:none}footer a:hover{color:var(--accent)}
+
+  .modal{
+    position:fixed;inset:0;background:rgba(3,6,10,.72);backdrop-filter:blur(12px);display:grid;place-items:center;z-index:20;padding:20px
+  }
+  .modal.hidden{display:none}
+  .card{
+    width:min(560px,100%);max-height:82vh;overflow:auto;background:#111822;border:1px solid var(--line);
+    border-radius:20px;padding:24px;box-shadow:0 30px 90px rgba(0,0,0,.6)
+  }
+  .card h2{margin:0 0 6px;font-size:20px;letter-spacing:.02em}
+  .card h3{margin:20px 0 8px;font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+  .card p,.card li{font-size:12px;line-height:1.8;color:#b9c6d6}
+  .card a{color:var(--accent);text-decoration:none}.card a:hover{text-decoration:underline}
+  .card ul{padding-left:18px;margin:8px 0}
+  .card .close-row{display:flex;justify-content:flex-end;margin-top:18px}
+
+  @media(max-width:900px){
+    body{overflow:auto}.app{height:auto;min-height:100vh;padding:11px}
+    .stats{grid-template-columns:repeat(3,1fr)}
+    main{grid-template-columns:1fr}
+    .map-wrap{height:62vh;min-height:420px}
+    aside{max-height:none}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="logo">S</div>
+      <div>
+        <h1>SEOUL METRO</h1>
+        <p>首尔地铁规划 · 서울 지하철 네트워크 시뮬레이션</p>
+      </div>
+    </div>
+    <div class="head-actions">
+      <button class="btn small" id="btnSave">保存</button>
+      <button class="btn small" id="btnLoad">读取</button>
+      <button class="btn small" id="btnExport">导出</button>
+      <button class="btn small" id="btnImport">导入</button>
+      <button class="btn small" id="btnAbout">关于</button>
+      <button class="btn small danger" id="btnReset">重置</button>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><label>年份 · 月份</label><b id="statYear">1974 · 01</b></div>
+    <div class="stat" id="moneyCard"><label>资金 · 억원</label><b id="statMoney">30,000</b></div>
+    <div class="stat good"><label>月客流 · 万人次</label><b id="statRiders">0</b></div>
+    <div class="stat" id="satCard"><label>满意度</label><b id="statSat">—</b></div>
+    <div class="stat"><label>运营线路</label><b id="statLines">1</b></div>
+    <div class="stat"><label>时间流速</label><b id="statSpeed">1×</b></div>
+  </div>
+
+  <main>
+    <section class="map-wrap">
+      <canvas id="map"></canvas>
+      <div class="map-title">
+        <h2>SEOUL · 1974—2030</h2>
+        <p>点击站点绘制线路 · 跨汉江造价更高</p>
+      </div>
+      <div class="map-badge">
+        <span class="chip">◉ 已解锁 <b id="chipUnlocked">0</b> 站</span>
+        <span class="chip">汉江 · HAN RIVER</span>
+      </div>
+      <div class="map-hint">
+        <span><kbd>点击</kbd> 选择/建站</span><span><kbd>Enter</kbd> 完成线路</span>
+        <span><kbd>右键 / Backspace</kbd> 撤销一段</span><span><kbd>Esc</kbd> 取消</span>
+        <span><kbd>空格</kbd> 暂停</span>
+      </div>
+    </section>
+
+    <aside>
+      <div class="panel-scroll">
+        <div>
+          <div class="sec-title"><h3>工具</h3><span>TOOLS</span></div>
+          <div class="tool-grid">
+            <button class="btn active" id="btnSelect">↖ 选择 / 查看</button>
+            <button class="btn" id="btnBuild">✎ 建造线路</button>
+            <button class="btn" id="btnUndo">↶ 撤销一段</button>
+            <button class="btn" id="btnFinish">✓ 完成线路</button>
+          </div>
+          <div class="speed-row" style="margin-top:8px">
+            <button class="btn small speed-btn" data-speed="0">⏸</button>
+            <button class="btn small speed-btn active" data-speed="1">1×</button>
+            <button class="btn small speed-btn" data-speed="2">2×</button>
+            <button class="btn small speed-btn" data-speed="4">4×</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="sec-title"><h3>草稿</h3><span>DRAFT</span></div>
+          <div class="draft-box" id="draftInfo">切换到「建造线路」，然后点击站点开始绘制。</div>
+        </div>
+
+        <div>
+          <div class="sec-title"><h3>线路</h3><span id="lineCount">1 条</span></div>
+          <div id="lineList"></div>
+        </div>
+
+        <div>
+          <div class="sec-title"><h3>阶段目标</h3><span>OBJECTIVES</span></div>
+          <div id="goalList"></div>
+        </div>
+
+        <div>
+          <div class="sec-title"><h3>城市日志</h3><span>LOG</span></div>
+          <div class="log" id="logList"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <span>独立同人作品 · 非商业用途 · 数据为游戏化简化，非真实运营数据</span>
+    <span>灵感来源：<a href="https://github.com/VinsonFung/city-and-metro" target="_blank" rel="noopener">City &amp; Metro · VinsonFung</a></span>
+  </footer>
+</div>
+
+<div class="modal hidden" id="modal">
+  <div class="card">
+    <h2>关于这款游戏</h2>
+    <p><b>SEOUL METRO · 首尔地铁规划</b> 是一款原创的浏览器地铁规划小游戏。你从 1974 年的一小段线路出发，在首尔逐渐扩张的城市中绘制自己的轨道交通网络。</p>
+    <h3>怎么玩</h3>
+    <ul>
+      <li>点击「建造线路」，依次点击已解锁站点即可连线；按 <kbd>Enter</kbd> 或点击「完成线路」确认。</li>
+      <li>每一段消耗资金，跨越汉江会额外收费。线路越长，每月维护成本越高。</li>
+      <li>时间推进会解锁新站点与新城区。客流会在网络中寻找最短路径，换乘有时间惩罚。</li>
+      <li>满意度由覆盖率、拥挤度和财务状况决定。完成阶段目标可获得建设补助。</li>
+      <li>进度自动保存在浏览器本地，也可导出 / 导入 JSON 备份。</li>
+    </ul>
+    <h3>数据与署名</h3>
+    <p>站点名称为中文译名并附韩文原名；坐标基于公开的首尔地铁站位置数据做游戏化简化。线路颜色参考首尔地铁官方识别色。</p>
+    <p>本作品为独立开发的同人游戏，没有复制 <a href="https://github.com/VinsonFung/city-and-metro" target="_blank" rel="noopener">City &amp; Metro</a> 的源代码。原作版权归 <a href="https://github.com/VinsonFung" target="_blank" rel="noopener">VinsonFung</a> 所有，原作明确禁止商业使用。若你喜欢完整的地铁规划模拟，请访问原作。</p>
+    <div class="close-row"><button class="btn" id="btnCloseModal">关闭</button></div>
+  </div>
+</div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+
+<script>
+"use strict";
+
+/* ---------- 数据：主要站点（中文名 / 韩文名 / 纬度 / 经度 / 解锁年 / 需求 / 重要性 / 参考线路） ---------- */
+const RAW_STATIONS = [
+  ["seoul_station","首尔站","서울역",37.5579,126.9695,1974,95,2,"1·4"],
+  ["city_hall","市厅","시청역",37.5666,126.9782,1974,70,2,"1·2"],
+  ["jonggak","钟阁","종각역",37.5704,126.9818,1974,60,1,"1"],
+  ["jongno3ga","钟路3街","종로3가역",37.5704,126.9908,1974,65,2,"1·3·5"],
+  ["jongno5ga","钟路5街","종로5가역",37.5711,127.0004,1974,45,1,"1"],
+  ["dongdaemun","东大门","동대문역",37.5718,127.0113,1974,72,2,"1·4"],
+  ["dongmyo","东庙前","동묘앞역",37.5736,127.0172,1974,30,1,"1·6"],
+  ["sinseoldong","新设洞","신설동역",37.5761,127.0245,1974,28,1,"1·2"],
+  ["jegi","祭基洞","제기동역",37.5783,127.0388,1974,22,1,"1"],
+  ["cheongnyangni","清凉里","청량리역",37.5801,127.0477,1974,55,2,"1"],
+  ["yongsan","龙山","용산역",37.5295,126.9640,1978,58,2,"1"],
+  ["noryangjin","鹭梁津","노량진역",37.5143,126.9434,1978,50,1,"1"],
+  ["yeongdeungpo_market","永登浦市场","영등포시장역",37.5221,126.9060,1978,42,1,"1·5"],
+  ["yeongdeungpo_gu","永登浦区厅","영등포구청역",37.5255,126.8958,1978,40,1,"1·2·5"],
+  ["sindorim","新道林","신도림역",37.5087,126.8911,1978,62,2,"1·2"],
+  ["guro","九老","구로역",37.4948,126.8875,1978,38,1,"1"],
+  ["gasan","加山数字园区","가산디지털단지역",37.4807,126.8830,1997,52,1,"1·7"],
+
+  ["euljiro1ga","乙支路入口","을지로입구역",37.5661,126.9820,1984,66,1,"2"],
+  ["euljiro3ga","乙支路3街","을지로3가역",37.5662,126.9902,1984,52,1,"2·3"],
+  ["euljiro4ga","乙支路4街","을지로4가역",37.5664,126.9973,1984,48,1,"2·5"],
+  ["ddp","东大门历史文化公园","동대문역사문화공원역",37.5680,127.0106,1984,70,2,"2·4·5"],
+  ["sindang","新堂","신당역",37.5656,127.0203,1984,40,1,"2·6"],
+  ["wangsimni","往十里","왕십리역",37.5599,127.0362,1984,72,2,"2·5"],
+  ["seongsu","圣水","성수역",37.5447,127.0570,1984,50,1,"2"],
+  ["konkuk","建大入口","건대입구역",37.5408,127.0691,1984,62,2,"2·7"],
+  ["jamsil","蚕室","잠실역",37.5127,127.0951,1984,85,2,"2·8"],
+  ["sports_complex","综合运动场","종합운동장역",37.5111,127.0743,1984,45,1,"2"],
+  ["samseong","三成","삼성역",37.5092,127.0579,1984,60,1,"2"],
+  ["seolleung","宣陵","선릉역",37.5064,127.0539,1984,58,1,"2"],
+  ["yeoksam","驿三","역삼역",37.4998,127.0366,1984,55,1,"2"],
+  ["gangnam","江南","강남역",37.4986,127.0281,1984,98,2,"2"],
+  ["gyodae","教大","교대역",37.4949,127.0173,1984,55,1,"2·3"],
+  ["seocho","瑞草","서초역",37.4910,127.0068,1984,42,1,"2"],
+  ["sadang","舍堂","사당역",37.4808,126.9817,1984,75,2,"2·4"],
+  ["snu","首尔大入口","서울대입구역",37.4811,126.9534,1984,48,1,"2"],
+  ["sillim","新林","신림역",37.4841,126.9287,1984,52,1,"2"],
+  ["guro_digital","九老数字园区","구로디지털단지역",37.4853,126.9012,1984,56,1,"2"],
+  ["daelim","大林","대림역",37.5052,126.8889,1984,45,1,"2·7"],
+  ["dangsan","堂山","당산역",37.5347,126.9024,1984,48,1,"2"],
+  ["hapjeong","合井","합정역",37.5501,126.9146,1984,55,1,"2·6"],
+  ["hongdae","弘大入口","홍대입구역",37.5569,126.9237,1984,78,2,"2"],
+  ["sinchon","新村","신촌역",37.5547,126.9376,1984,58,1,"2"],
+  ["ahyeon","阿岘","아현역",37.5572,126.9540,1984,35,1,"2"],
+  ["chungjeongno","忠正路","충정로역",37.5610,126.9633,1984,40,1,"2·5"],
+
+  ["gyeongbokgung","景福宫","경복궁역",37.5738,126.9652,1985,62,2,"3"],
+  ["anguk","安国","안국역",37.5766,126.9852,1985,45,1,"3"],
+  ["chungmuro","忠武路","충무로역",37.5616,126.9956,1985,58,1,"3·4"],
+  ["yakshu","药水","약수역",37.5545,127.0110,1985,42,1,"3·6"],
+  ["apgujeong","狎鸥亭","압구정역",37.5264,127.0284,1985,60,1,"3"],
+  ["sinsa","新沙","신사역",37.5169,127.0198,1985,58,1,"3"],
+  ["express_terminal","高速巴士客运站","고속터미널역",37.5056,127.0071,1985,80,2,"3·7"],
+  ["yangjae","良才","양재역",37.4676,127.0232,1985,50,1,"3"],
+  ["dogok","道谷","도곡역",37.4906,127.0551,1985,42,1,"3"],
+  ["susu","水西","수서역",37.4881,127.1007,1985,55,1,"3"],
+  ["garak","可乐市场","가락시장역",37.4931,127.1181,1985,48,1,"3·8"],
+  ["ogeum","梧琴","오금역",37.5034,127.1262,1985,40,1,"3·5"],
+
+  ["hyehwa","惠化","혜화역",37.5834,127.0013,1985,52,1,"4"],
+  ["myeongdong","明洞","명동역",37.5608,126.9857,1985,70,2,"4"],
+  ["hoehyeon","会贤","회현역",37.5598,126.9785,1985,42,1,"4"],
+  ["samgakji","三角地","삼각지역",37.5346,126.9730,1985,45,1,"4·6"],
+  ["ichon","二村","이촌역",37.5230,126.9758,1985,38,1,"4"],
+  ["dongjak","铜雀","동작역",37.5029,126.9799,1985,42,1,"4"],
+
+  ["gimpo_airport","金浦机场","김포공항역",37.5614,126.8026,1996,85,2,"5"],
+  ["mokdong","木洞","목동역",37.5260,126.8663,1996,45,1,"5"],
+  ["yeouido","汝矣岛","여의도역",37.5239,126.9278,1996,78,2,"5"],
+  ["yeouinaru","汝矣渡口","여의나루역",37.5281,126.9326,1996,38,1,"5"],
+  ["gwanghwamun","光化门","광화문역",37.5716,126.9772,1996,68,2,"5"],
+  ["cheonggu","青丘","청구역",37.5599,127.0149,1996,40,1,"5"],
+  ["janghanpyeong","长汉坪","장한평역",37.5622,127.0606,1996,35,1,"5"],
+  ["gunja","君子","군자역",37.5567,127.0805,1996,42,1,"5"],
+  ["cheonho","千户","천호역",37.5385,127.1251,1996,58,1,"5"],
+  ["gangdong","江东","강동역",37.5358,127.1341,1996,40,1,"5"],
+  ["olympic_park","奥林匹克公园","올림픽공원역",37.5165,127.1311,1996,46,1,"5"],
+
+  ["yeonshinnae","延新内","연신내역",37.6190,126.9209,1996,42,1,"6"],
+  ["dmc","数字媒体城","디지털미디어시티역",37.5770,126.9016,2002,55,1,"6"],
+  ["worldcup","世界杯体育场","월드컵경기장역",37.5699,126.8990,2002,40,1,"6"],
+  ["itaewon","梨泰院","이태원역",37.5345,126.9947,1996,52,1,"6"],
+  ["hangangjin","汉江镇","한강진역",37.5409,127.0019,1996,40,1,"6"],
+  ["korea_univ","高丽大","고려대역",37.5897,127.0359,1996,50,1,"6"],
+
+  ["nowon","芦原","노원역",37.6561,127.0635,1996,55,1,"4·7"],
+  ["sanggye","上溪","상계역",37.6604,127.0720,1996,38,1,"7"],
+  ["childrens_park","儿童大公园","어린이대공원역",37.5471,127.0740,1996,45,1,"7"],
+  ["cheongdam","清潭","청담역",37.5188,127.0494,1996,48,1,"7"],
+  ["gangnam_gu","江南区厅","강남구청역",37.5182,127.0471,1996,42,1,"7"],
+  ["nonhyeon","论岘","논현역",37.5097,127.0222,1996,45,1,"7"],
+  ["banpo","盘浦","반포역",37.5083,127.0118,1996,38,1,"7"],
+  ["naebang","内方","내방역",37.4875,126.9932,1996,36,1,"7"],
+  ["isu","梨水","이수역",37.4850,126.9807,1996,48,1,"7"],
+
+  ["amsa","岩寺","암사역",37.5512,127.1282,1996,38,1,"8"],
+  ["gangdong_gu","江东区厅","강동구청역",37.5307,127.1206,1996,42,1,"8"],
+  ["mongchon","梦村土城","몽촌토성역",37.5170,127.1108,1996,40,1,"8"],
+  ["seokchon","石村","석촌역",37.5069,127.1055,1996,38,1,"8"],
+  ["songpa","松坡","송파역",37.4998,127.1123,1996,42,1,"8"],
+  ["munjeong","文井","문정역",37.4878,127.1213,1996,36,1,"8"]
+];
+
+const STATIONS = RAW_STATIONS.map(r => ({
+  id:r[0], zh:r[1], ko:r[2], lat:r[3], lon:r[4], year:r[5], demand:r[6], tier:r[7], refLines:r[8]
+}));
+const BY_ID = {};
+STATIONS.forEach(s => BY_ID[s.id] = s);
+
+const COLORS = ["#00A84D","#EF7C1C","#00A5DE","#996CAC","#CD7C2F","#8A8F3C","#AE5DA1","#BDB092","#4A90D9"];
+const SAVE_KEY = "wxz-seoul-metro-v1";
+const MONTH_MS = 2600;
+
+/* ---------- 状态 ---------- */
+const state = {
+  year:1974, month:1, money:30000, riders:0, satisfaction:0,
+  speed:1, tool:"select", lines:[], unlocked:new Set(), draft:[], goalsDone:new Set(),
+  log:[], phase:0, acc:0, saveAcc:0, hover:null, mouse:{x:0,y:0}, selected:null, lineSeq:1
+};
+
+function freshState(){
+  state.year=1974; state.month=1; state.money=30000; state.riders=0; state.satisfaction=0;
+  state.speed=1; state.tool="select"; state.draft=[]; state.goalsDone=new Set(); state.log=[];
+  state.phase=0; state.acc=0; state.saveAcc=0; state.hover=null; state.selected=null; state.lineSeq=2;
+  state.unlocked = new Set(STATIONS.filter(s => s.year <= 1974).map(s => s.id));
+  state.lines = [{
+    id:"L1", name:"1号线 · 试点", color:"#2F6FD0", cost:0,
+    stations:["seoul_station","city_hall","jonggak","jongno3ga","jongno5ga","dongdaemun"]
+  }];
+  logMsg("首尔地铁规划启动。现有线路：首尔站 — 东大门。");
+}
+
+/* ---------- 工具函数 ---------- */
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+function haversine(a,b){
+  const R=6371, dLat=(b.lat-a.lat)*Math.PI/180, dLon=(b.lon-a.lon)*Math.PI/180;
+  const la1=a.lat*Math.PI/180, la2=b.lat*Math.PI/180;
+  const h=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+function crossesHan(a,b){
+  if(Math.min(a.lon,b.lon) < 126.80 || Math.max(a.lon,b.lon) > 127.18) return false;
+  return (a.lat > 37.542 && b.lat < 37.532) || (b.lat > 37.542 && a.lat < 37.532);
+}
+function segmentCost(aId,bId){
+  const a=BY_ID[aId], b=BY_ID[bId];
+  if(!a||!b) return 0;
+  return Math.round(haversine(a,b)*28 + (crossesHan(a,b)?180:0));
+}
+function draftCost(){
+  let c=0;
+  for(let i=0;i<state.draft.length-1;i++) c+=segmentCost(state.draft[i],state.draft[i+1]);
+  return c;
+}
+function totalKm(){
+  let k=0;
+  state.lines.forEach(l=>{
+    for(let i=0;i<l.stations.length-1;i++){
+      const a=BY_ID[l.stations[i]], b=BY_ID[l.stations[i+1]];
+      if(a&&b) k+=haversine(a,b);
+    }
+  });
+  return k;
+}
+function servedByAnyLine(id){ return state.lines.some(l=>l.stations.includes(id)); }
+function moneyStr(n){ return Math.round(n).toLocaleString("en-US"); }
+function logMsg(msg){
+  state.log.unshift({y:state.year,m:state.month,msg});
+  if(state.log.length>28) state.log.pop();
+}
+
+/* ---------- 路径搜索（含换乘惩罚） ---------- */
+function buildGraph(){
+  const g=new Map();
+  const add=(a,b,w)=>{
+    if(!g.has(a)) g.set(a,[]);
+    if(!g.has(b)) g.set(b,[]);
+    g.get(a).push({to:b,w}); g.get(b).push({to:a,w});
+  };
+  state.lines.forEach((line,li)=>{
+    for(let i=0;i<line.stations.length-1;i++){
+      const a=line.stations[i], b=line.stations[i+1];
+      if(!state.unlocked.has(a)||!state.unlocked.has(b)) continue;
+      const km=haversine(BY_ID[a],BY_ID[b]);
+      add(a+"|"+li, b+"|"+li, km/32*60+1.6);
+    }
+  });
+  const stationLines=new Map();
+  state.lines.forEach((line,li)=>line.stations.forEach(s=>{
+    if(!stationLines.has(s)) stationLines.set(s,[]);
+    stationLines.get(s).push(li);
+  }));
+  stationLines.forEach((ls,s)=>{
+    for(let i=0;i<ls.length;i++) for(let j=i+1;j<ls.length;j++)
+      add(s+"|"+ls[i], s+"|"+ls[j], 4.5);
+  });
+  return g;
+}
+function findPath(origin,dest,g){
+  if(origin===dest) return {cost:0,path:[origin]};
+  const starts=[], targets=new Set();
+  state.lines.forEach((l,i)=>{
+    if(l.stations.includes(origin)) starts.push(origin+"|"+i);
+    if(l.stations.includes(dest)) targets.add(dest+"|"+i);
+  });
+  if(!starts.length||!targets.size) return null;
+  const dist=new Map(), prev=new Map(), queue=[];
+  starts.forEach(k=>{ dist.set(k,0); queue.push({k,d:0}); });
+  while(queue.length){
+    let bi=0;
+    for(let i=1;i<queue.length;i++) if(queue[i].d<queue[bi].d) bi=i;
+    const cur=queue.splice(bi,1)[0];
+    if(cur.d>(dist.get(cur.k)??Infinity)) continue;
+    if(targets.has(cur.k)){
+      const path=[]; let k=cur.k;
+      while(k){ path.push(k.split("|")[0]); k=prev.get(k); }
+      return {cost:cur.d,path:path.reverse()};
+    }
+    (g.get(cur.k)||[]).forEach(e=>{
+      const nd=cur.d+e.w;
+      if(nd<(dist.get(e.to)??Infinity)){
+        dist.set(e.to,nd); prev.set(e.to,cur.k); queue.push({k:e.to,d:nd});
+      }
+    });
+  }
+  return null;
+}
+function weightedPick(arr,weights,exclude){
+  let total=0;
+  arr.forEach((id,i)=>{ if(id!==exclude) total+=weights[i]; });
+  if(total<=0) return null;
+  let r=Math.random()*total;
+  for(let i=0;i<arr.length;i++){
+    if(arr[i]===exclude) continue;
+    r-=weights[i];
+    if(r<=0) return arr[i];
+  }
+  return arr[arr.length-1]===exclude?null:arr[arr.length-1];
+}
+
+/* ---------- 目标 ---------- */
+const GOALS = [
+  {id:"g1",title:"连接清凉里",desc:"把首尔站—东大门线延伸至清凉里。",until:1980,reward:2000,
+   test:()=>!!findPath("seoul_station","cheongnyangni",buildGraph())},
+  {id:"g2",title:"江南通道",desc:"建成经过江南站的线路，并拥有至少 2 条线路。",until:1992,reward:4000,
+   test:()=>servedByAnyLine("gangnam") && state.lines.length>=2},
+  {id:"g3",title:"机场接入",desc:"将金浦机场纳入轨道网络。",until:2005,reward:6000,
+   test:()=>servedByAnyLine("gimpo_airport")},
+  {id:"g4",title:"百万客流",desc:"月客流达到 100 万人次。",until:2015,reward:8000,
+   test:()=>state.riders>=1000},
+  {id:"g5",title:"满意网络",desc:"满意度达到 85%，且运营 5 条以上线路。",until:2030,reward:12000,
+   test:()=>state.satisfaction>=85 && state.lines.length>=5}
+];
+
+/* ---------- 月度模拟 ---------- */
+function simulateMonth(){
+  state.month++;
+  if(state.month>12){ state.month=1; state.year++; }
+  const newcomers=STATIONS.filter(s=>s.year===state.year);
+  newcomers.forEach(s=>{
+    if(!state.unlocked.has(s.id)){
+      state.unlocked.add(s.id);
+      if(s.tier===2) logMsg(s.zh+" 区域开通，新站点解锁。");
+    }
+  });
+
+  const growth=1+Math.max(0,state.year-1974)*0.045;
+  const active=[...state.unlocked].filter(id=>servedByAnyLine(id));
+  let served=0, unserved=0;
+  if(active.length<2){
+    STATIONS.forEach(s=>{ if(state.unlocked.has(s.id)) unserved+=s.demand*growth; });
+  }else{
+    const g=buildGraph();
+    const weights=active.map(id=>Math.pow(BY_ID[id].demand,0.72));
+    active.forEach(id=>{
+      const demand=BY_ID[id].demand*growth;
+      let local=0;
+      for(let k=0;k<3;k++){
+        const dest=weightedPick(active,weights,id);
+        if(dest && findPath(id,dest,g)) local+=demand/3;
+      }
+      served+=local; unserved+=demand-local;
+    });
+  }
+  state.riders=served;
+  const coverage=(served+unserved)>0?served/(served+unserved):0;
+  const km=totalKm();
+  const load=served/Math.max(500,km*20);
+  const rawSat=clamp(coverage*100-Math.max(0,load-1)*18-(state.money<0?8:0),18,99);
+  state.satisfaction=state.satisfaction?state.satisfaction*0.7+rawSat*0.3:rawSat;
+
+  const revenue=served*0.012;
+  const opCost=km*1.4+state.lines.length*7;
+  state.money+=revenue-opCost;
+
+  GOALS.forEach(goal=>{
+    if(state.goalsDone.has(goal.id)||state.year>goal.until) return;
+    if(goal.test()){
+      state.goalsDone.add(goal.id);
+      state.money+=goal.reward;
+      logMsg("目标达成：「"+goal.title+"」 · 补助 +"+goal.reward+" 억원");
+    }
+  });
+}
+
+/* ---------- 画布与绘制 ---------- */
+const canvas=document.getElementById("map");
+const ctx=canvas.getContext("2d");
+let CW=0,CH=0;
+function resizeCanvas(){
+  const r=canvas.getBoundingClientRect();
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  CW=r.width; CH=r.height;
+  canvas.width=Math.round(CW*dpr); canvas.height=Math.round(CH*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+const LAT_MIN=37.44,LAT_MAX=37.685,LON_MIN=126.78,LON_MAX=127.17;
+function project(s){
+  const padX=34, padY=34;
+  return {
+    x:padX+(s.lon-LON_MIN)/(LON_MAX-LON_MIN)*(CW-padX*2),
+    y:CH-padY-(s.lat-LAT_MIN)/(LAT_MAX-LAT_MIN)*(CH-padY*2)
+  };
+}
+function lighten(hex,amt){
+  const n=parseInt(hex.slice(1),16);
+  const r=clamp((n>>16)+amt,0,255),g=clamp(((n>>8)&255)+amt,0,255),b=clamp((n&255)+amt,0,255);
+  return "rgb("+r+","+g+","+b+")";
+}
+function roundRectPath(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+}
+const RIVER_RAW=[[126.79,37.552],[126.86,37.536],[126.93,37.526],[127.00,37.518],[127.06,37.515],[127.12,37.526],[127.17,37.545]];
+function smoothPoints(raw,steps){
+  const out=[];
+  for(let i=0;i<raw.length-1;i++){
+    const p0=raw[Math.max(0,i-1)],p1=raw[i],p2=raw[i+1],p3=raw[Math.min(raw.length-1,i+2)];
+    for(let t=0;t<steps;t++){
+      const u=t/steps,u2=u*u,u3=u2*u;
+      out.push([
+        0.5*((2*p1[0])+(-p0[0]+p2[0])*u+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*u2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*u3),
+        0.5*((2*p1[1])+(-p0[1]+p2[1])*u+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*u2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*u3)
+      ]);
+    }
+  }
+  out.push(raw[raw.length-1]);
+  return out;
+}
+const RIVER=smoothPoints(RIVER_RAW,10);
+const DISTRICTS=[
+  ["마포",126.918,37.545],["여의도",126.925,37.522],["용산",126.970,37.535],
+  ["종로",126.985,37.578],["성동",127.045,37.552],["광진",127.086,37.545],
+  ["강남",127.035,37.505],["서초",126.995,37.490],["송파",127.105,37.510],
+  ["영등포",126.895,37.515],["노원",127.065,37.642],["은평",126.925,37.610]
+];
+function drawBackground(){
+  const grd=ctx.createLinearGradient(0,0,CW,CH);
+  grd.addColorStop(0,"#0f1724"); grd.addColorStop(1,"#080c12");
+  ctx.fillStyle=grd; ctx.fillRect(0,0,CW,CH);
+  ctx.strokeStyle="rgba(255,255,255,.028)"; ctx.lineWidth=1;
+  for(let x=0;x<CW;x+=44){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke(); }
+  for(let y=0;y<CH;y+=44){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke(); }
+
+  ctx.save();
+  ctx.beginPath();
+  RIVER.forEach((p,i)=>{ const q=project({lat:p[1],lon:p[0]}); i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y); });
+  ctx.strokeStyle="rgba(52,124,186,.16)"; ctx.lineWidth=30; ctx.lineCap="round"; ctx.lineJoin="round"; ctx.stroke();
+  ctx.strokeStyle="rgba(86,165,224,.30)"; ctx.lineWidth=10; ctx.stroke();
+  ctx.strokeStyle="rgba(160,220,255,.16)"; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.restore();
+
+  ctx.font="600 11px "+getComputedStyle(document.body).fontFamily;
+  ctx.textAlign="center";
+  DISTRICTS.forEach(d=>{
+    const p=project({lat:d[2],lon:d[1]});
+    ctx.fillStyle="rgba(255,255,255,.10)";
+    ctx.fillText(d[0],p.x,p.y);
+  });
+  ctx.textAlign="start";
+}
+function strokePolyline(ids,color,width,alpha,dash){
+  if(ids.length<2) return;
+  ctx.save();
+  ctx.globalAlpha=alpha;
+  ctx.strokeStyle=color; ctx.lineWidth=width; ctx.lineJoin="round"; ctx.lineCap="round";
+  if(dash) ctx.setLineDash(dash);
+  ctx.shadowColor=color; ctx.shadowBlur=width>3?12:0;
+  ctx.beginPath();
+  ids.forEach((id,i)=>{
+    const p=project(BY_ID[id]);
+    i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);
+  });
+  ctx.stroke();
+  ctx.restore();
+}
+function drawLines(){
+  state.lines.forEach(l=>{
+    strokePolyline(l.stations,l.color,7,.55,null);
+    strokePolyline(l.stations,l.color,3.4,.98,null);
+    strokePolyline(l.stations,lighten(l.color.slice(0,7)||l.color,70),1,parentAlpha(),null);
+  });
+  function parentAlpha(){ return .55; }
+}
+function drawDraft(){
+  if(state.draft.length<1) return;
+  const ids=state.draft.slice();
+  if(state.hover && !ids.includes(state.hover) && state.unlocked.has(state.hover)) ids.push(state.hover);
+  strokePolyline(ids,"#5ee0c0",3,.9,[7,6]);
+  const c=draftCost()+(state.hover&&!state.draft.includes(state.hover)?segmentCost(state.draft[state.draft.length-1],state.hover):0);
+  ids.forEach(id=>{
+    const p=project(BY_ID[id]);
+    ctx.beginPath(); ctx.arc(p.x,p.y,4.5,0,Math.PI*2);
+    ctx.fillStyle="#5ee0c0"; ctx.fill();
+  });
+  if(ids.length>=2){
+    const p=project(BY_ID[ids[ids.length-1]]);
+    ctx.font="600 11px "+getComputedStyle(document.body).fontFamily;
+    ctx.fillStyle="#a9f5e2"; ctx.fillText("-"+moneyStr(c)+" 억원",p.x+10,p.y-10);
+  }
+}
+function drawTrains(){
+  state.lines.forEach(l=>{
+    if(l.stations.length<2||state.speed===0) return;
+    const pts=l.stations.map(id=>project(BY_ID[id]));
+    const lens=[]; let total=0;
+    for(let i=0;i<pts.length-1;i++){
+      const d=Math.hypot(pts[i+1].x-pts[i].x,pts[i+1].y-pts[i].y);
+      lens.push(d); total+=d;
+    }
+    if(total<1) return;
+    const n=clamp(Math.round(total/130),1,5);
+    for(let k=0;k<n;k++){
+      let d=((state.phase+k/n)%1)*total, idx=0;
+      while(idx<lens.length-1&&d>lens[idx]){ d-=lens[idx]; idx++; }
+      const t=lens[idx]?d/lens[idx]:0;
+      const x=pts[idx].x+(pts[idx+1].x-pts[idx].x)*t;
+      const y=pts[idx].y+(pts[idx+1].y-pts[idx].y)*t;
+      const a=Math.atan2(pts[idx+1].y-pts[idx].y,pts[idx+1].x-pts[idx].x);
+      ctx.save(); ctx.translate(x,y); ctx.rotate(a);
+      ctx.shadowColor=l.color; ctx.shadowBlur=10;
+      ctx.fillStyle=l.color; roundRectPath(-7,-3.2,14,6.4,3); ctx.fill();
+      ctx.shadowBlur=0; ctx.fillStyle="rgba(255,255,255,.85)";
+      ctx.fillRect(4.5,-1.6,1.6,3.2);
+      ctx.restore();
+    }
+  });
+}
+function drawStations(){
+  STATIONS.forEach(s=>{
+    const p=project(s), unlocked=state.unlocked.has(s.id);
+    const isHover=state.hover===s.id, isSel=state.selected===s.id;
+    if(!unlocked){
+      ctx.beginPath(); ctx.arc(p.x,p.y,2.6,0,Math.PI*2);
+      ctx.strokeStyle="rgba(255,255,255,.17)"; ctx.lineWidth=1; ctx.stroke();
+      if(isHover){
+        ctx.font="10px "+getComputedStyle(document.body).fontFamily;
+        ctx.fillStyle="rgba(255,255,255,.4)"; ctx.fillText(s.year,p.x+7,p.y+3);
+      }
+      return;
+    }
+    const stationLines=state.lines.filter(l=>l.stations.includes(s.id)).length;
+    const r=(s.tier===2?6:4.2)+(stationLines>1?1.4:0)+(isHover||isSel?2.2:0);
+    ctx.save();
+    if(isHover||isSel||stationLines>1){ ctx.shadowColor="#ffffff"; ctx.shadowBlur=isHover||isSel?16:7; }
+    ctx.beginPath(); ctx.arc(p.x,p.y,r,0,Math.PI*2);
+    ctx.fillStyle=stationLines>0?"#eef6f7":"#101923"; ctx.fill();
+    ctx.lineWidth=stationLines>1?2.2:1.4;
+    ctx.strokeStyle=stationLines>1?"#ffffff":"rgba(255,255,255,.72)"; ctx.stroke();
+    ctx.restore();
+    if(s.tier===2||isHover||isSel){
+      ctx.font=(s.tier===2?"600 ":"500 ")+"10.5px "+getComputedStyle(document.body).fontFamily;
+      ctx.fillStyle=isHover||isSel?"#ffffff":"rgba(255,255,255,.72)";
+      ctx.shadowColor="rgba(0,0,0,.9)"; ctx.shadowBlur=5;
+      ctx.fillText(s.zh,p.x+r+4,p.y+3.5);
+      ctx.shadowBlur=0;
+    }
+  });
+}
+function drawTooltip(){
+  if(!state.hover) return;
+  const s=BY_ID[state.hover]; if(!s) return;
+  const unlocked=state.unlocked.has(s.id);
+  const lines=state.lines.filter(l=>l.stations.includes(s.id));
+  const title=s.zh+"  "+s.ko;
+  const sub=unlocked?("需求 "+s.demand+" · 参考线路 "+s.refLines+" · "+(lines.length?"已接入 "+lines.length+" 条":"尚未接入"))
+                    :("预计 "+s.year+" 年解锁");
+  ctx.font="600 12px "+getComputedStyle(document.body).fontFamily;
+  const w=Math.max(ctx.measureText(title).width,ctx.measureText(sub).width)+22;
+  let x=state.mouse.x+16, y=state.mouse.y+14;
+  if(x+w>CW-8) x=CW-w-8;
+  if(y+52>CH-8) y=CH-60;
+  ctx.save();
+  ctx.fillStyle="rgba(8,13,20,.88)"; ctx.strokeStyle="rgba(255,255,255,.16)";
+  roundRectPath(x,y,w,46,10); ctx.fill(); ctx.stroke();
+  ctx.font="600 12px "+getComputedStyle(document.body).fontFamily;
+  ctx.fillStyle="#eef6f7"; ctx.fillText(title,x+11,y+18);
+  ctx.font="10px "+getComputedStyle(document.body).fontFamily;
+  ctx.fillStyle="rgba(255,255,255,.5)"; ctx.fillText(sub,x+11,y+34);
+  ctx.restore();
+}
+function draw(){
+  if(!CW||!CH) return;
+  ctx.clearRect(0,0,CW,CH);
+  drawBackground();
+  drawLines();
+  drawDraft();
+  drawTrains();
+  drawStations();
+  drawTooltip();
+}
+
+/* ---------- 面板 ---------- */
+const $=id=>document.getElementById(id);
+function updatePanel(){
+  $("statYear").textContent=state.year+" · "+String(state.month).padStart(2,"0");
+  $("statMoney").textContent=moneyStr(state.money);
+  $("moneyCard").className="stat "+(state.money<0?"bad":state.money<5000?"warn":"");
+  $("statRiders").textContent=(state.riders/10).toFixed(1);
+  $("statSat").textContent=state.satisfaction?state.satisfaction.toFixed(0)+"%":"—";
+  $("satCard").className="stat "+(state.satisfaction<45?"bad":state.satisfaction<70?"warn":"good");
+  $("statLines").textContent=state.lines.length;
+  $("statSpeed").textContent=state.speed===0?"暂停":state.speed+"×";
+  $("chipUnlocked").textContent=state.unlocked.size;
+  $("lineCount").textContent=state.lines.length+" 条";
+
+  $("draftInfo").innerHTML=state.draft.length
+    ? "草稿站点 <b>"+state.draft.length+"</b> 个 · 造价 <b>"+moneyStr(draftCost())+"</b> 억원<br>点击下一站继续 · Enter 完成 · 右键撤销"
+    : (state.tool==="build"?"点击任意已解锁站点开始绘制线路。":"切换到「建造线路」，然后点击站点开始绘制。");
+
+  $("lineList").innerHTML=state.lines.map(l=>{
+    const km=totalLineKm(l);
+    return '<div class="line-item"><span class="dot" style="background:'+l.color+';color:'+l.color+'"></span>'+
+      '<span class="meta"><b>'+esc(l.name)+'</b><small>'+l.stations.length+' 站 · '+km.toFixed(1)+' km</small></span>'+
+      '<button class="btn small danger" data-del="'+l.id+'">拆除</button></div>';
+  }).join("");
+
+  $("goalList").innerHTML=GOALS.map(g=>{
+    const done=state.goalsDone.has(g.id);
+    return '<div class="goal '+(done?"done":"")+'"><b>'+g.title+'</b><small>'+g.desc+' 截止 '+g.until+' 年 · 奖励 '+g.reward+' 억원</small>'+
+      (done?'<span class="tag">已完成</span>':"")+'</div>';
+  }).join("");
+
+  $("logList").innerHTML=state.log.slice(0,10).map(l=>
+    '<div><time>'+l.y+"."+String(l.m).padStart(2,"0")+'</time>'+esc(l.msg)+'</div>').join("");
+
+  document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>removeLine(b.dataset.del));
+}
+function totalLineKm(l){
+  let k=0;
+  for(let i=0;i<l.stations.length-1;i++){
+    const a=BY_ID[l.stations[i]],b=BY_ID[l.stations[i+1]];
+    if(a&&b) k+=haversine(a,b);
+  }
+  return k;
+}
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+/* ---------- 建造操作 ---------- */
+function setTool(tool){
+  state.tool=tool;
+  $("btnSelect").classList.toggle("active",tool==="select");
+  $("btnBuild").classList.toggle("active",tool==="build");
+  if(tool==="select") state.draft=[];
+  updatePanel();
+}
+function addToDraft(id){
+  if(!state.unlocked.has(id)){ logMsg("该站点尚未解锁。"); return; }
+  if(state.draft.length){
+    const last=state.draft[state.draft.length-1];
+    if(last===id) return;
+    const cost=segmentCost(last,id);
+    if(state.money-draftCost()-cost<0){ logMsg("预算不足，无法继续延伸。"); return; }
+  }
+  state.draft.push(id);
+  updatePanel();
+}
+function finishDraft(){
+  if(state.draft.length<2){ logMsg("至少需要两个站点才能成线。"); return; }
+  const cost=draftCost();
+  if(state.money<cost){ logMsg("预算不足：需要 "+moneyStr(cost)+" 억원。"); return; }
+  const color=COLORS[(state.lineSeq-2)%COLORS.length];
+  const line={id:"L"+state.lineSeq,name:"新线路 "+state.lineSeq,color:color,cost:cost,stations:state.draft.slice()};
+  state.lines.push(line); state.lineSeq++;
+  state.money-=cost;
+  logMsg(line.name+" 开通，造价 "+moneyStr(cost)+" 억원。");
+  state.draft=[];
+  updatePanel();
+}
+function undoDraft(){ if(state.draft.length) { state.draft.pop(); updatePanel(); } }
+function removeLine(id){
+  const i=state.lines.findIndex(l=>l.id===id); if(i<0) return;
+  const l=state.lines[i];
+  state.money+=Math.round(l.cost*0.4);
+  state.lines.splice(i,1);
+  logMsg(l.name+" 已拆除，返还 40% 建设费。");
+  updatePanel();
+}
+
+/* ---------- 存档 ---------- */
+function serialize(){
+  return {
+    v:1, year:state.year, month:state.month, money:state.money, riders:state.riders,
+    satisfaction:state.satisfaction, speed:state.speed, lines:state.lines,
+    unlocked:[...state.unlocked], goalsDone:[...state.goalsDone], log:state.log.slice(0,28),
+    lineSeq:state.lineSeq
+  };
+}
+function applySave(d){
+  if(!d||d.v!==1||!Array.isArray(d.lines)) throw new Error("存档格式不兼容");
+  state.year=d.year; state.month=d.month; state.money=d.money;
+  state.riders=d.riders||0; state.satisfaction=d.satisfaction||0;
+  state.speed=d.speed===undefined?1:d.speed;
+  state.lines=d.lines; state.unlocked=new Set(d.unlocked||[]);
+  state.goalsDone=new Set(d.goalsDone||[]); state.log=d.log||[];
+  state.lineSeq=d.lineSeq||state.lines.length+1;
+  state.draft=[]; state.hover=null; state.selected=null;
+  setTool("select"); updatePanel();
+}
+function saveGame(quiet){
+  try{ localStorage.setItem(SAVE_KEY,JSON.stringify(serialize())); if(!quiet) logMsg("进度已保存。"); }
+  catch(e){ if(!quiet) logMsg("保存失败："+e.message); }
+}
+function loadGame(quiet){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(!raw){ if(!quiet) logMsg("没有找到本地存档。"); return false; }
+    applySave(JSON.parse(raw));
+    if(!quiet) logMsg("已读取本地存档。");
+    return true;
+  }catch(e){ if(!quiet) logMsg("读取失败："+e.message); return false; }
+}
+function exportSave(){
+  const blob=new Blob([JSON.stringify(serialize(),null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="seoul-metro-"+state.year+"-"+String(state.month).padStart(2,"0")+".json";
+  a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function importSave(file){
+  const r=new FileReader();
+  r.onload=()=>{ try{ applySave(JSON.parse(r.result)); logMsg("存档导入成功。"); }catch(e){ logMsg("导入失败："+e.message); } };
+  r.readAsText(file);
+}
+
+/* ---------- 事件 ---------- */
+function nearestStation(x,y,unlockedOnly){
+  let best=null,bd=15*15;
+  STATIONS.forEach(s=>{
+    if(unlockedOnly&&!state.unlocked.has(s.id)) return;
+    const p=project(s), d=(p.x-x)**2+(p.y-y)**2;
+    if(d<bd){ bd=d; best=s.id; }
+  });
+  return best;
+}
+canvas.addEventListener("mousemove",e=>{
+  const r=canvas.getBoundingClientRect();
+  state.mouse.x=e.clientX-r.left; state.mouse.y=e.clientY-r.top;
+  state.hover=nearestStation(state.mouse.x,state.mouse.y,false);
+});
+canvas.addEventListener("mouseleave",()=>{ state.hover=null; });
+canvas.addEventListener("click",e=>{
+  const r=canvas.getBoundingClientRect();
+  const id=nearestStation(e.clientX-r.left,e.clientY-r.top,false);
+  if(!id) return;
+  if(state.tool==="build") addToDraft(id);
+  else state.selected=id;
+  updatePanel();
+});
+canvas.addEventListener("contextmenu",e=>{
+  e.preventDefault();
+  if(state.tool==="build"&&state.draft.length) undoDraft();
+});
+window.addEventListener("keydown",e=>{
+  if(e.target.tagName==="INPUT") return;
+  if(e.key==="Enter"){ e.preventDefault(); if(state.tool==="build") finishDraft(); }
+  else if(e.key==="Escape"){ state.draft=[]; $("modal").classList.add("hidden"); setTool("select"); }
+  else if(e.key==="Backspace"||e.key==="Delete"){ e.preventDefault(); if(state.tool==="build") undoDraft(); }
+  else if(e.code==="Space"){ e.preventDefault(); setSpeed(state.speed===0?1:0); }
+  else if(e.key==="v"||e.key==="V") setTool("select");
+  else if(e.key==="b"||e.key==="B") setTool("build");
+  else if(e.key==="1") setSpeed(1);
+  else if(e.key==="2") setSpeed(2);
+  else if(e.key==="4") setSpeed(4);
+});
+function setSpeed(s){
+  state.speed=s;
+  document.querySelectorAll(".speed-btn").forEach(b=>b.classList.toggle("active",Number(b.dataset.speed)===s));
+  updatePanel();
+}
+$("btnSelect").onclick=()=>setTool("select");
+$("btnBuild").onclick=()=>setTool("build");
+$("btnUndo").onclick=undoDraft;
+$("btnFinish").onclick=finishDraft;
+document.querySelectorAll(".speed-btn").forEach(b=>b.onclick=()=>setSpeed(Number(b.dataset.speed)));
+$("btnSave").onclick=()=>saveGame(false);
+$("btnLoad").onclick=()=>loadGame(false);
+$("btnExport").onclick=exportSave;
+$("btnImport").onclick=()=>$("importFile").click();
+$("importFile").onchange=e=>{ if(e.target.files[0]) importSave(e.target.files[0]); e.target.value=""; };
+$("btnReset").onclick=()=>{
+  if(!confirm("确定重置所有进度？此操作不可撤销。")) return;
+  localStorage.removeItem(SAVE_KEY); freshState(); setSpeed(1); setTool("select"); updatePanel();
+};
+$("btnAbout").onclick=()=>$("modal").classList.remove("hidden");
+$("btnCloseModal").onclick=()=>$("modal").classList.add("hidden");
+$("modal").onclick=e=>{ if(e.target===$("modal")) $("modal").classList.add("hidden"); };
+window.addEventListener("resize",resizeCanvas);
+window.addEventListener("beforeunload",()=>saveGame(true));
+
+/* ---------- 主循环 ---------- */
+let last=performance.now();
+function frame(now){
+  const dt=Math.min(now-last,120); last=now;
+  if(state.speed>0){
+    state.acc+=dt*state.speed;
+    if(state.acc>=MONTH_MS){
+      const steps=Math.floor(state.acc/MONTH_MS);
+      state.acc-=steps*MONTH_MS;
+      for(let i=0;i<steps;i++) simulateMonth();
+      updatePanel();
+    }
+    state.phase=(state.phase+dt*0.000038*state.speed)%1;
+  }
+  state.saveAcc+=dt;
+  if(state.saveAcc>20000){ state.saveAcc=0; saveGame(true); }
+  draw();
+  requestAnimationFrame(frame);
+}
+
+/* ---------- 启动 ---------- */
+function init(){
+  freshState();
+  if(!loadGame(true)) logMsg("提示：点击「建造线路」，从东大门继续向清凉里延伸。");
+  resizeCanvas();
+  setTool("select"); setSpeed(state.speed);
+  updatePanel();
+  requestAnimationFrame(frame);
+}
+init();
+</script>
+</body>
+</html>
